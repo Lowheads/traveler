@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.travelmaker.mapper.AdminMemberMapper">
+
+<resultMap type="org.travelmaker.domain.MemberVO" id="VOResult">
+	<result property="memNo" column="MEM_NO"/>
+	<result property="email" column="EMAIL"/>
+	<result property="nickname" column="NICKNAME"/>
+	<result property="pwd" column="PWD"/>
+	<result property="birth" column="BIRTH"/>
+	<result property="gender" column="GENDER"/>	
+	<result property="regDate" column="REG_DATE"/>
+	<result property="lastDate" column="LAST_DATE"/>
+	<result property="status" column="STATUS"/>
+	<result property="memGrade" column="MEM_GRADE"/>
+</resultMap>
+
+
+	<select id="getUser" resultMap="VOResult">
+	select /*+ index_desc(member pk_member) */ * from member where mem_no=#{memNo}
+	</select>
+	
+	<select id="getUserList" resultMap="VOResult">
+ <![CDATA[
+	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 order by mem_no]]>
+	</select>
+	
+		<update id="removeUser">
+		update member set status='탈퇴' where mem_no=#{result}
+	</update>
+	
+	
+	<select id="getWithdrawUserList" resultMap="VOResult">
+ <![CDATA[
+	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 and status='탈퇴']]>
+	</select>
+	
+	
+	<select id ="searchUser" resultMap="VOResult">
+		select * from(
+			select /*+ index_desc(member pk_member) */ * 
+			from member
+			where
+			<choose>
+				<when test="type == 'nickname'">
+					(nickname like '%'||#{keyword}||'%')
+				</when>
+				<when test="type == 'email'">
+					(email like '%'||#{keyword}||'%')
+				</when>
+				<when test="type == 'mem_no'">
+					(mem_no =#{keyword})
+				</when>
+			</choose>
+			)	
+	</select>
+	
+		<select id ="searchWithdrawUser" resultMap="VOResult">
+		select * from(
+			select /*+ index_desc(member pk_member) */ * 
+			from member
+			where 
+			<choose>
+				<when test="type == 'nickname'">
+					(nickname like '%'||#{keyword}||'%')
+				</when>
+				<when test="type == 'email'">
+					(email like '%'||#{keyword}||'%')
+				</when>
+				<when test="type == 'mem_no'">
+					(mem_no like '%'||#{keyword}||'%')
+				</when>
+			</choose>
+			and status='탈퇴'
+			)	
+	</select>
+
+</mapper>
