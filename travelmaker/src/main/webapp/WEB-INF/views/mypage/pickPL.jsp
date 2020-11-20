@@ -151,6 +151,7 @@
 					    fragment = document.createDocumentFragment(), 
 						listStr = '';
 						
+						//장소 NodeList 받아옴
 						var itemVal = document.querySelectorAll(".item");
 						
 						$("#placesList").children().remove();
