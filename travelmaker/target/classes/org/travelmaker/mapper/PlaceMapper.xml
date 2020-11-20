@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.travelmaker.mapper.PlaceMapper">
+		
+		<resultMap type="org.travelmaker.domain.PlaceVO" id="placeVO">
+			<result property="plcNo" column="PLC_NO"/>
+			<result property="regionNo" column="REGION_NO"/>
+			<result property="plcTitle" column="PLC_TITLE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lng" column="LNG"/>
+			<result property="addressDt" column="ADDRESS_DT"/>
+			<result property="pCate" column="P_CATE"/>
+			<result property="holiday" column="HOLIDAY"/>
+			<result property="openingH" column="OPENING_H"/>
+			<result property="likeCnt" column="LIKECNT"/>
+		
+		</resultMap>
+	
+	
+	<resultMap type="org.travelmaker.domain.PlaceDTO" id="placeDTO">
+      <result property="plcNo" column="PLC_NO" />
+      <result property="plcTitle" column="PLC_TITLE" />
+      <result property="themeNo" column="THEME_NO" />
+   </resultMap>
+<!-- 순규매퍼  -->	
+<select id="getList" resultMap="placeVO">
+<![CDATA[
+select * from PLACE
+]]>
+</select>	
+
+<insert id="insert">
+	insert into PLACE (plc_no,region_no,plc_title,lat,lng,p_cate,holiday,opening_h)
+	values(#{plcNo},#{regionNo},#{plcTitle},#{lat},#{lng},#{pCate},#{holiday},#{openingH})
+</insert>	
+
+<select id="read" resultMap="placeVO">
+	select * from PLACE where plc_no = #{plcNo}
+</select>
+
+<delete id="delete">
+	delete from PLACE where plc_no = #{plcNo}
+</delete>
+
+<update id="update">
+	update PLACE
+	 set region_no = #{regionNo},
+	 plc_title = #{plcTitle},
+	 lat = #{lat},
+	 lng = #{lng},
+	 p_cate = #{pCate},
+	 holiday = #{holiday},
+	 opening_h = #{openingH}
+	where plc_no = #{plcNo}
+
+</update>
+
+<select id="getListWithPaging" resultMap="placeVO">
+<![CDATA[
+		select
+			*
+			from
+			(
+			select
+				rownum rn,p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+			from
+			place p, pick_pl pl
+			where p.plc_no = pl.plc_no 
+			and pl.mem_no = #{memNo}
+			and rownum <= #{pageNum} * #{amount}
+			)
+			where rn > (#{pageNum} -1) * #{amount}  
+]]>
+</select>
+
+<update id="upSet">
+
+UPDATE place SET likecnt = likecnt +1 where plc_no = #{plcNo}
+</update>
+
+<update id="downSet">
+
+UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
+</update>
+
+<select id="sortLike" resultMap="placeVO"><!-- 내일 수정  -->
+<![CDATA[
+   select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+        from place p,pick_pl pl
+        where p.plc_no = pl.plc_no 
+			and pl.mem_no = #{memNo}
+            order by p.likecnt desc)a
+            where rownum <= #{pageNum} * 6
+            )
+            where no >= (#{pageNum} -1) *6+1 
+]]>
+</select>
+
+<select id="sortNewest" resultMap="placeVO"><!-- 내일 수정  -->
+<![CDATA[
+   select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+        from place p,pick_pl pl
+        where p.plc_no = pl.plc_no 
+			and pl.mem_no = #{memNo}
+            order by pl.pp_date desc,
+            p.plc_no desc
+            )a
+            where rownum <= #{pageNum} * 6
+            )
+            where no >= (#{pageNum} -1) *6+1 
+]]>
+</select>
+
+<select id="sortOldest" resultMap="placeVO"><!-- 내일 수정  -->
+<![CDATA[
+   select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+        from place p,pick_pl pl
+        where p.plc_no = pl.plc_no 
+			and pl.mem_no = #{memNo}
+            order by pl.pp_date asc,
+            p.plc_no desc
+            
+            )a
+            where rownum <= #{pageNum} * 6
+            )
+            where no >= (#{pageNum} -1) *6+1 
+]]>
+</select>
+
+<select id="getTotalCount" resultType="int">
+
+select count(*) from place p, pick_pl pl
+			where p.plc_no = pl.plc_no 
+			and pl.mem_no = #{memNo}
+
+</select>
+
+
+<!-- 종운 매퍼 -->
+<!-- 제목으로 검색하는 기능 -->
+<select id="getListWithTitle" resultMap="placeVO">
+	
+	select * from place where plc_title like '%'||#{plcTitle}||'%'
+	
+</select>
+
+<select id="getListWithTheme" resultMap="placeDTO">
+   select tplc.theme_no, p.plc_no , p.plc_title
+   from theme_plc tplc,  place p
+   where theme_no = (select theme_no
+   from theme t
+   where t.region_no = 1 and t.theme_code = 'C001')
+   and tplc.plc_no = p.plc_no
+</select>
+
+
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="org.travelmaker.mapper.BoarddtMapper">
+
+<resultMap type="org.travelmaker.domain.BoarddtVO" id="boarddtResult">
+	<result property="boardNo" column="board_no"/>
+	<result property="boarddtImg" column="boarddt_img"/>
+	<result property="boardCon" column="board_con"/>
+	<result property="num" column="num"/>
+	<result property="dtThumbImg" column="dtthumbimg"/>
+	<result property="boarddtImg2" column="boarddt_img2"/>
+	<result property="boardCon2" column="board_con2"/>
+	<result property="dtThumbImg2" column="dtThumbimg2"/>
+
+</resultMap>
+
+<select id="getList" resultMap="boarddtResult">
+<![CDATA[
+	select board_no, boarddt_img, board_con
+	from board_dt
+	where board_no=#{boardNo}
+]]>
+</select>
+
+<insert id="register">
+	insert into board_dt (board_no, boarddt_img, board_con, num, dtthumbimg)
+	values(#{boardNo}, #{boarddtImg}, #{boardCon}, board_dt_seq.nextval , #{dtThumbImg})
+</insert>
+
+<delete id="delete">
+	delete from board_dt where board_no = #{boardNo}
+</delete>
+
+</mapper>
