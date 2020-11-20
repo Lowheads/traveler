@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.travelmaker.mapper.ThemeMapper">
+
+<select id="getThemeList" resultType="map">
+	select region_no, theme_code from theme
+</select>
+
+<select id="getThemeInfo" resultType="string">
+	select p.plc_no from theme t , theme_plc p where t.theme_no = p.theme_no and t.region_no=#{region_no, jdbcType=INTEGER} and t.theme_code=#{theme_code, jdbcType=VARCHAR}
+</select>
+</mapper>

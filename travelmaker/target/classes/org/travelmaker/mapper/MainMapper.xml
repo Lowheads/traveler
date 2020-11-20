@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.travelmaker.mapper.MainMapper">
+
+<resultMap type="org.travelmaker.domain.StatisticVO" id="VOResult">
+	<result property="cntMember" column="CNT_USER"/>
+	<result property="cntPost" column="CNT_POST"/>
+</resultMap>
+
+<select id="getDailyStatistic" resultMap="VOResult">
+ <![CDATA[
+	SELECT * FROM(SELECT to_char(daily_log,'mm-dd') AS "dailyLog", cnt_user, cnt_post FROM STATISTIC order by daily_log DESC) WHERE ROWNUM<=7]]>
+		
+</select>
+
+
+<select id="getMonthlyStatistic" resultMap="VOResult">
+	SELECT extract(month from daily_log) AS "dailyLog", SUM(cnt_user) as "cnt_user", sum(cnt_post) as "cnt_post"
+	FROM STATISTIC GROUP BY extract(month from daily_log) order by extract(month from daily_log)
+</select>
+
+</mapper>

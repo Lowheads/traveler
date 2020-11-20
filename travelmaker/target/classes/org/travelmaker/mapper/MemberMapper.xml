@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.travelmaker.mapper.MemberMapper">
+
+ 	<resultMap type="org.travelmaker.domain.MemberVO" id="UserResult">
+		<result property="memNo" column="MEM_NO" />
+		<result property="email" column="EMAIL" />
+		<result property="nickname" column="NICKNAME" />
+		<result property="pwd" column="PWD" />
+		<result property="birth" column="BIRTH" />
+		<result property="gender" column="GENDER" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="lastDate" column="LAST_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="memGrade" column="MEM_GRADE" />
+	</resultMap>
+
+	<!-- 현 유저 확인 -->
+	<select id="cnt" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join">
+		insert into member (mem_no, email, nickname, pwd, birth, gender, status, mem_grade)
+		values(
+		seq_memNo.nextval,
+		#{email},
+		#{nickname},
+		#{pwd},
+		#{birth},
+		#{gender},
+ 		#{status},
+		#{memGrade}
+		)
+	</insert>	
+	
+	<!-- 로그인 -->
+	<select id="login" resultMap="UserResult">
+		select email, pwd from member
+		where email = #{email}
+		and pwd = #{pwd}
+	</select>
+	
+	<!-- 계정조회 -->
+	<select id="viewMember" resultMap="UserResult">
+	select 
+		*
+		from member
+		where email = #{email}
+	</select>
+	
+	<!-- 비밀번호 수정 -->
+	<update id="pwdModify" parameterType="String">
+		update member set
+		pwd = #{pwd}
+		where email = #{email}		
+	</update>
+	
+	
+	<!-- email 중복체크 -->
+	<select id="emailCheck" parameterType="String" resultType="Integer">
+      SELECT COUNT(*) FROM member
+      WHERE
+          email = #{email}
+	</select>
+	
+	<!-- 닉네임 수정 -->
+	<update id="nNameModify" parameterType="String">
+		update member set
+		nickname = #{nickname}
+		where email = #{email}		
+	</update>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="nicknameDuplCheck" parameterType="String" resultType="Integer">
+      SELECT COUNT(*) FROM member
+      WHERE
+          nickname = #{nickname}
+	</select>
+	
+	<!-- 계정삭제 -->
+	<update id="deleteMember">
+		update member set 
+		status = '탈퇴'
+		where email = #{email} 
+		and pwd = #{pwd}
+	</update>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="java.util.Map" resultType="java.lang.String">
+		select pwd from member where email= #{email}		
+	</select>
+	
+	<!--최종 로그인 업데이트 -->
+	<update id="presentDate" parameterType="String">
+		update member 
+		set last_date = sysdate
+		where email = #{email}
+	</update>
+	
+	<!-- 정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다.-->
+	<select id="myNicknamePass" resultType="String">
+	select nickname from member
+	where email = #{email}
+	</select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="org.travelmaker.mapper.SchdtMapper">
+
+<resultMap type="org.travelmaker.domain.SchdtVO" id="schdtResult">
+		<result property="schDate" column="sch_date"/>
+		<result property="schNo" column="sch_no"/>
+		<result property="fromPlc" column="from_plc"/>
+		<result property="toPlc" column="to_plc"/>
+		<result property="distance" column="distance"/>
+		<result property="duration" column="duration"/>
+		<result property="transit" column="transit"/>
+
+</resultMap>
+
+
+<select id="getSchdt" resultMap="schdtResult">
+<![CDATA[
+	select sch_date, sch_no, from_plc, to_plc, distance, duration, transit
+	from sch_dt
+	where sch_no=#{schNo}
+]]>
+</select>
+
+<insert id="insert">
+	insert into sch_dt(board_no, boarddt_img, board_con, num)
+	values (#{boardNo}, #{boarddtImg},#{boardCon}, sch_dt_seq.nextval)
+
+</insert>
+
+
+<select id="getplacetitle" resultType="org.travelmaker.domain.Schdt_PlaceVO">
+<![CDATA[
+	
+    select s.sch_date as schDate, s.sch_no as schNo, p.plc_title as plcTitle , 
+    (select plc_title from place p
+		where s.sch_no= #{schNo}
+		and p.plc_no= s.to_plc) as plcTitle1, s.distance, s.duration, s.transit
+		from sch_dt s, place p
+		where sch_no= #{schNo}
+		and p.plc_no= s.from_plc
+]]>
+</select>
+
+</mapper>

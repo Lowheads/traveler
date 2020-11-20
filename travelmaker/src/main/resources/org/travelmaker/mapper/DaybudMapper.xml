@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.travelmaker.mapper.DaybudMapper">
+
+<resultMap type="org.travelmaker.domain.DaybudVO" id="UserResult">
+	<result property="paydate" column="pay_date"/>
+	<result property="schno" column="sch_no"/>
+	<result property="daypay" column="day_pay"/>
+	<result property="daycnt" column="day_cnt"/>
+</resultMap>
+
+<select id="getList" resultMap="UserResult">
+<![CDATA[
+select * from day_bud where sch_no > 0 ORDER BY pay_date ASC
+]]>
+</select>
+
+<insert id="insert">
+insert into day_bud (sch_no, pay_date, day_pay, day_cnt)
+values (#{schno}, #{paydate}, #{daypay}, #{daycnt})
+</insert>
+
+<select id="box" resultMap="UserResult">
+select distinct sch_no from bud_dt;
+</select>
+
+<!-- <insert id="insertSelectKey">
+
+  <selectKey keyProperty="sch_no" order="BEFORE"
+    resultType="long">
+    select sch_no from dual
+  </selectKey>
+
+insert into schedule (sch_no, mem_no, sch_title, from_date, to_date, img, sch_reg_date, sch_last_date, sch_status, memo, sch_region)
+values (#{schno}, #{mem_no}, #{sch_title}, #{from_date},#{img}, #{sch_reg_date}, #{sch_last_date}, #{sch_status}, #{memo}, #{sch_region})
+</insert>  -->
+
+<!-- <select id="read" resultType="org.zerock.domain.DaybudVO">
+select * from day_bud where sch_no = #{schno} ORDER BY pay_date ASC
+</select> -->
+
+<select id="read" resultMap="UserResult">
+select pay_date, sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as day_pay , count(rownum) as day_cnt from bud_dt where sch_no = #{schno} group by pay_date, sch_no
+</select>
+
+<delete id="delete" >
+delete from day_bud where sch_no = #{schno}
+</delete>
+
+<update id="update">
+update day_bud
+set pay_date = #{paydate},
+day_pay = #{daypay},
+day_cnt = #{daycnt}
+where sch_no = #{schno}
+</update>
+</mapper>
