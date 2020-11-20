@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/admin/*")
 @AllArgsConstructor
 public class AdminBoardController {
-	
+	//테스트
 private AdminBoardService service;
 		
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberContorller.class);
