@@ -17,6 +17,8 @@ public class BuddtVO { // bud_dt 경비상세
 	private String expense;
 	private String budcate;
 	private Long catecnt; 
+	private String maxDate;
+	private String minDate;
 
 	public BuddtVO() {};
 	public BuddtVO (Long no,Date paydate,Long schno) {
