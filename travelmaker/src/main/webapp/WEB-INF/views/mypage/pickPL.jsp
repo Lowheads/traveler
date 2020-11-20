@@ -302,7 +302,7 @@
 								'heart' : 1
 							}
 							
-							//ajax 기능 추가
+							//ajax 기능 추가 
 							$.ajax({
 								type : 'post',
 								url : '/mypage/heart',
