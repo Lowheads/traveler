@@ -301,6 +301,8 @@
 								'plc_no' : $(this).attr('plc_no'),
 								'heart' : 1
 							}
+							
+							//ajax 기능 추가 
 							$.ajax({
 								type : 'post',
 								url : '/mypage/heart',
