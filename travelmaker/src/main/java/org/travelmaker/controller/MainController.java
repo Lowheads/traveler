@@ -35,7 +35,6 @@ public class MainController {
 	@PostMapping(value="/theme", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE}) 
 	public void getInitSch(ScheduleDTO schDTO, Model model) {
 		model.addAttribute("schDto",schDTO); 
-		System.out.println(schDTO.getSchRegion());
 		for (int i = 1; i <= 6; i++) {
 			model.addAttribute("theme"+i,placeService.getListWithTheme(schDTO.getSchRegion(),i));
 		}
