@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.BoardVO;
@@ -72,7 +74,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr, MultipartFile file) throws Exception {
+	public String register(BoardVO board, RedirectAttributes rttr, MultipartFile file, Model model) throws Exception {
 		log.info("register: "+board);
 
 		//파일처리 관련 코드
@@ -95,28 +97,38 @@ public class BoardController {
 				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		System.out.println(board.getBoardImg()+","+board.getThumbImg());
 		
-		
+		model.addAttribute("board",board);
 		
 		service.register(board);
 		System.out.println(board);
 		
-		return "redirect:/board/dtregister?boardTitle="+boardTitle;
+		return "redirect:/board/dtregister?boardTitle="+boardTitle+"&schNo="+board.getSchNo();
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/titlecheck", method = RequestMethod.POST, produces = "application/json")
+	public boolean titlecheck(@RequestParam("boardTitle") String boardTitle, @RequestParam("schNo") String schNo) {
+		BoardVO board = new BoardVO();
+		System.out.println(boardTitle + " -----" + schNo);
+		board.setBoardTitle(boardTitle);
+		board.setSchNo(Integer.parseInt(schNo));
+		//같은 일정번호의 게시물명이 중복이 아닐 때
+		if (service.getbytitle(board) != null) {
+			return true;
+		}
+		//중복일 때
+		return false;
 	}
 	
 	
 	@GetMapping("/dtregister")
-	public void dtregister(@RequestParam("boardTitle")String boardTitle,Model model) throws UnsupportedEncodingException {
-		
-		BoardVO board= new BoardVO();
+	public void dtregister(BoardVO board,Model model) throws UnsupportedEncodingException {
 		
 		//board_title = URLEncoder.encode(board_title,"UTF-8");
-		
-		System.out.println("getdtregister-------"+boardTitle);
-		board=service.getbytitle(boardTitle);
-		
-		int boardNo =board.getBoardNo();
-		System.out.println(boardNo);
-		model.addAttribute("boardNo",boardNo);
+		System.out.println("받았음"+board);
+		board=service.getbytitle(board);
+		model.addAttribute("board",board);
 		
 	}
 	
@@ -207,7 +219,7 @@ public class BoardController {
 			rttr.addFlashAttribute("result","success");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());
-		rttr.addAttribute("amont", cri.getAmount());
+		rttr.addAttribute("amount", cri.getAmount());
 		
 		return "redirect:/board/list";
 	}

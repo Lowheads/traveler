@@ -31,11 +31,11 @@
 			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
 				
 				<div class="form-group">
-					<label>게시물 번호</label> <input class="form-control" name='boardNo' value='${boardNo }' readonly="readonly">
+					<label>게시물 번호</label> <input class="form-control" name='boardNo' value='${board.boardNo }' readonly="readonly">
 				</div>
 								
 				<div class="form-group">
-					<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${boardTitle }' readonly="readonly">
+					<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${board.boardTitle }' readonly="readonly">
 				</div>
 				<!-- 첫번째 사진등록 -->
 				<div class="form-group">
@@ -68,7 +68,7 @@
 						
 
 				<br>
-				<button type="submit" >게시글 등록</button>
+				<button type="submit" class="btn btn-default" >게시글 등록</button>
 				<button type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
 			</form>
 		</div>

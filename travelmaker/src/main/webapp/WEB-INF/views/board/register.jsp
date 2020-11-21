@@ -27,14 +27,14 @@
 		<!-- /.panel-heading -->
 		<div class="panel-body">
 		
-			<form role="form" action="/board/register" method="post" enctype="multipart/form-data">
+			<form role="form" id="registerform" action="/board/register" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>일정번호</label> <input class="form-control" name='schNo' value='${schNo }' readonly="readonly">
+					<label>일정번호</label> <input class="form-control" name='schNo' id='schNo' value='${schNo }' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>게시글이름</label>
-					<input class="form-control" name='boardTitle' >
+					<input class="form-control" name='boardTitle' id='boardTitle'>
 				</div>
 						<div class="form-group"><label for="boardimg">대표 사진 업로드</label>
 							<div class="form-group uploadDiv" >
@@ -60,11 +60,11 @@
 
 						<div class="form-group">
 					<label>공개여부</label> 
-					공개<input type="radio" name='hidden' value="y" required> 
+					공개<input type="radio" name='hidden' value="y" required checked> 
 					비공개<input type="radio" name='hidden' value="n">
 				</div>
 				<br>
-				<button type="submit" class="btn btn-default">게시글 상세 등록</button>
+				<button type="button" class="btn btn-default" id="dtregister">게시글 상세 등록</button>
 				<button type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
 			</form>
 		</div>
@@ -77,3 +77,25 @@
 <!-- /.row -->
 </div>
 
+<script type="text/javascript">
+	//같은 일정번호의 게시물명 중복일 때 알람창 ajax
+ 	$('#dtregister').on("click",function(e){
+		e.preventDefault();
+		var formObj = $("#registerform");
+		var sendData = {'boardTitle' : document.getElementById('boardTitle').value, 'schNo' : document.getElementById('schNo').value }
+		 
+  		$.ajax({
+			type : 'post',
+			url : '/board/titlecheck',
+			data : sendData,
+			success : function(data){
+				if(data==true)
+					alert('게시물이 중복입니다');
+				else
+					formObj.submit();
+			}		
+	});   
+		
+	});
+
+</script>
