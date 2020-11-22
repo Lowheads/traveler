@@ -46,7 +46,6 @@
 						//사진등록 시 화면에 보여주는 함수
 						$("[name=boardTitle]").attr("required",true);
 						$("#boardImg").change(function() {
-							alert('사진등록');
 							if (this.files && this.files[0]) {
 							var reader = new FileReader;
 								reader.onload = function(data) {
@@ -90,7 +89,7 @@
 			data : sendData,
 			success : function(data){
 				if(data==true)
-					alert('게시물이 중복입니다');
+					alert('게시물 제목이 중복입니다');
 				else
 					formObj.submit();
 			}		
