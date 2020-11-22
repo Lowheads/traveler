@@ -39,7 +39,10 @@
 		$('input[name="daterange"]').daterangepicker({
 			startDate: moment(),
 			endDate: moment(),
-			minDate: moment()
+			minDate: moment(),
+			locale: {
+				format: 'YYYY-MM-DD'
+			},
 		  }, function(start, end, label) {
 		    /* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
 		    startDate = start.format('YYYY-MM-DD');
@@ -52,8 +55,8 @@
 	
 	
 		function initDate() {
-			let dateRange = document.getElementsByTagName("input")[0];
-			let dateList = dateRange.value.split('-');
+			let datePicker = document.getElementsByClassName("data-range-picker")[0];
+			let dateList = datePicker.value.split('-');
 			startDate = addDays(new Date(dateList[0]),1).toISOString().split('T')[0];
 			endDate = addDays(new Date(dateList[1]),1).toISOString().split('T')[0];
 		}
