@@ -7,8 +7,6 @@
 
 
   <!-- Page Content -->
-  <div class="container">
-<div class="black_bg"></div>
     <div class="row">
 
       <div class="col-lg-3">
@@ -46,7 +44,7 @@
              <!-- <i class="fa fa-heart-o" style="font-size:24px;color:red"></i>
              <i class="fa fa-heart" style="font-size:24px;color:red"></i> -->
                <div style="float:right;" class="heart">
-       <a data-sch_no="${sch.schNo }">
+       <a sch_no="${sch.schNo }">
           <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
        </a>
    </div>
@@ -113,15 +111,15 @@
 		
 		//좋아요 취소하는 버튼
 		$(".heart a").on("click", function() {
-
+			
 			$(this).hide(30);
 			var that = $(".heart");
 			var sendData = {
-				'sch_no' : $(this).data('sch_no'),
+				'sch_no' : $(this).attr('sch_no'),
 				'heart' : 1
 			}
 			$.ajax({
-				type : 'post',
+				type : 'POST',
 				url : '/mypage/heartSch',
 				data : sendData,
 				success : function(data) {

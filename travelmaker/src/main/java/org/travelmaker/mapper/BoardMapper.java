@@ -26,4 +26,7 @@ public interface BoardMapper {
 	
 	public int getTotalCount(Criteria cri);
 	
+	public void upCnt(int boardNo);
+	
+	public void downCnt(int boardNo);
 }

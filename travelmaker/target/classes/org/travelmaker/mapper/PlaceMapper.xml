@@ -73,12 +73,12 @@ select * from PLACE
 ]]>
 </select>
 
-<update id="upSet">
+<update id="upCnt">
 
 UPDATE place SET likecnt = likecnt +1 where plc_no = #{plcNo}
 </update>
 
-<update id="downSet">
+<update id="downCnt">
 
 UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
 </update>
