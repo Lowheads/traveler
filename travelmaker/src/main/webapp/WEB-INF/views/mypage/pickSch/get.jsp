@@ -6,21 +6,19 @@
 <%@ include file="../../includes/header.jsp" %>
 
   <!-- Page Content -->
-  <div class="container">
-<div class="black_bg"></div>
     <div class="row">
 
-      <div class="col-lg-3">
+       <div class="leftNav">
 
-        <h1 class="my-4">메뉴메뉴</h1>
         <div class="list-group">	
-          <a href="/mypage/pickPL" class="list-group-item">찜한장소</a>
-          <a href="/mypage/pickSch" class="list-group-item">찜한일정</a>
-          <a href="/mypage/past" class="list-group-item">지나간여행</a>
-          <a href="/mypage/upcomming" class="list-group-item">다가올여행</a>
+        <ul>
+  <li><a href="/mypage/pickPL" class="list-group-item">찜한장소</a></li>
+  <li><a href="/mypage/pickSch" class="list-group-item">찜한일정</a></li>
+  <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
+  <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
+</ul>
         </div>
-
-      </div>
+        </div>
       <!-- /.col-lg-3 -->
  <div class="col-lg-9" style="padding-top: 20px;">
         <div class="row" style="flex-wrap: inherit;">
