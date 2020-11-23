@@ -6,6 +6,8 @@
 # Compiled class file
 *.class
 
+.MANIFEST.MF
+
 # Log file
 *.log
 
