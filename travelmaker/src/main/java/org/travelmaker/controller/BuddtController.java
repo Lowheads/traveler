@@ -70,8 +70,14 @@ public class BuddtController {
 */	
 	
 	@GetMapping("/register")
-	public void register() {
-		
+	public void register(@RequestParam("schno") Long schno, Model model) {
+		BuddtVO buddt=new BuddtVO();
+		buddt.setSchno(schno);
+		System.out.println(buddt.getSchno());
+		model.addAttribute("box", service.box());
+		model.addAttribute("buddt",service.mmDate(schno));
+		System.out.println(buddt);
+//		model.addAttribute("mmDate",service.mmDate());
 	}
 	
 	@GetMapping("/get")
@@ -96,7 +102,6 @@ public class BuddtController {
 	
 	@GetMapping({"/modify", "/amend"})
 	public void modify(@RequestParam("no") Long no, @RequestParam("paydate") Date paydate, @RequestParam("schno") Long schno,
-			 
 			Model model) {
 			System.out.println("@@@@@@@@@@@@@@@@@@@");
 			System.out.println(no);
@@ -146,4 +151,5 @@ public class BuddtController {
 		model.addAttribute("listAll", service.readAll(schno));
 		model.addAttribute("schno", schno);
 	}
+	
 }

@@ -801,7 +801,7 @@ text-align: center;
     }
     
     // 닉네임은 2~8자리까지만
-    if(!(mNname.length >= 2 && mNname.length <= 8)){f
+    if(!(mNname.length >= 2 && mNname.length <= 8)){
        alert("닉네임을 입력해주세요");
        $("#nickname").focus();
        return false;

@@ -11,7 +11,7 @@ public interface BoardService {
 	
 	public BoardVO get(int boardNo);
 	
-	public BoardVO getbytitle(String boardTitle);
+	public BoardVO getbytitle(BoardVO board);
 	
 	public boolean modify(BoardVO board);
 	
