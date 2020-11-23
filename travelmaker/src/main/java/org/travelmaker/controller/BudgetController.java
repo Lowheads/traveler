@@ -87,5 +87,6 @@ public class BudgetController {
 	public void get(@RequestParam("schno") Long schno, Model model) {
 		log.info("/get or modify");
 		model.addAttribute("budget", service.get(schno));
+		
 	}
 }

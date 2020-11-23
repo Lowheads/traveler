@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.BudgetVO;
+import org.travelmaker.domain.DaybudVO;
 import org.travelmaker.mapper.BudgetMapper;
 
 import lombok.AllArgsConstructor;
@@ -45,5 +46,5 @@ public class BudgetServiceImpl implements BudgetService { // mapper(+xml) 에서
 		log.info("getList......");
 		return mapper.getList();
 	}
-	
+
 }

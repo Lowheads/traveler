@@ -7,10 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class BudgetVO { // buddt 경비상세 
+public class BudgetVO {
 	
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Long schno; // 같아야함 1 
+	private Long schno; 
 	private String totalpay;
 	private Long totalcnt;
 

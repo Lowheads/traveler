@@ -24,12 +24,24 @@ select bud_cate, count(*) as cate_cnt from bud_dt group by bud_cate
 </select>
 <!-- select bud_cate, pay_date, count(*) as cate_cnt from bud_dt where pay_date = #{paydate} group by bud_cate, pay_date -->
 
-
 <insert id="insert">
 insert into bud_dt ( pay_date, sch_no, store, expense, bud_cate, no)
 values ( #{paydate}, #{schno}, #{store}, #{expense}, #{budcate}, seq_no.nextval)
 </insert>
 
+<select id="box" resultMap="UserResult">
+select distinct sch_no from bud_dt
+</select>
+
+<select id="dateBox" resultMap="UserResult">
+SELECT DISTINCT pay_date FROM bud_dt
+</select>
+
+<select id="mmDate" resultMap="UserResult">
+SELECT MAX(pay_date) as maxDate, MIN(pay_date) as minDate
+FROM bud_dt
+WHERE sch_no = #{schno}
+</select>
 <!-- <insert id="insertSelectKey">
 
   <selectKey keyProperty="sch_no" order="BEFORE"
