@@ -3,6 +3,7 @@ package org.travelmaker.service;
 import java.util.List;
 
 import org.travelmaker.domain.BudgetVO;
+import org.travelmaker.domain.DaybudVO;
 
 public interface BudgetService {
 	
