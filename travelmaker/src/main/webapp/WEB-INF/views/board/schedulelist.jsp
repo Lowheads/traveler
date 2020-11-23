@@ -12,15 +12,24 @@
 				<tr>
 					<th>일정번호</th>
 					<th>일정명</th>
+					<th>작성여부</th>
 				</tr>
 			</thead>
 
 			<c:forEach items="${schedulelist}" var="schedule">
 				<tr>
-					<td><a
-						href='/board/register?schNo=<c:out value="${schedule.schNo}"/>'><c:out
-								value="${schedule.schNo}" /></a></td>
+				<td>
+					<c:if test="${schedule.schStatus eq '미작성' }">
+					<a href='/board/register?schNo=<c:out value="${schedule.schNo}"/>'><c:out value="${schedule.schNo}" /></a>
+					</c:if>
+					<c:if test="${schdule.schStatus eq '작성 '}">
+					<c:out value="${schedule.schNo}" />
+					</c:if>
+					</td>
+					
 					<td><c:out value="${schedule.schTitle}" /></td>
+					<td><c:out value="${schedule.schStatus }"/></td>
+					
 				</tr>
 			</c:forEach>
 		</table>
@@ -30,3 +39,5 @@
 			class="btn btn-sm-btn-primary">취소</button>
 	</div>
 </div>
+
+

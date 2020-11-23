@@ -101,6 +101,7 @@ public class BoardController {
 		model.addAttribute("board",board);
 		
 		boardservice.register(board);
+		scheduleservice.statusupdate(board.getSchNo());
 		System.out.println(board);
 		
 		return "redirect:/board/dtregister?boardTitle="+boardTitle+"&schNo="+board.getSchNo();

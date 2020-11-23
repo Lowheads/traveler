@@ -21,7 +21,7 @@
 
 <select id="getList" resultMap="ScheduleResult">
 <![CDATA[
-	select * from schedule
+	select * from schedule where mem_no = 101
 ]]>
 </select>
 
@@ -53,6 +53,11 @@
 <delete id="delete">
 	delete from schedule where sch_no = #{schNo}
 </delete>
+
+<!-- 게시물 작성할 때 게시물 상태 '작성'으로 변경 -->
+<update id="statusupdate">
+	update schedule set sch_status='작성' where sch_no= #{schNo}
+</update>
 
 <update id="update">
 	update schedule

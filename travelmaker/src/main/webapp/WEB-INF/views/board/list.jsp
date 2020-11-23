@@ -80,6 +80,7 @@
 					self.location="/board/schedulelist";
 				});
 				
+				
 				var actionForm = $("#actionForm");
 				 $(".paginate_button a").on("click", function(e){
 					e.preventDefault();

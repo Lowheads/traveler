@@ -18,6 +18,8 @@ public interface ScheduleMapper {
 	// 업데이트 가능해야되고(좋아요 업다운)
 	public int update(ScheduleVO vo);
 
+	public int statusupdate(int schNo);
+	
 	public void upSet(int schNo);
 
 	public void downSet(int schNo);
