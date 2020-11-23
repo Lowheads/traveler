@@ -50,7 +50,7 @@ public class MyPageController {
 			log.info("list");
 			cri.setMemNo(memNo);
 			int total = PLCservice.getTotal(cri);
-			cri.setAmount(6);
+			cri.setAmount(8);
 				model.addAttribute("list",PLCservice.getList(cri));
 				model.addAttribute("pageMaker",new PlacePageDTO(cri,total));	
 				if(selected!=null) {
@@ -79,9 +79,8 @@ public class MyPageController {
 		public void pickSch(Criteria cri,Model model,HttpServletRequest request) {
 			HttpSession session = request.getSession();
 			int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-			log.info("list");
 			cri.setMemNo(memNo);
-			log.info("list");
+			cri.setAmount(8);
 			model.addAttribute("list",SchService.getList(cri));
 			model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
 		}
@@ -97,9 +96,8 @@ public class MyPageController {
 		public void past(Criteria cri,Model model,HttpServletRequest request) {
 			HttpSession session = request.getSession();
 			int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-			log.info("list");
 			cri.setMemNo(memNo);
-			log.info("list");
+			cri.setAmount(8);
 			model.addAttribute("list",SchService.getPastList(cri));
 			model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getPtotal(cri)));
 		}
@@ -108,16 +106,15 @@ public class MyPageController {
 		public void upcomming(Criteria cri,Model model,HttpServletRequest request) {
 			HttpSession session = request.getSession();
 			int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-			log.info("list");
 			cri.setMemNo(memNo);
-			log.info("list");
+			cri.setAmount(8);
 			model.addAttribute("list",SchService.getUpCommingList(cri));
 			model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getCtotal(cri)));
 		}
 		
 		
 		@ResponseBody
-		 @RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
+		@RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
 		    public int heart(HttpServletRequest httpRequest,HttpSession session,@RequestParam("plc_no") int plcNo) throws Exception {
 			 	int heart = Integer.parseInt(httpRequest.getParameter("heart"));
 			 	int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
@@ -129,13 +126,13 @@ public class MyPageController {
 		    }
 		
 		@ResponseBody
-		 @RequestMapping(value = "/heartSch", method = RequestMethod.POST, produces = "application/json")
+		@RequestMapping(value = "/heartSch", method = RequestMethod.POST, produces = "application/json")
 		    public int heartSch(HttpServletRequest httpRequest,HttpSession session,@RequestParam("sch_no") int schNo) throws Exception {
-			 	int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+				int heart = Integer.parseInt(httpRequest.getParameter("heart"));
 			 	int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		        PICK_VO vo = new PICK_VO();
 		        vo.setMemNo(memNo);
-		        vo.setPlcNo(schNo);
+		        vo.setSchNo(schNo);
 		        PICKservice.removeSch(vo);
 		        return heart;
 		    }

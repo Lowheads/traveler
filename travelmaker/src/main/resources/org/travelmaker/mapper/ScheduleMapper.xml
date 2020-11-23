@@ -75,6 +75,9 @@
 			)
 			where rn > (#{pageNum} -1) * #{amount}  
 ]]>
+
+
+
 </select>
 
 <update id="upSet">
