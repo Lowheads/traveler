@@ -62,29 +62,30 @@ public class MemberComtroller {
 	// 회원가입정보를 다 입력하고 회원가입 버튼을 누른다. 
 	// value : 폼액션에서 넘겨줄 주소이다.
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
+	public ModelAndView register(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
+		ModelAndView mav = new ModelAndView("redirect:/member/main");
 		
+		// 이메일 한번 더 검사
 		if(service.emailCheck(mVO.getEmail()) > 0) {
-			rttr.addFlashAttribute("flag", false);
 			rttr.addFlashAttribute("msg", "이메일이 중복된다구요 ㅠㅠ");
-			return "redirect:main"; // 다시 메인으로 이동 ㅠ
+			return mav; // 다시 메인으로 이동 ㅠ
 		}
 		
+		// 닉네임 한번 더 검사
 		if(service.nicknameDuplCheck(mVO.getNickname()) > 0) {
-			rttr.addFlashAttribute("flag", false);
 			rttr.addFlashAttribute("msg", "닉네임이 중복된다구요 ㅠㅠ");
-			return "redirect:main"; // 다시 메인으로 이동 ㅠ
+			return mav; // 다시 메인으로 이동 ㅠ
 		}
+		
+		// 중복이 없다면.. 가입 시키자
 		service.join(mVO); // 내용을 저장한다.
-		session.setAttribute("email", mVO.getEmail()); // 세션을 추가한다.
-		rttr.addFlashAttribute("flag", false);
-		rttr.addFlashAttribute("msg", "travel 가족이 되신걸 환영합니다");
-		return "redirect:main"; // 회원가입 후, success.jsp로 이동
+		rttr.addFlashAttribute("msg", "travel 가족이 되신걸 환영합니다 로그인 해주세요!!");
+		return mav; // 회원가입 후, main으로 이동
 	}
 	
-	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
+	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
+		ModelAndView mav = new ModelAndView("redirect:/member/success");
 		
 		String email = request.getParameter("email");
 		String check = request.getParameter("remember"); // 체크 여부를 담자
@@ -92,31 +93,35 @@ public class MemberComtroller {
 		
 		// 로그인에 실패하면 메인 페이지로
 		if(service.login(mVO)==null) {
-			rttr.addFlashAttribute("flag", false);
 			rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요 ㅠㅠ..");
-		return "redirect:main";
+			mav=new ModelAndView("redirect:/member/main");
+		return mav;
 		}
 		
 		// id저장하기 눌렀으면 쿠키 증정..
 		if(service.isChecked(check)) {
 			response.addCookie(cookie);
 		}
+		
 		// id저장 안 눌렀으면 쿠키 없음..
 		if(service.isChecked(check) == false) {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
 		
+		// 탈퇴한 회원은 접속 못함
+		if(service.deleteNoAccess(email)) {
+			rttr.addFlashAttribute("msg", "이미 탈퇴한 계정입니다..");
+			mav = new ModelAndView("redirect:/member/main");
+			return mav;
+		}
+		
 		// DB와 정보가 맞으면 세션 주고, 로그인 성공
 		service.login(mVO); // 로그인 시키자..!
 		service.presentDate(mVO.getEmail()); // 최종 로그인은 오늘이겠지..
-		MemberVO vo = service.viewMember(email);
-		rttr.addFlashAttribute("flag", false); // 환영메시지 띄우기(alert)
-		rttr.addFlashAttribute("msg", email+"님!!! travle에 방문해주셔서 감사합니다!"); // 환영메시지 띄우기(alert)
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-		//수정 순규
-		session.setAttribute("memNo",vo.getMemNo());
-		return "redirect:success";
+		session.setAttribute("memNo", service.getMemNo(email));
+		return mav;
 	
 	}
 	
@@ -148,6 +153,7 @@ public class MemberComtroller {
 		
 		// 바뀐 정보를 담는다.
 		model.addAttribute("member", service.viewMember(email));
+		
 		// 조회페이지로 이동한다.
 		return "/member/accountInfo";
 	}
@@ -162,14 +168,14 @@ public class MemberComtroller {
         return count;
     }
 	
-	// 닉네임 체크
+	// 닉네임 체크(accountInfo)
 	@RequestMapping("/nicknameDuplCheck")
 	@ResponseBody
 	public String nicknameDuplCheck(@RequestParam("nickname") String nickname) {
-		System.out.println(nickname);
-		
-		String cnt = ""+service.nicknameDuplCheck(nickname); // 닉네임 있으면 1, 없으면 0을 반환한다.
-		
+
+		String cnt = "" + service.nicknameDuplCheck(nickname); // 닉네임 있으면 1, 없으면 0을 반환한다.
+		System.out.println("닉네입 중복 ? : " + cnt);
+			
 		return cnt;
 	}
 	
@@ -183,14 +189,17 @@ public class MemberComtroller {
 		// 저장하기를 눌렀을 떄, 닉네임을 변경하지 않았거나, 중복된 닉네임이 없다면 저장한다.
 		if(service.myNicknamePass(nickname, email) || nickNameResult < 1) {
 			service.nNameModify(nickname, email);
-			rttr.addFlashAttribute("flag", false);
-			rttr.addFlashAttribute("msg", "정보를 정상적으로 수정하였습니다!");
-			return "redirect:main";
+//			rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다");
+			model.addAttribute("msg", "정보를 정상적으로 변경하였습니다");
+			model.addAttribute("member", service.viewMember(email));
+			return "/member/accountInfo";
 		}
 			// 중복된 닉네임이 있다면 중복된다고 알려준다
-			rttr.addFlashAttribute("flag", false);
-			rttr.addFlashAttribute("msg", "닉네임이 중복됩니다. 다른 닉네임으로 선정해주세요!!");
-			return "redirect:main";
+//			rttr.addFlashAttribute("flag", false);
+//			rttr.addFlashAttribute("msg", "닉네임이 중복됩니다. 다른 닉네임으로 선정해주세요!!");
+			model.addAttribute("msg", "닉네임이 다른 회원과 중복됩니다..");
+			model.addAttribute("member", service.viewMember(email));
+			return "/member/accountInfo";
 	}
 	
 	//회원탈퇴 페이지 이동
@@ -203,23 +212,27 @@ public class MemberComtroller {
 	}
 	
 	// 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
-	@RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
-	public String deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
-		
-		System.out.println(pwd);
-		System.out.println(email);
-		
-		// 회원 상태를 "탈퇴"로 변경한다.
-		service.deleteMember(pwd, email);
-		// 세션을 제거한다.
-		session.invalidate();
-		
-		// 정상적으로 탈퇴 되었다는 메세지를 보낸다.
-		rttr.addFlashAttribute("flag", false);
-		rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
-		
-		return "/member/main";
-	}
+		@RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
+		public ModelAndView deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
+			ModelAndView mav;
+			System.out.println("여기는 탙퇴전 유효성 체크");
+			
+			if(!(service.deleteValid(pwd, email))) {
+				rttr.addFlashAttribute("msg", "비밀번호가 달라요!");
+				mav = new ModelAndView("redirect:/member/deletePage");
+				return mav;
+			}
+			
+			// 회원 상태를 "탈퇴"로 변경한다.
+			service.deleteMember(pwd, email);
+			// 세션을 제거한다.
+			session.invalidate();
+			
+			// 정상적으로 탈퇴 되었다는 메세지를 보낸다.
+			rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
+			mav = new ModelAndView("redirect:/member/main");
+			return mav;
+		}
 	
 	/* NaverLoginBO */
 	private NaverLoginBO naverLoginBO;
@@ -287,7 +300,6 @@ public class MemberComtroller {
 		
 		// 로그인 안됐으면 로그인 하라고 알려주자
 		if(result == null) {
-			rttr.addFlashAttribute("flag", false);
 			rttr.addFlashAttribute("msg", "로그인 해주세요!");
 			return "redirect:main";
 		}

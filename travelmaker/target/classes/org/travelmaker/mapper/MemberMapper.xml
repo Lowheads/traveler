@@ -44,6 +44,12 @@
 		and pwd = #{pwd}
 	</select>
 	
+	<!-- 회원번호 가져오기 -->
+	<select id="getMemNo" resultMap="UserResult">
+		select mem_no from member
+		where email = #{email}
+	</select>
+	
 	<!-- 계정조회 -->
 	<select id="viewMember" resultMap="UserResult">
 	select 
@@ -81,6 +87,14 @@
           nickname = #{nickname}
 	</select>
 	
+	<!-- 계정 삭제 전, 유효성체크 -->
+	<select id="deleteValid" parameterType="String" resultType="Integer">
+		select count(*) from member 
+		where 
+		email = #{email}
+		and pwd = #{pwd}
+	</select>
+	
 	<!-- 계정삭제 -->
 	<update id="deleteMember">
 		update member set 
@@ -105,5 +119,13 @@
 	<select id="myNicknamePass" resultType="String">
 	select nickname from member
 	where email = #{email}
+	</select>
+	
+		<!-- 탈퇴 회원은 로그인이랑 비밀번호 찾기 못하게.. -->
+	<select id="deleteNoAccess" parameterType="String" resultType="Integer">
+		select count(*) from member
+		where
+		email = #{email}
+		and status = '탈퇴'
 	</select>
 </mapper>
