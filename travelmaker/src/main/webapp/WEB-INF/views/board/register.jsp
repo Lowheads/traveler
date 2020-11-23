@@ -1,13 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<%
-	request.setCharacterEncoding("UTF-8");
-	String schNo=request.getParameter("boardNo");
-%>
-
-<%@include file="../includes/header.jsp"%>
+<%@include file="../includes/jeheader.jsp"%>
 
 
 <div class="container">    
@@ -15,9 +7,7 @@
 	<div class="col-1g-12">
 		<h1 class="page-header">Board Register</h1>
 	</div>
-	<!-- /.col-1g-12 -->
 </div>
-<!-- /.row -->
 
 <div class="row">
 	<div class="col-1g-12">
@@ -38,7 +28,7 @@
 				</div>
 						<div class="form-group"><label for="boardimg">대표 사진 업로드</label>
 							<div class="form-group uploadDiv" >
-								<input type="file" id="boardImg" name="file" class="boardImg" required>
+								<input type="file" id="boardImg" name="file" class="boardImg">
 								<div class="select_img"><img src=""/></div>
 							</div>
 						</div>
@@ -64,7 +54,7 @@
 				</div>
 				<br>
 				<button type="button" class="btn btn-default" id="dtregister">게시글 상세 등록</button>
-				<button type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
+				<button id="Btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
 			</form>
 		</div>
 		<!--  end panel-body -->
@@ -77,21 +67,46 @@
 </div>
 
 <script type="text/javascript">
+
 	//같은 일정번호의 게시물명 중복일 때 알람창 ajax
  	$('#dtregister').on("click",function(e){
 		e.preventDefault();
+		var boardTitle=document.getElementById('boardTitle').value;
+		var boardImg=document.getElementById('boardImg').value;
+		
+		//게시물 제목 입력 체크
+		if(boardTitle==""){		
+			alert('게시물 제목을 입력하세요');
+			return;
+		}	
+		//게시물 제목 길이 체크
+		if((boardTitle.length>60)){
+			alert('게시물 제목을 20자 이내로 작성해주세요');
+			document.getElementById('boardTitle').value= "";
+			return;
+		}
+		// 대표사진 등록 체크
+		if(boardImg==""){
+			alert('대표 사진을 등록하세요');
+			return;
+		}
+		
+		//게시물 명 중복 체크
 		var formObj = $("#registerform");
-		var sendData = {'boardTitle' : document.getElementById('boardTitle').value, 'schNo' : document.getElementById('schNo').value }
+		var sendData = {'boardTitle' : boardTitle, 'schNo' : document.getElementById('schNo').value }
 		 
   		$.ajax({
 			type : 'post',
 			url : '/board/titlecheck',
 			data : sendData,
 			success : function(data){
-				if(data==true)
+				if(data==true){
 					alert('게시물 제목이 중복입니다');
-				else
+					document.getElementById('boardTitle').value= "";
+				}
+				else{
 					formObj.submit();
+				}
 			}		
 	});   
 		

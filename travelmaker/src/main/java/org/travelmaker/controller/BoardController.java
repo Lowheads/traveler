@@ -37,30 +37,31 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class BoardController {
 
+	//빈의 이름을 검색해서 주입할 객체 설정
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
-	private BoardService service;
+	private BoardService boardservice;
 	
-	private ScheduleService service2;
+	private ScheduleService scheduleservice;
 	
-	private SchdtService service3;
+	private SchdtService schdtservice;
 	
-	private BoarddtService service4;
+	private BoarddtService boarddtservice;
 
 	@GetMapping("/schedulelist")
 	public void schedulelist(Model model) {
 		log.info("schedulelist");
-		model.addAttribute("schedulelist",service2.getList());
+		model.addAttribute("schedulelist",scheduleservice.getList());
 	}
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		log.info("list: "+cri);
-		model.addAttribute("list",service.getList(cri));
-		//model.addAttribute("pageMaker", new PageDTO(cri,123));
-		System.out.println(service.getList(cri));
-		int total= service.getTotal(cri);
+		model.addAttribute("list",boardservice.getList(cri));
+
+		System.out.println(boardservice.getList(cri));
+		int total= boardservice.getTotal(cri);
 		log.info("total:" + total);
 
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
@@ -99,22 +100,25 @@ public class BoardController {
 		
 		model.addAttribute("board",board);
 		
-		service.register(board);
+		boardservice.register(board);
 		System.out.println(board);
 		
 		return "redirect:/board/dtregister?boardTitle="+boardTitle+"&schNo="+board.getSchNo();
 	}
 	
 	
+	//게시물 명 중복 체크해주는 메소드
+	//자바 객체를  HTTP 요청의 body 내용으로 매핑
 	@ResponseBody
 	@RequestMapping(value = "/titlecheck", method = RequestMethod.POST, produces = "application/json")
 	public boolean titlecheck(@RequestParam("boardTitle") String boardTitle, @RequestParam("schNo") String schNo) {
 		BoardVO board = new BoardVO();
-		System.out.println(boardTitle + " -----" + schNo);
+
 		board.setBoardTitle(boardTitle);
 		board.setSchNo(Integer.parseInt(schNo));
+		
 		//같은 일정번호의 게시물명이 중복이 아닐 때
-		if (service.getbytitle(board) != null) {
+		if (boardservice.getbytitle(board) != null) {
 			return true;
 		}
 		//중복일 때
@@ -126,8 +130,8 @@ public class BoardController {
 	public void dtregister(BoardVO board,Model model) throws UnsupportedEncodingException {
 		
 		//board_title = URLEncoder.encode(board_title,"UTF-8");
-		System.out.println("받았음"+board);
-		board=service.getbytitle(board);
+
+		board=boardservice.getbytitle(board);
 		model.addAttribute("board",board);
 		
 	}
@@ -154,7 +158,7 @@ public class BoardController {
 		
 		System.out.println(boarddt);
 		
-		service4.register(boarddt);
+		boarddtservice.register(boarddt);
 		return "redirect:/board/list";
 	}
 	
@@ -164,7 +168,7 @@ public class BoardController {
 	public void modify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model) {
 	
 		log.info("/modify");
-		model.addAttribute("board",service.get(boardNo));
+		model.addAttribute("board",boardservice.get(boardNo));
 	
 	}
 	
@@ -175,10 +179,10 @@ public class BoardController {
 		
 		log.info("/get");
 		
-		model.addAttribute("schedule",service2.getListSchedule(schNo));
-		model.addAttribute("schdtplace", service3.getplacetitle(schNo));
-		model.addAttribute("boarddt",service4.getList(boardNo));
-		model.addAttribute("board",service.get(boardNo));
+		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
+		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
+		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
+		model.addAttribute("board",boardservice.get(boardNo));
 		model.addAttribute("boardNo",boardNo);
 	
 	}
@@ -202,7 +206,7 @@ public class BoardController {
 				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		System.out.println(board.getBoardImg()+","+board.getThumbImg());
 		
-		if(service.modify(board)) {
+		if(boardservice.modify(board)) {
 			rttr.addFlashAttribute("result","success");
 			
 			rttr.addAttribute("pageNum",cri.getPageNum());
@@ -214,8 +218,8 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove..."+boardNo);
-		service4.remove(boardNo);
-		if(service.remove(boardNo)) {
+		boarddtservice.remove(boardNo);
+		if(boardservice.remove(boardNo)) {
 			rttr.addFlashAttribute("result","success");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());

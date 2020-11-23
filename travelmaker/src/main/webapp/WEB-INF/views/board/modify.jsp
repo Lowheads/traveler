@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@include file="../includes/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="../includes/jeheader.jsp"%>
 
 <div class="container">
 	<div class="row">
@@ -62,9 +59,9 @@
 							비공개 <input type="radio" name='hidden' value="n">
 						</div>
 
-                        <button type="submit" data-oper='modify' class="btn btn-default subbutton">Modify</button>
-						<button type="submit" data-oper='remove' class="btn btn-danger subbutton">Remove</button>
-						<button data-oper='list' class="btn btn-info subbutton" onclick="location.href='/board/list'">List</button>
+                        <button id="Btn" type="submit" data-oper='modify' class="btn btn-default subbutton">Modify</button>
+						<button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">Remove</button>
+						<button id="Btn" data-oper='list' class="btn btn-info subbutton" onclick="location.href='/board/list'">List</button>
 					</form>
 				</div>
 				<!--  end panel-body -->
