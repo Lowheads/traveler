@@ -32,9 +32,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public BoardVO getbytitle(String boardTitle) {
-		log.info("getbytitle......"+boardTitle);
-		return mapper.readbytitle(boardTitle);
+	public BoardVO getbytitle(BoardVO board) {
+		log.info("getbytitle......"+board);
+		return mapper.readbytitle(board);
 	}
 
 	@Override

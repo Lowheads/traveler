@@ -1,14 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<%
-	request.setCharacterEncoding("UTF-8");
-	String schNo=request.getParameter("boardNo");
-%>
-<%@include file="../includes/header.jsp"%>
-    <!-- Bootstrap Core CSS -->
-    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<%@include file="../includes/jeheader.jsp"%>
 
 <div class="container">    
 	<div class="row">
@@ -31,11 +22,11 @@
 			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
 				
 				<div class="form-group">
-					<label>게시물 번호</label> <input class="form-control" name='boardNo' value='${boardNo }' readonly="readonly">
+					<label>게시물 번호</label> <input class="form-control" name='boardNo' value='${board.boardNo }' readonly="readonly">
 				</div>
 								
 				<div class="form-group">
-					<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${boardTitle }' readonly="readonly">
+					<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${board.boardTitle }' readonly="readonly">
 				</div>
 				<!-- 첫번째 사진등록 -->
 				<div class="form-group">
@@ -49,7 +40,6 @@
 				<script>
 				//사진등록 시 화면에 보여주는 함수
 				$("#boarddtImg").change(function() {
-					alert('상세사진등록');
 					if (this.files && this.files[0]) {
 					var reader = new FileReader;
 						reader.onload = function(data) {
@@ -64,12 +54,10 @@
 			
 						<div class="form-group"><label>상세 사진 내용 등록</label>
 							<input class="form-control" name='boardCon'>
-						</div>
-						
-
+						</div>				
 				<br>
-				<button type="submit" >게시글 등록</button>
-				<button type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
+				<button id="Btn" type="submit" class="btn btn-default" >게시글 등록</button>
+				<button id="Btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
 			</form>
 		</div>
 		<!--  end panel-body -->
