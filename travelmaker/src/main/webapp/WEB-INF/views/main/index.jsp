@@ -26,7 +26,7 @@
 		</c:forEach>
 	</select>
 	<input type="text" name="daterange" class="data-range-picker" />
-	<button id="goNext" onclick="submitData()">click me</button>
+	<button id="goNext">click me</button>
 	
 </body>	
 	<script type="text/javascript">
@@ -48,7 +48,7 @@
 		    startDate = start.format('YYYY-MM-DD');
 		  	endDate = end.format('YYYY-MM-DD');
 		  });
-		
+		document.getElementById("goNext").addEventListener("click",submitData);		
 		initDate();
 		
 	});
@@ -56,31 +56,25 @@
 	
 		function initDate() {
 			let datePicker = document.getElementsByClassName("data-range-picker")[0];
-			let dateList = datePicker.value.split('-');
-			startDate = addDays(new Date(dateList[0]),1).toISOString().split('T')[0];
-			endDate = addDays(new Date(dateList[1]),1).toISOString().split('T')[0];
-		}
-	
-		function addDays(date, days) {
-		    let result = new Date(date);
-		    result.setDate(result.getDate() + days);
-		    return result; 
+			let dateList = datePicker.value.split(' - ');
+			startDate = dateList[0];
+			endDate = dateList[1];
 		}
 	
 		function submitData() {
 			
-			let $optionRegionNo = $(".option-box:selected").get(0).dataset["regionNo"];
-			console.log($optionRegionNo);
+			let optionRegionNo = $(".option-box:selected").get(0).dataset["regionNo"];
 
 			console.log(startDate);
 			console.log(endDate);
+			
 			let form = document.createElement('form');
 			
 	        let objs1;
 	        objs1 = document.createElement('input');
 	        objs1.setAttribute('type', 'hidden');
 	        objs1.setAttribute('name', 'schRegion');      // 받을 네이밍
-	        objs1.setAttribute('value', $optionRegionNo);
+	        objs1.setAttribute('value', optionRegionNo);
 	        form.appendChild(objs1);
 
 	        let objs2;
@@ -101,7 +95,7 @@
 	        form.setAttribute('action', "/main/theme");      // URL
 	        document.body.appendChild(form);
 
-	      	form.submit(); 
+	     	form.submit();   
 			   
 		}
 	</script>
