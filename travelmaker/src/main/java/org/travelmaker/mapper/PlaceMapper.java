@@ -22,9 +22,9 @@ public interface PlaceMapper {
 	
 	public List<PlaceVO> getListWithPaging(Criteria cri);
 	
-	public void upSet(long plcNo);
+	public void upCnt(long plcNo);
 	
-	public void downSet(long plcNo);
+	public void downCnt(long plcNo);
 	
 	public List<PlaceVO> sortLike(Criteria cri);
 	public List<PlaceVO> sortNewest(Criteria cri);

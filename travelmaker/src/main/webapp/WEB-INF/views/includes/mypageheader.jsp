@@ -45,19 +45,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main</title>
 <head>
+<!-- HeartEmoji -->
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
 <!-- Bootstrap cdn 설정 -->
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <!-- 생년월일 달력 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -68,20 +63,75 @@
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 <style>
+/* left nav */
+.leftNav {  
+	margin-left:5%; 
+  	float: left;
+ 	width: 20%;
+}
 
+/* Right column */
+.content-mypage {
+  float: left;
+  width: 70%;
+}
+
+.list-group ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+}
+.row{
+	display:flex;
+	flex-direction : row;
+	flex-wrap: wrap;
+	align-items:stretch;
+
+}
+#resultcard{
+	flex-basis:20%;
+	justify-content: space-between;
+	margin-right: 20px;
+	margin-bottom: 30px;
+	height: 180px;
+}
+
+#resultcard a{
+	text-decoration:none ; color:#000000;
+}
+
+.card-body{
+	margin-bottom: 15px;
+}
+
+.list-group li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+.list-group li a:hover {
+  background-color: #555;
+  color: white;
+}
 /*datepicker에서 사용한 이미지 버튼 style적용*/
 img.ui-datepicker-trigger {
 	margin-left: 5px;
 	vertical-align: middle;
 	cursor: pointer;
 }
+
 .modal_wrap{
         display: none;
         width: 70%;
         position:fixed;
         height: 500px;
         top:50%;
-        margin: -250px 0 0 0;
+        margin: -250px 0 0 150px;
         background:#eee;
         z-index: 2;
     }
@@ -175,13 +225,6 @@ img.ui-datepicker-trigger {
    height: 60%;
 }
 
-.card-title {
-   display: block;
-}
-
-.card-text {
-   display: flex;
-}
 
 .h-100 {
    border: 1px solid gray;
@@ -371,12 +414,6 @@ img.ui-datepicker-trigger {
    font-weight: bold;
    cursor: default;
    color: #777;
-}
-
-body {
-   padding : 0px;
-   margin : 0px;
-   font-family: san-serif;
 }
 
 #regBtn {
@@ -801,7 +838,7 @@ text-align: center;
     }
     
     // 닉네임은 2~8자리까지만
-    if(!(mNname.length >= 2 && mNname.length <= 8)){f
+    if(!(mNname.length >= 2 && mNname.length <= 8)){
        alert("닉네임을 입력해주세요");
        $("#nickname").focus();
        return false;

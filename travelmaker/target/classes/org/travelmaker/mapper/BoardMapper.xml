@@ -23,10 +23,6 @@ select * from board where board_no>0
 ]]>
 </select>
 
-<insert id="insert">
-	insert into board (board_no, sch_no, board_title,  pick_cnt, v_cnt, hidden)
-	values (seq_board.nextval,#{schNo}, #{boardTitle},#{pickCnt}, #{vCnt},#{hidden})
-</insert>
 
 <insert id="insertSelectKey">
 <!--  	<selectKey keyProperty="board_no" order="BEFORE" resultType="long">
@@ -42,7 +38,7 @@ select * from board where board_no>0
 </select>
 
 <select id="readbytitle" resultMap="BoardResult">
-	select * from board where board_title=#{boardTitle}
+	select * from board where board_title=#{boardTitle} and sch_no = #{schNo}
 </select>
 
 <select id="getListWithPaging" resultMap="BoardResult">
@@ -52,9 +48,9 @@ select * from board where board_no>0
 			select /*+INDEX_DESC(board board_pk)*/
 				rownum rn, board_no, sch_no, board_title, w_date, mod_date, pick_cnt, v_cnt, hidden, board_img, thumbImg
 			from board
-			where rownum<=#{pageNum} * #{amount}
+			where rownum<=#{pageNum} * #{amount} and hidden='y'
 			)
-			where rn> (#{pageNum}-1) * #{amount} and hidden='y'
+			where rn> (#{pageNum}-1) * #{amount} 
 	]]>
 
 </select>
@@ -74,5 +70,14 @@ select * from board where board_no>0
 	select count(*) from board where hidden='y'
 </select>
 
+<update id="upCnt">
+
+UPDATE place SET pickCnt = pickCnt +1 boardNo  = #{boardNo}
+</update>
+
+<update id="downCnt">
+
+UPDATE place SET pickCnt = pickCnt -1 where boardNo = #{boardNo}
+</update>
 
 </mapper>

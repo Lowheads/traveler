@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@include file="../includes/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="../includes/jeheader.jsp"%>
 
 <div class="container">
 	<div class="row">
@@ -46,7 +43,7 @@
 						<script>
 						//사진등록 시 화면에 보여주는 함수
 						$("#boardImg").change(function() {
-							alert('사진등록');
+							alert('사진첨부완료');
 							if (this.files && this.files[0]) {
 							var reader = new FileReader;
 								reader.onload = function(data) {
@@ -62,9 +59,9 @@
 							비공개 <input type="radio" name='hidden' value="n">
 						</div>
 
-                        <button type="submit" data-oper='modify' class="btn btn-default jieun">Modify</button>
-						<button type="submit" data-oper='remove' class="btn btn-danger jieun">Remove</button>
-						<button data-oper='list' class="btn btn-info jieun" onclick="location.href='/board/list'">List</button>
+                        <button id="Btn" type="submit" data-oper='modify' class="btn btn-default subbutton">Modify</button>
+						<button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">Remove</button>
+						<button id="Btn" data-oper='list' class="btn btn-info subbutton" onclick="location.href='/board/list'">List</button>
 					</form>
 				</div>
 				<!--  end panel-body -->
@@ -82,22 +79,22 @@
 
 $(document).ready(function(){
 	var formObj=$("#modiremoveform");
-	$('.jieun').on("click",function(e){
+	$('.subbutton').on("click",function(e){
 		e.preventDefault();
+		
+		
 		var operation = $(this).data("oper");
+		
 		if(operation=='modify'){
 		var modifyimage = $("#modifyimage");
-		if(modifyimage.data("image")==modifyimage.attr("src")){
-			
-			return;
-		}
-		}
+			if(modifyimage.data("image")==modifyimage.attr("src")){
+				alert('수정할 사진을 등록해주세요');
+				return;
+			}
+	
+		}   
 		
-		var operation = $(this).data("oper");
-		
-		console.log(operation);
-		
-		if(operation==='remove'){
+		else if(operation==='remove'){
 			formObj.attr("action","/board/remove");
 			
 		}else if(operation==='list'){

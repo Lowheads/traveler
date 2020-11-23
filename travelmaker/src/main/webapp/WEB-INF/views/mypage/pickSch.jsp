@@ -3,33 +3,30 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="../includes/mypageheader.jsp" %>
 
 
   <!-- Page Content -->
-  <div class="container">
-<div class="black_bg"></div>
     <div class="row">
 
-      <div class="col-lg-3">
+     <div class="leftNav">
 
-        <h1 class="my-4">메뉴메뉴</h1>
         <div class="list-group">	
-          <a href="/mypage/pickPL" class="list-group-item">찜한장소</a>
-          <a href="/mypage/pickSch" class="list-group-item">찜한일정</a>
-          <a href="/mypage/past" class="list-group-item">지나간여행</a>
-          <a href="/mypage/upcomming" class="list-group-item">다가올여행</a>
+        <ul>
+  <li><a href="/mypage/pickPL" class="list-group-item">찜한장소</a></li>
+  <li><a href="/mypage/pickSch" class="list-group-item">찜한일정</a></li>
+  <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
+  <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
+</ul>
         </div>
-
-      </div>
+        </div>
       <!-- /.col-lg-3 -->
 <!-- col-lg-9(content) -->
-      <div class="col-lg-9" style="padding-top: 20px;">
+      <div class="content-mypage" style="padding-top: 20px;">
         <div class="row">
 
 <c:forEach items="${list }" var="sch">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100" id="resultcard">
             <a class='move' href='<c:out value="${sch.schNo }"/>'>
            <img class="card-img-top" src="http://placehold.it/700x400" alt="">
            </a>
@@ -46,16 +43,12 @@
              <!-- <i class="fa fa-heart-o" style="font-size:24px;color:red"></i>
              <i class="fa fa-heart" style="font-size:24px;color:red"></i> -->
                <div style="float:right;" class="heart">
-       <a data-sch_no="${sch.schNo }">
+       <a sch_no="${sch.schNo }">
           <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
        </a>
    </div>
              <!-- Like end -->
               </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
           </div>
 </c:forEach>
 
@@ -113,15 +106,15 @@
 		
 		//좋아요 취소하는 버튼
 		$(".heart a").on("click", function() {
-
+			
 			$(this).hide(30);
 			var that = $(".heart");
 			var sendData = {
-				'sch_no' : $(this).data('sch_no'),
+				'sch_no' : $(this).attr('sch_no'),
 				'heart' : 1
 			}
 			$.ajax({
-				type : 'post',
+				type : 'POST',
 				url : '/mypage/heartSch',
 				data : sendData,
 				success : function(data) {
