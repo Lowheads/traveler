@@ -20,5 +20,5 @@ public interface DaybudMapper { // xml과  세트 , 서비스는 여기서 가�
 	
 	public int update(DaybudVO daybud);
 	
-	public List<DaybudVO> select();
+	public List<DaybudVO> box();
 }

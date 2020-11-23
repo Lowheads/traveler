@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.travelmaker.domain.BudgetVO;
+import org.travelmaker.domain.DaybudVO;
 
 public interface BudgetMapper { // xml과  세트 , 서비스는 여기서 가져다가 사용 
 	
@@ -19,5 +20,5 @@ public interface BudgetMapper { // xml과  세트 , 서비스는 여기서 가�
 	public int delete(Long no);
 	
 	public int update(BudgetVO Budget);
-	
+
 }
