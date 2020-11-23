@@ -119,7 +119,7 @@
 			  });
 		   
 		   $('input[name="daterange"]').on('apply.daterangepicker', (e, picker) => {
-			   computeDate();
+			   computeDate(); 
 		      }); 
 		   
 		   
@@ -197,24 +197,50 @@
 	    
 	    
 	    
-		function searchAction() {
+	    function searchAction() {
 			let placeValue = $("#search-value").val();
 			let placeList = $(".right-place-list");
-			let tagStr = "";
+			placeList.empty();
 			let i;
 			placeService.getList({title : placeValue},
 					function(list) {
 						for (i = 0, len = list.length || 0; i < len; i++) {
-							var str = "";
-							str += "<li class='right clearfix'>"; // 굳이 없어도 되는 부분이긴 한데... 
-							str += "<div class='hoverable-place'  data-title='"+list[i].plcTitle+"' data-region-id='"+list[i].regionId+"' data-plc-dt='"+list[i].plcDt+"' data-plc-no='"+list[i].plcNo+"' data-holiday='"+list[i].holiday+"' data-lat='"+list[i].lat+"' data-p-cate='"+list[i].pCate+"' data-opening-h='"+list[i].openingH+"' data-lng='"+list[i].lng+"' onmouseover='placeOver(event)'>"
-									+ list[i].plcTitle + " ";
-							str += "<button class='add-button' onclick='moveToLeft(event)'><i class='fas fa-plus'></i></button>";
-							str += "<button class='detail-button' onclick='placeDetail(event)'><i class='fas fa-search-plus'></i></button></div></li>";
-							tagStr += str;
+							let liobj = document.createElement("li");	
+							liobj.setAttribute('class', 'left clearfix');
 							
+							let objs1 = document.createElement("div");
+							objs1.setAttribute('class','hoverable-place');
+							objs1.setAttribute('data-title',list[i].plcTitle);
+							objs1.setAttribute('data-region-id',list[i].regionId);
+							objs1.setAttribute('data-plc-dt',list[i].plcDt);
+							objs1.setAttribute('data-plc-no',list[i].plcNo);
+							objs1.setAttribute('data-holiday',list[i].holiday);
+							objs1.setAttribute('data-lat',list[i].lat);
+							objs1.setAttribute('data-lng',list[i].lng);
+							objs1.setAttribute('data-opening-h',list[i].openingH);
+							objs1.setAttribute('data-p-cate',list[i].pCate);
+							objs1.innerText=list[i].plcTitle + " ";
+							objs1.addEventListener('mouseover',placeOver);
+							
+							let btnobj1 = document.createElement("button");
+							btnobj1.setAttribute('class', 'add-button');
+							let iconobj1 = document.createElement("i");
+							iconobj1.setAttribute('class', 'fas fa-plus');
+							iconobj1.addEventListener('click',moveToLeft);
+							btnobj1.appendChild(iconobj1);
+							
+							let btnobj2 = document.createElement("button");
+							btnobj2.setAttribute('class', 'detail-button');
+							let iconobj2 =document.createElement("i");
+							iconobj2.setAttribute('class', 'fas fa-search-plus');
+							iconobj2.addEventListener('click',placeDetail);
+							btnobj2.appendChild(iconobj2);
+
+							objs1.appendChild(btnobj1);
+							objs1.appendChild(btnobj2);
+							liobj.appendChild(objs1);
+							placeList.append(liobj);
 						}
-						placeList.html(tagStr);
 						
 					})
 			return;
@@ -229,36 +255,56 @@
 			let clickedBtn = event.currentTarget;
 			console.log(clickedBtn);
 			let index = document.getElementsByClassName("left-place")
-			let parentE = clickedBtn.parentElement.dataset;
-			
+			let parentE = clickedBtn.parentElement.parentElement.dataset;
+			let placeList = $(".left-place-list");
 			let leftPlace = document.getElementsByClassName("selected-place");
 			let i;
 			if(leftPlace.length ||0){
 			for (i = 0; i < leftPlace.length; i++) {
-				if(leftPlace[i].dataset['title'] == parentE['title']){		
-					alert("이미 일정에 추가하셨습니다.");
-					return;
+					if(leftPlace[i].dataset['title'] == parentE['title']){		
+						alert("이미 일정에 추가하셨습니다.");
+						return;
+					}
 				}
 			}
-			}
 			
-			var str ="";
-			str += "<li class='left clearfix'>"; 
-			str += "<div class='selected-place'  data-title='"+parentE['title']+"' data-region-id='"+parentE['regionId']+"' data-plc-dt='"+parentE['plcDt']+"' data-plc-no='"+parentE['plcNo']+"' data-holiday='"+parentE['holiday']+"' data-lat='"+parentE['lat']+"' data-p-cate='"+parentE['pCate']+"' data-opening-h='"+parentE['openingH']+"' data-lng='"+parentE['lng']+"'>"
-			+ parentE['title'];
-			str += "<button class='delete-button' onclick='deleteInLeft(event)'><i class='fas fa-times'></i></button>";
-			var placeList = $(".left-place-list");
-			placeList.append(str);
+							let liobj = document.createElement("li");	
+							liobj.setAttribute('class', 'left clearfix');
+							
+							let objs1 = document.createElement("div");
+							objs1.setAttribute('class','hoverable-place');
+							objs1.setAttribute('data-title',parentE['title']);
+							objs1.setAttribute('data-region-id',parentE['regionId']);
+							objs1.setAttribute('data-plc-dt',parentE['plcDt']);
+							objs1.setAttribute('data-plc-no',parentE['plcNo']);
+							objs1.setAttribute('data-holiday',parentE['holiday']);
+							objs1.setAttribute('data-lat',parentE['lat']);
+							objs1.setAttribute('data-lng',parentE['lng']);
+							objs1.setAttribute('data-opening-h',parentE['openingH']);
+							objs1.setAttribute('data-p-cate',parentE['pCate']);
+							objs1.innerText=parentE['title'] + " ";
+						
+
+							let btnobj1 = document.createElement("button");
+							btnobj1.setAttribute('class', 'delete-button');
+							let iconobj1 = document.createElement("i");
+							iconobj1.setAttribute('class', 'fas fa-times');
+							iconobj1.addEventListener('click',deleteInLeft);
+							btnobj1.appendChild(iconobj1);
+							liobj.appendChild(objs1);
+							placeList.append(liobj);
+						
+			
 			if(markers.length||0){
 				markers[0].setMap(null);
 				markers.pop();
 			}
-			clickedBtn.parentElement.parentElement.remove();
+			clickedBtn.parentElement.parentElement.parentElement.remove();
 		}
 		
 		function placeDetail(event) { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
 			let clickedBtn = event.currentTarget;
-			let placeNo = clickedBtn.parentElement.dataset["plcNo"];
+			let placeNo = clickedBtn.parentElement.parentElement.dataset["plcNo"];
 			let URL = "https://place.map.kakao.com/"+placeNo;
 			window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
 		}
