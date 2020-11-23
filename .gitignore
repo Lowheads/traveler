@@ -6,6 +6,12 @@
 # Compiled class file
 *.class
 
+*.MF
+MANIFEST
+/MANIFEST.MF
+**/MANIFEST.MF
+**/MANIFEST.*
+
 *.egg
 MANIFEST
 
