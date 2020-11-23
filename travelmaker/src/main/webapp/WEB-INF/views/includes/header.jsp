@@ -429,7 +429,7 @@ text-align: center;
    padding: 8px;
 }
 
-#btn{ /* 닉네임 중복체크 버튼 */
+.btn{ /* 닉네임 중복체크 버튼 */
    width: 130px;
    height: 35px;
    text-align: center;
@@ -591,7 +591,7 @@ text-align: center;
                   
                   <!-- 이메일 -->
                   <div class="div-reg"><input type="email" name="email" id="email" placeholder="이메일주소">
-                     <button type="button" id="emailCheck" id="btn">이메일 중복체크</button>
+                     <button class="btn" type="button" id="emailCheck">이메일 중복체크</button>
                   <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
@@ -607,7 +607,7 @@ text-align: center;
                   
                   <!-- 닉네임 -->
                   <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임">
-                     <button type="button" id="btn" class="nicknameCheck">중복 체크</button>
+                     <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
                   <div class="div-reg"><span id="spanNickname"></span></div></div>
                   
@@ -626,7 +626,7 @@ text-align: center;
                   <!-- 등급?(일반회원, 관계자 등..) -->
                   <p><input type="hidden" name="memGrade" id="mem_grade" value="일반회원"><p>
                   
-               <div class="wrap-Addition"><button type="submit" id="button" onclick="return inputCheck();">가입하기</button></div>
+               <div class="wrap-Addition"><button type="submit" id="button" onclick="return registerValidCheck();">가입하기</button></div>
             </form>
             </div>
       </div>
@@ -642,7 +642,7 @@ text-align: center;
     document.getElementById('register_modal_btn').addEventListener('click', rModalShow);
     document.querySelector('.rModal_close').addEventListener('click', rModalClose);
 
-
+    
     //모달 보여지는 메서드
     function lModalShow() {
         document.querySelector('.login_modal').style.display = 'block';
@@ -653,7 +653,7 @@ text-align: center;
         document.querySelector('.register_modal').style.display = 'block';
         document.querySelector('.black_bg').style.display = 'block';
     };
-
+    
     //모달 사라지는 메서드
     function lModalClose() {
         document.querySelector('.login_modal').style.display = 'none';
@@ -671,22 +671,26 @@ text-align: center;
  	   rModalShow();
     }; // end moveRegisterPage()
     
-    $("#emailCheck").click(function() { // email 중복체크 버튼 누르면 실행
+    
+    /* 회원가입 */
+    
+ // email 중복체크 버튼 누르면 실행
+    $("#emailCheck").click(function() { 
         
-        var mEmail = $("#email").val();    // 이메일
-       var jEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일정규식
+       let myEmail = $("#email").val();    // 이메일
+       let jEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일정규식
 
          // 이메일 입력
-          if(mEmail.length == 0){
+          if(myEmail.length == 0){
              document.getElementById("spanEmail").innerHTML = "이메일을 입력해주세요";
              spanEmail.style.color='red';
-          return;
+          	return;
        }else{
           document.getElementById("spanEmail").innerHTML = "";
        }
         
         // 이메일 정규식
-         if(false === jEmail.test(mEmail)) {     
+         if(false === jEmail.test(myEmail)) {     
             document.getElementById("spanEmail").innerHTML = "이메일 형식이 잘못되었습니다";
                 spanEmail.style.color='red';
                 
@@ -695,8 +699,8 @@ text-align: center;
              document.getElementById("spanEmail").innerHTML = "사용할 수 있는 이메일입니다.";
           }       
         
-       var email = $("#email").val();
-       var sendDate = {'email' : email}
+       let email = $("#email").val();
+       let sendDate = {'email' : email}
 
        $.ajax({
           /* async : true, */
@@ -712,109 +716,136 @@ text-align: center;
                 spanEmail.style.color = 'blue';
              }
            }
-       });  
- }); // end nickName Dupl
-
- //AccountInfo에서 사용되는 스크립트
-
-
- // 닉네임 중복체크
- $(".nicknameCheck").click(function(){
-    
-    var nickName = $("#nickname").val();
-    var sendDate = {'nickName' : nickName}
-    
-    if(nickName == "${member.nickname}"){
-       document.getElementById("spanNickName").innerHTML = "현재 닉네임입니다.";
-       spanNickName.style.color ='green';
-       return;
-    }
-    
-     $.ajax({
-       type : 'POST',
-       data : sendDate, // sendDate 함수를 contrlr에 보냄
-       url : "/member/nNameCheck",
-       success : function(data){
-          if(data > 0){ // 자신의 닉네임이 1이니까 1이상이면 중복
-             document.getElementById("spanNickName").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
-             spanNickName.style.color ='red';
-             return false;
-          }else{
-             document.getElementById("spanNickName").innerHTML = "사용할 수 있는 닉네임입니다.";
-             spanNickName.style.color = 'blue';
-          } 
-       }
-    });  
+       });
+       
  });
- function inputCheck() {
+    
+ // 닉네임 중복체크 버튼 누르면 실행
+    $("#nicknameCheck").click(function() { 
+        
+       let myNickname = $("#nickname").val();    // 닉네임
+       let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
+
+         // 닉네임 입력
+          if(myNickname.length == 0){
+             document.getElementById("spanNickname").innerHTML = "닉네임을 입력해주세요";
+             spanNickname.style.color='red';
+          	return;
+       }else{
+          document.getElementById("spanNickname").innerHTML = "";
+       }
+        
+        // 닉네임 정규식
+         if(false === jNname.test(myNickname)) {     
+            document.getElementById("spanNickname").innerHTML = "닉네임은 한글/영문/숫자로 2~8자리 부탁드립니다";
+            spanNickname.style.color='red';
+             return;  
+         }else{
+             document.getElementById("spanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+          }       
+        
+        
+       let nickname = $("#nickname").val();
+       let sendDate = {'nickname' : nickname}
+
+       $.ajax({
+          /* async : true, */
+          type : 'POST',
+          data : sendDate,
+          url : "/member/nicknameDuplCheck",
+           success : function(data) { // 성공하면 여기로 넘어옴
+              if (data > 0) {
+                document.getElementById("spanNickname").innerHTML = "닉네임이 중복됩니다.";
+                spanNickname.style.color = 'red';
+             } else {
+                document.getElementById("spanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+                spanNickname.style.color = 'blue';
+             }
+           }
+       });
+       
+ });
+
+
+    // 회원가입 유효성체크
+ function registerValidCheck() {
     
      // 정규식
-     let jEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일
+     // jEamil = local@앞에 3글자 이상 
+	 let jEmail = /^[0-9a-zA-Z][0-9a-zA-Z\_\-\.\+]+[0-9a-zA-Z]@[0-9a-zA-Z][0-9a-zA-Z\_\-]*[0-9a-zA-Z](\.[a-zA-Z]{2,6}){1,2}$/;
      let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
      let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 
     // 스크립트 태그 변수
-    let mEmail = $("#email").val();    // 이메일
-    let mPwd = $("#pwd").val();       // 비밀번호
-    let mPwdCfm = $("#pwdCfm").val();  // 비밀번호 확인
-    let mNname = $("#nickname").val(); // 닉네임
-    let mBirth = $("#birth").val();    // 생년월일
+    let myEmail = $("#email").val();    // 이메일
+    let myPwd = $("#pwd").val();       // 비밀번호
+    let myPwdCfm = $("#pwdCfm").val();  // 비밀번호 확인
+    let myNickname = $("#nickname").val(); // 닉네임
+    let myBirth = $("#birth").val();    // 생년월일
     
     // 이메일 입력
-    if(mEmail.length == 0){
+    if(myEmail.length == 0){
        alert("이메일 입력 후, 중복체크를 눌러주세요");
         $("#email").focus();
         return false;
     }
     
     // 이메일 정규식
-     if(false === jEmail.test(mEmail)) {     
-        alert('이메일 형식이 잘못되었습니다.');
+     if(false === jEmail.test(myEmail)) {     
+        alert('이메일 형식이 잘못되었습니다. @앞에 3글자 이상은 넣으셨나요?');
           return false;         
      }                            
     
      // 패스워드 입력
-    if(mPwd.length == 0){
+    if(myPwd.length == 0){
         alert("비밀번호를 입력해 주세요"); 
         $("#pwd").focus();
         return false;
     }
      
+    // 비밀번호 정규식
+    if(false === jPwd.test(myPwd)) {     
+		alert('비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다.');
+		$("#pwd").focus();
+        return false;         
+    }   
+     
      // 패스워드 확인
-     if(mPwd != mPwdCfm){
+     if(myPwd != myPwdCfm){
         alert("비밀번호가 일치하지 않습니다.");
         $("#pwdCfm").focus();
         return false;
      }
      
      // 비밀번호에 공백 포함 X
-     if(mPwd.search(/\s/) != -1){
+     if(myPwd.search(/\s/) != -1){
           alert("비밀번호는 공백 없이 입력해주세요.");
           return false;
      }
 
     // 닉네임 입력
-    if(mNname.length == 0){
+    if(myNickname.length == 0){
        alert("닉네임을 입력해주세요");
        $("#nickname").focus();
        return false;
     }
     
     // 닉네임은 2~8자리까지만
-    if(!(mNname.length >= 2 && mNname.length <= 8)){
-       alert("닉네임을 입력해주세요");
-       $("#nickname").focus();
-       return false;
-    }
+    if(!(myNickname.length >= 2 && myNickname.length <= 8)){
+	   	alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+	   	$("#nickname").focus();
+	   	return false;
+   }
     
-    if(false === jNname.test(mNname)){
+    // 닉네임은 영문/한글/숫자만!!
+    if(false === jNname.test(myNickname)){
        alert("닉네임은 영문/한글/숫자만 허용됩니다!!");
        $("#nickname").focus();
        return false;
     }
     
      // 생년월일 입력
-    if(mBirth.length == 0){
+    if(myBirth.length == 0){
        alert("생년월일을 입력해주세요");
        $("#birth").focus();
        return false;
@@ -827,20 +858,21 @@ text-align: center;
     }
     
     // 필수입력 완료했으니까 회원가입 성공!
-        /* alert("회원가입을 축하합니다"); */
+    
         return true;
- } // end inputCheck()
+    
+ } // end registerValidCheck()
 
- //   비밀번호 커서 처리
+ //   비밀번호 커서 처리(blur)
  function pwdCheck() {
 
     let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
     
-    let mPwd = $("#pwd").val();       // 비밀번호
-    let mPwdCfm = $("#pwdCfm").val();    // 비밀번호 확인
+    let myPwd = $("#pwd").val();       // 비밀번호
+    let myPwdCfm = $("#pwdCfm").val();    // 비밀번호 확인
     
-    // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
-    if(false === jPwd.test(mPwd) || mPwd.search(/\s/) != -1) {
+    // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리(공백 당연히 안됨!)
+    if(false === jPwd.test(myPwd) || myPwd.search(/\s/) != -1) {
        document.getElementById("spanPwdCfm").innerHTML = "비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다. 공백없이!!";
          spanPwdCfm.style.color='red';         
          return false;
@@ -849,7 +881,7 @@ text-align: center;
     }
     
  // 패스워드 확인
-    if (mPwd != mPwdCfm) {
+    if (myPwd != myPwdCfm) {
        document.getElementById("spanPwdCfm").innerHTML = "비밀번호가 서로 다릅니다.";
          spanPwdCfm.style.color='red';
          return false;
@@ -858,26 +890,56 @@ text-align: center;
     }
     
  }
+ 
+ 
+	//회원가입시 생년월일 입력 받기
+	 $("#birth").datepicker(
+	       {
+	          changeMonth : true,
+	          changeYear : true,
+	          maxDate : 0, // 오늘 날짜이후로 선택 못 함
+	          minDate : '-80y', // 년 시작일
+	          nextText : '다음 달',
+	          prevText : '이전 달',
+	          yearRange : 'c-80:c+20', // 년 시작~최대 범위
+	          showButtonPanel : true,
+	          currentText : '오늘 날짜',
+	          closeText : '닫기',
+	          dateFormat : "yy-mm-dd",
+	          showAnim : "slide",
+	          showMonthAfterYear : true,
+	          dayNamesMin : [ '월', '화', '수', '목', '금', '토', '일' ],
+	          monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
+	                '7월', '8월', '9월', '10월', '11월', '12월' ]
+	       });
 
+
+ //======================회원가입 끝============================================ 
+ 
+	/* 로그인 */
+	 
+ // 로그인 모달 유효성 체크
  function loginCheck(){
     
-    let logEmail = $("#login_email").val();    // 이메일
-    let logPwd = $("#login_pwd").val();       // 비밀번호
+    let loginEmail = $("#login_email").val();    // 이메일
+    let loginPwd = $("#login_pwd").val();       // 비밀번호
     
     // 이메일 입력(로그인)
-    if(logEmail.length == 0){
+    if(loginEmail.length == 0){
        alert("이메일을 입력해주세요");
        $("#login_email").focus();
        return false;
     }
     
     // 비밀번호 입력(로그인)
-    if(logPwd.length == 0){
+    if(loginPwd.length == 0){
        alert("비밀번호를 입력해주세요");
        $("#login_pwd").focus();
        return false;
     }
  } // end loginCheck
+ 
+ //======================로그인 끝========================================== 
     
 
     // 회원가입을 유도한다.. 안 됐다면 넘어갈 수 없음..
@@ -891,70 +953,16 @@ text-align: center;
     };
        return true;
     };
-    
-    // 닉네임 중복체크
-       $(".nicknameCheck").click(function(){
-          
-          let nickname = $("#nickname").val();
-          let sendDate = {'nickname' : nickname}
-          let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
-          
-          if(nickname.length == 0){
-             document.getElementById("spanNickname").innerHTML = "닉네임은 공백일 수 없습니다.";
-             spanNickname.style.color ='red';
-             return;
-          }
-          
-             // 닉네임 총 8자리
-             if(!(nickname.length >= 2 && nickname.length <= 8 )){
-                document.getElementById("spanNickname").innerHTML = "닉네임은 2~8자리까지만!!!";
-                spanNickname.style.color ='red';
-                return;
-             }
-             
-             // 영문/한글/숫자만 허용
-             if(false === jNname.test(nickname)){
-                document.getElementById("spanNickname").innerHTML = "닉네임은 한글/영문/숫자만!!";
-                spanNickname.style.color ='red';
-                   return;
-                }
-          
-           $.ajax({
-             type : 'POST',
-             data : sendDate, // sendDate 함수를 contrlr에 보냄
-             url : "/member/nicknameDuplCheck",
-             success : function(data){
-                if(data == 1){ 
-                   document.getElementById("spanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
-                   spanNickname.style.color ='red';
-                   console.log(data);
-                }else{
-                   document.getElementById("spanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
-                   spanNickname.style.color = 'blue';
-                } 
-             }
-          });  
-       });
-    
-    // 회원가입시 생년월일 입력 받기
-       $("#birth").datepicker(
-             {
-                changeMonth : true,
-                changeYear : true,
-                maxDate : 0, // 오늘 날짜이후로 선택 못 함
-                minDate : '-80y', // 년 시작일
-                nextText : '다음 달',
-                prevText : '이전 달',
-                yearRange : 'c-80:c+20', // 년 시작~최대 범위
-                showButtonPanel : true,
-                currentText : '오늘 날짜',
-                closeText : '닫기',
-                dateFormat : "yy-mm-dd",
-                showAnim : "slide",
-                showMonthAfterYear : true,
-                dayNamesMin : [ '월', '화', '수', '목', '금', '토', '일' ],
-                monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-                      '7월', '8월', '9월', '10월', '11월', '12월' ]
-             });
+     
+       //rttr 창띄우기
+        	$(function(){
+        		
+      		var responseMessage = '<c:out value="${msg}" />';
+      		
+      		if(responseMessage != ""){
+      	    alert(responseMessage);
+      	}
+      		
+      });  
 
 </script>
