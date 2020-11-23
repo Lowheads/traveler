@@ -5,38 +5,28 @@
 <%@include file="../includes/header2.jsp"%>
 
 
-<div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">&nbsp경비 상세내역 수정/삭제</h1>
+<div>
+	<div>
+		<h1>&nbsp경비 상세내역 수정/삭제</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
+<div>
+	<div>
+		<div>
 		
-			<div class="panel-heading">&nbsp경비 상세내역 수정/삭제</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
+			<div>&nbsp경비 상세내역 수정/삭제</div>
+			<div>
 			
 			<form role="form" action="/buddt/modify" method="post">
-			
-<%-- 			<!-- p.319 -->
-			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
-			<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-			<!-- p.346 -->
-			<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-			<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'> --%>
 			
 					<div class="form-group">
 						<label>#no </label> <input class="form-control" name='no'
 						  value='<c:out value="${buddt.no }"/>' readonly="readonly">
 					</div>
 					
-					  <%-- <input class="form-control" name='pay_date'
-						  value='<c:out value="${buddt.pay_date }"/>' readonly="readonly"> --%>
 					<div class="form-group">
 					  <label>결제한 날짜 (PK,FK)</label> 
 							<input class="form-control" name='paydate'
@@ -57,35 +47,19 @@
 					<div class="form-group">
 					  <label>금액</label> <input class="form-control" name='expense'
 						  value='<c:out value="${buddt.expense }"/>' 
-						  type="text" onkeyup="onlyInsertNum(this)" maxlength="7" required>
+						  type="text" onkeyup="onlyInsertNum(this)" maxlength="7" >
 					</div>
 					
 					<div class="form-group">
-					  <label>카테고리</label> <input class="form-control" name='budcate'
-						  value='<c:out value="${buddt.budcate }"/>' 
-						  type="text" onkeyup="specialCharRemove(this)" maxlength="5" required>
+						<label>카테고리</label> &nbsp 
+						<select id="flag" name="budcate" onChange="schnocheck()"> <br>
+								<option value='<c:out value="${buddt.budcate }"/>'>선택</option>
+								<option value="음식점">음식점</option>
+								<option value="카페">카페</option>
+								<option value="활동">활동</option>
+								<option value="기타">기타</option>
+						</select> <input class="form-control" type="hidden" name="schno2">
 					</div>
-					
-<%-- 					<div class="form-group">
-					  <label>Text area</label>
-					  <textarea class="form-control" rows="3" name='content' ><c:out
-					value="${buddt.content}" /></textarea>
-					</div>
-					
-					<div class="form-group">
-					  <label>RegDate</label> 
-					  <input class="form-control" name='regDate'
-					    value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${buddt.
-					    regdate}" />'  readonly="readonly">
-					</div>
-					
-					<div class="form-group">
-					  <label>Update Date</label> 
-					  <input class="form-control" name='updateDate'
-					    value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${buddt.
-					updateDate}" />'  readonly="readonly">
-					</div> --%>
-					
 					
 					<button type="submit" data-oper='modify'
 					   class="btn btn-default">수정</button>
@@ -93,8 +67,7 @@
 					<button type="submit" data-oper='remove' 
 						class="btn btn-danger">삭제</button>
 					
-					<button type="submit" data-oper='list' 
-						class="btn btn-info">목록</button>
+					<button type="button" onclick="goBack();">목록</button>
 					
 					</form>	
 					
@@ -109,31 +82,11 @@
 <!-- /.row -->
 
 <script type="text/javascript">
+function goBack(){
+	window.history.back();
+}
 
-$(document).ready(function() {
-
-	var formObj = $("form");
-
-	$('button').on("click", function(e) {
-
-		e.preventDefault();
-
-		var operation = $(this).data("oper");
-
-		console.log(operation);
-
-		if (operation === 'remove') {
-			formObj.attr("action", "/buddt/remove");
-
-		} else if (operation === 'list') {
-			// move to list
-			formObj.attr("action", "/budget/list").attr("method", "get");
-			formObj.empty();
-
-		}
-		formObj.submit();
-	});
-});
+$("#flag").val('<c:out value="${buddt.budcate }"/>').prop("selected", true);
 
 function specialCharRemove(obj) { // 특수문자 제외 (한글 허용)
 	var val = obj.value;

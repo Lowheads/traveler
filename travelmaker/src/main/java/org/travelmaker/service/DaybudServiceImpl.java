@@ -47,8 +47,8 @@ public class DaybudServiceImpl implements DaybudService { // mapper(+xml) 에서
 	}
 
 	@Override
-	public List<DaybudVO> select() {
-		return mapper.select();
+	public List<DaybudVO> box() {
+		return mapper.box();
 	}
 	
 }

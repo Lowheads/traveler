@@ -88,6 +88,7 @@ public class DaybudController {
 		log.info("/get or modify");
 		model.addAttribute("daybud", service.get(schno));
 		model.addAttribute("schno", schno);
+		model.addAttribute("box", service.box());
 	}
 	
 //	@GetMapping("/get")
