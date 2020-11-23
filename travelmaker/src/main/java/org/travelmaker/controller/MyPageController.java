@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.PICK_VO;
+import org.travelmaker.domain.PickVO;
 import org.travelmaker.domain.PlacePageDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.service.*;
@@ -39,15 +39,13 @@ public class MyPageController {
 
 		private PlaceService PLCservice;
 		private ScheduleService SchService;
-		private PICK_Service PICKservice;
+		private PickService PICKservice;
 		
 		//찜한장소 페이지 들어왔을때 장소 리스트 뽑아와야되니까
 		@GetMapping("/pickPL")
 		public void list(Criteria cri,Model model,HttpServletRequest request,String selected) {
 			HttpSession session = request.getSession();
 			int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-			System.out.println(memNo);
-			log.info("list");
 			cri.setMemNo(memNo);
 			int total = PLCservice.getTotal(cri);
 			cri.setAmount(8);
@@ -68,7 +66,6 @@ public class MyPageController {
 		
 		@PostMapping("/remove")
 		public String remove(@RequestParam("plc_no")int plcNo,RedirectAttributes rttr) {
-			log.info("remove..."+plcNo);
 			if(PLCservice.remove(plcNo)) {
 				rttr.addFlashAttribute("result","success");
 			}
@@ -88,7 +85,6 @@ public class MyPageController {
 		@GetMapping({"/past/get","/pickSch/get","/upcomming/get"})
 		public void get(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 			
-			System.out.println("===================sch_no:"+schNo);
 			model.addAttribute("board",SchService.get(schNo));
 		}
 		
@@ -112,28 +108,16 @@ public class MyPageController {
 			model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getCtotal(cri)));
 		}
 		
-		
 		@ResponseBody
 		@RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
-		    public int heart(HttpServletRequest httpRequest,HttpSession session,@RequestParam("plc_no") int plcNo) throws Exception {
-			 	int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+		    public void heart(HttpServletRequest httpRequest,HttpSession session,PickVO vo) throws Exception {
 			 	int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		        PICK_VO vo = new PICK_VO();
-		        vo.setMemNo(memNo);
-		        vo.setPlcNo(plcNo);
-		        PICKservice.remove(vo);
-		        return heart;
-		    }
-		
-		@ResponseBody
-		@RequestMapping(value = "/heartSch", method = RequestMethod.POST, produces = "application/json")
-		    public int heartSch(HttpServletRequest httpRequest,HttpSession session,@RequestParam("sch_no") int schNo) throws Exception {
-				int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-			 	int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		        PICK_VO vo = new PICK_VO();
-		        vo.setMemNo(memNo);
-		        vo.setSchNo(schNo);
-		        PICKservice.removeSch(vo);
-		        return heart;
+			 	vo.setMemNo(memNo);
+		        if(vo.getSchNo()==0) {
+		        	PICKservice.remove(vo);
+		        }
+		        if(vo.getPlcNo()==0) {
+		        	PICKservice.removeSch(vo);
+		        }
 		    }
 }
