@@ -41,17 +41,17 @@
 	
 	<select id ="searchUser" resultMap="VOResult">
 		select * from(
-			select /*+ index_desc(member pk_member) */ * 
+			select /*+ index_desc(member pk_member) */ *
 			from member
 			where
 			<choose>
-				<when test="type == 'nickname'">
+				<when test="type == '닉네임'">
 					(nickname like '%'||#{keyword}||'%')
 				</when>
-				<when test="type == 'email'">
+				<when test="type == '이메일'">
 					(email like '%'||#{keyword}||'%')
 				</when>
-				<when test="type == 'mem_no'">
+				<when test="type == '회원번호'">
 					(mem_no =#{keyword})
 				</when>
 			</choose>
@@ -64,13 +64,13 @@
 			from member
 			where 
 			<choose>
-				<when test="type == 'nickname'">
+				<when test="type == '닉네임'">
 					(nickname like '%'||#{keyword}||'%')
 				</when>
-				<when test="type == 'email'">
+				<when test="type == '이메일'">
 					(email like '%'||#{keyword}||'%')
 				</when>
-				<when test="type == 'mem_no'">
+				<when test="type == '회원번호'">
 					(mem_no like '%'||#{keyword}||'%')
 				</when>
 			</choose>

@@ -17,7 +17,7 @@ public interface AdminMemberService {
 	
 	public List<MemberVO> searchWithdrawUser(Criteria cri);
 
-	public boolean removeUser(int result);
+	public int removeUser(int result);
 	
 	
 	

@@ -11,7 +11,7 @@ public interface AdminMemberMapper {
 	
 	public List<MemberVO> getUserList();
 	
-	public boolean removeUser(int result);
+	public int removeUser(int result);
 	
 	public List<MemberVO> getWithdrawUserList();
 	
