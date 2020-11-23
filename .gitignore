@@ -6,7 +6,8 @@
 # Compiled class file
 *.class
 
-.MANIFEST.MF
+*.egg
+MANIFEST
 
 # Log file
 *.log
