@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.BuddtVO;
+import org.travelmaker.domain.DaybudVO;
 import org.travelmaker.mapper.BuddtMapper;
 
 import lombok.AllArgsConstructor;
@@ -70,11 +71,28 @@ public class BuddtServiceImpl implements BuddtService { // mapper(+xml) 에서 �
 		return mapper.readAll(schno);
 	}
 
+//	수정 페이지에 입력 값을 가져옵니다.
 	@Override
 	public BuddtVO readed(BuddtVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.readed(vo);
 	}
 
+	@Override
+	public List<DaybudVO> box() {
+		return mapper.box();
+	}
+
+	@Override
+	public List<DaybudVO> dateBox() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BuddtVO mmDate(Long schno) {
+		log.info("mmDate......");
+		return mapper.mmDate(schno);
+	}	
 	
 }

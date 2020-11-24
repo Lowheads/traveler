@@ -3,25 +3,26 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="../includes/mypageheader.jsp" %>
 
   <!-- Page Content -->
-<div class="black_bg"></div>
-    <div class="row">
+      <!-- sort -->
+<select id="listSort" style="float:right; margin-right:10%;" > 
+<option hidden selected disabled ></option>
+<option value="like">좋아요 순</option>
+<option value="new">최근에 찜한 순</option>
+<option value="old">오래전에 찜한 순</option>
+</select>
+      <div class="leftNav">
 
-      <div class="col-lg-3">
-
-        <h1 class="my-4">메뉴메뉴</h1>
         <div class="list-group">	
-          <a href="/mypage/pickPL" class="list-group-item">찜한장소</a>
-          <a href="/mypage/pickSch" class="list-group-item">찜한일정</a>
-          <a href="/mypage/past" class="list-group-item">지나간여행</a>
-          <a href="/mypage/upcomming" class="list-group-item">다가올여행</a>
+        <ul>
+  <li><a href="/mypage/pickPL" class="list-group-item">찜한장소</a></li>
+  <li><a href="/mypage/pickSch" class="list-group-item">찜한일정</a></li>
+  <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
+  <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
+</ul>
         </div>
-
-      </div>
-      <!-- /.col-lg-3 -->
-<!-- col-lg-9(content) -->
 
 <div class="modal_wrap">
     <div class="modal_close"><a href="#">close</a></div>
@@ -37,73 +38,55 @@
      <!-- End Map -->
     
 </div>
-    
-          <!-- sort -->
-<select id="listSort" style="float:right;"> 
-<option hidden selected disabled ></option>
-<option value="like">좋아요 순</option>
-<option value="new">최근에 찜한 순</option>
-<option value="old">오래전에 찜한 순</option>
-</select>
-      <div class="col-lg-9" style="padding-top: 20px;" >
+      </div>
+
+      <div class="content-mypage" style="padding-top: 20px;" >
 
         <div class="row" id="new">
 
 <c:forEach items="${list }" var="place">
-          <div class="col-lg-4 col-md-6 mb-4" id="resultcard">
-            <div class="card h-100">
+            <div class="card h-100" id="resultcard">
            <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
-           <img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+           <img class="card-img-top" src="" alt=""></a>
            <input type="hidden" value='${place.plcNo }' id='plc_no'>
            <input type="hidden" data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" data-lng="${place.lng }" data-title="${place.plcTitle }" class="markerlatlng">
               <div class="card-body">
                 <h4 class="card-title">
                    <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
                    <c:out value="${place.plcTitle }"></c:out></a>
-                </h4>
-                <p>쉬는날 : <c:out value="${place.holiday }"></c:out></p>
-                <p class="card-text">영업시간 : <c:out value="${place.openingH }"></c:out></p>
-             
-             <!-- Like  -->
-             <!-- <i class="fa fa-heart-o" style="font-size:24px;color:red"></i>
-             <i class="fa fa-heart" style="font-size:24px;color:red"></i> -->
-               <div style="float:right;" class="heart">
+                     <!-- Like  -->
+     <div style="float:right;" class="heart">
        <a plc_no='${place.plcNo }'>
           <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
        </a>
-   </div>
+   </div>          
              <!-- Like end -->
-             
-             
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                </h4>
+           
               </div>
             </div>
-          </div>
 </c:forEach>
 
 <form id='actionForm' action="/mypage/pickPL" method='get'>
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
-	<input type='hidden' name='amount' value = '6'>
 	<input type='hidden' name='selected' value = <%= request.getParameter("selected") %>>
 </form>
         </div>
         <!-- /.row -->
-        <div style="text-align: center;">
-<ul class="pagination">
+        <div style="text-align: center;" class="w3-center">
+<ul class="w3-bar">
 <c:if test="${pageMaker.prev }">
-<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">Previous</a></li>
+<li class="w3-button"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>
 </c:if>
 
 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":"" }">
+<li class="w3-button" "${pageMaker.cri.pageNum == num ? 'active':'' }">
 <a href="${num}"> ${num }</a></li>
 </c:forEach>
 
 <c:if test="${pageMaker.next }">
-<li class="paginate_button next">
-<a href="${pageMaker.endPage +1 }">Next</a></li>
+<li >
+<a href="${pageMaker.endPage +1 }" class="w3-button">&raquo;</a></li>
 </c:if>
 </ul>
 
@@ -280,7 +263,7 @@
 						
 					
 						//페이지정보 보내는 function
-						$(".paginate_button a").on("click",function(e) {
+						$(".w3-button a").on("click",function(e) {
 
 									e.preventDefault();
 

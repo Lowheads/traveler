@@ -16,6 +16,7 @@ public interface DaybudService {
 	
 	public List<DaybudVO> getList();
 
-	public List<DaybudVO> select();
+	public List<DaybudVO> box();
+
 
 }

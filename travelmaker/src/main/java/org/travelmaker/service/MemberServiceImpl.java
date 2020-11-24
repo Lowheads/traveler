@@ -32,6 +32,11 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO login(MemberVO mVO) { // 로그인 기능
 		return mapper.login(mVO);
 	}
+	
+	@Override
+	public int getMemNo(String email) {
+		return mapper.getMemNo(email).getMemNo();
+	}
 
 	@Override
 	public void presentDate(String email) { // 최종 로그인 날짜 수정
@@ -69,6 +74,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public boolean deleteValid(String pwd, String email) { // 삭제 전 유효성 체크
+		return mapper.deleteValid(pwd, email) == 1 ? true : false; 
+	}
+	
+	@Override
 	public void deleteMember(String pwd, String email) { // 회원탈퇴
 		mapper.deleteMember(pwd, email);
 	}
@@ -103,5 +113,11 @@ public class MemberServiceImpl implements MemberService {
 		 
 		 return false;
 	}
+	
+	@Override
+	public boolean deleteNoAccess(String email) { // 탈퇴한 회원은 접속 못함
+		return mapper.deleteNoAccess(email) == 1 ? true : false;
+	}
+
 
 }

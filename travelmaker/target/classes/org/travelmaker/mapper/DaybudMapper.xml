@@ -23,7 +23,7 @@ values (#{schno}, #{paydate}, #{daypay}, #{daycnt})
 </insert>
 
 <select id="box" resultMap="UserResult">
-select distinct sch_no from bud_dt;
+select distinct sch_no from day_bud
 </select>
 
 <!-- <insert id="insertSelectKey">
@@ -42,7 +42,8 @@ select * from day_bud where sch_no = #{schno} ORDER BY pay_date ASC
 </select> -->
 
 <select id="read" resultMap="UserResult">
-select pay_date, sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as day_pay , count(rownum) as day_cnt from bud_dt where sch_no = #{schno} group by pay_date, sch_no
+select pay_date, sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as day_pay , count(rownum) as day_cnt 
+from bud_dt where sch_no = #{schno} group by pay_date, sch_no ORDER BY pay_date ASC
 </select>
 
 <delete id="delete" >
