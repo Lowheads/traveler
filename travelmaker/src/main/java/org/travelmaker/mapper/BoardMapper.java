@@ -25,5 +25,11 @@ public interface BoardMapper {
 	public BoardVO readbytitle(BoardVO board);
 	
 	public int getTotalCount(Criteria cri);
+
+	//게시물 상태 공개 -> 비공개로 변경
+	public void updateN(BoardVO board);
+	
+	//게시물 상태 비공개 -> 공개로 변경
+	public void updateY(BoardVO board);
 	
 }

@@ -67,4 +67,19 @@ public class BoardServiceImpl implements BoardService{
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
+
+	@Override
+	public void updateHidden(BoardVO board) {
+		
+		if(board.getHidden().equals("y")) {
+			mapper.updateN(board);
+			System.out.println("y->n");
+		}
+		if(board.getHidden().equals("n")) {
+			mapper.updateY(board);
+			System.out.println("n->y");
+		}
+	}
+	
+	
 }

@@ -55,7 +55,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		return mapper.getList();
 	}
+	
+	//공개,비공개 여부 알 수 있는 리스트 가져오기
+	@Override
+	public List<ScheduleVO> getHiddenList(int memNo) {
+		// TODO Auto-generated method stub
+		return mapper.getHiddenList(memNo);
+	}
 
+	//memno에 맞는 schedulelist가져오기
+	public List<ScheduleVO> getList(int memNo){
+		return mapper.getList(memNo);
+	}
 	@Override
 	public boolean modify(ScheduleVO vo) {
 
@@ -122,6 +133,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+
+
+
+
 
 
 }

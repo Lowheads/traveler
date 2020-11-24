@@ -12,6 +12,11 @@ public interface ScheduleMapper {
 	// 리스트 불러와야되고 
 	public List<ScheduleVO> getList();
 
+	//memno에 맞는 schedulelist가져오기
+	public List<ScheduleVO> getList(int memNo);
+	
+	public List<ScheduleVO> getHiddenList(int memNo);
+	
 	// 삭제가능해야되고
 	public int delete(int schNo);
 
