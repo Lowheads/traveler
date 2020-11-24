@@ -138,22 +138,24 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
 		</select>
 		
 		<select id="getPastTotal" resultType="int">
+				<![CDATA[
 		select count(*) from
 		schedule s, pick_sch pl
 			where s.sch_no = pl.sch_no 
 			and pl.mem_no = #{memNo}
-			and s.sch_status = 1 
-		
+			and s.to_date < TO_CHAR(SYSDATE,'YY/MM/DD')
+		]]>
 		</select>
 		
 		
 		<select id="getCommingTotal" resultType="int">
+				<![CDATA[
 		select count(*) from
 		schedule s, pick_sch pl
 			where s.sch_no = pl.sch_no 
 			and pl.mem_no = #{memNo}
-			and s.sch_status = 3 
-		
+			and s.to_date > TO_CHAR(SYSDATE,'YY/MM/DD')
+		]]>
 		</select>
 
 </mapper>
