@@ -4,7 +4,13 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ include file="../../includes/mypageheader.jsp" %>
-
+<!-- 경고창 -->
+ <div id="remove_modal">
+           <h4>정말 삭제하시겠습니까?</h4><br>
+           
+            <button class="modal_close_btn">취소</button>
+            <button class="remove_btn">삭제</button>
+        </div>
   <!-- Page Content -->
 
        <div class="leftNav">
@@ -36,6 +42,7 @@
  <div>지역: <c:out value="${board.schRegion }"/></div>
       <div class="pull-right">
       <button data-oper='list'> 목록으로</button>
+      <button id="popup_open_btn">삭제</button>
       </div>
 </div>
 </div>
@@ -48,13 +55,90 @@
       <!-- /.col-lg-9 -->
       <script type="text/javascript">
     	  
-     var operForm = $("#operForm");
+var operForm = $("#operForm");
       
       $("button[data-oper='list']").on("click",function(e){
     	
     	  operForm.find("#sch_no").remove();
-    	  operForm.attr("action","/mypage/past/").submit();
+    	  operForm.attr("action","/mypage/upcomming").submit();
     	  operForm.submit();
+      });
+      
+      $(".remove_btn").on("click",function(){
+
+    	  
+    	  let schNo = {
+    			  "schNo" : $('input[name=sch_no]').val()
+    	  };
+    	  
+    	  $.ajax({
+				type : 'post',
+				url : '/mypage/remove',
+				data : schNo,
+				success : function(data) {
+					
+					alert("목록에서 삭제되었습니다.");
+					location.href="/mypage/past?pageNum="+$('input[name=pageNum]').val();
+				},
+    	 		error : function (xhr){
+    		  		
+    	 			alert("삭제실패");
+    			 }
+    	 
+     		 });
+      });
+      
+      function modal(id) {
+          var zIndex = 9999;
+          var modal = document.getElementById(id);
+
+          // 모달 div 뒤에 희끄무레한 레이어
+          var bg = document.createElement('div');
+          bg.setStyle({
+              position: 'fixed',
+              zIndex: zIndex,
+              left: '0px',
+              top: '0px',
+              width: '100%',
+              height: '100%',
+              overflow: 'auto',
+              // 레이어 색갈은 여기서 바꾸면 됨
+              backgroundColor: 'rgba(0,0,0,0.4)'
+          });
+          document.body.append(bg);
+
+          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+          modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+              bg.remove();
+              modal.style.display = 'none';
+          });
+
+          modal.setStyle({
+              position: 'fixed',
+              display: 'block',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+              // 시꺼먼 레이어 보다 한칸 위에 보이기
+              zIndex: zIndex + 1,
+
+              // div center 정렬
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              msTransform: 'translate(-50%, -50%)',
+              webkitTransform: 'translate(-50%, -50%)'
+          });
+      };
+
+      // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+      Element.prototype.setStyle = function(styles) {
+          for (var k in styles) this.style[k] = styles[k];
+          return this;
+      };
+
+      document.getElementById('popup_open_btn').addEventListener('click', function() {
+          // 모달창 띄우기
+          modal('remove_modal');
       });
       
       </script>

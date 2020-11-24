@@ -72,9 +72,9 @@ public class MyPageController {
 		@RequestMapping(value = "/remove", method = RequestMethod.POST, produces = "application/json")
 		@ResponseBody
 		public void remove(@RequestParam("schNo")int schNo) {
-			System.out.println(schNo);
 			SchService.remove(schNo);
 			}
+		
 		
 		@GetMapping("/pickSch")
 		public void pickSch(Criteria cri,Model model,HttpServletRequest request,String selected) {
