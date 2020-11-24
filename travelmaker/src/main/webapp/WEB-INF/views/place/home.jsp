@@ -35,16 +35,19 @@
 		
 		<button class="btn-rec-place">추천 장소</button>
 		<ul class="left-place-rec-list">
-		<li class="left clearfix" id="rec-place">
+			<li class="left clearfix" id="rec-place">
 				<c:forEach items="${places}" var="list">
-					<div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}">
+					<div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
 						<c:out value="${list.plcTitle}"></c:out>
+						<button class="rec-add-button" type="button">
+						<i class="fas fa-plus"></i>
+						</button>
 					</div>
 				</c:forEach>
 			</li>
 		</ul>
 		<ul class="left-place-list" id="left-place-list">
-			
+				
 		</ul>
 	</div>
 	<!-- end place list -->
@@ -151,7 +154,11 @@
 			document.querySelector('.search-button').addEventListener('click', searchAction);
 			document.querySelector('.btn-rec-place').addEventListener('click', showRecPlace);
 			document.querySelector('.daily-place-list').style.display ='block';
-			
+			let recPlaceBtn = document.getElementsByClassName("rec-add-button");
+			for (var i = 0; i < recPlaceBtn.length; i++) {
+				recPlaceBtn[i].addEventListener('click', addRecPlace);
+			}
+			document.querySelector('.btn-make-schedule').addEventListener('click', makeSchedule)
 	    }
 	          
 	          
@@ -183,6 +190,9 @@
 					dailyPlaceList[i].style.display='none';
 				}
 			}
+	    	if(!!($('#search-value').val())){
+	    	searchAction();
+	    	}
 	    }
 
 	    function computeDate() { // date picker apply 이벤트랑, 초기값 계산해서 button 생성하는 function
@@ -225,28 +235,85 @@
 	          
 	       }
 	    
+	    function addRecPlace(event) {
+	    	let index = getActiveDay();
+			let leftPlaceList = document.getElementsByClassName("daily-place-list");
+			let activePlaceList = leftPlaceList[index];
+			let compPlaceList = activePlaceList.children
+			let currTarget = event.currentTarget.parentElement;
+			let targetText = currTarget.innerText;
+	    	let curClone = currTarget.cloneNode();
+	    	curClone.setAttribute("class", "selected-place");
+	    	let innerText = document.createTextNode(targetText);
+		    	for (var i = 0; i < compPlaceList.length; i++) {
+					if(curClone.dataset["plcNo"]==compPlaceList[i].dataset["plcNo"]){
+						return;
+					}					
+				}
+	    	
+	    	let btnobj1 = document.createElement("button");
+			btnobj1.setAttribute('class', 'delete-button');
+			let iconobj1 = document.createElement("i");
+			iconobj1.setAttribute('class', 'fas fa-times');
+			iconobj1.addEventListener('click',deleteInLeft);
+			btnobj1.appendChild(iconobj1);
+			
+			curClone.appendChild(innerText);
+			curClone.appendChild(btnobj1);
+			activePlaceList.appendChild(curClone);
+	    }
+	    
+	    function makeSchedule() {
+	    	
+	    	/* var placeObj = {places:list};
+			var schDTO = {sch_region:h.dataset["schRegion"],from_date:h.dataset["fromDate"],to_date:h.dataset["toDate"]} 
+			
+			  alert(h.dataset["schRegion"]);
+			 var sendData = {
+					 places:list
+						,sch_region:h.dataset["schRegion"] 
+						,from_date:h.dataset["fromDate"]
+						,to_date:h.dataset["toDate"] 
+						
+				  };
+			 var sendJSON = JSON.stringify(sendData);
+			$.ajax({  
+				   type: 'POST' 
+				  ,url: "/place/"
+				  ,data: sendJSON
+				  ,success:function(data){
+				    alert("성공");
+				  }
+				  ,error:function(data){
+				    alert("error");
+				  }
+				  });  */
+	    	
+	    }
 	    
 	    
 	    function searchAction() {
 			let placeValue = $("#search-value").val();
 			let placeList = $(".right-place-list");
 			let leftPlace = document.getElementsByClassName("selected-place");
+			let index = getActiveDay();
+			let leftPlaceList = document.getElementsByClassName("daily-place-list");
+			let activePlaceList = leftPlaceList[index].children;
 			placeList.empty();
 			let i,j;
 			let tmplist = [];
+			
 			placeService.getList({title : placeValue},
 					function(list) {
 						let len = list.length;
-						let leng = leftPlace.length;
+						let leng = activePlaceList.length;
 						for (i= 0, len||0; i<len-leng; i++) {
 							for (j = 0; j < leng||0; j++) {
-									if(leftPlace[j].dataset["title"]==list[i].plcTitle){
-										tmplist.push(list[i]);
+									if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
 										list.splice(i,1);
 									}
 							}
 						}
-						console.log(tmplist); // 디버깅용 tmplist
 						
 						for (i = 0, len|| 0; i < len-leng; i++) {
 							let liobj = document.createElement("li");	
@@ -255,8 +322,8 @@
 							let objs1 = document.createElement("div");
 							objs1.setAttribute('class','hoverable-place');
 							objs1.setAttribute('data-title',list[i].plcTitle);
-							objs1.setAttribute('data-region-id',list[i].regionId);
-							objs1.setAttribute('data-plc-dt',list[i].plcDt);
+							objs1.setAttribute('data-region-no',list[i].regionNo);
+							objs1.setAttribute('data-address-dt',list[i].addressDt);
 							objs1.setAttribute('data-plc-no',list[i].plcNo);
 							objs1.setAttribute('data-holiday',list[i].holiday);
 							objs1.setAttribute('data-lat',list[i].lat);
@@ -297,7 +364,6 @@
 		
 		function getActiveDay(){
 			let dateList = document.getElementsByClassName("daily-place-list");
-			console.log(dateList);
 			let idx, i;
 			for (i = 0; i < dateList.length; i++) {
 				
@@ -305,7 +371,6 @@
 					idx = i;
 				}
 			}
-			console.log(idx);
 			return idx;
 		}
 
@@ -313,25 +378,32 @@
 			let clickedBtn = event.currentTarget;
 			let index = document.getElementsByClassName("left-place-list")
 			let parentE = clickedBtn.parentElement.parentElement.dataset;
-			let placeList = $(".left-place-list");
-			let leftPlace = document.getElementsByClassName("selected-place");
+			let currTarget = clickedBtn.parentElement.parentElement;
 			let dailyPlaceList = document.getElementsByClassName("daily-place-list");
 			let idx = getActiveDay(); // idx 를 얻었다.
+			let i;
 			let currentList = dailyPlaceList[idx];
-			
+			console.log(currentList[0]||0);
+			console.log(currTarget.dataset["plcNo"]);
+			for (i = 0; len = currentList.length ,i < len; i++) {
+				console.log(currentList[i].dataset["plcNo"]);
+				if(currTarget.dataset["plcNo"]==currentList[i].dataset["plcNo"]){
+					return;
+				}
+			}
 							
 							let objs1 = document.createElement("div");
 							objs1.setAttribute('class','selected-place');
 							objs1.setAttribute('data-title',parentE['title']);
-							objs1.setAttribute('data-region-id',parentE['regionId']);
-							objs1.setAttribute('data-plc-dt',parentE['plcDt']);
+							objs1.setAttribute('data-region-no',parentE['regionNo']);
+							objs1.setAttribute('data-address-dt',parentE['addressDt']);
 							objs1.setAttribute('data-plc-no',parentE['plcNo']);
 							objs1.setAttribute('data-holiday',parentE['holiday']);
 							objs1.setAttribute('data-lat',parentE['lat']);
 							objs1.setAttribute('data-lng',parentE['lng']);
 							objs1.setAttribute('data-opening-h',parentE['openingH']);
 							objs1.setAttribute('data-p-cate',parentE['pCate']);
-							objs1.innerText=parentE['title'] + " ";
+							objs1.innerText=parentE['title'];
 						
 
 							let btnobj1 = document.createElement("button");
