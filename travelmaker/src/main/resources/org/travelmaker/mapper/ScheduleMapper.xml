@@ -14,6 +14,7 @@
 	<result property="schStatus" column="sch_status"/>
 	<result property="memo" column="memo"/>
 	<result property="schRegion" column="sch_region"/>
+	<result property="hidden" column="hidden"/>
 
 
 </resultMap>
@@ -21,7 +22,15 @@
 
 <select id="getList" resultMap="ScheduleResult">
 <![CDATA[
-	select * from schedule
+	select * from schedule where mem_no = #{memNo}
+]]>
+</select>
+
+<!-- schedule, board 조인해서 공개, 비공개 여부 확인 -->
+<select id="getHiddenList" resultMap="ScheduleResult">
+<![CDATA[
+	select s.sch_no, s.sch_title, b.hidden from schedule s, board b
+	where mem_no = #{memNo} and s.sch_no=b.sch_no
 ]]>
 </select>
 
@@ -53,6 +62,11 @@
 <delete id="delete">
 	delete from schedule where sch_no = #{schNo}
 </delete>
+
+<!-- 게시물 작성할 때 게시물 상태 '작성'으로 변경 -->
+<update id="statusupdate">
+	update schedule set sch_status='작성' where sch_no= #{schNo}
+</update>
 
 <update id="update">
 	update schedule
