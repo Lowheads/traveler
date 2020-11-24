@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 닉네임 수정 -->
-	<update id="nNameModify" parameterType="String">
+	<update id="nicknameModify" parameterType="String">
 		update member set
 		nickname = #{nickname}
 		where email = #{email}		

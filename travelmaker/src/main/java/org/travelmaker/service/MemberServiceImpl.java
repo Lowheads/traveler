@@ -64,8 +64,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void nNameModify(String nickname, String email) { // 닉네임 변경
-		mapper.nNameModify(nickname, email);
+	public void nicknameModify(String nickname, String email) { // 닉네임 변경
+		mapper.nicknameModify(nickname, email);
 	}
 
 	@Override

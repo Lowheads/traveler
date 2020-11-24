@@ -20,7 +20,7 @@ public interface MemberService {
 	
 	public int emailCheck(String email); // 이메일 중복체크
 	
-	public void nNameModify(String nickname, String email); // 이메일 수정(id받아서 변경)
+	public void nicknameModify(String nickname, String email); // 이메일 수정(id받아서 변경)
 	
 	public int nicknameDuplCheck(String nickname); // 닉네임 중복체크
 	

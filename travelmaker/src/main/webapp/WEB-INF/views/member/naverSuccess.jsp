@@ -33,8 +33,8 @@ h3 {
        
         $("#email").html("환영합니다. "+email+"님");
         $("#nickName").html("닉네임 : " + nickName);
-        $("#id").html("닉네임 : " + id);
-        $("#gender").html("닉네임 : " + gender);
+        $("#id").html("애플리케이션 ID : " + id);
+        $("#gender").html("성별 : " + gender);
       });
 </script>
 

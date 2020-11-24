@@ -45,7 +45,7 @@ public class SendEmailController {
 	        ModelAndView mav;
 	        String e_mail=(String) paramMap.get("email"); // 내가 입력한 이메일이 저장된다.
 	        service.newPwd(e_mail); // 이메일을 넣으면 이건 새로운 비밀번호로 바뀐다.
-	        String pw= service.findPwd(paramMap); // 이메일로 조회한 결과(비밀번호)를 저장한다.
+	        String pw= service.findPwd(paramMap); // 이메일로 조회한 결과(새로운 비밀번호)를 저장한다.
 	        
 	        if(pw!=null) { // 이메일이 ture면..
 	            email.setContent("안녕하세요, travel입니다! \n"
@@ -55,7 +55,6 @@ public class SendEmailController {
 	            email.setSubject(e_mail+"님 travle에서 보내드리는 임시 비밀번호 메일입니다."); // 제목
 	            emailSender.SendEmail(email);
 	            // alert 출력
-	        	rttr.addFlashAttribute("flag", false);
 	        	rttr.addFlashAttribute("msg", "임시비밀번호를 보내드렸습니다.\n 확인해주세요!");
 	        	// 성공하면 메인페이지로 이동.. 로그인해주세요
 	        	mav= new ModelAndView("redirect:/member/main"); 

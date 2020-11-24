@@ -180,15 +180,15 @@ public class MemberComtroller {
 	}
 	
 	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
-	@RequestMapping(value = "/nNameModify", method = RequestMethod.POST)
-	public String nNameModify(String nickname, String email, Model model, RedirectAttributes rttr) {
+	@RequestMapping(value = "/nicknameModify", method = RequestMethod.POST)
+	public String nicknameModify(String nickname, String email, Model model, RedirectAttributes rttr) {
 
 		// nickNameResult : 닉네임 있으면 1, 없으면 0
 		int nickNameResult = service.nicknameDuplCheck(nickname); 
 		
 		// 저장하기를 눌렀을 떄, 닉네임을 변경하지 않았거나, 중복된 닉네임이 없다면 저장한다.
 		if(service.myNicknamePass(nickname, email) || nickNameResult < 1) {
-			service.nNameModify(nickname, email);
+			service.nicknameModify(nickname, email);
 //			rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다");
 			model.addAttribute("msg", "정보를 정상적으로 변경하였습니다");
 			model.addAttribute("member", service.viewMember(email));
@@ -245,7 +245,7 @@ public class MemberComtroller {
 	}
 	
     @RequestMapping("/main")
-    public ModelAndView login(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로 가는 듯.
+    public ModelAndView naverLogin(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로 가는 듯.
         /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         
@@ -254,6 +254,7 @@ public class MemberComtroller {
     }
     
   //네이버 로그인 성공시 callback호출 메소드
+  // 'id'값은 각 애플리케이션마다 회원 별로 유니크한 값
     @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
     System.out.println("여기는 callback");
@@ -289,6 +290,7 @@ public class MemberComtroller {
     System.out.println(apiResult); // 네이버 로그인 정보					
     return "/member/naverSuccess";
     }
+    
     
     // 로그인 해야 들어갑니다아
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)

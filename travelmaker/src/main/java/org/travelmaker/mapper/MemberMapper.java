@@ -27,7 +27,7 @@ public interface MemberMapper {
 	
 	public int nicknameDuplCheck(String nickname); // 닉네임 중복체크 (있으면 1, 없으면 0 반환)
 	
-	public void nNameModify(@Param("nickname") String nickname, @Param("email") String email); //닉네임 수정
+	public void nicknameModify(@Param("nickname") String nickname, @Param("email") String email); //닉네임 수정
 	
 	public int deleteValid(@Param("pwd") String pwd, @Param("email") String email); // 탈퇴전 유효성 체크
 	

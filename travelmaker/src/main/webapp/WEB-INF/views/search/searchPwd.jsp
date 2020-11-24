@@ -39,7 +39,7 @@
 			<h1>비밀번호 찾기</h1>
 			<p><input type="email" id="email" name="email"></p>
 			<p><span id="spanEmail"></span></p>
-			<input type="submit" onclick="return inputCheck()" value="비밀번호 찾자..">
+			<input type="submit" onclick="return inputCheck()" value="메일 보내기">
 			</form>
 			<!-- 이메일이 맞으면 임시비밀번호 보냈다는 메세지 출력 -->
 		<c:if test="${flag == false }"><p><script>alert('<c:out value="${msg}"/>');</script></p></c:if>
