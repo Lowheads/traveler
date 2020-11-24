@@ -52,8 +52,7 @@
 						cellspacing="0">
 						<thead>
 							<tr>
-								<th><input type="checkbox" name="checkAll" id="th_checkAll"
-									onclick="checkAll();" /></th>
+								<th><input type="checkbox" id="th_checkAll" onclick="checkAll();" /></th>
 								<th>MEM_NO</th>
 								<th>EMAIL</th>
 								<th>NICKNAME</th>
@@ -165,12 +164,10 @@
 
 			if (message === '' || history.state) {
 				return;
-			}else {
-
+			}else{
 				$(".modal-body").html("삭제를 완료하였습니다");
 				$("#myModal").modal("show");
 			}
-
 		}
 	})
 
@@ -221,6 +218,14 @@
 			$("#myModal").modal("show");
 			return false;
 		}
+		
+		if(type =="회원번호"){
+			if(isNaN(keyword)){
+				$(".modal-body").html("회원번호는 숫자만 입력해주세요");
+				$("#myModal").modal("show");
+				return false;
+			}
+		}
 		return true;
 	})
 	
@@ -259,7 +264,7 @@
 
 	})
 
-	function checkAll() {
+	function checkAll(event) {
 		if ($("#th_checkAll").is(':checked')) {
 			$("input[name=ChkBox]").prop("checked", true);
 		} else {

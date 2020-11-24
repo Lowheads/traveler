@@ -24,6 +24,8 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="org.travelmaker.controller" />
+	<context:component-scan base-package="org.travelmaker.exception" />
+	
 
 	<!-- 업로드 패스 설정 -->
 	<beans:bean class="java.lang.String" id="uploadPath">

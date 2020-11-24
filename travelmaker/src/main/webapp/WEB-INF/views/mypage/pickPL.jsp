@@ -76,17 +76,17 @@
         <div style="text-align: center;" class="w3-center">
 <ul class="w3-bar">
 <c:if test="${pageMaker.prev }">
-<li class="w3-button"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>
+<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
 </c:if>
 
 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-<li class="w3-button" "${pageMaker.cri.pageNum == num ? 'active':'' }">
-<a href="${num}"> ${num }</a></li>
+<li class="w3-button" "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
+<a> ${num }</a></li>
 </c:forEach>
 
 <c:if test="${pageMaker.next }">
-<li >
-<a href="${pageMaker.endPage +1 }" class="w3-button">&raquo;</a></li>
+<li class="w3-button" num="${pageMaker.endPage +1 }">
+<a>&raquo;</a></li>
 </c:if>
 </ul>
 
@@ -263,29 +263,21 @@
 						
 					
 						//페이지정보 보내는 function
-						$(".w3-button a").on("click",function(e) {
+						$(".w3-button").on("click",function(e) {
 
 									e.preventDefault();
 
-									console.log('click');
-
 									actionForm.find("input[name='pageNum']")
-											.val($(this).attr("href"));
+											.val($(this).attr("num"));
 									actionForm.submit();
 								});
 
 						//좋아요 취소하는 버튼
 						$(".heart a").on("click", function() {
-
 							$(this).hide(5);
-							var hvar = document.getElementById("hvar");
-
-							var that = $(".heart");
 							var sendData = {
-								'plc_no' : $(this).attr('plc_no'),
-								'heart' : 1
+								'plcNo' : $(this).attr('plc_no'),
 							}
-							
 							//ajax 기능 추가 
 							$.ajax({
 								type : 'post',

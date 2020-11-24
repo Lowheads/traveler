@@ -9,7 +9,7 @@ public interface ThemeMapper {
 
 	public List<Map<String,String>> getThemeList();
 
-	public List<String> getThemeInfo(@Param(value = "region_no") String region_id,
-			@Param(value = "theme_code") String theme_code);
+	public List<Map<String,String>> getThemeInfo(@Param(value = "regionNo") String regionNo,
+			@Param(value = "themeCode") String themeCode);
 
 }
