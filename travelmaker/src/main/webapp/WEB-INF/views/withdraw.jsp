@@ -39,7 +39,7 @@
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
 				</div>
 				<div>
-				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
+				<button class="btn btn-sm- btn-primary">검색</button>
 				</div>
 				</form>
 
@@ -180,6 +180,7 @@ $(document).ready(function() {
 })
 
 $("#searchForm button").on("click",function(e) {
+		
 		var type = $("#searchForm").find("option:selected").val();
 		var keyword = $("#searchForm").find("input[name='keyword']").val();
 
@@ -194,9 +195,14 @@ $("#searchForm button").on("click",function(e) {
 			$("#myModal").modal("show");
 			return false;
 		}
-		
+		if(type =="회원번호"){
+			if(isNaN(keyword)){
+				$(".modal-body").html("회원번호는 숫자만 입력해주세요");
+				$("#myModal").modal("show");
+				return false;
+			}
+		}
 		return true;
-
 	})
 </script>
 
