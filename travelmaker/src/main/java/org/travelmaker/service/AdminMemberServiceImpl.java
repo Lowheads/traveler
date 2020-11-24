@@ -29,7 +29,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	}
 
 	@Override
-	public boolean removeUser(int result) {
+	public int removeUser(int result) {
 
 		return mapper.removeUser(result);
 		

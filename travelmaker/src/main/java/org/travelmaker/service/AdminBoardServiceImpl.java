@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.mapper.AdminBoardMapper;
 
@@ -35,6 +36,12 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	public List<BoardVO> searchBoardWriter(Criteria cri) {
 
 		return mapper.searchBoardWriter(cri);
+	}
+
+	@Override
+	public List<BoarddtVO> getBoardDetail(int boardNo) {
+
+		return mapper.getBoardDetail(boardNo);
 	}
 
 }

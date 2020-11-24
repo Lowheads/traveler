@@ -9,6 +9,6 @@
 </select>
 
 <select id="getThemeInfo" resultType="string">
-	select p.plc_no from theme t , theme_plc p where t.theme_no = p.theme_no and t.region_no=#{region_no, jdbcType=INTEGER} and t.theme_code=#{theme_code, jdbcType=VARCHAR}
+	select p.plc_no, pl.plc_title from theme t , theme_plc p, place pl where t.theme_no = p.theme_no and p.plc_no=pl.plc_no and t.region_no=#{region_no, jdbcType=INTEGER} and t.theme_code=#{theme_code, jdbcType=VARCHAR}
 </select>
 </mapper>

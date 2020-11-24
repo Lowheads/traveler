@@ -3,8 +3,8 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     
 <%@ include file="includes/adminheader.jsp"%>
-<div id="dailyChart" style="width: 700px; height: 200px;"></div>
-<div id="monthlyChart" style="width: 700px; height: 200px;"></div>
+<div id="dailyChart" style="width: 900px; height: 200px;"></div>
+<div id="monthlyChart" style="width: 900px; height: 200px;"></div>
 <div id="Table" style="width: 700px; height: 200px;"></div>
  <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
