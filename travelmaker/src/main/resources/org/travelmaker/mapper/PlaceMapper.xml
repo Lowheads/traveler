@@ -95,9 +95,9 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
         where p.plc_no = pl.plc_no 
 			and pl.mem_no = #{memNo}
             order by p.likecnt desc)a
-            where rownum <= #{pageNum} * 8
+            where rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *8+1 
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
@@ -115,9 +115,9 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
             order by pl.pp_date desc,
             p.plc_no desc
             )a
-            where rownum <= #{pageNum} * 8
+            where rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *8+1 
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
@@ -136,9 +136,9 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
             p.plc_no desc
             
             )a
-            where rownum <= #{pageNum} * 8
+            where rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *8+1 
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 

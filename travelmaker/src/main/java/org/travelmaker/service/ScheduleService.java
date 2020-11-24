@@ -3,6 +3,7 @@ package org.travelmaker.service;
 import java.util.List;
 
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 
 public interface ScheduleService {
@@ -34,4 +35,8 @@ public interface ScheduleService {
 	public void register(ScheduleVO schedule);
 
 	public ScheduleVO getListSchedule(int schNo); 
+	
+//	public List<ScheduleVO> getLikeList(Criteria cri);
+	public List<ScheduleVO> getNewestList(Criteria cri);
+	public List<ScheduleVO> getOldestList(Criteria cri);
 }

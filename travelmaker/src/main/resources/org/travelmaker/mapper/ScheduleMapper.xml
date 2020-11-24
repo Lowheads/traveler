@@ -174,13 +174,13 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
             order by pl.ps_date desc,
             s.sch_no desc
             )a
-            where rownum <= #{pageNum} * 8
+            where rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *8+1 
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
-<select id="sortNewest" resultMap="ScheduleResult"><!-- 내일 수정  -->
+<select id="sortOldest" resultMap="ScheduleResult"><!-- 내일 수정  -->
 <![CDATA[
    select *
     from (
@@ -195,9 +195,9 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
             order by pl.ps_date asc,
             s.sch_no desc
             )a
-            where rownum <= #{pageNum} * 8
+            where rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *8+1 
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 

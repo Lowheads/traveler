@@ -78,13 +78,29 @@ public class MyPageController {
 			}
 		
 		@GetMapping("/pickSch")
-		public void pickSch(Criteria cri,Model model,HttpServletRequest request) {
+		public void pickSch(Criteria cri,Model model,HttpServletRequest request,String selected) {
 			HttpSession session = request.getSession();
 			int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 			cri.setMemNo(memNo);
 			cri.setAmount(8);
+			if(selected==null||selected.equals("null")) {
 			model.addAttribute("list",SchService.getList(cri));
 			model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
+			}
+			if(selected!=null) {
+//				if(selected.equals("like")){
+//					model.addAttribute("list",Schservice.getLikeList(cri));
+//					model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
+//				}
+				if(selected.equals("new")){
+					model.addAttribute("list",SchService.getNewestList(cri));
+					model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
+				}
+				if(selected.equals("old")){
+					model.addAttribute("list",SchService.getOldestList(cri));
+					model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
+				}
+			}
 		}
 		
 		@GetMapping({"/past/get","/pickSch/get","/upcomming/get"})
