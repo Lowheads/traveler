@@ -49,19 +49,24 @@ public class MyPageController {
 			cri.setMemNo(memNo);
 			int total = PLCservice.getTotal(cri);
 			cri.setAmount(8);
+			if(selected==null||selected.equals("null")) {
 				model.addAttribute("list",PLCservice.getList(cri));
-				model.addAttribute("pageMaker",new PlacePageDTO(cri,total));	
-				if(selected!=null) {
-					if(selected.equals("like")){
-						model.addAttribute("list",PLCservice.getLikeList(cri));
-					}
-					if(selected.equals("new")){
-						model.addAttribute("list",PLCservice.getNewestList(cri));
-					}
-					if(selected.equals("old")){
-						model.addAttribute("list",PLCservice.getOldestList(cri));
-					}
+				model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
+			}
+			if(selected!=null) {
+				if(selected.equals("like")){
+					model.addAttribute("list",PLCservice.getLikeList(cri));
+					model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
 				}
+				if(selected.equals("new")){
+					model.addAttribute("list",PLCservice.getNewestList(cri));
+					model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
+				}
+				if(selected.equals("old")){
+					model.addAttribute("list",PLCservice.getOldestList(cri));
+					model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
+				}
+			}
 		}
 		
 		@PostMapping("/remove")

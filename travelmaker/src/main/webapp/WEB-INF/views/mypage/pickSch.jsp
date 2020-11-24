@@ -7,7 +7,13 @@
 
 
   <!-- Page Content -->
-    <div class="row">
+     <!-- sort -->
+<select id="listSort" style="float:right; margin-right:10%;" > 
+<option hidden selected disabled ></option>
+<option value="like">좋아요 순</option>
+<option value="new">최근에 찜한 순</option>
+<option value="old">오래전에 찜한 순</option>
+</select>
 
      <div class="leftNav">
 
@@ -73,7 +79,6 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function(){
 		
 		var actionForm = $("#actionForm");
 		
@@ -114,7 +119,12 @@
 			});
 		});
 		
-	});
+	
+		$("#listSort").change(function(){
+
+			location.replace("/mypage/pickPL?selected="+this.value);
+		});
+		
 	
 
 </script>   
