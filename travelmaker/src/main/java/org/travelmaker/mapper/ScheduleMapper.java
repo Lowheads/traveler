@@ -18,9 +18,9 @@ public interface ScheduleMapper {
 	// 업데이트 가능해야되고(좋아요 업다운)
 	public int update(ScheduleVO vo);
 
-	public void upSet(int schNo);
+	public void upCnt(int schNo);
 
-	public void downSet(int schNo);
+	public void downCnt(int schNo);
 
 	public List<ScheduleVO> getListWithPaging(Criteria cri);
 

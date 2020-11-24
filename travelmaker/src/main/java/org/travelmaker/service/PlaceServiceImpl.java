@@ -23,15 +23,11 @@ public class PlaceServiceImpl implements PlaceService {
 	
 	@Override
 	public void register(PlaceVO place) {
-
-		log.info("register"+place);
 		mapper.insert(place);
 	}
 
 	@Override
 	public PlaceVO get(long plcNo) {
-
-		log.info("get...."+plcNo);
 		
 		return mapper.read(plcNo);
 		
@@ -40,15 +36,11 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public boolean remove(long plcNo) {
 		
-		log.info("remove...."+plcNo);
-		
 		return mapper.delete(plcNo)==1;
 	}
 
 	@Override
 	public List<PlaceVO> getList() {
-		
-		log.info("getList.....");
 		
 		return mapper.getList();
 	}
@@ -56,23 +48,17 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public boolean modify(PlaceVO place) {
 
-		log.info("modify..."+place);
-		
 		return mapper.update(place) ==1;
 	}
 
 	@Override
 	public List<PlaceVO> getList(Criteria cri) {
 
-
-		log.info("get List with criteria: "+cri);
-		
 		return mapper.getListWithPaging(cri);
 	}
 
 	@Override
 	public void updateLikeCnt(PlaceVO vo) {
-		log.info("update,,,");
 		mapper.update(vo);
 	}
 

@@ -22,7 +22,7 @@
 	<div class="panel-body">
 		<!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
 		<div class="date-wrapper">일정 작성
-				<p>
+			<p>
 				<input type="text" name="daterange" class="data-range-picker" data-init-todate='<c:out value="${schDto.toDate}" />' data-init-fromdate='<c:out value="${schDto.fromDate}" />' />
 			</p>
 		</div>
@@ -34,14 +34,17 @@
 		</ul> 
 		
 		<button class="btn-rec-place">추천 장소</button>
-		<ul class="left-place-list" id="left-place-list">
-			<li class="left clearfix" id="rec-place">
+		<ul class="left-place-rec-list">
+		<li class="left clearfix" id="rec-place">
 				<c:forEach items="${places}" var="list">
 					<div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}">
 						<c:out value="${list.plcTitle}"></c:out>
 					</div>
 				</c:forEach>
 			</li>
+		</ul>
+		<ul class="left-place-list" id="left-place-list">
+			
 		</ul>
 	</div>
 	<!-- end place list -->
@@ -53,7 +56,7 @@
 		<!-- 검색 창의 시작  -->
 		<form name="searchForm" id="searchForm">
 			<i class="fa fa-map-marker"></i> 
-				<input type="text" id="search-value" /><br>
+				<input type="text" id="search-value" onkeypress="return false" /><br>
 				<button class="search-button" type="button">
 				<i class="fas fa-search"></i>
 			</button>
@@ -90,7 +93,6 @@
 		var markers =[];
 		var marker;
 		
-		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
 	       center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
@@ -119,7 +121,7 @@
 			  });
 		   
 		   $('input[name="daterange"]').on('apply.daterangepicker', (e, picker) => {
-			   computeDate();
+			   computeDate(); 
 		      }); 
 		   
 		   
@@ -148,6 +150,7 @@
 		    
 			document.querySelector('.search-button').addEventListener('click', searchAction);
 			document.querySelector('.btn-rec-place').addEventListener('click', showRecPlace);
+			document.querySelector('.daily-place-list').style.display ='block';
 			
 	    }
 	          
@@ -157,32 +160,59 @@
 
 	    //모달 보여지는 메서드
 	    function modalShow() {
-	    	document.querySelector('.modal_wrap').style.display = 'block';
-	        document.querySelector('.black_bg').style.display = 'block';
+	    	document.querySelector('.modal_wrap').style.display ='block';
+	        document.querySelector('.black_bg').style.display ='block';
 	    };
 
 	    //모달 사라지는 메서드
 	    function modalClose() {
-	        document.querySelector('.modal_wrap').style.display = 'none';
-	        document.querySelector('.black_bg').style.display = 'none';
+	        document.querySelector('.modal_wrap').style.display ='none';
+	        document.querySelector('.black_bg').style.display ='none';
+	    }
+	    
+	    function showDailyPlaceList(event) {
+	    	let currTarget = event.currentTarget;
+	    	let btnList = document.getElementsByClassName("daily-place-btn")
+	    	let i;
+	    	let dailyPlaceList = document.querySelectorAll('.daily-place-list')
+	    	for (i = 0; i < btnList.length; i++) {
+				if(btnList[i] == currTarget) {
+					dailyPlaceList[i].style.display='block';
+				}
+				else{
+					dailyPlaceList[i].style.display='none';
+				}
+			}
 	    }
 
-	    function computeDate() { // date picker onchange랑, 초기값 계산해서 button 생성하는 function
+	    function computeDate() { // date picker apply 이벤트랑, 초기값 계산해서 button 생성하는 function
 	    	let datePicker = document.getElementsByClassName("data-range-picker")[0];
 	    	let dateList = datePicker.value.split(' - ');
 			let fromDate = new Date(dateList[0]);
 			let toDate = new Date(dateList[1]);
 	    	let dateDiff = Math.ceil((toDate.getTime()-fromDate.getTime())/(1000*3600*24));
 		    let idx =0;
-		    let totalPlace = document.getElementById("left-date-list");
-		    totalPlace.innerHTML = null;
+		    let totalDate = document.getElementById("left-date-list");
+		    let totalPlace = document.getElementById("left-place-list");
+		    totalDate.innerHTML = null;
+		    totalPlace.innerHTML = null; // 수정되면 초기화 작업
 		   for(idx; idx<=dateDiff; idx++ ){
 			   let objs;
 			    objs = document.createElement('button');
 		        objs.setAttribute('class', 'daily-place-btn');
 		        objs.innerText=idx+1+"일차";
-		        totalPlace.appendChild(objs);
+		        objs.addEventListener('click', showDailyPlaceList);
+		        totalDate.appendChild(objs);
+		        
+		       let liobjs
+		       liobjs = document.createElement('li');
+		       liobjs.setAttribute('class', 'daily-place-list');
+		       liobjs.setAttribute('style','display:none');
+		       liobjs.innerText=idx+1+"일차 장소리스트 on";
+		       totalPlace.appendChild(liobjs);
+		       
 		   }
+		   document.querySelector('.daily-place-list').style.display='block';
 	    }
 	    
 	    function showRecPlace() { // 추천장소 버튼을 누르면 장소들 등장, button을 추가할지 말진 모르겠다.
@@ -190,31 +220,71 @@
 	          let len = recPlace.length;
 	          let i;
 	          for (i = 0; i < len; i++) {
-	             recPlace[i].style.display = 'block';
+	             recPlace[i].style.display='block';
 	         }
 	          
 	       }
 	    
 	    
 	    
-		function searchAction() {
+	    function searchAction() {
 			let placeValue = $("#search-value").val();
 			let placeList = $(".right-place-list");
-			let tagStr = "";
-			let i;
+			let leftPlace = document.getElementsByClassName("selected-place");
+			placeList.empty();
+			let i,j;
+			let tmplist = [];
 			placeService.getList({title : placeValue},
 					function(list) {
-						for (i = 0, len = list.length || 0; i < len; i++) {
-							var str = "";
-							str += "<li class='right clearfix'>"; // 굳이 없어도 되는 부분이긴 한데... 
-							str += "<div class='hoverable-place'  data-title='"+list[i].plcTitle+"' data-region-id='"+list[i].regionId+"' data-plc-dt='"+list[i].plcDt+"' data-plc-no='"+list[i].plcNo+"' data-holiday='"+list[i].holiday+"' data-lat='"+list[i].lat+"' data-p-cate='"+list[i].pCate+"' data-opening-h='"+list[i].openingH+"' data-lng='"+list[i].lng+"' onmouseover='placeOver(event)'>"
-									+ list[i].plcTitle + " ";
-							str += "<button class='add-button' onclick='moveToLeft(event)'><i class='fas fa-plus'></i></button>";
-							str += "<button class='detail-button' onclick='placeDetail(event)'><i class='fas fa-search-plus'></i></button></div></li>";
-							tagStr += str;
-							
+						let len = list.length;
+						let leng = leftPlace.length;
+						for (i= 0, len||0; i<len-leng; i++) {
+							for (j = 0; j < leng||0; j++) {
+									if(leftPlace[j].dataset["title"]==list[i].plcTitle){
+										tmplist.push(list[i]);
+										list.splice(i,1);
+									}
+							}
 						}
-						placeList.html(tagStr);
+						console.log(tmplist); // 디버깅용 tmplist
+						
+						for (i = 0, len|| 0; i < len-leng; i++) {
+							let liobj = document.createElement("li");	
+							liobj.setAttribute('class', 'left clearfix');
+							
+							let objs1 = document.createElement("div");
+							objs1.setAttribute('class','hoverable-place');
+							objs1.setAttribute('data-title',list[i].plcTitle);
+							objs1.setAttribute('data-region-id',list[i].regionId);
+							objs1.setAttribute('data-plc-dt',list[i].plcDt);
+							objs1.setAttribute('data-plc-no',list[i].plcNo);
+							objs1.setAttribute('data-holiday',list[i].holiday);
+							objs1.setAttribute('data-lat',list[i].lat);
+							objs1.setAttribute('data-lng',list[i].lng);
+							objs1.setAttribute('data-opening-h',list[i].openingH);
+							objs1.setAttribute('data-p-cate',list[i].pCate);
+							objs1.innerText=list[i].plcTitle + " ";
+							objs1.addEventListener('mouseover',placeOver);
+							
+							let btnobj1 = document.createElement("button");
+							btnobj1.setAttribute('class', 'add-button');
+							let iconobj1 = document.createElement("i");
+							iconobj1.setAttribute('class', 'fas fa-plus');
+							iconobj1.addEventListener('click',moveToLeft);
+							btnobj1.appendChild(iconobj1);
+							
+							let btnobj2 = document.createElement("button");
+							btnobj2.setAttribute('class', 'detail-button');
+							let iconobj2 =document.createElement("i");
+							iconobj2.setAttribute('class', 'fas fa-search-plus');
+							iconobj2.addEventListener('click',placeDetail);
+							btnobj2.appendChild(iconobj2);
+
+							objs1.appendChild(btnobj1);
+							objs1.appendChild(btnobj2);
+							liobj.appendChild(objs1);
+							placeList.append(liobj);
+						}
 						
 					})
 			return;
@@ -224,41 +294,66 @@
 			let deleteElement = event.currentTarget;
 			deleteElement.parentElement.parentElement.remove(); 
 			}
+		
+		function getActiveDay(){
+			let dateList = document.getElementsByClassName("daily-place-list");
+			console.log(dateList);
+			let idx, i;
+			for (i = 0; i < dateList.length; i++) {
+				
+				if(dateList[i].style.display=="block"){
+					idx = i;
+				}
+			}
+			console.log(idx);
+			return idx;
+		}
 
 		function moveToLeft(event) {
 			let clickedBtn = event.currentTarget;
-			console.log(clickedBtn);
-			let index = document.getElementsByClassName("left-place")
-			let parentE = clickedBtn.parentElement.dataset;
-			
+			let index = document.getElementsByClassName("left-place-list")
+			let parentE = clickedBtn.parentElement.parentElement.dataset;
+			let placeList = $(".left-place-list");
 			let leftPlace = document.getElementsByClassName("selected-place");
-			let i;
-			if(leftPlace.length ||0){
-			for (i = 0; i < leftPlace.length; i++) {
-				if(leftPlace[i].dataset['title'] == parentE['title']){		
-					alert("이미 일정에 추가하셨습니다.");
-					return;
-				}
-			}
-			}
+			let dailyPlaceList = document.getElementsByClassName("daily-place-list");
+			let idx = getActiveDay(); // idx 를 얻었다.
+			let currentList = dailyPlaceList[idx];
 			
-			var str ="";
-			str += "<li class='left clearfix'>"; 
-			str += "<div class='selected-place'  data-title='"+parentE['title']+"' data-region-id='"+parentE['regionId']+"' data-plc-dt='"+parentE['plcDt']+"' data-plc-no='"+parentE['plcNo']+"' data-holiday='"+parentE['holiday']+"' data-lat='"+parentE['lat']+"' data-p-cate='"+parentE['pCate']+"' data-opening-h='"+parentE['openingH']+"' data-lng='"+parentE['lng']+"'>"
-			+ parentE['title'];
-			str += "<button class='delete-button' onclick='deleteInLeft(event)'><i class='fas fa-times'></i></button>";
-			var placeList = $(".left-place-list");
-			placeList.append(str);
+							
+							let objs1 = document.createElement("div");
+							objs1.setAttribute('class','selected-place');
+							objs1.setAttribute('data-title',parentE['title']);
+							objs1.setAttribute('data-region-id',parentE['regionId']);
+							objs1.setAttribute('data-plc-dt',parentE['plcDt']);
+							objs1.setAttribute('data-plc-no',parentE['plcNo']);
+							objs1.setAttribute('data-holiday',parentE['holiday']);
+							objs1.setAttribute('data-lat',parentE['lat']);
+							objs1.setAttribute('data-lng',parentE['lng']);
+							objs1.setAttribute('data-opening-h',parentE['openingH']);
+							objs1.setAttribute('data-p-cate',parentE['pCate']);
+							objs1.innerText=parentE['title'] + " ";
+						
+
+							let btnobj1 = document.createElement("button");
+							btnobj1.setAttribute('class', 'delete-button');
+							let iconobj1 = document.createElement("i");
+							iconobj1.setAttribute('class', 'fas fa-times');
+							iconobj1.addEventListener('click',deleteInLeft);
+							btnobj1.appendChild(iconobj1);
+							objs1.appendChild(btnobj1);
+							currentList.append(objs1);
+							
+			
 			if(markers.length||0){
 				markers[0].setMap(null);
 				markers.pop();
 			}
-			clickedBtn.parentElement.parentElement.remove();
+			clickedBtn.parentElement.parentElement.parentElement.remove();
 		}
 		
 		function placeDetail(event) { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
 			let clickedBtn = event.currentTarget;
-			let placeNo = clickedBtn.parentElement.dataset["plcNo"];
+			let placeNo = clickedBtn.parentElement.parentElement.dataset["plcNo"];
 			let URL = "https://place.map.kakao.com/"+placeNo;
 			window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
 		}
@@ -297,7 +392,7 @@
 			function panTo(marker) {
 	    	    // 이동할 위도 경도 위치를 생성합니다 
 	    	    var moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
-	    	    // 지도 중심을 부드럽게 이동시킵x니다
+	    	    // 지도 중심을 부드럽게 이동시킵니다
 	    	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
 	    	    map.setProportion;
 	    	    map.panTo(moveLatLon);            
