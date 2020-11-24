@@ -69,12 +69,11 @@ public class MyPageController {
 			}
 		}
 		
-		@PostMapping("/remove")
-		public String remove(@RequestParam("plc_no")int plcNo,RedirectAttributes rttr) {
-			if(PLCservice.remove(plcNo)) {
-				rttr.addFlashAttribute("result","success");
-			}
-			return "redirect:/mypage/list";
+		@RequestMapping(value = "/remove", method = RequestMethod.POST, produces = "application/json")
+		@ResponseBody
+		public void remove(@RequestParam("schNo")int schNo) {
+			System.out.println(schNo);
+			SchService.remove(schNo);
 			}
 		
 		@GetMapping("/pickSch")

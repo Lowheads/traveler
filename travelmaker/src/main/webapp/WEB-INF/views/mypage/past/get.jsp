@@ -6,7 +6,6 @@
 <%@ include file="../../includes/mypageheader.jsp" %>
 
   <!-- Page Content -->
-    <div class="row">
 
        <div class="leftNav">
 
@@ -35,22 +34,19 @@
  <div>메모: <c:out value="${board.memo}"/></div>
   
  <div>지역: <c:out value="${board.schRegion }"/></div>
-</div>
-</div>
       <div class="pull-right">
       <button data-oper='list'> 목록으로</button>
       </div>
 </div>
+</div>
+</div>
      
-      <form id='operForm' action="/mypage/past" method="get">
+	<form id='operForm' action="/mypage/past" method="get">
       <input type='hidden' id='sch_no' name='sch_no' value='<c:out value="${board.schNo}"/>'>
       <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-      <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-      </form>
+	</form>
       <!-- /.col-lg-9 -->
       <script type="text/javascript">
-      
-      $(document).ready(function(){
     	  
      var operForm = $("#operForm");
       
@@ -60,10 +56,6 @@
     	  operForm.attr("action","/mypage/past/").submit();
     	  operForm.submit();
       });
-      
-      });
-      
-      
       
       </script>
 <%@include file="../../includes/footer.jsp" %>

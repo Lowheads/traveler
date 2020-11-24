@@ -116,7 +116,7 @@ public class MemberComtroller {
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
 		//수정 순규
 		session.setAttribute("memNo",vo.getMemNo());
-		return "redirect:success";
+		return "redirect:/";
 	
 	}
 	
