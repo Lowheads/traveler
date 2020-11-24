@@ -188,18 +188,16 @@
 		
 		user.detail(boardNo,function(list){
 			
-			alert("list "+list);
-			alert("길이 "+list.length);
 			
-			var str = "";
+			var str = boardNo+"번 게시글 상세정보 <br>";
 			for (var i = 0; i < list.length; i++) {
 				
-				str+=list.boardCon +"/"
+				str+="내용	:	"+list[i].boardCon+"	num	:	"+list[i].num+"	이미지	:	"+list[i].boarddtImg+"	썸네일 이미지	:	"+list[i].boardThumbImg+"<br>";
 			}
-			alert("str "+str);
+			
 			$(".modal-body").html(str);
 			$("#myModal").modal("show");
-			
+
 		})
 		
 	})

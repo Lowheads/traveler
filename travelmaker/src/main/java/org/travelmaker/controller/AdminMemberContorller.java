@@ -77,8 +77,8 @@ public class AdminMemberContorller {
 		if (ids != null) {
 			for (int i = 0; i < ids.length; i++) {
 				service.removeUser(ids[i]);
-				rttr.addFlashAttribute("message", "SUCCESS");
 			}
+			rttr.addFlashAttribute("message", "SUCCESS");
 		}
 
 		return "redirect:/admin/userInfo";

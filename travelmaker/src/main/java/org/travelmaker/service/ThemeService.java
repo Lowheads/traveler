@@ -7,7 +7,7 @@ public interface ThemeService {
 	
 public List<Map<String, String>> getThemeList();
 	
-	public List<String> getThemeInfo(String region_no, String theme_code);
+	public List<Map<String,String>> getThemeInfo(String regionNo, String themeCode);
 	
 
 }

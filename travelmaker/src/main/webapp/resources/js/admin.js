@@ -6,11 +6,20 @@ var user=(function(){
 	
 	function detail(boardNo, callback, error){
 		
-		$.ajax({
-			url : "/admin/getDetail",
-			data:{"boardNo":boardNo},
-			datatype:'json',
-			method :'post',
+		$.getJSON("/admin/getDetail/"+boardNo+".json"
+		,function(data){
+			if(callback){
+				callback(data)}}
+				).fail(
+			function(xhr, status,err){
+				if(error){
+					error();
+				}
+			});
+		
+		/*$.ajax({
+			url : "/admin/getDetail/"+boardNo+".json",
+			method :'get',
 			success:function(result,status,xhr){
 				if(callback){
 					callback(result);
@@ -22,7 +31,7 @@ var user=(function(){
 				}
 			}
 		})
-		
+		*/
 	}
 
 function list(callback,error){
@@ -78,11 +87,7 @@ function list(callback,error){
 		});
 	}
 	
-	return {detail:detail,
-			list:list,
-			search:search,
-			remove:remove
-			};	
+	return {detail:detail};
 })();
 
 

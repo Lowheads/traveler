@@ -24,9 +24,9 @@ public class ThemeServiceImpl implements ThemeService {
 	}
 
 	@Override
-	public List<String> getThemeInfo(String region_no, String theme_code) {
+	public List<Map<String,String>> getThemeInfo(String regionNo, String themeCode) {
 	
-		return mapper.getThemeInfo(region_no,theme_code);
+		return mapper.getThemeInfo(regionNo,themeCode);
 	}
 
 	
