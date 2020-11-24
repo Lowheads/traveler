@@ -3,7 +3,7 @@ package org.travelmaker.domain;
 import lombok.Data;
 
 @Data
-public class PICK_VO {
+public class PickVO {
 
 	private int schNo;
 	private int plcNo;

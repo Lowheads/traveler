@@ -124,7 +124,6 @@ img.ui-datepicker-trigger {
 	vertical-align: middle;
 	cursor: pointer;
 }
-
 .modal_wrap{
         display: none;
         width: 70%;
