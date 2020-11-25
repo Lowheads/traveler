@@ -243,8 +243,13 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove..."+boardNo);
+		
+		BoardVO board= boardservice.get(boardNo);
+		int schNo=board.getSchNo();
+		
 		boarddtservice.remove(boardNo);
 		if(boardservice.remove(boardNo)) {
+			scheduleservice.statusupdate(schNo);
 			rttr.addFlashAttribute("result","success");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());
