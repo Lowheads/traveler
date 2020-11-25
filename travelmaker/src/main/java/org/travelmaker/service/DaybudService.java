@@ -6,17 +6,13 @@ import org.travelmaker.domain.DaybudVO;
 
 public interface DaybudService {
 	
-	public void register(DaybudVO daybud);
-	
-	public List<DaybudVO> get(Long no);
-	
-	public boolean modify(DaybudVO daybud);
-	
-	public boolean remove(Long no);
-	
-	public List<DaybudVO> getList();
-
+	// get.jsp - 셀렉트 박스 : 날짜
 	public List<DaybudVO> box();
+	
+	// get.jsp - 일정 지출 내역 카운트 -> 그래프
+	public List<DaybudVO> get(Long no);
 
+	// Test - 그래프
+	public List<DaybudVO> getList();
 
 }

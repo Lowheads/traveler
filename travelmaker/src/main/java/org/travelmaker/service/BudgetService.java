@@ -7,14 +7,7 @@ import org.travelmaker.domain.DaybudVO;
 
 public interface BudgetService {
 	
-	public void register(BudgetVO Budget);
-	
-	public BudgetVO get(Long no);
-	
-	public boolean modify(BudgetVO Budget);
-	
-	public boolean remove(Long no);
-	
+	// list.jsp - 모든 일정, 지출 내역
 	public List<BudgetVO> getList();
 
 }
