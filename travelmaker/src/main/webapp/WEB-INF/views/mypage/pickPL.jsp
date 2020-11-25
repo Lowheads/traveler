@@ -105,193 +105,194 @@
 	$(document).ready(function() {
 		
 					selectVal();
-		
-					var actionForm = $("#actionForm");
-					var markers = [];
-					//마커의 좌표값 얻어오기
-					var markerlatlng = document.getElementsByClassName("markerlatlng");
-					var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-					/* alert($(".markerlatlng").attr("lat")+""+$(".markerlatlng").attr("lng")); */
-					//모달 보여지는 메서드
-					function modalShow() {
-						document.querySelector('.modal_wrap').style.display = 'block';
-						document.querySelector('.black_bg').style.display = 'block';
-						
-						//지도 생성
-						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-						mapOption = {
-							center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
-							level : 3
-						// 지도의 확대 레벨
-						};
-						var map = new kakao.maps.Map(mapContainer,
-								mapOption); // 지도를 생성합니다
-						// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-						var bounds = new kakao.maps.LatLngBounds();
-						var i, marker;
-						var listEl = document.getElementById('placesList'), 
-					    menuEl = document.getElementById('menu_wrap'),
-					    fragment = document.createDocumentFragment(), 
-						listStr = '';
-						
-						//장소 NodeList 받아옴
-						var itemVal = document.querySelectorAll(".item");
-						
-						$("#placesList").children().remove();
-						
-						for (i = 0; i < markerlatlng.length; i++) {
-							
-							// 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-							var placePosition = new kakao.maps.LatLng(
-									(markerlatlng[i].dataset["lat"]),
-									(markerlatlng[i].dataset["lng"])),
-							marker = addMaker(placePosition),
-							itemEl = getListItem(i,markerlatlng[i],markerlatlng[i].dataset["title"],markerlatlng[i].dataset["plc_dt"]);
-							/* if(itemVal[i] !== null || itemVal[i] !== undefined) {
-								
-							} */
-							fragment.appendChild(itemEl);
-							// LatLngBounds 객체에 좌표를 추가합니다
-							bounds.extend(placePosition);
-							//지도 중심좌표 변경
-							map.setBounds(bounds);
-							 (function(marker, title,plc_no) {
-								 itemEl.onmouseover =  function () {
-						                displayInfowindow(marker, title);
-						            };
-
-						            itemEl.onmouseout =  function () {
-						                infowindow.close();
-						            };
-						            itemEl.onclick = function(){
-						            	openPlaceDt(marker,title,plc_no);
-						            };
-							kakao.maps.event.addListener(marker, 'mouseover', function() {
-				                displayInfowindow(marker, title);
-				            });
-
-				            kakao.maps.event.addListener(marker, 'mouseout', function() {
-				            	infowindow.close(marker,title);
-				            });
-				            kakao.maps.event.addListener(marker, 'click', function() {
-				            	openPlaceDt(marker,title,plc_no);
-				            });
-				            
-							 })(marker, markerlatlng[i].dataset["title"],markerlatlng[i].dataset["plc_no"]);
-							 
-						}
-						
-						 listEl.appendChild(fragment);
-						    menuEl.scrollTop = 0;
-						function getListItem(index,places,title,dt) {
-
-						    var el = document.createElement('li'),
-						    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-						                '<div class="info">' +
-						                '   <h5>' + title + '</h5>';
-						    itemStr += '<span>' + dt + '</span>';
-
-						    el.innerHTML = itemStr;
-						    el.className = 'item';
-
-						    //el 값
-						    return el;
-						}
-						function setBounds() {
-							// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-							// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
-							map.setBounds(bounds);
-						}
-						function openPlaceDt(marker,title,plc_no){
-							
-							window.open('https://place.map.kakao.com/'+plc_no, '_blank');
-						}
-						function addMaker(position) {
-							marker = new kakao.maps.Marker({
-								position : position, // 마커의 위치
-							});
-							marker.setMap(map); // 지도 위에 마커를 표출합니다
-							markers.push(marker); // 배열에 생성된 마커를 추가합니다
-							return marker;
-		 				}
-						function displayInfowindow(marker, title) {
-							  var content = '<div style="padding:5px;z-index:1; font-size: 13px;">' + title + '</div>';
-
-							    var moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
-							    infowindow.setContent(content);
-							    infowindow.open(map, marker);
-							    
-							    // 지도 중심을 부드럽게 이동시킵니다
-							    map.panTo(moveLatLon);
-								}
-					}
-					//모달 사라지는 메서드
-					function modalClose() {
-						document.querySelector('.modal_wrap').style.display = 'none';
-							document.querySelector('.black_bg').style.display = 'none';
-						}
-
-						document.getElementById('modal_btn').addEventListener('click', modalShow);
-						document.querySelector('.modal_close').addEventListener('click', modalClose);
-
-					//셀렉트 value 값 설정
-					function selectVal(){
-							var selVal = document.location.href.split("selected=");
-							
-							var selArr = $("#listSort option");
-							if(selVal[1]==undefined || selVal[1] == 'null'){
-							selArr[0].innerHTML = "정렬 기준";
-							}
-							if(selVal[1]=="like"){
-							selArr[0].innerHTML = "좋아요 순";
-							};
-							if(selVal[1]=="new"){
-								selArr[0].innerHTML = "최근에 찜한 순";
-							};
-							if(selVal[1]=="old"){
-								selArr[0].innerHTML = "오래전에 찜한 순";
-							};
-						}
-						
-						
-						
-						//리스트 정렬기준 설정
-					$("#listSort").change(function(){
-
-						location.replace("/mypage/pickPL?selected="+this.value);
-					});
-						
 					
-						//페이지정보 보내는 function
-						$(".w3-button").on("click",function(e) {
-
-									e.preventDefault();
-
-									actionForm.find("input[name='pageNum']")
-											.val($(this).attr("num"));
-									actionForm.submit();
-								});
-
-						//좋아요 취소하는 버튼
-						$(".heart a").on("click", function() {
-							$(this).hide(5);
-							var sendData = {
-								'plcNo' : $(this).attr('plc_no'),
-							}
-							//ajax 기능 추가 
-							$.ajax({
-								type : 'post',
-								url : '/mypage/heart',
-								data : sendData,
-								success : function(data) {
-									
-									alert("목록에서 삭제되었습니다.")
-									location.reload();
-								}
-							});
-						});
-						
 					});
+	
+	var actionForm = $("#actionForm");
+	var markers = [];
+	//마커의 좌표값 얻어오기
+	var markerlatlng = document.getElementsByClassName("markerlatlng");
+	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+	/* alert($(".markerlatlng").attr("lat")+""+$(".markerlatlng").attr("lng")); */
+	//모달 보여지는 메서드
+	function modalShow() {
+		document.querySelector('.modal_wrap').style.display = 'block';
+		document.querySelector('.black_bg').style.display = 'block';
+		
+		//지도 생성
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
+			level : 3
+		// 지도의 확대 레벨
+		};
+		var map = new kakao.maps.Map(mapContainer,
+				mapOption); // 지도를 생성합니다
+		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+		var bounds = new kakao.maps.LatLngBounds();
+		var i, marker;
+		var listEl = document.getElementById('placesList'), 
+	    menuEl = document.getElementById('menu_wrap'),
+	    fragment = document.createDocumentFragment(), 
+		listStr = '';
+		
+		//장소 NodeList 받아옴
+		var itemVal = document.querySelectorAll(".item");
+		
+		$("#placesList").children().remove();
+		
+		for (i = 0; i < markerlatlng.length; i++) {
+			
+			// 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+			var placePosition = new kakao.maps.LatLng(
+					(markerlatlng[i].dataset["lat"]),
+					(markerlatlng[i].dataset["lng"])),
+			marker = addMaker(placePosition),
+			itemEl = getListItem(i,markerlatlng[i],markerlatlng[i].dataset["title"],markerlatlng[i].dataset["plc_dt"]);
+			/* if(itemVal[i] !== null || itemVal[i] !== undefined) {
+				
+			} */
+			fragment.appendChild(itemEl);
+			// LatLngBounds 객체에 좌표를 추가합니다
+			bounds.extend(placePosition);
+			//지도 중심좌표 변경
+			map.setBounds(bounds);
+			 (function(marker, title,plc_no) {
+				 itemEl.onmouseover =  function () {
+		                displayInfowindow(marker, title);
+		            };
+
+		            itemEl.onmouseout =  function () {
+		                infowindow.close();
+		            };
+		            itemEl.onclick = function(){
+		            	openPlaceDt(marker,title,plc_no);
+		            };
+			kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+            	infowindow.close(marker,title);
+            });
+            kakao.maps.event.addListener(marker, 'click', function() {
+            	openPlaceDt(marker,title,plc_no);
+            });
+            
+			 })(marker, markerlatlng[i].dataset["title"],markerlatlng[i].dataset["plc_no"]);
+			 
+		}
+		
+		 listEl.appendChild(fragment);
+		    menuEl.scrollTop = 0;
+		function getListItem(index,places,title,dt) {
+
+		    var el = document.createElement('li'),
+		    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+		                '<div class="info">' +
+		                '   <h5>' + title + '</h5>';
+		    itemStr += '<span>' + dt + '</span>';
+
+		    el.innerHTML = itemStr;
+		    el.className = 'item';
+
+		    //el 값
+		    return el;
+		}
+		function setBounds() {
+			// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+			// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+			map.setBounds(bounds);
+		}
+		function openPlaceDt(marker,title,plc_no){
+			
+			window.open('https://place.map.kakao.com/'+plc_no, '_blank');
+		}
+		function addMaker(position) {
+			marker = new kakao.maps.Marker({
+				position : position, // 마커의 위치
+			});
+			marker.setMap(map); // 지도 위에 마커를 표출합니다
+			markers.push(marker); // 배열에 생성된 마커를 추가합니다
+			return marker;
+			}
+		function displayInfowindow(marker, title) {
+			  var content = '<div style="padding:5px;z-index:1; font-size: 13px;">' + title + '</div>';
+
+			    var moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
+			    infowindow.setContent(content);
+			    infowindow.open(map, marker);
+			    
+			    // 지도 중심을 부드럽게 이동시킵니다
+			    map.panTo(moveLatLon);
+				}
+	}
+	//모달 사라지는 메서드
+	function modalClose() {
+		document.querySelector('.modal_wrap').style.display = 'none';
+			document.querySelector('.black_bg').style.display = 'none';
+		}
+
+		document.getElementById('modal_btn').addEventListener('click', modalShow);
+		document.querySelector('.modal_close').addEventListener('click', modalClose);
+
+	//셀렉트 value 값 설정
+	function selectVal(){
+			var selVal = document.location.href.split("selected=");
+			
+			var selArr = $("#listSort option");
+			if(selVal[1]==undefined || selVal[1] == 'null'){
+			selArr[0].innerHTML = "정렬 기준";
+			}
+			if(selVal[1]=="like"){
+			selArr[0].innerHTML = "좋아요 순";
+			};
+			if(selVal[1]=="new"){
+				selArr[0].innerHTML = "최근에 찜한 순";
+			};
+			if(selVal[1]=="old"){
+				selArr[0].innerHTML = "오래전에 찜한 순";
+			};
+		}
+		
+		
+		
+		//리스트 정렬기준 설정
+	$("#listSort").change(function(){
+
+		location.replace("/mypage/pickPL?selected="+this.value);
+	});
+		
+	
+		//페이지정보 보내는 function
+		$(".w3-button").on("click",function(e) {
+
+					e.preventDefault();
+
+					actionForm.find("input[name='pageNum']")
+							.val($(this).attr("num"));
+					actionForm.submit();
+				});
+
+		//좋아요 취소하는 버튼
+		$(".heart a").on("click", function() {
+			$(this).hide(5);
+			var sendData = {
+				'plcNo' : $(this).attr('plc_no'),
+			}
+			//ajax 기능 추가 
+			$.ajax({
+				type : 'post',
+				url : '/mypage/heart',
+				data : sendData,
+				success : function(data) {
+					
+					alert("목록에서 삭제되었습니다.")
+					location.reload();
+				}
+			});
+		});
+		
 
 </script>
 <%@include file="../includes/footer.jsp" %>
