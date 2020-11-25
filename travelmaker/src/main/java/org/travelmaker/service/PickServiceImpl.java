@@ -37,15 +37,13 @@ public class PickServiceImpl implements PickService{
 
 	@Override
 	public int remove(PickVO vo) {
-		pMapper.downCnt(vo.getPlcNo());
-		return mapper.delete(vo);
 		
-	}
+		//장소 좋아요취소일때
+		if(vo.getPlcNo()!=0) {
+			pMapper.downCnt(vo.getPlcNo());
+			return mapper.delete(vo);
+		}
 
-	@Override
-	public int removeSch(PickVO vo) {
-//		bMapper.downCnt(vo.getSchNo());
 		return mapper.deleteSch(vo);
 	}
-
 }

@@ -289,6 +289,9 @@
 					
 					alert("목록에서 삭제되었습니다.")
 					location.reload();
+				},
+				error : function(error){
+					alert("에러발생"+error);
 				}
 			});
 		});

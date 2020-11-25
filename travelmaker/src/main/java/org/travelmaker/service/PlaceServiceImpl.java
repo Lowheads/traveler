@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.PlacePageDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.mapper.PlaceMapper;
 
@@ -52,8 +53,19 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public List<PlaceVO> getList(Criteria cri) {
+	public List<PlaceVO> getList(Criteria cri,String selected) {
 
+		if(selected!=null) {
+			if(selected.equals("like")){
+				return mapper.sortLike(cri);
+			}
+			if(selected.equals("new")){
+				return mapper.sortNewest(cri);
+			}
+			if(selected.equals("old")){
+				return mapper.sortOldest(cri);
+			}
+		}
 		return mapper.getListWithPaging(cri);
 	}
 
@@ -63,26 +75,10 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public List<PlaceVO> getLikeList(Criteria cri) {
-		return mapper.sortLike(cri);
-	}
-
-	@Override
-	public List<PlaceVO> getNewestList(Criteria cri) {
-		return mapper.sortNewest(cri);
-	}
-
-	@Override
-	public List<PlaceVO> getOldestList(Criteria cri) {
-		return mapper.sortOldest(cri);
-	}
-
-	@Override
 	public int getTotal(Criteria cri) {
 		// TODO Auto-generated method stub
 		return mapper.getTotalCount(cri);
 	}
-	
 	
 	//종운 메서드
 	@Override
