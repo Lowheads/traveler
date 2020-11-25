@@ -76,12 +76,20 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return mapper.update(vo) ==1;
 	}
 
+
 	@Override
-	public List<ScheduleVO> getList(Criteria cri) {
+	public List<ScheduleVO> getList(Criteria cri,String selected) {
 
-
-		log.info("get List with criteria: "+cri);
-
+		if(selected!=null) {
+		  //if(selected.equals("like")){
+			//				}
+			if(selected.equals("new")){
+				return mapper.sortNewest(cri);
+			}
+			if(selected.equals("old")){
+				return mapper.sortOldest(cri);
+			}
+		}
 		return mapper.getListWithPaging(cri);
 	}
 
@@ -134,30 +142,4 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
-//
-//	@Override
-//	public List<ScheduleVO> getLikeList(Criteria cri) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-	@Override
-	public List<ScheduleVO> getNewestList(Criteria cri) {
-		// TODO Auto-generated method stub
-		return mapper.sortNewest(cri);
-	}
-
-	@Override
-	public List<ScheduleVO> getOldestList(Criteria cri) {
-		// TODO Auto-generated method stub
-		return mapper.sortOldest(cri);
-	}
-	
-	
-
-
-
-
-
-
 }
