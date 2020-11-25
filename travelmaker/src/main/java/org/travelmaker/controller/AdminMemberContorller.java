@@ -46,19 +46,14 @@ public class AdminMemberContorller {
 		String keyword =cri.getKeyword();
 		
 		if(type==null||keyword==null) {
-			model.addAttribute("users", service.getUserList());
-		}else {
-			if(type.equals("회원번호")) {
-				for(int i=0;i<keyword.length();i++) {
-					char ck =keyword.charAt(i);
-					if(ck<47||ck>57) {
-						return "userInfo";
-					}	
-				}
-			}
 			
+			model.addAttribute("users", service.getUserList());
+
+		}else {
+		
 			model.addAttribute("users", service.searchUser(cri));
 		}
+		
 		return "userInfo";
 	}
 
@@ -71,14 +66,6 @@ public class AdminMemberContorller {
 		if (keyword == null || type == null) {
 			model.addAttribute("users", service.getWithdrawUserList());
 		} else {
-			if(type.equals("회원번호")) {
-				for(int i=0;i<keyword.length();i++) {
-					char ck =keyword.charAt(i);
-					if(ck<47||ck>57) {
-						return "userInfo";
-					}	
-				}
-			}
 			model.addAttribute("users", service.searchWithdrawUser(cri));
 		}
 		return "withdraw";
@@ -90,8 +77,8 @@ public class AdminMemberContorller {
 		if (ids != null) {
 			for (int i = 0; i < ids.length; i++) {
 				service.removeUser(ids[i]);
-				rttr.addFlashAttribute("message", "SUCCESS");
 			}
+			rttr.addFlashAttribute("message", "SUCCESS");
 		}
 
 		return "redirect:/admin/userInfo";

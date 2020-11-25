@@ -14,6 +14,14 @@ public interface ScheduleService {
 	public boolean remove(int schNo);
 	//전체리스트
 	public List<ScheduleVO> getList();
+	
+	//memno에 맞는 schedulelist가져오기
+	public List<ScheduleVO> getList(int memNo);
+	
+	//memno에 맞는 schedule 공개, 비공개 여부 가져오기
+	public List<ScheduleVO> getHiddenList(int memNo); 
+	
+	public int statusupdate(int schNo);
 
 	public boolean modify(ScheduleVO vo);
 
@@ -33,5 +41,6 @@ public interface ScheduleService {
 
 	public void register(ScheduleVO schedule);
 
-	public ScheduleVO getListSchedule(int schNo); 
+	public ScheduleVO getListSchedule(int schNo);
+	
 }

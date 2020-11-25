@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,12 +62,11 @@ private AdminBoardService service;
 	}
 	
 	
-	@PostMapping("/getDetail/{boardNo}")
+	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<BoarddtVO>> getBoardDetail(@PathVariable("boardNo") int boardNo) {
 		
 		ResponseEntity<List<BoarddtVO>> result = null;
 		result = ResponseEntity.status(HttpStatus.OK).body(service.getBoardDetail(boardNo));
-		System.out.println(result.toString());
 		
 		return result;
 	} 

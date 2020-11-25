@@ -28,17 +28,15 @@ public class ThemeController {
 		List<Map<String, String>> list = service.getThemeList();
 
 		model.addAttribute("list", list);
-		System.out.println(list);
 
 		return "theme";
 	}
 	
-	@GetMapping("/themeInfo/{region_no}/{theme_code}")
-	public String themeInfo(@PathVariable("region_no") String region_no, @PathVariable("theme_code") String theme_code,Model model) {
+	@GetMapping("/themeInfo/{regionNo}/{themeCode}")
+	public String themeInfo(@PathVariable("regionNo") String regionNo, @PathVariable("themeCode") String themeCode,Model model) {
 		
-		List<String> list = service.getThemeInfo(region_no, theme_code);
+		List<Map<String,String>> list = service.getThemeInfo(regionNo, themeCode);
 
-		System.out.println(list.toString());
 		
 		model.addAttribute("list", list);
 
