@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.mapper.ScheduleMapper;
 
@@ -34,6 +35,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return mapper.read(schNo);
 
 	}
+	
+	@Override
+	public int statusupdate(int schNo) {
+		return mapper.statusupdate(schNo);
+	}
 
 	@Override
 	public boolean remove(int schNo) {
@@ -50,7 +56,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		return mapper.getList();
 	}
+	
+	//공개,비공개 여부 알 수 있는 리스트 가져오기
+	@Override
+	public List<ScheduleVO> getHiddenList(int memNo) {
+		// TODO Auto-generated method stub
+		return mapper.getHiddenList(memNo);
+	}
 
+	//memno에 맞는 schedulelist가져오기
+	public List<ScheduleVO> getList(int memNo){
+		return mapper.getList(memNo);
+	}
 	@Override
 	public boolean modify(ScheduleVO vo) {
 
@@ -117,5 +134,30 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+//
+//	@Override
+//	public List<ScheduleVO> getLikeList(Criteria cri) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	@Override
+	public List<ScheduleVO> getNewestList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.sortNewest(cri);
+	}
+
+	@Override
+	public List<ScheduleVO> getOldestList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.sortOldest(cri);
+	}
+	
+	
+
+
+
+
+
 
 }

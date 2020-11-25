@@ -6,7 +6,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,9 +53,20 @@ public class BoardController {
 	private BoarddtService boarddtservice;
 
 	@GetMapping("/schedulelist")
-	public void schedulelist(Model model) {
+	public void schedulelist(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		
 		log.info("schedulelist");
-		model.addAttribute("schedulelist",scheduleservice.getList());
+		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
+	}
+	
+	@GetMapping("/hiddenlist")
+	public void hiddencheck(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		
+		model.addAttribute("hiddenlist",scheduleservice.getHiddenList(memNo));
 	}
 	
 	@GetMapping("/list")
@@ -101,6 +115,7 @@ public class BoardController {
 		model.addAttribute("board",board);
 		
 		boardservice.register(board);
+		scheduleservice.statusupdate(board.getSchNo());
 		System.out.println(board);
 		
 		return "redirect:/board/dtregister?boardTitle="+boardTitle+"&schNo="+board.getSchNo();
@@ -123,6 +138,16 @@ public class BoardController {
 		}
 		//중복일 때
 		return false;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value= "/hidden", method=RequestMethod.POST, produces="application/json")
+	public void hidden(BoardVO board) {
+		System.out.println(board);
+		
+		boardservice.updateHidden(board);
+
 	}
 	
 	

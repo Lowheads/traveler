@@ -3,6 +3,7 @@ package org.travelmaker.service;
 import java.util.List;
 
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 
 public interface ScheduleService {
@@ -14,6 +15,14 @@ public interface ScheduleService {
 	public boolean remove(int schNo);
 	//전체리스트
 	public List<ScheduleVO> getList();
+	
+	//memno에 맞는 schedulelist가져오기
+	public List<ScheduleVO> getList(int memNo);
+	
+	//memno에 맞는 schedule 공개, 비공개 여부 가져오기
+	public List<ScheduleVO> getHiddenList(int memNo); 
+	
+	public int statusupdate(int schNo);
 
 	public boolean modify(ScheduleVO vo);
 
@@ -33,5 +42,14 @@ public interface ScheduleService {
 
 	public void register(ScheduleVO schedule);
 
+<<<<<<< HEAD
+	public ScheduleVO getListSchedule(int schNo);
+	
+=======
 	public ScheduleVO getListSchedule(int schNo); 
+	
+//	public List<ScheduleVO> getLikeList(Criteria cri);
+	public List<ScheduleVO> getNewestList(Criteria cri);
+	public List<ScheduleVO> getOldestList(Criteria cri);
+>>>>>>> dev1
 }

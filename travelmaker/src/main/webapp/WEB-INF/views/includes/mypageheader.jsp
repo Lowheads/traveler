@@ -70,6 +70,33 @@
  	width: 20%;
 }
 
+ #remove_modal {
+                display: none;
+                width: 300px;
+                padding: 20px 30px;
+                background-color: #fefefe;
+                border: 1px solid #888;
+                border-radius: 3px;
+            }
+
+#remove_modal .modal_close_btn {
+				width:40%;
+				margin-right:10%;
+				background-color:white;
+				color:black;
+				border: 1px solid gray;
+   				border-radius: 5px;
+}
+#remove_modal .remove_btn {
+				width:40%;
+				background-color: #ff6d70;
+				color:white;
+				border: 1px solid gray;
+  				border-radius: 5px;
+				
+}
+
+
 /* Right column */
 .content-mypage {
   float: left;
