@@ -42,14 +42,11 @@ public interface ScheduleService {
 
 	public void register(ScheduleVO schedule);
 
-<<<<<<< HEAD
-	public ScheduleVO getListSchedule(int schNo);
-	
-=======
+
 	public ScheduleVO getListSchedule(int schNo); 
 	
 //	public List<ScheduleVO> getLikeList(Criteria cri);
 	public List<ScheduleVO> getNewestList(Criteria cri);
 	public List<ScheduleVO> getOldestList(Criteria cri);
->>>>>>> dev1
+
 }
