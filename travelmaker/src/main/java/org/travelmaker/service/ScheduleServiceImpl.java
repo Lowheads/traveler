@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.mapper.ScheduleMapper;
 
@@ -133,6 +134,26 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+//
+//	@Override
+//	public List<ScheduleVO> getLikeList(Criteria cri) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	@Override
+	public List<ScheduleVO> getNewestList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.sortNewest(cri);
+	}
+
+	@Override
+	public List<ScheduleVO> getOldestList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.sortOldest(cri);
+	}
+	
+	
 
 
 
