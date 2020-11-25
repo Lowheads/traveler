@@ -14,85 +14,82 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @AllArgsConstructor
-public class BuddtServiceImpl implements BuddtService { // mapper(+xml) 에서 가져다가 사용 
+public class BuddtServiceImpl implements BuddtService {
 	
 	private BuddtMapper mapper;
-
+	
+	// get.jsp - 일정 지출 내역 : 날짜별
 	@Override
-	public void register(BuddtVO buddt) {
-		log.info("register......" + buddt);
-		mapper.insert(buddt);
-	}
-
-	@Override
-	public List<BuddtVO> get(Date paydate) { // 그래프 & 2020-11-03
+	public List<BuddtVO> get(Date paydate) {
 		log.info("get......" + paydate);
 		return mapper.read(paydate);
 	}
-	
-	@Override
-	public BuddtVO get(Long no) {
-		return null;
-	}
-	
-	@Override
-	public boolean modify(BuddtVO buddt) {
-		log.info("modify......" + buddt);
-		return mapper.update(buddt) == 1;
-	}
 
-	@Override
-	public boolean remove(Long no) {
-		log.info("remove" + no);
-		return mapper.delete(no) == 1;
-	}
-	
-	@Override
-	public boolean amend(BuddtVO buddt) {
-		log.info("amend" + buddt);
-		return mapper.update(buddt) == 1;
-	}
-
-	@Override // ???????
-	public List<BuddtVO> getList() {
-		log.info("getList......");
-		return mapper.getList();
-	}
-
-	@Override
-	public List<BuddtVO> cateCnt() {
-		log.info("cateCnt......");
-		return mapper.cateCnt();
-	}	
-	
+	// listAll.jsp - 선택된 일정 모든 지출 내역
 	@Override
 	public List<BuddtVO> readAll(Long schno) {
 		log.info("readAll......");
 		return mapper.readAll(schno);
 	}
 
-//	수정 페이지에 입력 값을 가져옵니다.
+	// register.jsp - 지출 내역 등록
 	@Override
-	public BuddtVO readed(BuddtVO vo) {
-		// TODO Auto-generated method stub
-		return mapper.readed(vo);
+	public void register(BuddtVO buddt) {
+		log.info("register......" + buddt);
+		mapper.insert(buddt);
 	}
-
+	
+	// register.jsp - 셀렉트 박스 : 일정 선택
 	@Override
 	public List<DaybudVO> box() {
 		return mapper.box();
 	}
-
-	@Override
-	public List<DaybudVO> dateBox() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	// register.jsp - 날짜 선택 제한
 	@Override
 	public BuddtVO mmDate(Long schno) {
 		log.info("mmDate......");
 		return mapper.mmDate(schno);
 	}	
+	
+	// modify.jsp - 수정
+	@Override
+	public boolean modify(BuddtVO buddt) {
+		log.info("modify......" + buddt);
+		return mapper.update(buddt) == 1;
+	}
+	
+	// modify.jsp - 읽기 전용 VO
+	@Override
+	public BuddtVO readed(BuddtVO vo) {
+		return mapper.readed(vo);
+	}
+	
+	// modify.jsp - 삭제
+	@Override
+	public boolean remove(Long no) {
+		log.info("remove" + no);
+		return mapper.delete(no) == 1;
+	}
+	
+	// Test - 그래프
+//	@Override
+//	public List<BuddtVO> cateCnt() {
+//		log.info("cateCnt......");
+//		return mapper.cateCnt();
+//	}	
+	
+	// Test - 그래프
+//	@Override 
+//	public List<BuddtVO> getList() {
+//		log.info("getList......");
+//		return mapper.getList();
+//	}
+	
+	// XX
+//	@Override
+//	public BuddtVO get(Long no) {
+//		return null;
+//	}
 	
 }

@@ -106,7 +106,7 @@
 	          mapOption); // 지도를 생성합니다
 	   
 	          
-	   $(document).ready(function(){ // document readty, datepicker의 초기값과 이벤트 등록 전담
+	   $(document).ready(function(){ // document ready, datepicker의 초기값과 이벤트 등록 전담
 		   
 		   let datePicker = document.getElementsByClassName("data-range-picker")[0];
 		   let fromDate = datePicker.dataset["initFromdate"];
@@ -134,7 +134,7 @@
 		})
 		
 		function init() { //이벤트 등록 전담용 initial
-		   computeDate();
+		    computeDate();
 		 //모달보는 버튼에 이벤트 추가
 		    document.querySelector('#transit-btn-car').addEventListener('click', modalShow);
 		    document.querySelector('#transit-btn-car').addEventListener('click', function(e) {
@@ -383,11 +383,9 @@
 			let idx = getActiveDay(); // idx 를 얻었다.
 			let i;
 			let currentList = dailyPlaceList[idx];
-			console.log(currentList[0]||0);
-			console.log(currTarget.dataset["plcNo"]);
-			for (i = 0; len = currentList.length ,i < len; i++) {
-				console.log(currentList[i].dataset["plcNo"]);
-				if(currTarget.dataset["plcNo"]==currentList[i].dataset["plcNo"]){
+			let currentPlaceList = currentList.children;
+			for (i = 0; len = currentPlaceList.length ,i < len; i++) {
+				if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
 					return;
 				}
 			}

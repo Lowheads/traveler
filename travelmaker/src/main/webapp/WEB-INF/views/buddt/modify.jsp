@@ -9,9 +9,7 @@
 	<div>
 		<h1>&nbsp경비 상세내역 수정/삭제</h1>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
 
 <div>
 	<div>
@@ -20,7 +18,7 @@
 			<div>&nbsp경비 상세내역 수정/삭제</div>
 			<div>
 			
-			<form role="form" action="/buddt/modify" method="post">
+			<form role="form" id="modiremoveform" action="/buddt/modify" method="post">
 			
 					<div class="form-group">
 						<label>#no </label> <input class="form-control" name='no'
@@ -64,8 +62,8 @@
 					<button type="submit" data-oper='modify'
 					   class="btn btn-default">수정</button>
 					
-					<button type="submit" data-oper='remove' 
-						class="btn btn-danger">삭제</button>
+					<button type="button" data-oper='remove' 
+						class="btn btn-danger" id="subbutton">삭제</button>
 					
 					<button type="button" onclick="goBack();">목록</button>
 					
@@ -82,6 +80,14 @@
 <!-- /.row -->
 
 <script type="text/javascript">
+
+	var formObj=$("#modiremoveform");
+	   $("#subbutton").on("click",function(e){
+	 var operation = $(this).data("oper");
+	 if(operation==='remove'){
+	         formObj.attr("action","/buddt/remove");
+	 			formObj.submit();        
+	 } });
 function goBack(){
 	window.history.back();
 }

@@ -7,30 +7,36 @@ import org.apache.ibatis.annotations.Select;
 import org.travelmaker.domain.BuddtVO;
 import org.travelmaker.domain.DaybudVO;
 
-public interface BuddtMapper { // xml과  세트 , 서비스는 여기서 가져다가 사용 
+public interface BuddtMapper {
 	
-	public List<BuddtVO> getList();
+	// get.jsp - 해당 일정 지출 내역
+	public List<BuddtVO> read(Date paydate);
+
+	// listAll.jsp - 해당 일정 모든 지출 내역
+	public List<BuddtVO> readAll(long schno);
 	
+	// register.jsp - 등록
 	public void insert(BuddtVO buddt);
 	
-	public void insertSelectKey(BuddtVO buddt);
-
-	public List<BuddtVO> read(Date paydate);
+	// register.jsp - 셀렉트 박스 : 일정 선택
+	public List<DaybudVO> box();
 	
-	public int delete(Long no);
-	
+	// register.jsp - 날짜 선택 제한
+	public BuddtVO mmDate(Long schno);
+			
+	// modify.jsp - 수정
 	public int update(BuddtVO buddt);
 	
-	public List<BuddtVO> cateCnt();
-
-	public List<BuddtVO> readAll(long schno);
-
+	// modify.jsp - 읽기 전용 VO
 	public BuddtVO readed(BuddtVO vo);
-
-	public List<DaybudVO> box();
-
-	public List<DaybudVO> dateBox();
 	
-	public BuddtVO mmDate(Long schno);
+	// modify.jsp - 삭제
+	public int delete(Long no);
+	
+	// list.jsp X
+	public List<BuddtVO> getList();
+	
+	// get.jsp - 그래프 X
+	public List<BuddtVO> cateCnt();
 	
 }
