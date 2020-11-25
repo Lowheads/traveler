@@ -6,19 +6,12 @@ import org.apache.ibatis.annotations.Select;
 import org.travelmaker.domain.BudgetVO;
 import org.travelmaker.domain.DaybudVO;
 
-public interface BudgetMapper { // xml과  세트 , 서비스는 여기서 가져다가 사용 
+public interface BudgetMapper { 
 	
-	//@Select("select * from schedule where sch_no > 0")
+	// list.jsp - 모든 일정, 지출 내역 출력
 	public List<BudgetVO> getList();
-	
-	public void insert(BudgetVO Budget);
-	
-	public void insertSelectKey(BudgetVO Budget);
 
-	public BudgetVO read(Long no);
-
-	public int delete(Long no);
+	//
+//	public BudgetVO read(Long no);
 	
-	public int update(BudgetVO Budget);
-
 }

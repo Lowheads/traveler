@@ -120,15 +120,8 @@ public class MemberComtroller {
 		service.login(mVO); // 로그인 시키자..!
 		service.presentDate(mVO.getEmail()); // 최종 로그인은 오늘이겠지..
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-<<<<<<< HEAD
 		session.setAttribute("memNo", service.getMemNo(email));
 		return mav;
-=======
-		//수정 순규
-		session.setAttribute("memNo",vo.getMemNo());
-		return "redirect:/";
->>>>>>> dev1
-	
 	}
 	
 	// 로그아웃
