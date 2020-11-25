@@ -23,4 +23,6 @@ public interface BoardService {
 	
 	public int getTotal(Criteria cri);
 	
+	public void updateHidden(BoardVO board);
+	
 }

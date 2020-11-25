@@ -17,6 +17,8 @@ public interface MemberMapper {
 	
 	public MemberVO login(MemberVO mVO); // 로그인
 	
+	public MemberVO getMemNo(String email); // 멤버번호 가져오기
+	
     public void pwdModify(@Param("pwd") String pwd, @Param("email") String email); // 비밀번호 수정
     
     public int emailCheck(String email); // 이메일 중복체크
@@ -27,6 +29,8 @@ public interface MemberMapper {
 	
 	public void nNameModify(@Param("nickname") String nickname, @Param("email") String email); //닉네임 수정
 	
+	public int deleteValid(@Param("pwd") String pwd, @Param("email") String email); // 탈퇴전 유효성 체크
+	
 	public void deleteMember(@Param("pwd") String pwd, @Param("email") String email); // 회원 탈퇴
 	
 	public String findPwd(Map<String, Object> paramMap); // 패스워드 찾기
@@ -34,4 +38,6 @@ public interface MemberMapper {
 	public void presentDate(String email); // 최종 로그인
 	
 	public String myNicknamePass(String email); //정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다. 
+	
+	public int deleteNoAccess(String email); // 삭제한 계정은 접속 못함 
 }

@@ -24,21 +24,29 @@
 			<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
 		</div>
 		<div class="card-body">
-			<div class="table-responsive">
-			
+			<div class="form-group row justify-content-center">
 			<form id='searchForm' action="/admin/boardList" method='get'>
-							<select name="type" id="type">
-							<option selected disabled hidden><c:out value="${criteria.type}"/></option>
-							<option value="mem_no">회원번호</option>
-							<option value="title">제목</option>
-						</select>
-						<input type="text" class="form-control form-control-sm"
-							name="keyword" id="keyword" placeholder="회원번호를 입력하시오" value = '<c:out value="${criteria.keyword}"/>'>
-						<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
-				</form>
-
-				<button id="removePost" type="button" class="btn btn-default"
-					onClick="deletePost()">delete</button>
+				<div class="w100" style="padding-right: 10px">
+					<select class="form-control form-control-sm" name="type" id="type">
+						<option selected disabled hidden><c:out
+								value="${criteria.type}" /></option>
+						<option value="회원번호">회원번호</option>
+						<option value="닉네임">닉네임</option>
+						<option value="제목">제목</option>
+					</select>
+				</div>
+				<div class="w300" style="padding-right: 10px">
+					<input type="text" class="form-control form-control-sm"
+						name="keyword" id="keyword" placeholder="키워드를 입력하시오"
+						value='<c:out value="${criteria.keyword}"/>'>
+				</div>
+				<div>
+					<button id="searchBtn" class="btn btn-sm- btn-primary">검색</button>
+				</div>
+			</form>
+			<div class="table-responsive">
+				<button id="removePost" type="button" class="btn btn-primary"
+					onClick="deletePost()">게시물 삭제하기</button>
 				<table class="table table-bordered" id="dataTable" width="100%"
 					cellspacing="0">
 					<thead>
@@ -54,28 +62,16 @@
 							<th>숨김여부</th>
 						</tr>
 					</thead>
-					<tfoot>
-						<tr>
-							<th>check</th>
-							<th>NO</th>
-							<th>제목</th>
-							<th>작성일</th>
-							<th>찜한수</th>
-							<th>수정일</th>
-							<th>조회수</th>
-							<th>숨김여부</th>
-						</tr>
-					</tfoot>
 					<tbody>
 						<c:forEach items="${board}" var="board">
-							<tr>
+							<tr name="row" id='<c:out value="${board.boardNo}" />'>
 								<td><input type="checkbox" name="ChkBox"
 									id="${board.boardNo}"></td>
 								<td><c:out value="${board.boardNo}" /></td>
 								<td><c:out value="${board.boardTitle}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${board.WDate}" /></td>
-								<td><c:out value="${board.pickCnt}" /></td>
+								<td id=""><c:out value="${board.pickCnt}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${board.modDate}" /></td>
 								<td><c:out value="${board.VCnt}" /></td>
@@ -94,7 +90,7 @@
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">탈퇴</h4>
+								<h4 class="modal-title" id="myModalLabel"></h4>
 							</div>
 							<div class="modal-body">처리가 완료되었습니다</div>
 							<div class="modal-footer">
@@ -122,25 +118,9 @@
 </div>
 <!-- End of Main Content -->
 
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 	$(document).ready(function() {
-		
-		
-		var searchForm = $("#searchForm")
-		
-		$("#searchForm button").on("click", function(e) {
-
-			if (!searchForm.find("input[name='keyword']").val()) {
-				alert("키워드를 입력하시오")
-				return false;
-			}
-			
-			e.preventDefault();
-		//	actionForm.find("input[name='type']").val($(this).attr("href"));
-		//	actionForm.submit();
-			searchForm.submit();
-			
-		})
 
 		var message = '<c:out value="${message}"/>';
 
@@ -150,13 +130,32 @@
 
 			$(".modal-body").html("삭제를 완료하였습니다");
 			$("#myModal").modal("show");
-
 		}
+
 	})
+
+	$("#searchForm button").on("click", function(e) {
+		var type = $("#searchForm").find("option:selected").val();
+		var keyword = $("#searchForm").find("input[name='keyword']").val();
+
+		if (type == "") {
+			$(".modal-body").html("검색할 대상을 선택하세요");
+			$("#myModal").modal("show");
+			return false;
+		}
+
+		if (keyword == "") {
+			$(".modal-body").html("검색할 단어를 입력하세요");
+			$("#myModal").modal("show");
+			return false;
+		}
+		
+		return true;
+	})
+
 	function deletePost() {
 
 		var cnt = 0;
-
 		var txt = "";
 
 		for (var i = 0; i < $("input[name=ChkBox]").length; i++) {
@@ -166,34 +165,43 @@
 			}
 		}
 
-		var result = (txt.substring(0, txt.lastIndexOf(","))).split(",");
+		var boardNo = (txt.substring(0, txt.lastIndexOf(","))).split(",");
 
 		if (txt.length == 0) {
 			$(".modal-body").html("삭제할 게시글을 선택해주세요");
 
 		} else {
-
-			$(".modal-body").html(cnt + "개의 게시글을 삭제 시키겠습니까?");
-
+			$(".modal-body").html(cnt + "개의 게시글을 삭제하시겠습니까?");
 		}
 
 		$("#myModal").modal("show");
-
+		
 		$("#modalInBtn").on("click", function() {
-			if (txt.length != 0) {
-				var url = "/admin/removeContent?result=" + result;
-				self.location = url;
-			}
-
+			
+			location.href = "/admin/removeContent/" + boardNo;
 		});
 	};
-	function test(){
-		
-		alert(this[0].innerText);
-		
-	}
 	
-	
+	$("tr[name=row]").click(function() {
+		
+		var boardNo = $(this).attr("id");
+		
+		user.detail(boardNo,function(list){
+			
+			
+			var str = boardNo+"번 게시글 상세정보 <br>";
+			for (var i = 0; i < list.length; i++) {
+				
+				str+="내용	:	"+list[i].boardCon+"	num	:	"+list[i].num+"	이미지	:	"+list[i].boarddtImg+"	썸네일 이미지	:	"+list[i].boardThumbImg+"<br>";
+			}
+			
+			$(".modal-body").html(str);
+			$("#myModal").modal("show");
+
+		})
+		
+	})
+
 	function checkAll() {
 		if ($("#th_checkAll").is(':checked')) {
 			$("input[name=ChkBox]").prop("checked", true);

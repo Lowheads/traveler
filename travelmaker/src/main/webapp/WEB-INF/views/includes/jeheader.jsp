@@ -12,8 +12,68 @@
 </head>
 
 <style>
+/* toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
 
-	/* Paging Style Set */
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Paging Style Set */
 
 .pagination a {
   color: black;
@@ -90,7 +150,7 @@ body {
 	font-family: san-serif;
 }
 
-#Btn, #regBtn{
+#Btn, #regBtn, #hiddenBtn{
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	margin-right: -4px;
@@ -125,7 +185,7 @@ body {
             <span class="icon-bar"></span>
           </button>
           <!-- 타이틀임. -->
-          <a class="navbar-brand" href="#">여정</a>
+          <a class="navbar-brand" href="/">여정</a>
         </div>
         <!-- 메뉴 설정 -->
         <div class="collapse navbar-collapse">
