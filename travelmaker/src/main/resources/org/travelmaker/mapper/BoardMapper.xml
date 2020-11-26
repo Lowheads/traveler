@@ -27,9 +27,6 @@ select * from board where board_no>0
 
 
 <insert id="insertSelectKey">
-<!--  	<selectKey keyProperty="board_no" order="BEFORE" resultType="long">
-		select seq_board.nextval from dual
-	</selectKey> -->
 	insert into board (board_no,sch_no, board_title, hidden, board_img, thumbImg)
 	values (seq_board.nextval,#{schNo}, #{boardTitle},#{hidden},#{boardImg},#{thumbImg})
 </insert>
@@ -39,8 +36,8 @@ select * from board where board_no>0
 	select * from board where board_no=#{boardNo}
 </select>
 
-<select id="readbytitle" resultMap="BoardResult">
-	select * from board where board_title=#{boardTitle} and sch_no = #{schNo}
+<select id="readbySchNo" resultMap="BoardResult">
+	select * from board where sch_no = #{schNo}
 </select>
 
 <select id="getListWithPaging" resultMap="BoardResult">
@@ -64,7 +61,9 @@ select * from board where board_no>0
 
 <update id="update">
 	update board
-	set  board_title= #{boardTitle}, mod_date= sysdate, hidden= #{hidden}, board_img= #{boardImg} where board_no = #{boardNo}
+	set  board_title= #{boardTitle}, mod_date= sysdate, hidden= #{hidden}, board_img= #{boardImg} 
+	where board_no = #{boardNo}
+	
 </update>
 
 <update id="updateY">

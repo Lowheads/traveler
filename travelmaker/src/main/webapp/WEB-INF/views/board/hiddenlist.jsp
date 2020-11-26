@@ -40,7 +40,6 @@
 		
 	$(".round").on("click",function(){
 		
-		alert($(this).data("schno"));
 		let sendData = {
 				
 				"hidden" : $(this).data("hidden"),

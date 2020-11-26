@@ -56,10 +56,10 @@ public class BoardController {
 	public void schedulelist(Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		
-		log.info("schedulelist");
+
 		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
 	}
+	
 	
 	@GetMapping("/hiddenlist")
 	public void hiddencheck(Model model, HttpServletRequest request) {
@@ -71,12 +71,11 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
-		log.info("list: "+cri);
+
 		model.addAttribute("list",boardservice.getList(cri));
 
-		System.out.println(boardservice.getList(cri));
 		int total= boardservice.getTotal(cri);
-		log.info("total:" + total);
+
 
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
 	}
@@ -96,10 +95,8 @@ public class BoardController {
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath =UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
-		rttr.addFlashAttribute("boardTitle", board.getBoardTitle());
+
 		rttr.addFlashAttribute("result", board.getBoardNo());
-		String boardTitle = URLEncoder.encode(board.getBoardTitle(),"UTF-8");
-		
 		
 		if (file != null) {
 			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
@@ -114,30 +111,15 @@ public class BoardController {
 		
 		model.addAttribute("board",board);
 		
+		
+		
 		boardservice.register(board);
+		
+		//스케쥴 상태 '미작성' -> '작성' 으로 변경
 		scheduleservice.statusupdate(board.getSchNo());
-		System.out.println(board);
-		
-		return "redirect:/board/dtregister?boardTitle="+boardTitle+"&schNo="+board.getSchNo();
-	}
-	
-	
-	//게시물 명 중복 체크해주는 메소드
-	//자바 객체를  HTTP 요청의 body 내용으로 매핑
-	@ResponseBody
-	@RequestMapping(value = "/titlecheck", method = RequestMethod.POST, produces = "application/json")
-	public boolean titlecheck(@RequestParam("boardTitle") String boardTitle, @RequestParam("schNo") String schNo) {
-		BoardVO board = new BoardVO();
 
-		board.setBoardTitle(boardTitle);
-		board.setSchNo(Integer.parseInt(schNo));
 		
-		//같은 일정번호의 게시물명이 중복이 아닐 때
-		if (boardservice.getbytitle(board) != null) {
-			return true;
-		}
-		//중복일 때
-		return false;
+		return "redirect:/board/dtregister?schNo="+board.getSchNo();
 	}
 	
 	
@@ -154,9 +136,9 @@ public class BoardController {
 	@GetMapping("/dtregister")
 	public void dtregister(BoardVO board,Model model) throws UnsupportedEncodingException {
 		
-		//board_title = URLEncoder.encode(board_title,"UTF-8");
 
-		board=boardservice.getbytitle(board);
+		board=boardservice.getbySchNo(board);
+		
 		model.addAttribute("board",board);
 		
 	}
@@ -193,6 +175,7 @@ public class BoardController {
 	public void modify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model) {
 	
 		log.info("/modify");
+		
 		model.addAttribute("board",boardservice.get(boardNo));
 	
 	}
@@ -240,16 +223,22 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove..."+boardNo);
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
+
 		
+		//게시물 상세부터 remove
 		boarddtservice.remove(boardNo);
 		if(boardservice.remove(boardNo)) {
+			
+			//게시물 상태 '작성' -> '미작성' 으로 변경
 			scheduleservice.statusupdate(schNo);
+			
 			rttr.addFlashAttribute("result","success");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());

@@ -39,11 +39,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public void statusupdate(int schNo) {
 		ScheduleVO schedule= mapper.read(schNo);
 		//작성일때 -> 미작성으로
-		if(schedule.getHidden().equals("작성")) {
-			mapper.statusupdate(schNo);
+		if(schedule.getSchStatus().equals("작성")) {
+			mapper.statusback(schNo);
 		}
 		//미작성일때 -> 작성으로 . mapper 메소드 변경하기
-		if(schedule.getHidden().equals("미작성")) {
+		if(schedule.getSchStatus().equals("미작성")) {
 			mapper.statusupdate(schNo);
 		}
 	

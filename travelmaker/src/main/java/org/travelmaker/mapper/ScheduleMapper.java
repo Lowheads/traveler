@@ -23,7 +23,10 @@ public interface ScheduleMapper {
 	// 업데이트 가능해야되고(좋아요 업다운)
 	public int update(ScheduleVO vo);
 
+	//게시글 상태 미작성 -> 작성으로 변경
 	public int statusupdate(int schNo);
+	//게시글 상태 작성 -> 미작성으로 변경
+	public int statusback(int schNo);
 	
 	public void upSet(int schNo);
 
