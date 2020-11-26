@@ -159,14 +159,20 @@ $(document).ready(function() {
 
 	$("tr[name=row]").click(function() {
 
-		var id = $(this).attr("id");
+		const id = $(this).attr("id");
 		
-		var res = $("#"+id)[0].innerText;
-		var info =(res.substring(0,res.length)).split("	");
+		const res = $("#"+id)[0].innerText;
+		const info =(res.substring(0,res.length)).split("	");
 
-		var output ="회원번호	:	"+info[0]+"<br>"+"이메일		:	"+info[1]+"<br>"+"닉네임		:	"+info[2]
-		+"<br>"+"생년월일		:	"+info[3]+"<br>"+"성별		:	"+info[4]+"<br>"+"상태		:	"+info[5]
-		+"<br>"+"가입일		:	"+info[6]+"<br>"+"최근 로그인 날짜		:	"+info[7]+"<br>"+"등급		:	"+info[8]
+		const output ="회원번호	:	"+info[0]+"<br>"
+					+"이메일		:	"+info[1]+"<br>"
+					+"닉네임		:	"+info[2]+"<br>"
+					+"생년월일		:	"+info[3]+"<br>"
+					+"성별		:	"+info[4]+"<br>"
+					+"상태		:	"+info[5]+"<br>"
+					+"가입일		:	"+info[6]+"<br>"
+					+"최근 로그인 날짜		:	"+info[7]+"<br>"
+					+"등급		:	"+info[8]
 
 		
 		$(".modal-body").html(output);
@@ -181,29 +187,35 @@ $(document).ready(function() {
 
 $("#searchForm button").on("click",function(e) {
 		
-		var type = $("#searchForm").find("option:selected").val();
-		var keyword = $("#searchForm").find("input[name='keyword']").val();
-
+		const type = $("select[id=type]").val();
+		const keyword = $("input[id=keyword]").val();
+	
+		let msg = "";
+		
 		if (type == "") {
-			$(".modal-body").html("검색할 대상을 선택하세요");
-			$("#myModal").modal("show");
+			
+			showModal("검색할 대상을 선택하세요")
 			return false;
 		}
 
 		if (keyword == "") {
-			$(".modal-body").html("검색할 단어를 입력하세요");
-			$("#myModal").modal("show");
+			showModal("검색할 단어를 입력하세요")
 			return false;
 		}
 		if(type =="회원번호"){
 			if(isNaN(keyword)){
-				$(".modal-body").html("회원번호는 숫자만 입력해주세요");
-				$("#myModal").modal("show");
+				showModal("회원번호는 숫자만 입력해주세요")
 				return false;
 			}
 		}
 		return true;
 	})
+
+	function showModal(msg){
+			
+			$(".modal-body").html(msg);
+			$("#myModal").modal("show");
+		};
 </script>
 
 

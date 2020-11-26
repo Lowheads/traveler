@@ -33,15 +33,15 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public List<BoardVO> searchBoardWriter(Criteria cri) {
+	public List<BoardVO> searchPost(Criteria cri) {
 
-		return mapper.searchBoardWriter(cri);
+		return mapper.searchPost(cri);
 	}
 
 	@Override
-	public List<BoarddtVO> getBoardDetail(int boardNo) {
+	public List<BoarddtVO> getPostDetail(int boardNo) {
 
-		return mapper.getBoardDetail(boardNo);
+		return mapper.getPostDetail(boardNo);
 	}
 
 }

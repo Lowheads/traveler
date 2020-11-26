@@ -59,7 +59,7 @@ public class MapperTests {
 	public void testtt() {
 		
 		
-		List<BoarddtVO> list = mapper2.getBoardDetail(3);
+		List<BoarddtVO> list = mapper2.getPostDetail(3);
 				
 				list.forEach(member -> log.info(member.toString()));		
 		

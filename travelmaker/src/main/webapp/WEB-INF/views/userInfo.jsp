@@ -154,7 +154,7 @@
 <script>
 	$(document).ready(function() {
 
-		var message = '<c:out value="${message}"/>';
+		const message = '<c:out value="${message}"/>';
 
 		checkModal(message);
 
@@ -163,20 +163,22 @@
 		function checkModal(message) {
 
 			if (message === '' || history.state) {
+				
 				return;
+				
 			}else{
-				$(".modal-body").html("삭제를 완료하였습니다");
-				$("#myModal").modal("show");
+				
+				showModal("삭제를 완료하였습니다");
 			}
 		}
 	})
 
 	function deleteUser() {
 
-		var cnt = 0;
-		var txt = "";
+		let cnt = 0;
+		let txt = "";
 
-		for (var i = 0; i < $("input[name=ChkBox]").length; i++) {
+		for (let i = 0; i < $("input[name=ChkBox]").length; i++) {
 			if ($("input[name=ChkBox]")[i].checked) {
 				txt += $("input[name=ChkBox]")[i].id + ", ";
 				cnt++;
@@ -184,17 +186,16 @@
 		}
 
 		if (txt.length == 0) {
-			$(".modal-body").html("탈퇴 처리 할 회원을 선택해주세요");
-			$("#myModal").modal("show");
+			
+			showModal("탈퇴 처리 할 회원을 선택해주세요")
 
 		} else {
-			var ids = (txt.substring(0, txt.lastIndexOf(","))).split(",");
-			$(".modal-body").html(cnt + "명의 회원을 강제로 탈퇴시키겠습니까?");
-			$("#myModal").modal("show");
+			
+			const ids = (txt.substring(0, txt.lastIndexOf(","))).split(",");
+			
+			showModal(cnt+"명의 회원을 강제로 탈퇴시키겠습니까?")
 
-			$("#myModal #modalInBtn").on("click", function(e) {
-				
-				var tableTD = $("#tableBody");
+			$("#myModal #modalInBtn").on("click", function() {
 				
 				location.href = "/admin/remove/" + ids;
 				
@@ -204,41 +205,49 @@
 	};
 
 	$("#searchForm button").on("click",function(e) {
-		var type = $("#searchForm").find("option:selected").val();
-		var keyword = $("#searchForm").find("input[name='keyword']").val();
+		
+		const type = $("select[id=type]").val();
+		const keyword = $("input[id=keyword]").val();
+		
+		let msg="";
 
 		if (type == "") {
-			$(".modal-body").html("검색할 대상을 선택하세요");
-			$("#myModal").modal("show");
+			msg = "검색할 대상을 선택하세요";
+			showModal(msg);
 			return false;
 		}
 
 		if (keyword == "") {
-			$(".modal-body").html("검색할 단어를 입력하세요");
-			$("#myModal").modal("show");
+			msg = "검색할 단어를 입력하세요"
+			showModal(msg);
 			return false;
 		}
 		
 		if(type =="회원번호"){
 			if(isNaN(keyword)){
-				$(".modal-body").html("회원번호는 숫자만 입력해주세요");
-				$("#myModal").modal("show");
+				msg = "회원번호는 숫자만 입력해주세요"
+				showModal(msg);
 				return false;
 			}
 		}
 		return true;
 	})
 	
+		function showModal(msg){
+			
+			$(".modal-body").html(msg);
+			$("#myModal").modal("show");
+		};
 
 	$("tr[name=row]").click(function() {
 		
-			var id = $(this).attr("id");
+			const id = $(this).attr("id");
 				
-			var res = $("#" + id)[0].innerText;
+			const res = $("#" + id)[0].innerText;
 
-			var info = (res.substring(1, res.length)).split("	");
+			const info = (res.substring(1, res.length)).split("	");
 
-			var output = "회원번호   :   " + info[0] + "<br>"
+			const output = "회원번호   :   " + info[0] + "<br>"
 						+ "이메일      :   " + info[1] + "<br>"
 						+ "닉네임      :   " + info[2] + "<br>"
 						+ "생년월일      :   " + info[3] + "<br>"

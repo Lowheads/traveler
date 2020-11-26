@@ -22,9 +22,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	@Override
 	public List<MemberVO> getUserList() {
 		
-//		System.out.println(mapper.getList());
-
-		
 		return mapper.getUserList();
 	}
 
@@ -32,9 +29,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public int removeUser(int result) {
 
 		return mapper.removeUser(result);
-		
 	}
-
 
 	@Override
 	public List<MemberVO> getWithdrawUserList() {
@@ -58,8 +53,5 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 		return mapper.getUser(memNo);
 	}
-
-
-
 
 }

@@ -12,14 +12,20 @@
 
 <select id="getDailyStatistic" resultMap="VOResult">
  <![CDATA[
-	SELECT * FROM(SELECT to_char(daily_log,'mm-dd') AS "dailyLog", cnt_user, cnt_post FROM STATISTIC order by daily_log DESC) WHERE ROWNUM<=7]]>
+	SELECT * FROM(
+		SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post 
+		FROM STATISTIC 
+		ORDER BY daily_log DESC) 
+	WHERE ROWNUM<=7]]>
 		
 </select>
 
 
 <select id="getMonthlyStatistic" resultMap="VOResult">
-	SELECT extract(month from daily_log) AS "dailyLog", SUM(cnt_user) as "cnt_user", sum(cnt_post) as "cnt_post"
-	FROM STATISTIC GROUP BY extract(month from daily_log) order by extract(month from daily_log)
+	SELECT extract(month from daily_log) AS "targetDate", SUM(cnt_user) as "cnt_user", sum(cnt_post) as "cnt_post"
+	FROM STATISTIC 
+	GROUP BY extract(month from daily_log) 
+	ORDER BY extract(month from daily_log)
 </select>
 
 </mapper>
