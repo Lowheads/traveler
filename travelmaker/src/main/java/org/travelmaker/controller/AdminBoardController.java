@@ -35,7 +35,7 @@ private AdminBoardService service;
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberContorller.class);
 	
 	@GetMapping("/boardList")
-	public String boardList(Criteria cri, Model model) {
+	public String getPost(Criteria cri, Model model) {
 		
 		List<BoardVO> result;
 		
@@ -43,7 +43,7 @@ private AdminBoardService service;
 			result = service.getBoardList();
 			model.addAttribute("board", result);
 		}else {
-			result = service.searchBoardWriter(cri);
+			result = service.searchPost(cri);
 			model.addAttribute("board", result);
 		}
 		
@@ -63,10 +63,10 @@ private AdminBoardService service;
 	
 	
 	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<BoarddtVO>> getBoardDetail(@PathVariable("boardNo") int boardNo) {
+	public ResponseEntity<List<BoarddtVO>> getDetail(@PathVariable("boardNo") int boardNo) {
 		
 		ResponseEntity<List<BoarddtVO>> result = null;
-		result = ResponseEntity.status(HttpStatus.OK).body(service.getBoardDetail(boardNo));
+		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostDetail(boardNo));
 		
 		return result;
 	} 
