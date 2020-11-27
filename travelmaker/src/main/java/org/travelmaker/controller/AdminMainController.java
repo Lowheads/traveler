@@ -24,38 +24,31 @@ public class AdminMainController {
 	@GetMapping("/main")
 	public String showChart(Model model) {
 
-		List<StatisticVO> list1 = service.getDailyStatistic();
+		List<StatisticVO> dailyStatistic = service.getDailyStatistic();
 		
-		String result1 = "";
+		String dailyLog = "";
 
-		for (int i = 0; i < list1.size(); i++) {
+		for (int i = 0; i < dailyStatistic.size(); i++) {
 
-			result1 += "['" + list1.get(i).getDailyLog() + "'," + list1.get(i).getCntMember() + "," + list1.get(i).getCntPost() +"]";
-			if (i != list1.size() - 1) {
-				result1 += ",";
+			dailyLog += "['" + dailyStatistic.get(i).getTargetDate() + "'," + dailyStatistic.get(i).getCntMember() + "," + dailyStatistic.get(i).getCntPost() +"]";
+			if (i != dailyStatistic.size() - 1) {
+				dailyLog += ",";
+			}
+		}
+		
+		List<StatisticVO> monthlyStatistic = service.getMonthlyStatistic();
+		
+		String monthlyLog = "";
+		for (int i = 0; i < monthlyStatistic.size(); i++) {
+
+			monthlyLog += "['" + monthlyStatistic.get(i).getTargetDate() + "월'," + monthlyStatistic.get(i).getCntMember() +"," + monthlyStatistic.get(i).getCntPost() +"]";
+			if (i != monthlyStatistic.size() - 1) {
+				monthlyLog += ",";
 			}
 		}
 
-
-		System.out.println(result1);
-		
-		List<StatisticVO> list2 = service.getMonthlyStatistic();
-		
-		String result2 = "";
-		for (int i = 0; i < list2.size(); i++) {
-
-			result2 += "['" + list2.get(i).getDailyLog() + "월'," + list2.get(i).getCntMember() +"," + list2.get(i).getCntPost() +"]";
-			if (i != list2.size() - 1) {
-				result2 += ",";
-			}
-		}
-		System.out.println("---------------------------");
-		System.out.println(result2);
-
-		model.addAttribute("result1", result1);
-		
-		model.addAttribute("result2", result2);
-
+		model.addAttribute("dailyLog", dailyLog);
+		model.addAttribute("monthlyLog", monthlyLog);
 		
 
 		return "main";

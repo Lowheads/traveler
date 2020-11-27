@@ -27,7 +27,7 @@
 $(document).ready(function() {
 $("tr[name=row]").click(function(){
 	
-	var plcNum = $(this).attr("id");
+	const plcNum = $(this).attr("id");
 
 	let URL = "https://place.map.kakao.com/"+plcNum;
 	

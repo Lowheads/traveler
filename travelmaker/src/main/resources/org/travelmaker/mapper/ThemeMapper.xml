@@ -9,7 +9,12 @@
 </select>
 
 <select id="getThemeInfo" resultType="map">
-	SELECT T.PLC_NO, P.PLC_TITLE FROM THEME_PLC T, PLACE P WHERE T.PLC_NO = P.PLC_NO AND THEME_NO = (SELECT THEME_NO FROM THEME WHERE REGION_NO=#{regionNo} AND THEME_CODE=#{themeCode})
+	SELECT T.PLC_NO, P.PLC_TITLE 
+	FROM THEME_PLC T, PLACE P 
+	WHERE T.PLC_NO = P.PLC_NO AND THEME_NO = (
+		SELECT THEME_NO 
+		FROM THEME 
+		WHERE REGION_NO=#{regionNo} AND THEME_CODE=#{themeCode})
 
 </select>
 </mapper>
