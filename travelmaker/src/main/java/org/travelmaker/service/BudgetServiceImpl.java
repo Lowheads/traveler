@@ -17,34 +17,11 @@ public class BudgetServiceImpl implements BudgetService { // mapper(+xml) 에서
 	
 	private BudgetMapper mapper;
 
+	// list.jsp - 모든 일정, 지출 내역
 	@Override
-	public void register(BudgetVO budget) {
-		log.info("register......" + budget);
-		mapper.insert(budget);
-	}
-
-	@Override
-	public BudgetVO get(Long schno) {
-		log.info("get......" + schno);
-		return mapper.read(schno);
-	}
-
-	@Override
-	public boolean modify(BudgetVO budget) {
-		log.info("modify......" + budget);
-		return mapper.update(budget) == 1;
-	}
-
-	@Override
-	public boolean remove(Long schno) {
-		log.info("remove" + schno);
-		return mapper.delete(schno) == 1;
-	}
-
-	@Override // 이거 어떻게 동작할 수 있는지 ?
 	public List<BudgetVO> getList() {
 		log.info("getList......");
 		return mapper.getList();
 	}
-
+	
 }

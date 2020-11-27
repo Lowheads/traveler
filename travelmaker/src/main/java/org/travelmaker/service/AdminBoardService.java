@@ -3,6 +3,7 @@ package org.travelmaker.service;
 import java.util.List;
 
 import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
 
 public interface AdminBoardService {
@@ -11,7 +12,9 @@ public interface AdminBoardService {
 	
 	public void removePost(int result);
 	
-	public List<BoardVO> searchBoardWriter(Criteria cri);
+	public List<BoardVO> searchPost(Criteria cri);
+	
+	public List<BoarddtVO> getPostDetail(int boardNo);
 	
 
 }

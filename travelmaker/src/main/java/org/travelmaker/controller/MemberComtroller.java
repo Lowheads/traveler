@@ -122,7 +122,6 @@ public class MemberComtroller {
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
 		session.setAttribute("memNo", service.getMemNo(email));
 		return mav;
-	
 	}
 	
 	// 로그아웃

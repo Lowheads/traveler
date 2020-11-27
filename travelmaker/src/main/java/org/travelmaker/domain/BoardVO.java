@@ -14,6 +14,7 @@ public class BoardVO {
 	private Date modDate;
 	private int vCnt;
 	private String hidden;
+	private String writer;  //schedule과 조인한 mem_no
 	
 	private String boardImg;
 	private String thumbImg;

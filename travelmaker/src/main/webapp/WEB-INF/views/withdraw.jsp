@@ -28,10 +28,10 @@
 				<form id='searchForm' action="/admin/withdraw" method='get'>
 				<div class="w100" style="padding-right: 10px">
 					<select class="form-control form-control-sm" name="type" id="type">
-							<option selected disabled hidden><c:out value="${criteria.type}"/></option>
-							<option value="mem_no">회원번호</option>
-							<option value="email">이메일</option>
-							<option value="nickname">닉네임</option>
+						<option selected disabled hidden><c:out value="${criteria.type}"/></option>
+						<option value="회원번호">회원번호</option>
+						<option value="이메일">이메일</option>
+						<option value="닉네임">닉네임</option>
 					</select>
 				</div>
 				<div class="w300" style="padding-right: 10px">
@@ -39,7 +39,7 @@
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
 				</div>
 				<div>
-				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
+				<button class="btn btn-sm- btn-primary">검색</button>
 				</div>
 				</form>
 
@@ -72,7 +72,7 @@
 								<th>MEM_GRADE</th>
 							</tr>
 						</tfoot>
-						<tbody>
+						<tbody id="tableBody">
 
 							<c:forEach items="${users}" var="users">
 								<tr name="row" id='<c:out value="${users.memNo}" />'>
@@ -91,6 +91,31 @@
 						</tbody>
 
 					</table>
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel"></h4>
+								</div>
+								<div class="modal-body"></div>
+								<div class="modal-footer">
+									<button id="modalInBtn" type="button" class="btn btn-primary"
+										data-dismiss="modal">확인</button>
+									<button id="modalDefaultBtn" type="button"
+										class="btn btn-primary" data-dismiss="modal">close</button>
+
+								</div>
+							</div>
+							<!-- /.modal-content -->
+							</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.modal -->
+							
 						<!-- 2nd Modal -->
 					<div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,7 +124,7 @@
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">회원정보</h4>
+									<h4 class="modal-title" id="myModalLabel"></h4>
 								</div>
 								<div class="modal-body">회원정보</div>
 								<div name="secret" hidden=true ></div>
@@ -128,43 +153,26 @@
 </div>
 <!-- End of Main Content -->
 
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 $(document).ready(function() {
-	
-	var searchForm = $("#searchForm");
 
-	var actionForm  = $("#actionForm");
-
-	$("#searchForm button").on("click", function(e) {
-
-		if (!searchForm.find("option:selected").val()) {
-			alert("검색 종류를 선택하세요")
-			return false;
-		}
-
-		if (!searchForm.find("input[name='keyword']").val()) {
-			alert("검색 키워드를 입력하시오")
-			return false;
-		}
-		
-		e.preventDefault();
-		searchForm.submit();
-		
-	})
-	
 	$("tr[name=row]").click(function() {
 
-		var id = "#" + $(this).attr("id");
+		const id = $(this).attr("id");
 		
-		
-		var res = $(id)[0].innerText;
-		var info =(res.substring(0,res.length)).split("	");
+		const res = $("#"+id)[0].innerText;
+		const info =(res.substring(0,res.length)).split("	");
 
-		$("div[name=secret]")[0].innerText =info[0];
-		
-		var output ="회원번호	:	"+info[0]+"<br>"+"이메일		:	"+info[1]+"<br>"+"닉네임		:	"+info[2]
-		+"<br>"+"생년월일		:	"+info[3]+"<br>"+"성별		:	"+info[4]+"<br>"+"상태		:	"+info[5]
-		+"<br>"+"가입일		:	"+info[6]+"<br>"+"최근 로그인 날짜		:	"+info[7]+"<br>"+"등급		:	"+info[8]
+		const output ="회원번호	:	"+info[0]+"<br>"
+					+"이메일		:	"+info[1]+"<br>"
+					+"닉네임		:	"+info[2]+"<br>"
+					+"생년월일		:	"+info[3]+"<br>"
+					+"성별		:	"+info[4]+"<br>"
+					+"상태		:	"+info[5]+"<br>"
+					+"가입일		:	"+info[6]+"<br>"
+					+"최근 로그인 날짜		:	"+info[7]+"<br>"
+					+"등급		:	"+info[8]
 
 		
 		$(".modal-body").html(output);
@@ -172,13 +180,42 @@ $(document).ready(function() {
 		
 		$("#moveBtn").on('click',function(){
 			
-			var number = $("div[name=secret]")[0].innerText
-			location.href="/admin/boardList?type=mem_no&keyword="+number;
-			
+			location.href = "/admin/boardList?type=mem_no&keyword="	+ id;
 		})
-		
 	})
 })
+
+$("#searchForm button").on("click",function(e) {
+		
+		const type = $("select[id=type]").val();
+		const keyword = $("input[id=keyword]").val();
+	
+		let msg = "";
+		
+		if (type == "") {
+			
+			showModal("검색할 대상을 선택하세요")
+			return false;
+		}
+
+		if (keyword == "") {
+			showModal("검색할 단어를 입력하세요")
+			return false;
+		}
+		if(type =="회원번호"){
+			if(isNaN(keyword)){
+				showModal("회원번호는 숫자만 입력해주세요")
+				return false;
+			}
+		}
+		return true;
+	})
+
+	function showModal(msg){
+			
+			$(".modal-body").html(msg);
+			$("#myModal").modal("show");
+		};
 </script>
 
 

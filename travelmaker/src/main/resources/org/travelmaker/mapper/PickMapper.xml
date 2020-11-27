@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.travelmaker.mapper.PICK_Mapper">
+<mapper namespace="org.travelmaker.mapper.PickMapper">
 
 <insert id="insert">
 	insert into PICK_PL (mem_no,plc_no)

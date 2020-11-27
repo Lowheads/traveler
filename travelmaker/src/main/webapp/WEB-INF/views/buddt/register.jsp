@@ -9,7 +9,9 @@
 	<div class="col-lg-12">
 		<h1 class="page-header">경비 상세 입력</h1>
 	</div>
+	<!-- /.col-lg-12 -->
 </div>
+<!-- /.row -->
 
 <div class="row">
 	<div class="col-lg-12">
@@ -21,7 +23,7 @@
 
 				<form role="form" action="/buddt/register" method="post">
 
-					<!-- 시퀀스 처리되어 필드에 보여지지 않아도 괜찮습니다!
+					<!-- 시퀀스 처리되어 필드에 보여지지 않아도 괜찮다
 					<div class="form-group"> 
 						<label>#no </label> <input type="hidden" class="form-control" name='no'
 						type="text" onkeyup="onlyInsertNum(this)">

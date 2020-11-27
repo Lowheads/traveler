@@ -7,6 +7,7 @@
 		<h1>테마 게시판</h1>
 	</div>
 	<button id="regBtn" class="btn btn-sm-btn-primary">내 일정 공유</button>
+	<button id="hiddenBtn" class="btn btn-sm-btn-primary">공개/비공개 설정</button>
 	<div>
 		<table class="board">
 			<thead>
@@ -17,6 +18,7 @@
 					<th>최초작성일</th>
 					<th>최종수정일</th>
 					<th>공개여부</th>
+					<th>작성자</th>
 					<th>대표사진</th>
 				</tr>
 			</thead>
@@ -30,13 +32,11 @@
 						</a></td>
 						<td><c:out value="${board.schNo }" /></td>
 						<td><c:out value="${board.boardTitle }" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.WDate}" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.modDate}" /></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.WDate}" /></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.modDate}" /></td>
 						<td><c:out value="${board.hidden }" /></td>
-						<td><img class="orgImg"
-							src="<c:out value='${board.boardImg}'/>" /></td>
+						<td><c:out value="${board.writer }"/></td>
+						<td><img class="orgImg" src="<c:out value='${board.boardImg}'/>" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -78,6 +78,10 @@
 
 				$("#regBtn").on("click",function(){
 					self.location="/board/schedulelist";
+				});
+				
+				$("#hiddenBtn").on("click",function(){
+					self.location="/board/hiddenlist";
 				});
 				
 				var actionForm = $("#actionForm");

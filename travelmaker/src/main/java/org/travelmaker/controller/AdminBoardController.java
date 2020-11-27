@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +21,7 @@ import org.travelmaker.service.AdminBoardService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Log4j
@@ -29,7 +35,7 @@ private AdminBoardService service;
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberContorller.class);
 	
 	@GetMapping("/boardList")
-	public String boardList(Criteria cri, Model model) {
+	public String getPost(Criteria cri, Model model) {
 		
 		List<BoardVO> result;
 		
@@ -37,25 +43,33 @@ private AdminBoardService service;
 			result = service.getBoardList();
 			model.addAttribute("board", result);
 		}else {
-			result = service.searchBoardWriter(cri);
+			result = service.searchPost(cri);
 			model.addAttribute("board", result);
 		}
 		
-
-		return "boardList";
+		return "/boardList";
 	}
 	
-	@GetMapping("/removeContent")
-	public String removePost(int[] result, RedirectAttributes rttr) {
+	@GetMapping("/removeContent/{boardNo}")
+	public String removePost(@PathVariable("boardNo") int[] boardNo, RedirectAttributes rttr) {
 		
-		
-		for(int i =0;i<result.length;i++) {
-			service.removePost(result[i]);
+		for(int i =0;i<boardNo.length;i++) {
+			service.removePost(boardNo[i]);
 		}
 		
 		rttr.addFlashAttribute("message", "SUCCESS");
 		return "redirect:/admin/boardList";
 	}
+	
+	
+	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<BoarddtVO>> getDetail(@PathVariable("boardNo") int boardNo) {
+		
+		ResponseEntity<List<BoarddtVO>> result = null;
+		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostDetail(boardNo));
+		
+		return result;
+	} 
 	
 	
 

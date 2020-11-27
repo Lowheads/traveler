@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class StatisticVO {
 	
-	private String dailyLog;
+	private String targetDate;
 	private String cntMember;
 	private String cntPost;
 	

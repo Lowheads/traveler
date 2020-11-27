@@ -8,17 +8,17 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.service.AdminMemberService;
@@ -36,58 +36,34 @@ import lombok.extern.log4j.Log4j;
 public class AdminMemberContorller {
 
 	private AdminMemberService service;
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberContorller.class);
-
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "home";
-	}
 
 	@GetMapping("userInfo")
 	public String userInfo(Criteria cri, Model model) {
 
-		model.addAttribute("criteria", cri);
-
-		if (cri.getKeyword() == null || cri.getType() == null) {
+		String type = cri.getType();
+		String keyword =cri.getKeyword();
+		
+		if(type==null||keyword==null) {
+			
 			model.addAttribute("users", service.getUserList());
-		} else {
+
+		}else {
+		
 			model.addAttribute("users", service.searchUser(cri));
 		}
 		
 		return "userInfo";
 	}
-	
-	/*
-	@GetMapping("userinfo/{type}/{keyword}")
-	public String searchUser(@PathVariable("type") String type,@PathVariable("keyword") String keword) {
-		model.addAttribute("users", service.searchUser(cri));
-		return "userInfo";
-	}*/
-/*
-	@GetMapping("userInfo/{memNo}")
-	public void userInfo(@PathVariable("memNo") String memNo, RedirectAttributes rttr) {
-		
-		rttr.addFlashAttribute("userInfo", service.getUser(memNo));
-		
-	}*/
 
 	@GetMapping("withdraw")
 	public String withdraw(Criteria cri, Model model) {
+
+		String type = cri.getType();
+		String keyword =cri.getKeyword();
 		
-		if (cri.getKeyword() == null || cri.getType() == null) {
+		if (keyword == null || type == null) {
 			model.addAttribute("users", service.getWithdrawUserList());
 		} else {
 			model.addAttribute("users", service.searchWithdrawUser(cri));
@@ -95,14 +71,14 @@ public class AdminMemberContorller {
 		return "withdraw";
 	}
 
-	@GetMapping("/remove")
-	public String removeUser(int[] result, RedirectAttributes rttr) {
-		
-		if(result!=null) {
-			for (int i = 0; i < result.length; i++) {
-					service.removeUser(result[i]);
-					rttr.addFlashAttribute("message", "SUCCESS");
+	@GetMapping("/remove/{ids}")
+	public String removeUser(@PathVariable("ids") int[] ids, RedirectAttributes rttr) {
+
+		if (ids != null) {
+			for (int i = 0; i < ids.length; i++) {
+				service.removeUser(ids[i]);
 			}
+			rttr.addFlashAttribute("message", "SUCCESS");
 		}
 
 		return "redirect:/admin/userInfo";

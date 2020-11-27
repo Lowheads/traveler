@@ -5,38 +5,57 @@
 
 <mapper namespace="org.travelmaker.mapper.AdminBoardMapper">
 
-<resultMap type="org.travelmaker.domain.BoardVO" id="VOResult">
-	<result property="boardNo" column="BOARD_NO"/>
-	<result property="schNo" column="SCH_NO"/>
-	<result property="boardTitle" column="BOARD_TITLE"/>
-	<result property="wDate" column="W_DATE"/>
-	<result property="pickCnt" column="PICK_CNT"/>
-	<result property="modDate" column="MOD_DATE"/>
-	<result property="vCnt" column="V_CNT"/>
-	<result property="hidden" column="HIDDEN"/>
-</resultMap>
+	<resultMap type="org.travelmaker.domain.BoardVO"
+		id="BoardVO">
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="schNo" column="SCH_NO" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="wDate" column="W_DATE" />
+		<result property="pickCnt" column="PICK_CNT" />
+		<result property="modDate" column="MOD_DATE" />
+		<result property="vCnt" column="V_CNT" />
+		<result property="hidden" column="HIDDEN" />
+	</resultMap>
+	
+		<resultMap type="org.travelmaker.domain.BoarddtVO"
+		id="Boarddt">
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="boardCon" column="BOARD_CON" />
+		<result property="num" column="NUN" />
+		<result property="boarddtImg" column="BOOARDDT_IMG" />
+		<result property="dtThumbImg" column="DT_THUMB_IMG" />
+	</resultMap>
 
-	<select id="getBoardList" resultMap="VOResult">
+	<select id="getBoardList" resultMap="BoardVO">
  <![CDATA[
-	select /*+ index_desc(tbl_board pk_board) */ * from board where board_no>0]]>
+	select /*+ index_desc(tbl_board pk_board) */ * from board where board_no>0 order by board_no desc]]>
 	</select>
 
 	<update id="removePost">
-		update board set hidden='숨김' where board_no=#{result}
+		delete board where board_no=#{result}
 	</update>
+
+	<select id="searchPost" resultMap="BoardVO">
+		select /*+ index_desc(member pk_board) */ *
+		from board b, schedule s, member m
+		where
+		<choose>
+			<when test="type == '회원번호'">
+				(m.mem_no = #{keyword})
+			</when>
+			<when test="type == '닉네임'">
+				(nickname like '%'||#{keyword}||'%')
+			</when>
+			<when test="type == '제목'">
+				(board_title like '%'||#{keyword}||'%')
+			</when>
+		</choose>
+		and b.sch_no = s.sch_no and s.mem_no=m.mem_no
+		order by board_no
+	</select>
 	
-		<select id ="searchBoardWriter" resultMap="VOResult">
-			select /*+ index_desc(member pk_board) */ * 
-			from board b, schedule s
-			where 
-			<choose>
-				<when test="type == 'title'">
-					(board_title like '%'||#{keyword}||'%')
-				</when>
-				<when test="type == 'mem_no'">
-					(mem_no = #{keyword})
-				</when>
-			</choose> and b.sch_no = s.sch_no
+	<select id="getPostDetail" resultMap="Boarddt">
+		SELECT * FROM BOARD_DT WHERE BOARD_NO = #{boardNo}
 	</select>
 
 </mapper>

@@ -5,10 +5,16 @@
 <mapper namespace="org.travelmaker.mapper.ThemeMapper">
 
 <select id="getThemeList" resultType="map">
-	select region_no, theme_code from theme
+	select * from theme
 </select>
 
-<select id="getThemeInfo" resultType="string">
-	select p.plc_no from theme t , theme_plc p where t.theme_no = p.theme_no and t.region_no=#{region_no, jdbcType=INTEGER} and t.theme_code=#{theme_code, jdbcType=VARCHAR}
+<select id="getThemeInfo" resultType="map">
+	SELECT T.PLC_NO, P.PLC_TITLE 
+	FROM THEME_PLC T, PLACE P 
+	WHERE T.PLC_NO = P.PLC_NO AND THEME_NO = (
+		SELECT THEME_NO 
+		FROM THEME 
+		WHERE REGION_NO=#{regionNo} AND THEME_CODE=#{themeCode})
+
 </select>
 </mapper>

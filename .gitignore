@@ -6,6 +6,15 @@
 # Compiled class file
 *.class
 
+*.MF
+MANIFEST
+/MANIFEST.MF
+**/MANIFEST.MF
+**/MANIFEST.*
+
+*.egg
+MANIFEST
+
 # Log file
 *.log
 
@@ -123,3 +132,5 @@ $RECYCLE.BIN/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+travelmaker/src/main/java/org/travelmaker/controller/ttt.java
+travelmaker/src/main/webapp/WEB-INF/spring/root-context.xml

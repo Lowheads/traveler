@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.PlacePageDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.mapper.PlaceMapper;
 
@@ -23,15 +24,11 @@ public class PlaceServiceImpl implements PlaceService {
 	
 	@Override
 	public void register(PlaceVO place) {
-
-		log.info("register"+place);
 		mapper.insert(place);
 	}
 
 	@Override
 	public PlaceVO get(long plcNo) {
-
-		log.info("get...."+plcNo);
 		
 		return mapper.read(plcNo);
 		
@@ -40,15 +37,11 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public boolean remove(long plcNo) {
 		
-		log.info("remove...."+plcNo);
-		
 		return mapper.delete(plcNo)==1;
 	}
 
 	@Override
 	public List<PlaceVO> getList() {
-		
-		log.info("getList.....");
 		
 		return mapper.getList();
 	}
@@ -56,39 +49,29 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public boolean modify(PlaceVO place) {
 
-		log.info("modify..."+place);
-		
 		return mapper.update(place) ==1;
 	}
 
 	@Override
-	public List<PlaceVO> getList(Criteria cri) {
+	public List<PlaceVO> getList(Criteria cri,String selected) {
 
-
-		log.info("get List with criteria: "+cri);
-		
+		if(selected!=null) {
+			if(selected.equals("like")){
+				return mapper.sortLike(cri);
+			}
+			if(selected.equals("new")){
+				return mapper.sortNewest(cri);
+			}
+			if(selected.equals("old")){
+				return mapper.sortOldest(cri);
+			}
+		}
 		return mapper.getListWithPaging(cri);
 	}
 
 	@Override
 	public void updateLikeCnt(PlaceVO vo) {
-		log.info("update,,,");
 		mapper.update(vo);
-	}
-
-	@Override
-	public List<PlaceVO> getLikeList(Criteria cri) {
-		return mapper.sortLike(cri);
-	}
-
-	@Override
-	public List<PlaceVO> getNewestList(Criteria cri) {
-		return mapper.sortNewest(cri);
-	}
-
-	@Override
-	public List<PlaceVO> getOldestList(Criteria cri) {
-		return mapper.sortOldest(cri);
 	}
 
 	@Override
@@ -96,7 +79,6 @@ public class PlaceServiceImpl implements PlaceService {
 		// TODO Auto-generated method stub
 		return mapper.getTotalCount(cri);
 	}
-	
 	
 	//종운 메서드
 	@Override
