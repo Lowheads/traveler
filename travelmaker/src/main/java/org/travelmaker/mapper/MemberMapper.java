@@ -37,7 +37,7 @@ public interface MemberMapper {
 	
 	public void presentDate(String email); // 최종 로그인
 	
-	public String myNicknamePass(String email); //정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다. 
+	public String getMyNickname(String email); //정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다. 
 	
 	public int deleteNoAccess(String email); // 삭제한 계정은 접속 못함 
 }
