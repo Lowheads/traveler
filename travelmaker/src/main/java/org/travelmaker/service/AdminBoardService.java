@@ -12,9 +12,9 @@ public interface AdminBoardService {
 	
 	public void removePost(int result);
 	
-	public List<BoardVO> searchBoardWriter(Criteria cri);
+	public List<BoardVO> searchPost(Criteria cri);
 	
-	public List<BoarddtVO> getBoardDetail(int boardNo);
+	public List<BoarddtVO> getPostDetail(int boardNo);
 	
 
 }

@@ -122,7 +122,7 @@
 <script>
 	$(document).ready(function() {
 
-		var message = '<c:out value="${message}"/>';
+		const message = '<c:out value="${message}"/>';
 
 		if (message === '') {
 			return;
@@ -135,47 +135,61 @@
 	})
 
 	$("#searchForm button").on("click", function(e) {
-		var type = $("#searchForm").find("option:selected").val();
-		var keyword = $("#searchForm").find("input[name='keyword']").val();
+		
+		const type = $("select[id=type]").val();
+		const keyword = $("input[id=keyword]").val();
+		//var type = $("#searchForm").find("option:selected").val();
+		//var keyword = $("#searchForm").find("input[name='keyword']").val();
+		
+		let msg="";
 
-		if (type == "") {
-			$(".modal-body").html("검색할 대상을 선택하세요");
-			$("#myModal").modal("show");
+		if (type == null) {
+			showModal("검색할 대상을 선택하세요");
 			return false;
 		}
 
 		if (keyword == "") {
-			$(".modal-body").html("검색할 단어를 입력하세요");
-			$("#myModal").modal("show");
+			showModal("검색할 단어를 입력하세요");
 			return false;
 		}
 		
+		if(type =="회원번호"){
+			if(isNaN(keyword)){
+				showModal("회원번호는 숫자만 입력해주세요");
+				return false;
+			}
+		}
+		
 		return true;
+		
 	})
 
 	function deletePost() {
 
-		var cnt = 0;
-		var txt = "";
+		let cnt = 0;
+		let txt = "";
 
-		for (var i = 0; i < $("input[name=ChkBox]").length; i++) {
+		for (let i = 0; i < $("input[name=ChkBox]").length; i++) {
 			if ($("input[name=ChkBox]")[i].checked == true) {
 				txt += $("input[name=ChkBox]")[i].id + ", ";
 				cnt++;
 			}
 		}
 
-		var boardNo = (txt.substring(0, txt.lastIndexOf(","))).split(",");
+		const boardNo = (txt.substring(0, txt.lastIndexOf(","))).split(",");
+		
+		let msg = "";
 
 		if (txt.length == 0) {
-			$(".modal-body").html("삭제할 게시글을 선택해주세요");
+			
+			showModal("삭제할 게시글을 선택해주세요")
+			return false;
 
-		} else {
-			$(".modal-body").html(cnt + "개의 게시글을 삭제하시겠습니까?");
+		} else {	
+			
+			showModal(cnt + "개의 게시글을 삭제하시겠습니까?")
 		}
 
-		$("#myModal").modal("show");
-		
 		$("#modalInBtn").on("click", function() {
 			
 			location.href = "/admin/removeContent/" + boardNo;
@@ -184,23 +198,26 @@
 	
 	$("tr[name=row]").click(function() {
 		
-		var boardNo = $(this).attr("id");
+		const boardNo = $(this).attr("id");
 		
 		user.detail(boardNo,function(list){
 			
-			
-			var str = boardNo+"번 게시글 상세정보 <br>";
-			for (var i = 0; i < list.length; i++) {
+			let str = boardNo+"번 게시글 상세정보 <br>";
+			for (let i = 0; i < list.length; i++) {
 				
-				str+="내용	:	"+list[i].boardCon+"	num	:	"+list[i].num+"	이미지	:	"+list[i].boarddtImg+"	썸네일 이미지	:	"+list[i].boardThumbImg+"<br>";
+				str+="내용	:	"+list[i].boardCon	+"	num	:	"+list[i].num+"	이미지	:	"+list[i].boarddtImg+"	썸네일 이미지	:	"+list[i].boardThumbImg+"<br>";
 			}
 			
-			$(".modal-body").html(str);
-			$("#myModal").modal("show");
-
+			showModal(str);
 		})
 		
-	})
+	})	
+	
+	function showModal(msg){
+			
+			$(".modal-body").html(msg);
+			$("#myModal").modal("show");
+		};
 
 	function checkAll() {
 		if ($("#th_checkAll").is(':checked')) {

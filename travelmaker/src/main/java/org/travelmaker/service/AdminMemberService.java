@@ -19,11 +19,4 @@ public interface AdminMemberService {
 
 	public int removeUser(int result);
 	
-	
-	
-	
-
-	
-	
-	
 }

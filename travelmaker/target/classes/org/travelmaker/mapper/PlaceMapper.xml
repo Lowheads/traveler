@@ -37,6 +37,8 @@ select * from PLACE
 <select id="read" resultMap="placeVO">
 	select * from PLACE where plc_no = #{plcNo}
 </select>
+<!--plc_no = #{plcNo} 선택된 plcNo를 in 으로 고쳐서  plc_no in( #{plcNo} ) 
+콤마로 문자열로 만들어서 주기-->
 
 <delete id="delete">
 	delete from PLACE where plc_no = #{plcNo}
@@ -124,13 +126,18 @@ select count(*) from place p, pick_pl pl
 </select>
 
 <select id="getListWithTheme" resultMap="placeDTO">
-   select tplc.theme_no, p.plc_no , p.plc_title
-   from theme_plc tplc,  place p
+   select tplc.theme_no, p.plc_no , p.plc_title, ctb.code_name
+   from theme_plc tplc,  place p, code_table ctb
    where theme_no = (select theme_no
    from theme t
-   where t.region_no = 1 and t.theme_code = 'C001')
+   where t.region_no = #{regionNo} 
+   and theme_code = 'C001')
    and tplc.plc_no = p.plc_no
 </select>
+<!-- 리뷰 내용 11/25
+하드 코딩한 거 밖으로 옮기기,
+and theme_code = 'C001') -> and theme_code = #{themeNum})
+ mapper들어오기전에 -->
 
 
 

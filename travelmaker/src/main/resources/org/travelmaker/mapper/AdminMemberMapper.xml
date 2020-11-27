@@ -5,7 +5,7 @@
 
 <mapper namespace="org.travelmaker.mapper.AdminMemberMapper">
 
-<resultMap type="org.travelmaker.domain.MemberVO" id="VOResult">
+<resultMap type="org.travelmaker.domain.MemberVO" id="MemberResult">
 	<result property="memNo" column="MEM_NO"/>
 	<result property="email" column="EMAIL"/>
 	<result property="nickname" column="NICKNAME"/>
@@ -19,13 +19,13 @@
 </resultMap>
 
 
-	<select id="getUser" resultMap="VOResult">
+	<select id="getUser" resultMap="MemberResult">
 	select /*+ index_desc(member pk_member) */ * from member where mem_no=#{memNo}
 	</select>
 	
-	<select id="getUserList" resultMap="VOResult">
+	<select id="getUserList" resultMap="MemberResult">
  <![CDATA[
-	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 order by mem_no]]>
+	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 order by mem_no desc]]>
 	</select>
 	
 		<update id="removeUser">
@@ -33,14 +33,14 @@
 	</update>
 	
 	
-	<select id="getWithdrawUserList" resultMap="VOResult">
+	<select id="getWithdrawUserList" resultMap="MemberResult">
  <![CDATA[
-	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 and status='탈퇴']]>
+	select /*+ index_desc(member pk_member) */ * 
+	from member where mem_no>0 and status='탈퇴'
+	order by mem_no desc]]>
 	</select>
 	
-	
-	<select id ="searchUser" resultMap="VOResult">
-		select * from(
+	<select id ="searchUser" resultMap="MemberResult">
 			select /*+ index_desc(member pk_member) */ *
 			from member
 			where
@@ -55,11 +55,9 @@
 					(mem_no =#{keyword})
 				</when>
 			</choose>
-			)	
 	</select>
 	
-		<select id ="searchWithdrawUser" resultMap="VOResult">
-		select * from(
+	<select id ="searchWithdrawUser" resultMap="MemberResult">
 			select /*+ index_desc(member pk_member) */ * 
 			from member
 			where 
@@ -75,7 +73,6 @@
 				</when>
 			</choose>
 			and status='탈퇴'
-			)	
 	</select>
 
 </mapper>

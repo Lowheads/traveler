@@ -279,14 +279,14 @@
 <body>
 	
 	
-		<p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필></p>
+		<p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p>
 	
 	<div class="wrap-main">
 	
 		<div class="center">아이디(이메일) : ${member.email }</div> 
 		
 		<!-- 닉네임 저장 폼 -->
-	<form action="/member/nNameModify" method="post">
+	<form action="/member/nicknameModify" method="post">
 		 <div class="center">닉네임 <input type="text" id="infoNickname" name="nickname" value="${member.nickname }">
 		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 		 	<button type="button" class="btn" id="infoNicknameCheck">중복 체크</button>

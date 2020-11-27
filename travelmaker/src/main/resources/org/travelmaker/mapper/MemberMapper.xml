@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 닉네임 수정 -->
-	<update id="nNameModify" parameterType="String">
+	<update id="nicknameModify" parameterType="String">
 		update member set
 		nickname = #{nickname}
 		where email = #{email}		
@@ -116,7 +116,7 @@
 	</update>
 	
 	<!-- 정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다.-->
-	<select id="myNicknamePass" resultType="String">
+	<select id="getMyNickname" resultType="String">
 	select nickname from member
 	where email = #{email}
 	</select>

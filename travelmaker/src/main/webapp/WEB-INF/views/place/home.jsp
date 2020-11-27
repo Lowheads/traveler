@@ -36,7 +36,8 @@
 		<button class="btn-rec-place">추천 장소</button>
 		<ul class="left-place-rec-list">
 			<li class="left clearfix" id="rec-place">
-				<c:forEach items="${places}" var="list">
+			<div><c:forEach items="${places}" var="list">
+			3</div>
 					<div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
 						<c:out value="${list.plcTitle}"></c:out>
 						<button class="rec-add-button" type="button">
@@ -85,7 +86,7 @@
     
     <div id="transit-container" class="transit-container" data-transit="car"></div>
     <button type='button' id="transit-btn-car" data-transit="car">차</button>
-    <button type='button' id="transit-btn-transit" data-transit="transit">대중교통</button>
+    <button type='button' id="transit-btn-transit" data-transit="traffic">대중교통</button>
 
 	<script type="text/javascript" src="/resources/js/place.js"></script>
 	<script type="text/javascript"
@@ -208,11 +209,11 @@
 		    totalPlace.innerHTML = null; // 수정되면 초기화 작업
 		   for(idx; idx<=dateDiff; idx++ ){
 			   let objs;
-			    objs = document.createElement('button');
-		        objs.setAttribute('class', 'daily-place-btn');
-		        objs.innerText=idx+1+"일차";
-		        objs.addEventListener('click', showDailyPlaceList);
-		        totalDate.appendChild(objs);
+			   objs = document.createElement('button');
+		       objs.setAttribute('class', 'daily-place-btn');
+		       objs.innerText=idx+1+"일차";
+		       objs.addEventListener('click', showDailyPlaceList);
+		       totalDate.appendChild(objs);
 		        
 		       let liobjs
 		       liobjs = document.createElement('li');
@@ -264,32 +265,59 @@
 	    }
 	    
 	    function makeSchedule() {
+	    	let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
+	    	let i,j;
+	    	let tmpAllList =[];
+	    	let tmpList;
+	    	let placeList = document.getElementsByClassName("daily-place-list");
+	    	let len = placeList.length;
 	    	
-	    	/* var placeObj = {places:list};
-			var schDTO = {sch_region:h.dataset["schRegion"],from_date:h.dataset["fromDate"],to_date:h.dataset["toDate"]} 
-			
-			  alert(h.dataset["schRegion"]);
-			 var sendData = {
-					 places:list
-						,sch_region:h.dataset["schRegion"] 
-						,from_date:h.dataset["fromDate"]
-						,to_date:h.dataset["toDate"] 
-						
-				  };
-			 var sendJSON = JSON.stringify(sendData);
-			$.ajax({  
-				   type: 'POST' 
-				  ,url: "/place/"
-				  ,data: sendJSON
-				  ,success:function(data){
-				    alert("성공");
-				  }
-				  ,error:function(data){
-				    alert("error");
-				  }
-				  });  */
-	    	
-	    }
+	    	for (i = 0; i < len; i++) {
+	    		let tmpSchList = [];
+				tmpList = placeList[i].children;
+				tmplen = tmpList.length;
+				for (j = 0; j < tmplen-1; j++) {
+					let tmp = { 
+							schDate:i, // 1일차, 2일차, 3일차
+							fromPlc:tmpList[j].dataset["plcNo"],
+							fromPlcLat:tmpList[j].dataset["lat"],
+							fromPlcLng:tmpList[j].dataset["lng"],
+							fromPlcTitle:tmpList[j].dataset["title"],
+							toPlc:tmpList[j+1].dataset["plcNo"],
+							toPlcLat:tmpList[j+1].dataset["lat"],
+							toPlcLng:tmpList[j+1].dataset["lng"],
+							toPlcTitle:tmpList[j+1].dataset["title"],
+							transit:transit
+					}
+					console.log(tmp)
+					/* let schData = JSON.stringify(tmp); */
+					tmpSchList.push(tmp);
+					console.log(tmpSchList);
+				}
+			tmpAllList.push(tmpSchList);
+			}
+	    	console.log(tmpAllList);
+			let sendJSON = JSON.stringify(tmpAllList);
+			console.log(sendJSON)
+	    	/* let childPlc = placeList.children;
+			console.log(sendData);
+			let sendJSON = JSON.stringify(sendData);
+			console.log(sendJSON) */
+	    	$.ajax({
+	        	traditional : true,
+	            url: "/place/test",
+	            type: "POST",
+	            data: sendJSON,
+	            contentType: "application/json; charset=utf-8;",
+	            dataType: "json",
+	            success: function(data){
+	                alert("success : "+data);
+	            },
+	            error: function(){
+	                alert("restController err");
+	            }
+	        });  
+	    };
 	    
 	    
 	    function searchAction() {
@@ -305,17 +333,19 @@
 			
 			placeService.getList({title : placeValue},
 					function(list) {
-						let len = list.length;
+						let len = list.length||0;
 						let leng = activePlaceList.length;
-						for (i= 0, len||0; i<len-leng; i++) {
+						for (i= 0; i<len-leng; i++) {
 							for (j = 0; j < leng||0; j++) {
 									if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
 										list.splice(i,1);
 									}
 							}
 						}
-						
-						for (i = 0, len|| 0; i < len-leng; i++) {
+						// 리뷰 template Literal 써서 자리 만들어서 채우기
+						// str ++ 하는거 같지 않은 세련된 방법이다.
+						// ` ` 백틱 문자를 사용해서 문자열이 아니라 str 그대로 들어간다.
+						for (i = 0; i < len-leng; i++) {
 							let liobj = document.createElement("li");	
 							liobj.setAttribute('class', 'left clearfix');
 							
@@ -351,8 +381,11 @@
 							objs1.appendChild(btnobj2);
 							liobj.appendChild(objs1);
 							placeList.append(liobj);
+							
 						}
 						
+						document.getElementsByClassName("add-button");
+						document.getElementsByClassName("detail-button");
 					})
 			return;
 		}
@@ -434,7 +467,7 @@
 		       var bounds = new kakao.maps.LatLngBounds();
 		      
 		       /*  for (var i = 0; i < markers.length||0; i++) {
-					//  굳이 marker배열을 쓸 필요가 없으면 필요없을거 같기도 하다.
+					//  굳이 marker배열을   쓸 필요가 없으면 필요없을거 같기도 하다.
 					
 				} */
 		          var placePosition = new kakao.maps.LatLng(
