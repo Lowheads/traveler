@@ -183,15 +183,19 @@ public class BoardController {
 	
 	@GetMapping({"/get"})
 	public void get(@RequestParam("schNo")int schNo, @RequestParam("boardNo")int boardNo, 
-			@ModelAttribute("cri") Criteria cri, Model model) {
+			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
 		
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+
 		log.info("/get");
 		
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
 		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
 		model.addAttribute("board",boardservice.get(boardNo));
-		model.addAttribute("boardNo",boardNo);
+		
+		model.addAttribute("memNo",memNo);
 	
 	}
 	

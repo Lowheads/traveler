@@ -4,7 +4,7 @@
 
 <div class="container">
 	<div>
-		<h1>내일정 공유</h1>
+		<h1>내일정 공유 </h1>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-striped table-sm">

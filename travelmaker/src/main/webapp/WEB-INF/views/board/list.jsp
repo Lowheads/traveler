@@ -45,8 +45,8 @@
 			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 			<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 		</form>
-		<div class='text-center'>
-			<ul class="pagination">
+		<div class='text-center' >
+			<ul class="pagination" style='text-align: center'>
 
 				<c:if test="${pageMaker.prev }">
 					<li class="paginate_button previous"><a
