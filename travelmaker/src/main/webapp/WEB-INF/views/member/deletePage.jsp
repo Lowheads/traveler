@@ -60,7 +60,7 @@
 	
 	// 탈퇴 전 한번 더 묻기
 	function deleteAsk() {
-		if (confirm("정말 탈퇴하시겠습니까??") == true) { //확인
+		if (confirm("정말 travel을 떠나실건가요..?") == true) { //확인
 			document.form.submit();
 		} else { //취소
 			return false;
