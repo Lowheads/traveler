@@ -5,6 +5,7 @@ import java.util.List;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceDTO;
 import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.ScheduleDtVO;
 
 
 public interface PlaceService {
@@ -35,4 +36,7 @@ public interface PlaceService {
 	
 	public int getTotal(Criteria cri);
 	
+//	public List<List<Schdt_PlaceVO>> getInitSchedule(Schdt_PlaceVO[] schdt_placeVOs);
+	
+	public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
 }
