@@ -26,7 +26,7 @@ public interface ScheduleService {
 
 	public boolean modify(ScheduleVO vo);
 
-	public List<ScheduleVO> getList(Criteria cri,String selected);
+	public List<ScheduleVO> getList(Criteria cri);
 
 	public void updateLikeCnt(ScheduleVO vo);
 

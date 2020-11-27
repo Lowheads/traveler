@@ -53,20 +53,12 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public List<PlaceVO> getList(Criteria cri,String selected) {
+	public List<PlaceVO> getList(Criteria cri) {
 
-		if(selected!=null) {
-			if(selected.equals("like")){
-				return mapper.sortLike(cri);
-			}
-			if(selected.equals("new")){
-				return mapper.sortNewest(cri);
-			}
-			if(selected.equals("old")){
-				return mapper.sortOldest(cri);
-			}
+		if(cri.getSelected()==null) {
+			return mapper.getListWithPaging(cri);
 		}
-		return mapper.getListWithPaging(cri);
+		return mapper.getSortList(cri);
 	}
 
 	@Override

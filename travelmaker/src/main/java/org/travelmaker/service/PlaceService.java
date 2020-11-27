@@ -25,7 +25,7 @@ public interface PlaceService {
 	public List<PlaceDTO> getListWithTheme(int regionNo, int themeNum);
 	
 	//순규 getList
-	public List<PlaceVO> getList(Criteria cri,String selected);
+	public List<PlaceVO> getList(Criteria cri);
 	
 	public void updateLikeCnt(PlaceVO vo);
 	

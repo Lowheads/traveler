@@ -49,8 +49,5 @@ public interface ScheduleMapper {
 
 	public void insertSelectKey(ScheduleVO schedule);
 	
-	public List<ScheduleVO> sortOldest(Criteria cri);
-	
-	public List<ScheduleVO> sortNewest(Criteria cri);
-	
+	public List<ScheduleVO> getSortList(Criteria cri);
 }

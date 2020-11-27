@@ -30,8 +30,8 @@ select * from PLACE
 </select>	
 
 <insert id="insert">
-	insert into PLACE (plc_no,region_no,plc_title,lat,lng,p_cate,holiday,opening_h)
-	values(#{plcNo},#{regionNo},#{plcTitle},#{lat},#{lng},#{pCate},#{holiday},#{openingH})
+	insert into PLACE (plc_no,region_no,plc_title,lat,lng,ADDRESS_DT,p_cate,holiday,opening_h)
+	values(#{plcNo},#{regionNo},#{plcTitle},#{lat},#{lng},#{addressDt},#{PCate},#{holiday},#{openingH})
 </insert>	
 
 <select id="read" resultMap="placeVO">
@@ -83,7 +83,7 @@ UPDATE place SET likecnt = likecnt +1 where plc_no = #{plcNo}
 UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
 </update>
 
-<select id="sortLike" resultMap="placeVO"><!-- 내일 수정  -->
+<select id="getSortList" resultMap="placeVO"><!-- 내일 수정  -->
 <![CDATA[
    select *
     from (
@@ -94,53 +94,17 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
         from place p,pick_pl pl
         where p.plc_no = pl.plc_no 
 			and pl.mem_no = #{memNo}
-            order by p.likecnt desc)a
+            order by case when #{selected}='old' then pl.pp_date end asc,
+            case when #{selected}='new' then pl.pp_date end desc,
+            case when #{selected}='like' then p.likecnt end desc,
+            p.plc_no desc
+             )a
             where rownum <= #{pageNum} * #{amount}
             )
             where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
-<select id="sortNewest" resultMap="placeVO"><!-- 내일 수정  -->
-<![CDATA[
-   select *
-    from (
-    select rownum no,a.*
-    from
-(select 
-        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
-        from place p,pick_pl pl
-        where p.plc_no = pl.plc_no 
-			and pl.mem_no = #{memNo}
-            order by pl.pp_date desc,
-            p.plc_no desc
-            )a
-            where rownum <= #{pageNum} * #{amount}
-            )
-            where no >= (#{pageNum} -1) *#{amount}+1 
-]]>
-</select>
-
-<select id="sortOldest" resultMap="placeVO"><!-- 내일 수정  -->
-<![CDATA[
-   select *
-    from (
-    select rownum no,a.*
-    from
-(select 
-        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
-        from place p,pick_pl pl
-        where p.plc_no = pl.plc_no 
-			and pl.mem_no = #{memNo}
-            order by pl.pp_date asc,
-            p.plc_no desc
-            
-            )a
-            where rownum <= #{pageNum} * #{amount}
-            )
-            where no >= (#{pageNum} -1) *#{amount}+1 
-]]>
-</select>
 
 <select id="getTotalCount" resultType="int">
 

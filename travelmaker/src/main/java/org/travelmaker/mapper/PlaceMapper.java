@@ -26,9 +26,7 @@ public interface PlaceMapper {
 	
 	public void downCnt(long plcNo);
 	
-	public List<PlaceVO> sortLike(Criteria cri);
-	public List<PlaceVO> sortNewest(Criteria cri);
-	public List<PlaceVO> sortOldest(Criteria cri);
+	public List<PlaceVO> getSortList(Criteria cri);
 	
 	public int getTotalCount(Criteria cri);
 	

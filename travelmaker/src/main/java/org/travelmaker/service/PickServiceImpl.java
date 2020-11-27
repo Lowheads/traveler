@@ -43,7 +43,8 @@ public class PickServiceImpl implements PickService{
 			pMapper.downCnt(vo.getPlcNo());
 			return mapper.delete(vo);
 		}
-
+		
+		//일정에 대한 좋아요 취소일때
 		return mapper.deleteSch(vo);
 	}
 }
