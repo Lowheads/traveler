@@ -81,7 +81,7 @@
 
 	<form id='operForm' action="/board/modify" method="get">
 		<input type='hidden' id='boardNo' name='boardNo'
-			value='<c:out value="${boardNo }"/>'> <input type='hidden'
+			value='<c:out value="${board.boardNo }"/>'> <input type='hidden'
 			name='pageNum' value='<c:out value="${cri.pageNum }"/>'> <input
 			type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 

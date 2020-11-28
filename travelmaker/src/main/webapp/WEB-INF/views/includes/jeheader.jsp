@@ -64,6 +64,20 @@
 
 
 /* 지은 스타일 */
+
+a:link, a:visited {
+  color: red;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: skyblue;
+  color: white;
+}
+
 /* toggle */
 .switch {
   position: relative;

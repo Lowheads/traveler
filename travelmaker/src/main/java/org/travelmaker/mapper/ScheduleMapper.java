@@ -24,9 +24,11 @@ public interface ScheduleMapper {
 	public int update(ScheduleVO vo);
 
 	//게시글 상태 미작성 -> 작성으로 변경
-	public int statusupdate(int schNo);
+	public int statusWritten(int schNo);
 	//게시글 상태 작성 -> 미작성으로 변경
-	public int statusback(int schNo);
+	public int statusunWritten(int schNo);
+	//게시글 상태 미작성-> 작성중으로 변경
+	public int statusWritting(int schNo);
 	
 	public void upSet(int schNo);
 
@@ -49,5 +51,7 @@ public interface ScheduleMapper {
 	public void insert(ScheduleVO schedule);
 
 	public void insertSelectKey(ScheduleVO schedule);
+
+
 
 }

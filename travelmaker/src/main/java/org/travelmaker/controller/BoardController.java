@@ -25,6 +25,7 @@ import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PageDTO;
+import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.service.BoardService;
 import org.travelmaker.service.BoarddtService;
 import org.travelmaker.service.SchdtService;
@@ -115,7 +116,7 @@ public class BoardController {
 		
 		boardservice.register(board);
 		
-		//스케쥴 상태 '미작성' -> '작성' 으로 변경
+		//스케쥴 상태 '미작성' -> '작성중' 으로 변경
 		scheduleservice.statusupdate(board.getSchNo());
 
 		
@@ -166,6 +167,12 @@ public class BoardController {
 		System.out.println(boarddt);
 		
 		boarddtservice.register(boarddt);
+		//boarddt 와 동일한 게시물번호의 board객체 가져오기
+		BoardVO board=boardservice.get(boarddt.getBoardNo());
+		
+		//작성중에서 작성으로
+		scheduleservice.statusupdate(board.getSchNo());
+		
 		return "redirect:/board/list";
 	}
 	
@@ -194,7 +201,6 @@ public class BoardController {
 		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
 		model.addAttribute("board",boardservice.get(boardNo));
-		model.addAttribute("boardNo",boardNo);
 		
 		model.addAttribute("memNo",memNo);
 	
@@ -235,13 +241,14 @@ public class BoardController {
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
-
+		ScheduleVO schedule=scheduleservice.get(schNo);
 		
 		//게시물 상세부터 remove
 		boarddtservice.remove(boardNo);
 		if(boardservice.remove(boardNo)) {
 			
 			//게시물 상태 '작성' -> '미작성' 으로 변경
+			schedule.setSchStatus("작성");
 			scheduleservice.statusupdate(schNo);
 			
 			rttr.addFlashAttribute("result","success");
