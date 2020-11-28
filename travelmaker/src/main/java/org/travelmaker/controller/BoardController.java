@@ -194,6 +194,7 @@ public class BoardController {
 		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
 		model.addAttribute("board",boardservice.get(boardNo));
+		model.addAttribute("boardNo",boardNo);
 		
 		model.addAttribute("memNo",memNo);
 	
