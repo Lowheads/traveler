@@ -22,7 +22,7 @@ public interface BoardMapper {
 	
 	public int update(BoardVO board);
 
-	public BoardVO readbytitle(BoardVO board);
+	public BoardVO readbySchNo(BoardVO board);
 	
 	public int getTotalCount(Criteria cri);
 

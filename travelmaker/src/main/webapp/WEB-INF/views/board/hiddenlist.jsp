@@ -32,7 +32,7 @@
 	</div>
 	<div>
 		<button id="Btn" onclick="location.href='/board/list'"
-			class="btn btn-sm-btn-primary">취소</button>
+			class="btn btn-sm-btn-primary">확인</button>
 	</div>
 </div>
 <script type="text/javascript">
@@ -40,7 +40,6 @@
 		
 	$(".round").on("click",function(){
 		
-		alert($(this).data("schno"));
 		let sendData = {
 				
 				"hidden" : $(this).data("hidden"),

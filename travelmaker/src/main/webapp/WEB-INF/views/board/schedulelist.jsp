@@ -4,7 +4,7 @@
 
 <div class="container">
 	<div>
-		<h1>내일정 공유</h1>
+		<h1>내일정 공유 </h1>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-striped table-sm">
@@ -20,7 +20,7 @@
 			<c:forEach items="${schedulelist}" var="schedule">
 				<tr>
 				<td>
-					<c:if test="${schedule.schStatus eq '미작성' }">
+					<c:if test="${schedule.schStatus eq '미작성' }"> <!-- 작성이 아닐때로 변경 (not eq ' ') -->
 					<a href='/board/register?schNo=<c:out value="${schedule.schNo}"/>'><c:out value="${schedule.schNo}" /></a>
 					</c:if>
 					<c:if test="${schdule.schStatus eq '작성 '}">

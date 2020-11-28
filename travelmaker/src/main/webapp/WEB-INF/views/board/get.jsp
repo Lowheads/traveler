@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="../includes/jeheader.jsp"%>
 
+
 <div class="container">
-	<h3>${board.boardTitle }</h3>
+	<h3>${board.boardTitle } </h3>
 	<table class="board">
 		<thead>
 			<tr>
@@ -69,8 +70,13 @@
 			</c:forEach>
 		</tbody>
 	</table>
-
-	<button id="Btn" data-oper='modify' class="btn btn-default">Modify</button>
+	
+   <c:choose>
+  <c:when test="${memNo eq schedule.memNo}">
+    <button id="Btn" data-oper='modify' class="btn btn-default">Modify</button>
+  </c:when>
+</c:choose>
+	
 	<button id="Btn" data-oper='list' class="btn btn-info">List</button>
 
 	<form id='operForm' action="/board/modify" method="get">

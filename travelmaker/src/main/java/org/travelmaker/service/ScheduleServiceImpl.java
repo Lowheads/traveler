@@ -36,10 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	}
 	
-	@Override
-	public int statusupdate(int schNo) {
-		return mapper.statusupdate(schNo);
-	}
+
 
 	@Override
 	public boolean remove(int schNo) {
@@ -142,4 +139,5 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+
 }

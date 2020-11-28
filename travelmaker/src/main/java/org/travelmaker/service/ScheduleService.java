@@ -22,7 +22,7 @@ public interface ScheduleService {
 	//memno에 맞는 schedule 공개, 비공개 여부 가져오기
 	public List<ScheduleVO> getHiddenList(int memNo); 
 	
-	public int statusupdate(int schNo);
+
 
 	public boolean modify(ScheduleVO vo);
 
