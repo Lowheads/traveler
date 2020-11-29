@@ -26,29 +26,29 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class MyPageController {
 
-	private PlaceService PLCservice;
+	private PlaceService placeService;
 	private ScheduleService SchService;
-	private PickService PICKservice;
+	private PickService pickService;
 
 	@GetMapping("/pickPL")
 	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
-		int total = PLCservice.getTotal(cri);
+		int total = placeService.getTotal(cri);
 		cri.setAmount(8);
-		model.addAttribute("list",PLCservice.getList(cri));
+		model.addAttribute("list",placeService.getListWithPaging(cri));
 		model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
 	}
 
 	@RequestMapping(value = "/deleteSchedule", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public void deleteSchedule(@RequestParam("schNo")int schNo) {
-		SchService.remove(schNo);
+		SchService.removeSchdule(schNo);
 	}
 
 	@GetMapping("/pickSch")
-	public void getSchList(Criteria cri,Model model,HttpServletRequest request) {
+	public void getScheduleList(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
@@ -58,13 +58,13 @@ public class MyPageController {
 	}
 
 	@GetMapping({"/past/get","/pickSch/get","/upcomming/get"})
-	public void get(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
+	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 
-		model.addAttribute("board",SchService.get(schNo));
+		model.addAttribute("board",SchService.getSchedule(schNo));
 	}
 
 	@GetMapping("/past")
-	public void getPastSch(Criteria cri,Model model,HttpServletRequest request) {
+	public void getPastSchedule(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
@@ -74,7 +74,7 @@ public class MyPageController {
 	}
 
 	@GetMapping("/upcomming")
-	public void getUpcommingSch(Criteria cri,Model model,HttpServletRequest request) {
+	public void getUpcomingSchedule(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
@@ -85,10 +85,10 @@ public class MyPageController {
 
 	@ResponseBody
 	@RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
-	public void deleteHeart(HttpSession session,PickVO vo) throws Exception {
+	public void deleteLike(HttpSession session,PickVO vo) throws Exception {
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		vo.setMemNo(memNo);
-		PICKservice.remove(vo);
+		pickService.remove(vo);
 	}
 	
 	
@@ -101,7 +101,7 @@ public class MyPageController {
   	   
   	   try {
   		   
-  		   PLCservice.register(vo);
+  		   placeService.register(vo);
   	   }
   	   catch(Exception e) {
   		   System.out.println("에러발생");

@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	//	}
 
 	@Override
-	public ScheduleVO get(int schNo) {
+	public ScheduleVO getSchedule(int schNo) {
 
 		log.info("get...."+schNo);
 
@@ -42,7 +42,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public boolean remove(int schNo) {
+	public boolean removeSchdule(int schNo) {
 
 		log.info("remove...."+schNo);
 

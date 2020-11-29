@@ -45,7 +45,7 @@ public class PlaceController {
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO,@RequestParam ("places") String[] plcNoArr, Model model) {
 		List<PlaceVO> list = new ArrayList<PlaceVO>();	
 		for (int i = 0; i < plcNoArr.length; i++) {
-			list.add(service.get(Long.parseLong(plcNoArr[i])));
+			list.add(service.getPlace(Long.parseLong(plcNoArr[i])));
 		}
 		// 리뷰 for 문 대신 plcNoArr을 문자열로 만들어서 mapper에서 query문이 한번만 실행되게 바꾸기
 		model.addAttribute("places", list);

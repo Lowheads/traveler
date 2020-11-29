@@ -23,12 +23,6 @@
       <result property="themeNo" column="THEME_NO" />
    </resultMap>
 <!-- 순규매퍼  -->	
-<select id="getList" resultMap="placeVO">
-<![CDATA[
-select * from PLACE
-]]>
-</select>	
-
 <insert id="insert">
 	insert into PLACE (plc_no,region_no,plc_title,lat,lng,ADDRESS_DT,p_cate,holiday,opening_h)
 	values(#{plcNo},#{regionNo},#{plcTitle},#{lat},#{lng},#{addressDt},#{PCate},#{holiday},#{openingH})
@@ -85,7 +79,7 @@ UPDATE place SET likecnt = likecnt +1 where plc_no = #{plcNo}
 UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
 </update>
 
-<select id="getSortList" resultMap="placeVO"><!-- 내일 수정  -->
+<select id="getSortList" resultMap="placeVO">
 <![CDATA[
    select *
     from (
@@ -108,7 +102,7 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
 </select>
 
 
-<select id="getTotalCount" resultType="int">
+<select id="getTotal" resultType="int">
 
 select count(*) from place p, pick_pl pl
 			where p.plc_no = pl.plc_no 
@@ -139,7 +133,5 @@ select count(*) from place p, pick_pl pl
 하드 코딩한 거 밖으로 옮기기,
 and theme_code = 'C001') -> and theme_code = #{themeNum})
  mapper들어오기전에 -->
-
-
 
 </mapper>

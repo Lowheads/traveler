@@ -32,22 +32,15 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public PlaceVO get(long plcNo) {
+	public PlaceVO getPlace(long plcNo) {
 		
 		return mapper.read(plcNo);
-		
 	}
 
 	@Override
-	public boolean remove(long plcNo) {
+	public boolean removePlace(long plcNo) {
 		
 		return mapper.delete(plcNo)==1;
-	}
-
-	@Override
-	public List<PlaceVO> getList() {
-		
-		return mapper.getList();
 	}
 
 	@Override
@@ -57,7 +50,7 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public List<PlaceVO> getList(Criteria cri) {
+	public List<PlaceVO> getListWithPaging(Criteria cri) {
 
 		if(cri.getSelected()==null) {
 			return mapper.getListWithPaging(cri);
@@ -73,7 +66,7 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public int getTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getTotalCount(cri);
+		return mapper.getTotal(cri);
 	}
 	
 	//종운 메서드
