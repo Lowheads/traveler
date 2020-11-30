@@ -29,7 +29,8 @@ public class adminController {
 	@GetMapping(value="userInfo2", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<MemberVO>> getUserList() {
 		
-		return new ResponseEntity<>(service.getUserList(), HttpStatus.OK);
+	//	return new ResponseEntity<>(service.getUserList(), HttpStatus.OK);
+		return null;
 		
 	}
 
@@ -40,7 +41,7 @@ public class adminController {
 		
 		if(result!=null) {
 			for (int i = 0; i < result.length; i++) {
-					service.removeUser(result[i]);
+					//service.removeUser(result[i]);
 				//	rttr.addFlashAttribute("message", "SUCCESS");
 			}
 			return new ResponseEntity<>("success",HttpStatus.OK);

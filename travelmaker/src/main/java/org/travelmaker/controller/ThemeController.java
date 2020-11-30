@@ -1,14 +1,15 @@
 package org.travelmaker.controller;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.ThemeVO;
 import org.travelmaker.service.ThemeService;
 
 import lombok.AllArgsConstructor;
@@ -25,23 +26,45 @@ public class ThemeController {
 	@GetMapping("/theme")	
 	public String theme(Model model) {
 		
-		List<Map<String, String>> list = service.getThemeList();
+		List<ThemeVO> list = service.getThemeList();
+		
+		System.out.println(list);
 
 		model.addAttribute("list", list);
 
 		return "theme";
 	}
 	
-	@GetMapping("/themeInfo/{regionNo}/{themeCode}")
-	public String themeInfo(@PathVariable("regionNo") String regionNo, @PathVariable("themeCode") String themeCode,Model model) {
+	@GetMapping("/themeInfo/{themeNo}")
+	public String themeInfo(@PathVariable("themeNo") int themeNo, Model model) {
 		
-		List<Map<String,String>> list = service.getThemeInfo(regionNo, themeCode);
-
+		List<PlaceDTO> list = service.getThemeInfo(themeNo);
 		
 		model.addAttribute("list", list);
 
 		return "themeInfo";
 	}
+	
+	@GetMapping("/modifyTheme/{themeNo}")
+	public String modifyTheme(@PathVariable("themeNo") int themeNo, Model model) {
+
+		List<PlaceDTO> list = service.getThemeInfo(themeNo);
+		model.addAttribute("list", list);
+
+		return "modifyTheme";
+		
+	}
+	
+	@PostMapping("/modifyTheme/{themeNo}")
+	public String modifyThemeAction(@PathVariable("themeNo") int themeNo, Model model) {
+
+		List<PlaceDTO> list = service.getThemeInfo(themeNo);
+		model.addAttribute("list", list);
+
+		return "modifyTheme";
+		
+	}
+	
 	
 
 }

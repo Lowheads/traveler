@@ -1,26 +1,16 @@
 package org.travelmaker.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.MemberVO;
 import org.travelmaker.service.AdminMemberService;
 
 import lombok.AllArgsConstructor;
@@ -45,14 +35,7 @@ public class AdminMemberContorller {
 		String type = cri.getType();
 		String keyword =cri.getKeyword();
 		
-		if(type==null||keyword==null) {
-			
-			model.addAttribute("users", service.getUserList());
-
-		}else {
-		
-			model.addAttribute("users", service.searchUser(cri));
-		}
+		model.addAttribute("users", service.getUserList(cri));
 		
 		return "userInfo";
 	}
@@ -63,23 +46,16 @@ public class AdminMemberContorller {
 		String type = cri.getType();
 		String keyword =cri.getKeyword();
 		
-		if (keyword == null || type == null) {
-			model.addAttribute("users", service.getWithdrawUserList());
-		} else {
-			model.addAttribute("users", service.searchWithdrawUser(cri));
-		}
+		model.addAttribute("users", service.getWithdrawUserList(cri));
+		
 		return "withdraw";
 	}
 
 	@GetMapping("/remove/{ids}")
-	public String removeUser(@PathVariable("ids") int[] ids, RedirectAttributes rttr) {
+	public String removeUser(@PathVariable("ids") ArrayList<Integer> ids, RedirectAttributes rttr) {
 
-		if (ids != null) {
-			for (int i = 0; i < ids.length; i++) {
-				service.removeUser(ids[i]);
-			}
+			service.removeUser(ids);
 			rttr.addFlashAttribute("message", "SUCCESS");
-		}
 
 		return "redirect:/admin/userInfo";
 	}

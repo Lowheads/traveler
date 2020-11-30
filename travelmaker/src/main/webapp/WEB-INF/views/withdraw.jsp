@@ -208,6 +208,13 @@ $("#searchForm button").on("click",function(e) {
 				return false;
 			}
 		}
+
+		if(keyword.length>100){
+			msg = "검색은 100자리 이하만 가능합니다";
+			showModal(msg);
+			return false;
+		}
+		
 		return true;
 	})
 

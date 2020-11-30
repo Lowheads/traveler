@@ -28,12 +28,18 @@
 
 	<select id="getBoardList" resultMap="BoardVO">
  <![CDATA[
-	select /*+ index_desc(tbl_board pk_board) */ * from board where board_no>0 order by board_no desc]]>
+	select /*+ index_desc(tbl_board pk_board) */ * 
+	from board 
+	order by board_no desc]]>
 	</select>
 
-	<update id="removePost">
-		delete board where board_no=#{result}
-	</update>
+	<delete id="removePost" parameterType="int[]">
+		delete board
+		where board_no in 
+		<foreach collection="list" item="post" open="(" close=")" separator=",">
+			#{post}
+		</foreach>
+	</delete>
 
 	<select id="searchPost" resultMap="BoardVO">
 		select /*+ index_desc(member pk_board) */ *
@@ -51,7 +57,7 @@
 			</when>
 		</choose>
 		and b.sch_no = s.sch_no and s.mem_no=m.mem_no
-		order by board_no
+		order by board_no desc
 	</select>
 	
 	<select id="getPostDetail" resultMap="Boarddt">

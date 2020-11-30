@@ -1,5 +1,6 @@
 package org.travelmaker.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.travelmaker.domain.Criteria;
@@ -9,14 +10,10 @@ public interface AdminMemberService {
 
 	public MemberVO getUser(String memNo);
 	
-	public List<MemberVO> getUserList();
+	public List<MemberVO> getUserList(Criteria cri);
 
-	public List<MemberVO> searchUser(Criteria cri);
-
-	public List<MemberVO> getWithdrawUserList();
+	public List<MemberVO> getWithdrawUserList(Criteria cri);
 	
-	public List<MemberVO> searchWithdrawUser(Criteria cri);
-
-	public int removeUser(int result);
+	public int removeUser(ArrayList<Integer> ids);
 	
 }

@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-
+import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.ThemeVO;
 import org.travelmaker.mapper.ThemeMapper;
 
 import lombok.AllArgsConstructor;
@@ -17,16 +18,16 @@ public class ThemeServiceImpl implements ThemeService {
 	private ThemeMapper mapper;
 
 	@Override
-	public List<Map<String, String>> getThemeList() {
+	public List<ThemeVO> getThemeList() {
 
 		return mapper.getThemeList();
 		 
 	}
 
 	@Override
-	public List<Map<String,String>> getThemeInfo(String regionNo, String themeCode) {
+	public List<PlaceDTO> getThemeInfo(int themeNo) {
 	
-		return mapper.getThemeInfo(regionNo,themeCode);
+		return mapper.getThemeInfo(themeNo);
 	}
 
 	

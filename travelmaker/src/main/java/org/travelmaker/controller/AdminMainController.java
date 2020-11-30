@@ -30,22 +30,29 @@ public class AdminMainController {
 
 		for (int i = 0; i < dailyStatistic.size(); i++) {
 
-			dailyLog += "['" + dailyStatistic.get(i).getTargetDate() + "'," + dailyStatistic.get(i).getCntMember() + "," + dailyStatistic.get(i).getCntPost() +"]";
+			dailyLog += "['" + dailyStatistic.get(i).getTargetDate() + "'," + dailyStatistic.get(i).getCntMember() + "," 
+			+dailyStatistic.get(i).getCntWithdrawalMember()+","+ dailyStatistic.get(i).getCntPost() +"]";
 			if (i != dailyStatistic.size() - 1) {
 				dailyLog += ",";
 			}
 		}
+		
+		System.out.println(dailyLog);
 		
 		List<StatisticVO> monthlyStatistic = service.getMonthlyStatistic();
 		
 		String monthlyLog = "";
 		for (int i = 0; i < monthlyStatistic.size(); i++) {
 
-			monthlyLog += "['" + monthlyStatistic.get(i).getTargetDate() + "월'," + monthlyStatistic.get(i).getCntMember() +"," + monthlyStatistic.get(i).getCntPost() +"]";
+			monthlyLog += "['" + monthlyStatistic.get(i).getTargetDate() + "월'," + monthlyStatistic.get(i).getCntMember() +"," 
+			+monthlyStatistic.get(i).getCntWithdrawalMember()+","+ monthlyStatistic.get(i).getCntPost() +"]";
 			if (i != monthlyStatistic.size() - 1) {
 				monthlyLog += ",";
 			}
 		}
+		
+
+		System.out.println(monthlyLog);
 
 		model.addAttribute("dailyLog", dailyLog);
 		model.addAttribute("monthlyLog", monthlyLog);
