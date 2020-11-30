@@ -29,7 +29,7 @@
    // 로그인 되었다면, 로그아웃, 정보수정, 회원탈퇴 버튼이 보인다.
    if(session.getAttribute("email") != null){
       sessionBtn = "<a href='/member/logout'>로그아웃</a>";
-      modifyBtn = "<a href='/member/viewMember?email="+session.getAttribute("email")+"\'\">정보수정</a>";
+      modifyBtn = "<a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a>";
    	  mypage = "<a href='/mypage/pickPL'>마이페이지</a>";
    }
    else{
@@ -101,25 +101,25 @@ img.ui-datepicker-trigger {
     }
 .login_modal {
    display: none;
-   width: 70%;
+   width: 40%;
    position: fixed;
    height: 500px;
    top: 50%;
    margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
+   margin-left: 15%;
+   background: white;
    z-index: 1;
 }
 
 .register_modal{
    display: none;
-   width: 70%;
+   width: 45%;
    position: fixed;
-   height: 500px;
+   height: 600px;
    top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
+   margin: -300px 0 0 -250px;
+   margin-left: 13%;
+   background: white;
    z-index: 1;
 }
 
@@ -427,6 +427,7 @@ text-align: center;
 
 .div-reg{
    padding: 8px;
+   padding-top: 2px;
 }
 
 .btn{ /* 닉네임 중복체크 버튼 */
@@ -480,6 +481,14 @@ text-align: center;
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.reg-font{
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 10px;
+}
+
 </style>
 
 </head>
@@ -545,21 +554,24 @@ text-align: center;
     <div class="login_modal">
     <div class="w3-container w3-orange"> 
     <div class="lModal_close"><a href="#">close</a></div>
-                 <p style="text-align: center; font-size: 30px">로그인</p>
+                 <p style="text-align: center; font-size: 30px; padding-top: 40px">로그인</p>
             </div>
             <p style="padding-bottom: 20px"></p>
             
             <div class="wrap-main">
             
             <form action="/member/login" onsubmit="return loginCheck();" method="post">
-               <div class="center">&nbsp;이메일&nbsp; <input type="text" style="width: 210px; height: 30px;" 
-               placeholder="이메일" id="login_email" name="email" value="<%=id %>"></div>
+               <div class="center"><p style="font-weight: bold; font-size: 15px">&nbsp;&nbsp;이메일&nbsp;&nbsp;
+               <input type="text" style="width: 210px; height: 30px;" 
+               placeholder="이메일" id="login_email" name="email" value="<%=id %>"></p></div>
                
-               <div class="center">비밀번호 <input type="password" style="width: 210px; height: 30px;" 
-               placeholder="비밀번호" id="login_pwd" name="pwd"></div>
+               <div class="center"><p style="font-weight: bold; font-size: 15px">비밀번호 
+               <input type="password" style="width: 210px; height: 30px;" 
+               placeholder="비밀번호" id="login_pwd" name="pwd"></p></div>
                
                <div class="wrap-Addition"> <input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
-               <div class="wrap-Addition"> <button type="submit" id="button">로그인</button> </div>
+               <div class="wrap-Addition"> 
+               <button style="font-size: 20px" type="submit" id="button">로그인</button> </div>
             </form>
          
             </div>
@@ -585,37 +597,40 @@ text-align: center;
         <div class="modal-dialog w3-modal-content" style="width: 600px; height:400px; display: table;">
             <p style="text-align: center; font-size: 30px">회원가입</p>
          <div class="wrap-main" style="margin-left: 15px">
-            <form action="/member/register" method="post">
-                  <!-- 회원번호 -->
-                  <!-- <div class="div-reg"><input type="text" name="memNo" placeholder="회원번호"></div> -->
+            <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
+                  <div class="reg-font">이메일</div>
                   <div class="div-reg"><input type="email" name="email" id="email" placeholder="이메일주소">
-                     <button class="btn" type="button" id="emailCheck">이메일 중복체크</button>
+                     <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
                   <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
+                  <div class="reg-font">비밀번호</div>
                   <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" onblur="pwdCheck()">
                      비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
                   <div class="div-reg"><span id="spanPwd"></span></div></div>
                   
                   <!-- 비밀번호 확인 -->
+                  <div class="reg-font">비밀번호 확인</div>
                    <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" onblur="pwdCheck()">
                      비밀번호 확인
                   <p><span id="spanPwdCfm"></span></p></div>
                      
                   
                   <!-- 닉네임 -->
+                  <div class="reg-font">닉네임</div>
                   <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
                   <div class="div-reg"><span id="spanNickname"></span></div></div>
                   
                   <!-- 생년월일 -->
+                  <div class="reg-font">생년월일</div>
                   <div class="div-reg"><input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!"></div>
                   
                   <!-- 성별 -->
-                  본인의 성별은 ?  
+                  <div class="reg-font">성별</div>
                      <input type="radio" name="gender" id="man_gender" value="M">남 
                      <input type="radio" name="gender" id="woman_gender" value="F">여
                      <p><span id="spanGender"></span></p>
@@ -626,7 +641,8 @@ text-align: center;
                   <!-- 등급?(일반회원, 관계자 등..) -->
                   <p><input type="hidden" name="memGrade" id="mem_grade" value="일반회원"><p>
                   
-               <div class="wrap-Addition"><button type="submit" id="button" onclick="return registerValidCheck();">가입하기</button></div>
+               <div class="wrap-Addition">
+               <button style="font-size: 20px" type="submit" id="button" onclick="return registerValidCheck();">가입하기</button></div>
             </form>
             </div>
       </div>
@@ -675,7 +691,7 @@ text-align: center;
     /* 회원가입 */
     
  // email 중복체크 버튼 누르면 실행
-    $("#emailCheck").click(function() { 
+    $("#emailCheckBtn").click(function() { 
         
        let myEmail = $("#email").val();    // 이메일
        let jEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일정규식
@@ -706,7 +722,7 @@ text-align: center;
           /* async : true, */
           type : 'POST',
           data : sendDate,
-          url : "/member/emailCheck",
+          url : "/member/hasEmail",
            success : function(data) { // 성공하면 여기로 넘어옴
               if (data > 0) {
                 document.getElementById("spanEmail").innerHTML = "이메일이 중복됩니다.";
