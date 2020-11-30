@@ -65,62 +65,33 @@ public class MemberComtroller {
 	public ModelAndView register(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
 		ModelAndView mav = new ModelAndView("redirect:/member/main");
 		
-		// 이메일 한번 더 검사
-		if(service.emailCheck(mVO.getEmail()) > 0) {
-			rttr.addFlashAttribute("msg", "이메일이 중복된다구요 ㅠㅠ");
-			return mav; // 다시 메인으로 이동 ㅠ
-		}
-		
-		// 닉네임 한번 더 검사
-		if(service.nicknameDuplCheck(mVO.getNickname()) > 0) {
-			rttr.addFlashAttribute("msg", "닉네임이 중복된다구요 ㅠㅠ");
-			return mav; // 다시 메인으로 이동 ㅠ
+		// 이메일, 닉네임 한번 더 검사하자
+		if(service.isDuplicateCheck(mVO)) {
+			rttr.addFlashAttribute("msg", "중복된 값이 있습니다.");
+			return mav;
 		}
 		
 		// 중복이 없다면.. 가입 시키자
 		service.join(mVO); // 내용을 저장한다.
-		rttr.addFlashAttribute("msg", "travel 가족이 되신걸 환영합니다 로그인 해주세요!!");
+		rttr.addFlashAttribute("msg", "travel 가족이 되신걸 환영합니다 로그인 해주세요");
 		return mav; // 회원가입 후, main으로 이동
 	}
+
+
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
 		ModelAndView mav = new ModelAndView("redirect:/member/success");
 		
-		String email = request.getParameter("email");
-		String check = request.getParameter("remember"); // 체크 여부를 담자
-		Cookie cookie = new Cookie("email", email); // 쿠키 생성
-		
-		// 로그인에 실패하면 메인 페이지로
-		if(service.login(mVO)==null) {
-			rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요 ㅠㅠ..");
+		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
+		// DB와 정보가 맞으면 세션 주고, 로그인 성공
+		if(service.isLoginFail(mVO, rttr, session)) {
 			mav=new ModelAndView("redirect:/member/main");
-		return mav;
-		}
-		
-		// id저장하기 눌렀으면 쿠키 증정..
-		if(service.isChecked(check)) {
-			response.addCookie(cookie);
-		}
-		
-		// id저장 안 눌렀으면 쿠키 없음..
-		if(service.isChecked(check) == false) {
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
-		}
-		
-		// 탈퇴한 회원은 접속 못함
-		if(service.deleteNoAccess(email)) {
-			rttr.addFlashAttribute("msg", "이미 탈퇴한 계정입니다..");
-			mav = new ModelAndView("redirect:/member/main");
 			return mav;
 		}
+		// email 저장하기 여부
+		service.RememberEmail(mVO.getEmail(), request, response);	
 		
-		// DB와 정보가 맞으면 세션 주고, 로그인 성공
-		service.login(mVO); // 로그인 시키자..!
-		service.presentDate(mVO.getEmail()); // 최종 로그인은 오늘이겠지..
-		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-		session.setAttribute("memNo", service.getMemNo(email));
 		return mav;
 	}
 	
@@ -167,37 +138,27 @@ public class MemberComtroller {
         return count;
     }
 	
-	// 닉네임 체크(accountInfo)
+	// Ajax 닉네임 체크(accountInfo)
 	@RequestMapping("/nicknameDuplCheck")
 	@ResponseBody
 	public String nicknameDuplCheck(@RequestParam("nickname") String nickname) {
 
 		String cnt = "" + service.nicknameDuplCheck(nickname); // 닉네임 있으면 1, 없으면 0을 반환한다.
-		System.out.println("닉네입 중복 ? : " + cnt);
+		System.out.println("닉네임 중복 ? : " + cnt);
 			
 		return cnt;
 	}
 	
 	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
-	@RequestMapping(value = "/nNameModify", method = RequestMethod.POST)
-	public String nNameModify(String nickname, String email, Model model, RedirectAttributes rttr) {
+	@RequestMapping(value = "/nicknameModify", method = RequestMethod.POST)
+	public String nicknameModify(String nickname, String email, Model model, RedirectAttributes rttr) {
 
-		// nickNameResult : 닉네임 있으면 1, 없으면 0
-		int nickNameResult = service.nicknameDuplCheck(nickname); 
+			// 닉네임을 수정했는데 중복이라면..
+			if(service.nicknameChange(nickname, email, model)) {
+				return "/member/accountInfo";
+			}
 		
-		// 저장하기를 눌렀을 떄, 닉네임을 변경하지 않았거나, 중복된 닉네임이 없다면 저장한다.
-		if(service.myNicknamePass(nickname, email) || nickNameResult < 1) {
-			service.nNameModify(nickname, email);
-//			rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다");
-			model.addAttribute("msg", "정보를 정상적으로 변경하였습니다");
-			model.addAttribute("member", service.viewMember(email));
-			return "/member/accountInfo";
-		}
-			// 중복된 닉네임이 있다면 중복된다고 알려준다
-//			rttr.addFlashAttribute("flag", false);
-//			rttr.addFlashAttribute("msg", "닉네임이 중복됩니다. 다른 닉네임으로 선정해주세요!!");
-			model.addAttribute("msg", "닉네임이 다른 회원과 중복됩니다..");
-			model.addAttribute("member", service.viewMember(email));
+			// 중복이 없다면 정보가 정상적으로 저장되었습니다.
 			return "/member/accountInfo";
 	}
 	
@@ -214,21 +175,13 @@ public class MemberComtroller {
 		@RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
 		public ModelAndView deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
 			ModelAndView mav;
-			System.out.println("여기는 탙퇴전 유효성 체크");
 			
-			if(!(service.deleteValid(pwd, email))) {
-				rttr.addFlashAttribute("msg", "비밀번호가 달라요!");
+			// 계정 일치하는지 확인
+			// 일치하면 탈퇴, 불일치하면 탈퇴 못함
+			if(service.deleteValid(pwd, email, rttr, session)) {
 				mav = new ModelAndView("redirect:/member/deletePage");
 				return mav;
 			}
-			
-			// 회원 상태를 "탈퇴"로 변경한다.
-			service.deleteMember(pwd, email);
-			// 세션을 제거한다.
-			session.invalidate();
-			
-			// 정상적으로 탈퇴 되었다는 메세지를 보낸다.
-			rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
 			mav = new ModelAndView("redirect:/member/main");
 			return mav;
 		}
@@ -244,7 +197,7 @@ public class MemberComtroller {
 	}
 	
     @RequestMapping("/main")
-    public ModelAndView login(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로 가는 듯.
+    public ModelAndView naverLogin(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로 가는 듯.
         /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         
@@ -253,6 +206,7 @@ public class MemberComtroller {
     }
     
   //네이버 로그인 성공시 callback호출 메소드
+  // 'id'값은 각 애플리케이션마다 회원 별로 유니크한 값
     @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
     System.out.println("여기는 callback");
@@ -289,13 +243,13 @@ public class MemberComtroller {
     return "/member/naverSuccess";
     }
     
+    
     // 로그인 해야 들어갑니다아
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage(HttpSession session, RedirectAttributes rttr) {
 		System.out.println("testPAge");
 		// 회원 로그인
 		String result = (String)session.getAttribute("email");
-//		String naverSessoin = (String)session.getAttribute("oauth_state");
 		
 		// 로그인 안됐으면 로그인 하라고 알려주자
 		if(result == null) {
@@ -307,5 +261,4 @@ public class MemberComtroller {
 		return "/member/testPage";
 	}
     
-	
 }

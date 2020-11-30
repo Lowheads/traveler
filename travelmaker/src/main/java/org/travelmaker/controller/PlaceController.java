@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
+import org.travelmaker.domain.ScheduleDtVO;
 import org.travelmaker.service.PlaceService;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +47,7 @@ public class PlaceController {
 		for (int i = 0; i < plcNoArr.length; i++) {
 			list.add(service.get(Long.parseLong(plcNoArr[i])));
 		}
+		// 리뷰 for 문 대신 plcNoArr을 문자열로 만들어서 mapper에서 query문이 한번만 실행되게 바꾸기
 		model.addAttribute("places", list);
 		return "/place/home";
 	}
@@ -53,5 +57,19 @@ public class PlaceController {
 		log.info("getList...........");
 		return new ResponseEntity<>(service.getList(title), HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/test",produces = "application/json;")
+	@ResponseBody
+	public String getInitSchedule(@RequestBody ScheduleDtVO[][] scheduleDtVO) {
+		System.out.println(scheduleDtVO[0][0].toString());
+//		System.out.println(scheduleDtVO[0][1].toString());
+//		System.out.println(scheduleDtVO[1][0].toString());
+//		System.out.println(scheduleDtVO[1][1].toString());
+		System.out.println(scheduleDtVO.length);
+		service.getInitSchWithDistAndDu(scheduleDtVO);
+		
+		return "/place/test";
+	}
+	
 	
 }
