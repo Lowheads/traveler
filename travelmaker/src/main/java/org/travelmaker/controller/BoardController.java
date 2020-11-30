@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpRequest;
@@ -20,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PageDTO;
+import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.service.BoardService;
 import org.travelmaker.service.BoarddtService;
 import org.travelmaker.service.SchdtService;
@@ -115,7 +120,8 @@ public class BoardController {
 		
 		boardservice.register(board);
 		
-
+		//스케쥴 상태 '미작성' -> '작성중' 으로 변경
+		scheduleservice.statusupdate(board.getSchNo());
 
 		
 		return "redirect:/board/dtregister?schNo="+board.getSchNo();
@@ -143,28 +149,17 @@ public class BoardController {
 	}
 	
 	@PostMapping("/dtregister")
-	public String dtregister(BoarddtVO boarddt, RedirectAttributes rttr, MultipartFile file) throws Exception{
-		log.info("dtregister: "+boarddt);
+	public String dtregister(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest) throws Exception{
+		log.info("dtregister: "+boarddt);	
 		
-		//파일처리 관련 코드
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-		String ymdPath =UploadFileUtils.calcPath(imgUploadPath);
-		String fileName = null;
+		BoardVO board= new BoardVO();
+		board=boardservice.get(boarddt.getBoardNo());
 		
-		if (file != null) {
-			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-		} else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
-		}
-
-		boarddt.setBoarddtImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-		boarddt.setDtThumbImg(
-				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-
+		boarddtservice.write(boarddt, mpRequest);
 		
-		System.out.println(boarddt);
+		//작성중에서 작성으로
+		scheduleservice.statusupdate(board.getSchNo());
 		
-		boarddtservice.register(boarddt);
 		return "redirect:/board/list";
 	}
 	
@@ -181,19 +176,22 @@ public class BoardController {
 	
 	
 	@GetMapping({"/get"})
-	public void get(@RequestParam("schNo")int schNo, @RequestParam("boardNo")int boardNo, 
-			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
+	public void get(@RequestParam("boardNo")int boardNo, 
+			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) throws Exception {
 		
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 
 		log.info("/get");
-		
+		BoardVO board=boardservice.get(boardNo);
+		int schNo=board.getSchNo();
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
 		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
 		model.addAttribute("board",boardservice.get(boardNo));
-		model.addAttribute("boardNo",boardNo);
+		
+		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
+		model.addAttribute("file",fileList);
 		
 		model.addAttribute("memNo",memNo);
 	
@@ -224,7 +222,7 @@ public class BoardController {
 			rttr.addAttribute("pageNum",cri.getPageNum());
 			rttr.addAttribute("amount",cri.getAmount());
 		}
-		return "redirect:/board/list";
+		return "redirect:/board/get?boardNo="+board.getBoardNo();
 	}
 	
 	
@@ -234,17 +232,72 @@ public class BoardController {
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
-
+		ScheduleVO schedule=scheduleservice.get(schNo);
 		
 		//게시물 상세부터 remove
 		boarddtservice.remove(boardNo);
 		if(boardservice.remove(boardNo)) {
 
 			
+			//게시물 상태 '작성' -> '미작성' 으로 변경
+			schedule.setSchStatus("작성");
+			scheduleservice.statusupdate(schNo);
+
+			
 			rttr.addFlashAttribute("result","success");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		
+		return "redirect:/board/list";
+	}
+	
+	//파일 다운로드
+	@ResponseBody
+	@RequestMapping(value="/fileDown")
+	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{
+		Map<String, Object> resultMap = boarddtservice.selectFileInfo(map);
+		System.out.println(resultMap);
+		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+		
+		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\upload\\file\\"+storedFileName));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		
+	}
+	
+	//dtmodify 폼
+	@GetMapping(value="/dtmodify")
+	public void dtmodify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		log.info("dtmodify");
+
+		
+		model.addAttribute("boarddt",boarddtservice.get(boardNo));
+		
+		List<Map<String, Object>> fileList = boarddtservice.selectFileList(boardNo);
+		model.addAttribute("file",fileList);
+
+	}
+	
+	
+	
+	//dt register 수정
+	@PostMapping(value="/dtmodify")
+	public String update(BoarddtVO boarddt,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr,
+			@RequestParam(value="fileNoDel[]") String[] files, @RequestParam(value="fileNameDel[]") String[] fileNames,
+			MultipartHttpServletRequest mpRequest) throws Exception{
+		log.info("update dtmodify");
+		boarddtservice.update(boarddt, files, fileNames, mpRequest);
+		
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
 		
 		return "redirect:/board/list";
 	}

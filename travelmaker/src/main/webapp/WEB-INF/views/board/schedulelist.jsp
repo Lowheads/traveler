@@ -18,14 +18,22 @@
 			</thead>
 
 			<c:forEach items="${schedulelist}" var="schedule">
-				<tr>
+				<tr class="schedulenum">
 				<td>
-					<c:if test="${schedule.schStatus eq '미작성' }"> <!-- 작성이 아닐때로 변경 (not eq ' ') -->
+					<c:choose>
+					<c:when test="${schedule.schStatus eq '미작성' }"> <!-- 작성이 아닐때로 변경 (not eq ' ') -->
 					<a href='/board/register?schNo=<c:out value="${schedule.schNo}"/>'><c:out value="${schedule.schNo}" /></a>
-					</c:if>
-					<c:if test="${schdule.schStatus eq '작성 '}">
+					</c:when>
+					
+					<c:when test="${schedule.schStatus eq '작성'}">
 					<c:out value="${schedule.schNo}" />
-					</c:if>
+					</c:when>
+					
+					<c:when test="${schedule.schStatus eq '작성중'}">
+					<a href='/board/dtregister?schNo=<c:out value="${schedule.schNo}"/>'><c:out value="${schedule.schNo}" /></a>
+					</c:when>
+					
+					</c:choose>
 					</td>
 					
 					<td><c:out value="${schedule.schTitle}" /></td>

@@ -43,6 +43,8 @@ public interface ScheduleService {
 	public void register(ScheduleVO schedule);
 
 
-	public ScheduleVO getListSchedule(int schNo); 
+	public ScheduleVO getListSchedule(int schNo);
+	
+	public void statusupdate(int schNo); 
 
 }

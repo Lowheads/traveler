@@ -2,6 +2,7 @@ package org.travelmaker.service;
 
 import java.util.List;
 
+
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
 
@@ -24,5 +25,4 @@ public interface BoardService {
 	public int getTotal(Criteria cri);
 	
 	public void updateHidden(BoardVO board);
-	
 }
