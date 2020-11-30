@@ -1,5 +1,6 @@
 package org.travelmaker.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,32 +21,21 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	private AdminMemberMapper mapper;
 
 	@Override
-	public List<MemberVO> getUserList() {
+	public List<MemberVO> getUserList(Criteria cri) {
 		
-		return mapper.getUserList();
+		return mapper.getUserList(cri);
 	}
 
 	@Override
-	public int removeUser(int result) {
+	public int removeUser(ArrayList<Integer> ids) {
 
-		return mapper.removeUser(result);
+		return mapper.removeUser(ids);
 	}
 
 	@Override
-	public List<MemberVO> getWithdrawUserList() {
+	public List<MemberVO> getWithdrawUserList(Criteria cri) {
 		
-		return mapper.getWithdrawUserList();
-	}
-
-	@Override
-	public List<MemberVO> searchUser(Criteria cri) {
-		return mapper.searchUser(cri);
-	}
-
-	@Override
-	public List<MemberVO> searchWithdrawUser(Criteria cri) {
-
-		return mapper.searchWithdrawUser(cri);
+		return mapper.getWithdrawUserList(cri);
 	}
 
 	@Override

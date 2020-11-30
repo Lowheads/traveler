@@ -4,17 +4,20 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.travelmaker.mapper.ThemeMapper">
 
+<resultMap type="org.travelmaker.domain.PlaceDTO"
+		id="PlaceResult">
+		<result property="themeNo" column="THEME_NO" />
+		<result property="plcNo" column="PLC_NO" />
+		<result property="plcTitle" column="PLC_TITLE" />
+	</resultMap>
+
 <select id="getThemeList" resultType="map">
 	select * from theme
 </select>
 
-<select id="getThemeInfo" resultType="map">
-	SELECT T.PLC_NO, P.PLC_TITLE 
+<select id="getThemeInfo" resultMap="PlaceResult">
+	SELECT T.THEME_NO, T.PLC_NO, P.PLC_TITLE 
 	FROM THEME_PLC T, PLACE P 
-	WHERE T.PLC_NO = P.PLC_NO AND THEME_NO = (
-		SELECT THEME_NO 
-		FROM THEME 
-		WHERE REGION_NO=#{regionNo} AND THEME_CODE=#{themeCode})
-
+	WHERE T.PLC_NO = P.PLC_NO AND THEME_NO=#{themeNo}
 </select>
 </mapper>

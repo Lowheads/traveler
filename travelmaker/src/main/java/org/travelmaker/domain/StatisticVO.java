@@ -14,6 +14,6 @@ public class StatisticVO {
 	private String targetDate;
 	private String cntMember;
 	private String cntPost;
-	
+	private String cntWithdrawalMember;
 
 }
