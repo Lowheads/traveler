@@ -18,8 +18,5 @@
 	<h3>memNo : <%=session.getAttribute("memNo") %></h3>
 	<p><a href="/member/main">홈으로</a></p>
 	
-<!-- Controller : rttr 출력-->
-<c:if test="${flag == false }"><p><script>alert('<c:out value="${msg}"/>');</script></p></c:if>
-
 </body>
 </html>

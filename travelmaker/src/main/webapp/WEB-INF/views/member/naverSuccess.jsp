@@ -25,16 +25,18 @@ h3 {
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+    	
     	let id = ${result}.response.id;
-        let email = ${result}.response.email;
+        let mail = ${result}.response.email;
         let nickName = ${result}.response.nickname;
         let gender = ${result}.response.gender;
-        
        
-        $("#email").html("환영합니다. "+email+"님");
+        $("#mail").html("환영합니다. "+mail+"님");
         $("#nickName").html("닉네임 : " + nickName);
         $("#id").html("애플리케이션 ID : " + id);
         $("#gender").html("성별 : " + gender);
+        /* $("#test").html(email); */
+        
       });
 </script>
 
@@ -46,8 +48,8 @@ h3 {
         style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
         <h3>SIST Naver_Login Success</h3>
     </div>
-    <br>
-    <h2 style="text-align: center" id="email"></h2>
+    <br><br>
+	<h2 style="text-align: center" id="mail"></h2>    
     <br>
     <h4 style="text-align: center" id="nickName"></h4>
     <br>

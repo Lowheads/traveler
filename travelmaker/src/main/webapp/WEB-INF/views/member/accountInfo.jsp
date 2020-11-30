@@ -207,7 +207,7 @@
 									.ajax({
 										type : 'POST',
 										data : sendDate, // sendDate 함수를 contrlr에 보냄
-										url : "/member/nicknameDuplCheck",
+										url : "/member/hasNickname",
 										success : function(data) {
 											if ($.trim(data) == 1) {
 												document
@@ -224,7 +224,7 @@
 						});
 	});
 
-	function nickSaveCheck() {
+	function infoNickSaveCheck() {
 
 		let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 		let myNickname = $("#infoNickname").val(); // 닉네임
@@ -272,9 +272,6 @@
 	});
 </script>
 
-<!-- 입력이 틀린경우 출력할 메세지들... -->
-<c:if test="${flag == false }"><p><script>alert('<c:out value="${msg}"/>');</script></p></c:if>
-
 </head>
 <body>
 	
@@ -286,7 +283,7 @@
 		<div class="center">아이디(이메일) : ${member.email }</div> 
 		
 		<!-- 닉네임 저장 폼 -->
-	<form action="/member/nicknameModify" method="post">
+	<form action="/member/modifyNickname" method="post">
 		 <div class="center">닉네임 <input type="text" id="infoNickname" name="nickname" value="${member.nickname }">
 		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 		 	<button type="button" class="btn" id="infoNicknameCheck">중복 체크</button>
@@ -297,7 +294,7 @@
 		
 		<div class="center">생년월일 ${member.birth }</div>
 		
-		<div class="center">비밀번호 : <%-- ${member.pwd } --%><input type="hidden" id="realPwdCfm" value="${member.pwd }">
+		<div class="center">비밀번호 : <input type="hidden" id="realPwdCfm" value="${member.pwd }">
 		<button type='button' id="modal_btn" class="button">비밀번호 변경</button></div>
 	
 		<!-- 비밀번호 변경 모달 -->
@@ -305,7 +302,7 @@
 		<div class="modal_close"><a href="#">close</a></div>
 	<div>
 			<!-- 비밀번호 -->
-		<form action="/member/pwdModify" method="post">
+		<form action="/member/modifyPwd" method="post">
 			<div class="pwd-change"><h4 style="font-weight: bold;">비밀번호 변경하기</h4></div>
 			<div class="pwd-change"><input class="pwd-change" type="password" name="realPwd" id="realPwd" placeholder="현재 비밀번호">
 			<p>현재 비밀번호를 입력해주세요!</p></div>

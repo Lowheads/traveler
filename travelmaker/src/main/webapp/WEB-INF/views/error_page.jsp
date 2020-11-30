@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<h1 style="color: red;">에러 발생</h1>
+	<h1 style="color: red; align-content: center;">에러 떳으 ..</h1>
 	
 	<h4><c:out value="${exception.getMessage() }"></c:out></h4>
 	

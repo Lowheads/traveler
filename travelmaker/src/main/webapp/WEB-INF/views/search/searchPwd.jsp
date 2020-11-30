@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
+    <%@ include file="../includes/header.jsp" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,16 +17,24 @@
 	
 	function inputCheck(){ // 입력 널 체크
 		
-		var email = $("#email").val();    // 이메일
+		let searchEmail = $("#serachEmail").val();    // 이메일
 		
 		// 이메일을 입력 안했다면..
-		if(email.length == ""){
-			document.getElementById("spanEmail").innerHTML = "이메일을 입력해주세요";
-			spanEmail.style.color = 'red';
+		if(searchEmail.length == 0){
+			alert("이메일을 입력해주세요");
 	        return false;
 		}
 		return true;
 	}
+	
+/* 	// 컨트롤러 msg 전달
+	$(function(){
+	    var responseMessage = "<c:out value='${msg}' />";
+	    if(responseMessage != ""){
+	        alert(responseMessage)
+	    }
+	})  */
+	
 </script>
 
 </head>
@@ -36,13 +46,11 @@
 		<p>이메일 주소를 입력해 주세요.</p>
 			<form action="/search/sendPwd" method="post">
 			
-			<h1>비밀번호 찾기</h1>
-			<p><input type="email" id="email" name="email"></p>
+			<p><input type="text" id="serachEmail" name="email"></p>
 			<p><span id="spanEmail"></span></p>
 			<input type="submit" onclick="return inputCheck()" value="메일 보내기">
 			</form>
-			<!-- 이메일이 맞으면 임시비밀번호 보냈다는 메세지 출력 -->
-		<c:if test="${flag == false }"><p><script>alert('<c:out value="${msg}"/>');</script></p></c:if>
+
 	</div>
 	<p align="center">메인 페이지로 가시려면 <a href="/member/main">여기</a>를 클릭하세요.</p>
 	

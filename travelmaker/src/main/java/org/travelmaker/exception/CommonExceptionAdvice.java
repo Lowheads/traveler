@@ -1,4 +1,4 @@
-package com.travelmaker.exception;
+package org.travelmaker.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
