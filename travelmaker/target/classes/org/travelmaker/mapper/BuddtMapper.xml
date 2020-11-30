@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.travelmaker.mapper.BuddtMapper">
+
+<resultMap type="org.travelmaker.domain.BuddtVO" id="UserResult">
+	<result property="paydate" column="pay_date"/>
+	<result property="schno" column="sch_no"/>
+	<result property="store" column="store"/>
+	<result property="expense" column="expense"/>
+	<result property="budcate" column="bud_cate"/>
+	<result property="no" column="no"/>
+</resultMap>
+
+<!-- get.jsp - 일별 지출 내역 -->
+<select id="read" resultMap="UserResult">
+<!-- select * from bud_dt where pay_date=#{paydate} order by no asc -->
+select pay_date, no, store, sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as expense, bud_cate
+from bud_dt 
+where pay_date = #{paydate}
+group by no, pay_date, store, sch_no, bud_cate
+order by no asc
+</select>
+
+<!-- listAll.jsp - 모든 지출 내역 -->
+<select id="readAll" resultMap="UserResult">
+select pay_date, no, store, sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as expense, bud_cate
+from bud_dt 
+where sch_no = #{schno}
+group by no, pay_date, store, sch_no, bud_cate
+order by pay_date asc
+</select>
+
+<!-- register.jsp - 지출 내역 등록 -->
+<insert id="insert">
+insert into bud_dt ( pay_date, sch_no, store, expense, bud_cate, no)
+values ( #{paydate}, #{schno}, #{store}, #{expense}, #{budcate}, seq_no.nextval)
+</insert>
+
+<!-- register.jsp - 셀렉트 박스 : 일정 선택 -->
+<select id="box" resultMap="UserResult">
+select distinct sch_no from bud_dt
+</select>
+
+<!-- register.jsp - 날짜 선택 제한 -->
+<select id="mmDate" resultMap="UserResult">
+SELECT MAX(pay_date) as maxDate, MIN(pay_date) as minDate
+FROM bud_dt
+WHERE sch_no = #{schno}
+</select>
+
+<!-- modify.jsp - 수정 -->
+<update id="update">
+update bud_dt
+set sch_no = #{schno},
+pay_date = #{paydate},
+store = #{store},
+expense = #{expense},
+bud_cate = #{budcate}
+where no = #{no}
+</update>
+
+<!-- modify.jsp - 읽기 전용 VO -->
+<select id="readed" resultMap="UserResult">
+<!-- select * from bud_dt where pay_date=#{paydate} order by no asc -->
+select * 
+from bud_dt
+where no= #{no} and pay_date =#{paydate} and sch_no= #{schno} 
+</select>
+
+<!-- modify.jsp - 삭제 -->
+<delete id="delete" >
+delete from bud_dt where no = #{no}
+</delete>
+
+<!-- 그래프 -->
+<select id="cateCnt" resultMap="UserResult">
+select bud_cate, count(*) as cate_cnt from bud_dt group by bud_cate
+</select>
+
+</mapper>
