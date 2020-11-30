@@ -37,18 +37,19 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override
 	public void statusupdate(int schNo) {
-		ScheduleVO schedule= mapper.read(schNo);
+		ScheduleVO schedule= get(schNo);
 		String status=schedule.getSchStatus();
+		System.out.println(status);
 		//작성일때 -> 미작성으로
 		if(status.equals("작성")) {
 			mapper.statusunWritten(schNo);
 		}
 		//작성중일때-> 작성으로
-		if(status.equals("작성중")) {
+		else if(status.equals("작성중")) {
 			mapper.statusWritten(schNo);
 		}
 		//미작성일때 -> 작성중으로
-		if(status.equals("미작성")) {
+		else if(status.equals("미작성")) {
 			mapper.statusWritting(schNo);
 		}
 	
