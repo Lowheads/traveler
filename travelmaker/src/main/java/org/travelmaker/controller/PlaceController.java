@@ -81,7 +81,7 @@ public class PlaceController {
 	@ResponseBody
 	public String putInitSchedule(@RequestBody ScheduleVO scheduleVO,@RequestBody ScheduleDtVO[][] scheduleDtVO) {
 		schService.register(scheduleVO);
-		schDtService.
+//		schDtService.
 //		schService.
 //		System.out.println(scheduleDtVO[0][1].toString());
 //		System.out.println(scheduleDtVO[1][0].toString());

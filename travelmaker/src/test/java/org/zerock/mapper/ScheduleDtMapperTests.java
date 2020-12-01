@@ -22,6 +22,6 @@ public class ScheduleDtMapperTests {
 	public void insertSchdt() {
 		
 		log.info("insert Sch dt with no seq");
-		mapper.
+//		mapper.
 	}
 }
