@@ -128,4 +128,12 @@
 		email = #{email}
 		and status = '탈퇴'
 	</select>
+	
+	<!-- 정보 수정페이지(api로그인 확인) -->
+	<select id="hasNaverMemberCnt" resultType="Integer">
+		select count(*) from member 
+		where mem_grade = 'SNS회원'
+		and email = #{email}
+	</select>
+	
 </mapper>

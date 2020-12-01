@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -114,7 +115,16 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getMember(String email) { // 내 정보 조회
 		return mapper.getMember(email);
 	}
+	
+	public boolean isApiLoginCheck(String email, HttpSession session) { // api로그인일경우 apiAccountInfo 페이지로 이동
 
+		if(mapper.hasNaverMemberCnt(email) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	@Override
 	public int hasEmail(String email) { // email 체크
 		return mapper.hasEmail(email);
@@ -228,6 +238,20 @@ public class MemberServiceImpl implements MemberService {
 	public boolean deleteNoAccess(String email) { // 탈퇴한 회원은 접속 못함
 		return mapper.deleteNoAccess(email) == 1 ? true : false;
 	}
-
+	
+	public boolean isNaverApiJoinCheck(JSONObject responseObj, Model model) { // api 로그인할 경우 회원가입 되어 있는지 확인
+		 String email = (String)responseObj.get("email"); // 로그인한 사용자의 이메일을 저장한다
+		 String nickname = (String)responseObj.get("nickname"); // 로그인한 사용자의 닉네임을 저장한다
+		 String gender = (String)responseObj.get("gender"); // 로그인한 사용자의 성별을 저장한다
+		
+		// 우리 회원이 아니면 회원가입 창으로 보낸다.
+		if(hasEmail(email) != 1) {
+			model.addAttribute("email", email);
+	    	model.addAttribute("nickname", nickname);
+	    	model.addAttribute("gender", gender);
+			return true;
+		}
+		return false;
+	}
 
 }
