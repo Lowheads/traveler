@@ -2,7 +2,9 @@ package org.travelmaker.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PageDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
 import org.travelmaker.domain.ScheduleDtVO;
+import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.service.PlaceService;
+import org.travelmaker.service.SchdtService;
+import org.travelmaker.service.ScheduleService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -34,6 +41,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class PlaceController {
 	private PlaceService service;
+	private ScheduleService schService;
+	private SchdtService schDtService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -43,19 +52,19 @@ public class PlaceController {
 		
 	@PostMapping(value="/")
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO,@RequestParam ("places") String[] plcNoArr, Model model) {
-		List<PlaceVO> list = new ArrayList<PlaceVO>();	
-		for (int i = 0; i < plcNoArr.length; i++) {
-			list.add(service.getPlace(Long.parseLong(plcNoArr[i])));
-		}
-		// 리뷰 for 문 대신 plcNoArr을 문자열로 만들어서 mapper에서 query문이 한번만 실행되게 바꾸기
+		List<PlaceVO> list = service.get(plcNoArr);
 		model.addAttribute("places", list);
 		return "/place/home";
 	}
 	
-	@GetMapping(value="/pages/{title}",	produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<PlaceVO>> getList(@PathVariable String title) {
-		log.info("getList...........");
-		return new ResponseEntity<>(service.getList(title), HttpStatus.OK);
+	@GetMapping(value="/pages/{title}/{regionNo}/{pageNum}",	produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Map<String,Object>> getList(@PathVariable String title,@PathVariable int regionNo, @PathVariable int pageNum) {
+		Criteria cri = new Criteria(pageNum,10);
+		PageDTO pageMaker = new PageDTO(cri,service.getSearchResultTotalCnt(title,regionNo));
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", service.getList(title,regionNo,cri));
+		map.put("pageMaker", pageMaker);
+		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/test",produces = "application/json;")
@@ -66,6 +75,20 @@ public class PlaceController {
 //		System.out.println(scheduleDtVO[1][0].toString());
 //		System.out.println(scheduleDtVO[1][1].toString());
 		System.out.println(scheduleDtVO.length);
+		service.getInitSchWithDistAndDu(scheduleDtVO);
+		
+		return "/place/test";
+	}
+	
+	@PostMapping(value="/test/sch",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public String putInitSchedule(@RequestBody ScheduleVO scheduleVO,@RequestBody ScheduleDtVO[][] scheduleDtVO) {
+		schService.register(scheduleVO);
+//		schDtService.
+//		schService.
+//		System.out.println(scheduleDtVO[0][1].toString());
+//		System.out.println(scheduleDtVO[1][0].toString());
+//		System.out.println(scheduleDtVO[1][1].toString());
 		service.getInitSchWithDistAndDu(scheduleDtVO);
 		
 		return "/place/test";

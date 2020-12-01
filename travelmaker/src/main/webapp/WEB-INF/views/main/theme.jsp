@@ -22,39 +22,57 @@
 	</div>
 	
 	<div class="place-list-theme1">
-		<c:forEach items="${theme1}" var="placeList">
+		<c:forEach items="${theme1}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
 	</div>
 	
-	<div class="place-list-theme2" style="display:none;">
-		<c:forEach items="${theme2}" var="placeList">
+	<div class="place-list-theme2">
+		<c:forEach items="${theme2}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
 	</div>
-	<div class="place-list-theme3" style="display:none;">
-		<c:forEach items="${theme3}" var="placeList">
+	<div class="place-list-theme3">
+		<c:forEach items="${theme3}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
 	</div>
-	<div class="place-list-theme4" style="display:none;">
-		<c:forEach items="${theme4}" var="placeList">
+	<div class="place-list-theme4">
+		<c:forEach items="${theme4}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
 	</div>
-	<div class="place-list-theme5" style="display:none;">
-		<c:forEach items="${theme5}" var="placeList">
+	<div class="place-list-theme5">
+		<c:forEach items="${theme5}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
 	</div>
 	
-	<div class="place-list-theme6" style="display:none;">
-		<c:forEach items="${theme6}" var="placeList">
+	<div class="place-list-theme6">
+		<c:forEach items="${theme6}" var="placeList" varStatus="status">
+		<c:if test="${status.first}">
+			<p><span><c:out value='${placeList.themeName }' /></span></p>
+		</c:if>
 			<input class="place-box" type="checkbox" data-plc-no="<c:out value='${placeList.plcNo}' />">
 			<span class="placeVO-title"><c:out value='${placeList.plcTitle }' /></span>
 		</c:forEach>
