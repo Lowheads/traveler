@@ -232,7 +232,7 @@ public class BoardController {
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
-		ScheduleVO schedule=scheduleservice.get(schNo);
+		ScheduleVO schedule=scheduleservice.getSchedule(schNo);
 		
 		//게시물 상세부터 remove
 		boarddtservice.remove(boardNo);
