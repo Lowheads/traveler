@@ -60,7 +60,7 @@ var operForm = $("#operForm");
       $("button[data-oper='list']").on("click",function(e){
     	
     	  operForm.find("#sch_no").remove();
-    	  operForm.attr("action","/mypage/upcomming").submit();
+    	  operForm.attr("action","/mypage/past").submit();
     	  operForm.submit();
       });
       

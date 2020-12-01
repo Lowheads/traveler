@@ -1,8 +1,12 @@
 package org.travelmaker.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PlaceVO {
 	private long plcNo;
 	private int regionNo;
@@ -11,8 +15,9 @@ public class PlaceVO {
 	private double lng;
 	private String addressDt;
 	private String pCate;
-	private String holiday;
-	private String openingH;
+	private String holiday = "무휴";
+	private String openingH = "무휴";
 	private int likeCnt;
+
 	
 }

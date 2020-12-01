@@ -23,9 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class HomeController {
 	
-	@GetMapping(path="/loginform") //loginform이라는 요청이 들어오면
+	@GetMapping(path="/placeDB") //loginform이라는 요청이 들어오면
 	public String loginform() {
-			return "loginform"; //해당 요청을 받아서 loginform.jsp 수행
+			return "placeDB"; //해당 요청을 받아서 loginform.jsp 수행
 		}
 		
 //해당 요청을 받아서 처리할 수 있는 컨트롤러

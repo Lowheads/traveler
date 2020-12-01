@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	//	}
 
 	@Override
-	public ScheduleVO get(int schNo) {
+	public ScheduleVO getSchedule(int schNo) {
 
 		log.info("get...."+schNo);
 
@@ -59,7 +59,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
-	public boolean remove(int schNo) {
+	public boolean removeSchdule(int schNo) {
 
 		log.info("remove...."+schNo);
 
@@ -95,19 +95,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
-	public List<ScheduleVO> getList(Criteria cri,String selected) {
+	public List<ScheduleVO> getList(Criteria cri) {
 
-		if(selected!=null) {
-		  //if(selected.equals("like")){
-			//				}
-			if(selected.equals("new")){
-				return mapper.sortNewest(cri);
-			}
-			if(selected.equals("old")){
-				return mapper.sortOldest(cri);
-			}
+		if(cri.getSelected()==null || cri.getSelected().equals("null")) {
+			return mapper.getListWithPaging(cri);
 		}
-		return mapper.getListWithPaging(cri);
+		return mapper.getSortList(cri);
 	}
 
 	@Override
