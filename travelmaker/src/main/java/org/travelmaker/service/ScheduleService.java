@@ -40,8 +40,7 @@ public interface ScheduleService {
 
 	public int getCtotal(Criteria cri);
 
-	public void register(ScheduleVO schedule);
-
+	public int register(ScheduleVO schedule);
 
 	public ScheduleVO getListSchedule(int schNo); 
 

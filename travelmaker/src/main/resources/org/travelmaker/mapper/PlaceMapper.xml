@@ -19,6 +19,7 @@
 	
 	<resultMap type="org.travelmaker.domain.PlaceDTO" id="placeDTO">
       <result property="plcNo" column="PLC_NO" />
+      <result property="themeName" column="CODE_NAME" />
       <result property="plcTitle" column="PLC_TITLE" />
       <result property="themeNo" column="THEME_NO" />
    </resultMap>
@@ -35,7 +36,10 @@ select * from PLACE
 </insert>	
 
 <select id="read" resultMap="placeVO">
-	select * from PLACE where plc_no = #{plcNo}
+	select * from PLACE where plc_no in <foreach item="item" index="plcNo" collection="array"
+      open="(" separator="," close=")">
+        #{item}
+  </foreach>
 </select>
 <!--plc_no = #{plcNo} 선택된 plcNo를 in 으로 고쳐서  plc_no in( #{plcNo} ) 
 콤마로 문자열로 만들어서 주기-->
@@ -154,21 +158,41 @@ select count(*) from place p, pick_pl pl
 
 
 <!-- 종운 매퍼 -->
-<!-- 제목으로 검색하는 기능 -->
+<!-- 제목으로 검색하는 기능 페이징 기능 추가 -->
 <select id="getListWithTitle" resultMap="placeVO">
-	
-	select * from place where plc_title like '%'||#{plcTitle}||'%'
-	
+	<![CDATA[
+	select *
+    from (
+    select rownum no,rs.*
+    from (select * from place
+    where region_no = #{regionNo}
+    and plc_title like '%'||#{plcTitle}||'%'
+            )rs
+            where rownum <= #{pageNum} * #{amount}
+            )
+            where no >= (#{pageNum} -1) *#{amount}+1 
+	]]>
 </select>
 
-<select id="getListWithTheme" resultMap="placeDTO">
-   select tplc.theme_no, p.plc_no , p.plc_title
-   from theme_plc tplc,  place p
+<select id="getSearchResultTotalCnt" resultType="int">
+
+	select count(*) 
+	from (select * 
+		from place 
+		where region_no = #{regionNo}
+    	and plc_title like '%'||#{plcTitle}||'%')
+
+</select>
+
+<select id="getListWithTheme" resultMap="placeDTO">  
+   select tplc.theme_no, p.plc_no , p.plc_title, ctb.code_name
+   from theme_plc tplc,  place p, code_table ctb
    where tplc.theme_no = (select theme_no
    from theme t
-   where t.region_no = #{regionNo}  
-   and theme_code = 'C001')
+   where t.region_no = #{regionNo}
+   and theme_code = #{themeCode})
    and tplc.plc_no = p.plc_no
+   and concat(ctb.code_type_id,ctb.code) = #{themeCode}
 </select>
 
 <!-- 리뷰 내용 11/25

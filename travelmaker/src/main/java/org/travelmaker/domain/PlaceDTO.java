@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class PlaceDTO {
 	
 	private String plcTitle;
+	private String themeName;
 	private int plcNo;
 	private int themeNo;
 

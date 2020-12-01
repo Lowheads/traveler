@@ -132,10 +132,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public void register(ScheduleVO schedule) {
+	public int register(ScheduleVO schedule) {
 
 		log.info("register....."+schedule);
-		mapper.insertSelectKey(schedule);
+		return mapper.insertSelectKey(schedule);
 	}
 
 	public ScheduleVO getListSchedule(int schNo) {
