@@ -30,12 +30,13 @@ h3 {
         let mail = ${result}.response.email;
         let nickName = ${result}.response.nickname;
         let gender = ${result}.response.gender;
+        let birth = ${result}.response.birthday;
        
         $("#mail").html("환영합니다. "+mail+"님");
         $("#nickName").html("닉네임 : " + nickName);
         $("#id").html("애플리케이션 ID : " + id);
         $("#gender").html("성별 : " + gender);
-        /* $("#test").html(email); */
+        $("#birthday").html("생일 : " + birth);
         
       });
 </script>
@@ -56,6 +57,8 @@ h3 {
     <h4 style="text-align: center" id="id"></h4>
     <br>
     <h4 style="text-align: center" id="gender"></h4>
+    <br>
+    <h4 style="text-align: center" id="birthday"></h4>
     
     <p><a href="/member/main">홈으로</a></p>
     

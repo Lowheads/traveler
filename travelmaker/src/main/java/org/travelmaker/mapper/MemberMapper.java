@@ -40,4 +40,6 @@ public interface MemberMapper {
 	public String getMyNickname(String email); //정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다. 
 	
 	public int deleteNoAccess(String email); // 삭제한 계정은 접속 못함 
+	
+	public int hasNaverMemberCnt(String email); // 네이버 로그인인지 확인
 }

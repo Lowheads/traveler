@@ -575,10 +575,15 @@ text-align: center;
             </form>
          
             </div>
-
+            
+			<!-- 네이버 로그인 -->
             <div id="naverIdLogin" style="text-align:center;"><a href="${url}">
-            <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a></div>
+            <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
             <br>
+            
+            <a href="/member/oauth"> <!-- 카카오 로그인 -->
+				<img src="/resources/img/kakaoBtn.png" style="height: 60px" width="288px"></a></div>
+				<br>
             
             <div class="findInfo">
             
@@ -768,7 +773,7 @@ text-align: center;
           /* async : true, */
           type : 'POST',
           data : sendDate,
-          url : "/member/nicknameDuplCheck",
+          url : "/member/hasNickname",
            success : function(data) { // 성공하면 여기로 넘어옴
               if (data > 0) {
                 document.getElementById("spanNickname").innerHTML = "닉네임이 중복됩니다.";
