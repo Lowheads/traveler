@@ -39,7 +39,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public void statusupdate(int schNo) {
-		ScheduleVO schedule= get(schNo);
+		ScheduleVO schedule= getSchedule(schNo);
 		String status=schedule.getSchStatus();
 		System.out.println(status);
 		//작성일때 -> 미작성으로
