@@ -5,63 +5,54 @@
 
 <mapper namespace="org.travelmaker.mapper.AdminMemberMapper">
 
-<resultMap type="org.travelmaker.domain.MemberVO" id="MemberResult">
-	<result property="memNo" column="MEM_NO"/>
-	<result property="email" column="EMAIL"/>
-	<result property="nickname" column="NICKNAME"/>
-	<result property="pwd" column="PWD"/>
-	<result property="birth" column="BIRTH"/>
-	<result property="gender" column="GENDER"/>	
-	<result property="regDate" column="REG_DATE"/>
-	<result property="lastDate" column="LAST_DATE"/>
-	<result property="status" column="STATUS"/>
-	<result property="memGrade" column="MEM_GRADE"/>
-</resultMap>
+	<resultMap type="org.travelmaker.domain.MemberVO"
+		id="MemberResult">
+		<result property="memNo" column="MEM_NO" />
+		<result property="email" column="EMAIL" />
+		<result property="nickname" column="NICKNAME" />
+		<result property="pwd" column="PWD" />
+		<result property="birth" column="BIRTH" />
+		<result property="gender" column="GENDER" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="lastDate" column="LAST_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="memGrade" column="MEM_GRADE" />
+	</resultMap>
 
-
-	<select id="getUser" resultMap="MemberResult">
-	select /*+ index_desc(member pk_member) */ * from member where mem_no=#{memNo}
-	</select>
-	
 	<select id="getUserList" resultMap="MemberResult">
- <![CDATA[
-	select /*+ index_desc(member pk_member) */ * from member where mem_no>0 order by mem_no desc]]>
-	</select>
-	
-		<update id="removeUser">
-		update member set status='탈퇴' where mem_no=#{result}
-	</update>
-	
-	
-	<select id="getWithdrawUserList" resultMap="MemberResult">
- <![CDATA[
-	select /*+ index_desc(member pk_member) */ * 
-	from member where mem_no>0 and status='탈퇴'
-	order by mem_no desc]]>
-	</select>
-	
-	<select id ="searchUser" resultMap="MemberResult">
-			select /*+ index_desc(member pk_member) */ *
-			from member
-			where
+		select /*+ index_desc(member pk_member) */ *
+		from member
+		<where>
 			<choose>
 				<when test="type == '닉네임'">
-					(nickname like '%'||#{keyword}||'%')
+					nickname like '%'||#{keyword}||'%'
 				</when>
 				<when test="type == '이메일'">
-					(email like '%'||#{keyword}||'%')
+					email like '%'||#{keyword}||'%'
 				</when>
 				<when test="type == '회원번호'">
-					(mem_no =#{keyword})
+					mem_no =#{keyword}
 				</when>
 			</choose>
+		</where>
+		order by mem_no desc
 	</select>
-	
-	<select id ="searchWithdrawUser" resultMap="MemberResult">
-			select /*+ index_desc(member pk_member) */ * 
-			from member
-			where 
-			<choose>
+
+	<update id="removeUser" parameterType="int[]">
+		update member
+		set status='탈퇴'
+		where mem_no in
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+	<select id="getWithdrawUserList" resultMap="MemberResult">
+		select /*+ index_desc(member pk_member) */ *
+		from member where
+		status='탈퇴'
+		<trim prefix="and">
+		<choose>
 				<when test="type == '닉네임'">
 					(nickname like '%'||#{keyword}||'%')
 				</when>
@@ -72,7 +63,7 @@
 					(mem_no like '%'||#{keyword}||'%')
 				</when>
 			</choose>
-			and status='탈퇴'
+		</trim>
+		order by mem_no desc
 	</select>
-
 </mapper>

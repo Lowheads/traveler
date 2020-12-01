@@ -70,10 +70,10 @@
 
 	//같은 일정번호의 게시물명 중복일 때 알람창 ajax
  	$('#dtregister').on("click",function(e){
-		e.preventDefault();
+/* 		e.preventDefault();
 		var boardTitle=document.getElementById('boardTitle').value;
 		var boardImg=document.getElementById('boardImg').value;
-		
+		 */
 		//게시물 제목 입력 체크
 		if(boardTitle==""){		
 			alert('게시물 제목을 입력하세요');
@@ -93,7 +93,8 @@
 		
 		//게시물 명 중복 체크
 		var formObj = $("#registerform");
-		var sendData = {'boardTitle' : boardTitle, 'schNo' : document.getElementById('schNo').value }
+			formObj.submit();
+/* 		var sendData = {'boardTitle' : boardTitle, 'schNo' : document.getElementById('schNo').value }
 		 
   		$.ajax({
 			type : 'post',
@@ -107,8 +108,8 @@
 				else{
 					formObj.submit();
 				}
-			}		
-	});   
+			}	
+	});   */
 		
 	});
 

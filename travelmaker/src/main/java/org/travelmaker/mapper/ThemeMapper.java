@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.ThemeVO;
 
 public interface ThemeMapper {
 
-	public List<Map<String,String>> getThemeList();
+	public List<ThemeVO> getThemeList();
 
-	public List<Map<String,String>> getThemeInfo(@Param(value = "regionNo") String regionNo,
-			@Param(value = "themeCode") String themeCode);
+	public List<PlaceDTO> getThemeInfo(@Param(value = "themeNo") int themeNo);
 
 }

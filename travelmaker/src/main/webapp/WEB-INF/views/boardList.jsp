@@ -126,11 +126,13 @@
 
 		if (message === '') {
 			return;
-		} else {
-
+		}else if(message === 'success'){
 			$(".modal-body").html("삭제를 완료하였습니다");
-			$("#myModal").modal("show");
+		}else{
+			$(".modal-body").html("삭제중 오류가 발생했습니다 다시 시도해주세요");
 		}
+		$("#myModal").modal("show");
+		
 
 	})
 
@@ -159,7 +161,12 @@
 				return false;
 			}
 		}
-		
+
+		if(keyword.length>100){
+			msg = "검색은 100자리 이하만 가능합니다";
+			showModal(msg);
+			return false;
+		}
 		return true;
 		
 	})

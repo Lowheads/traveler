@@ -1,27 +1,16 @@
 package org.travelmaker.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PickVO;
 import org.travelmaker.domain.PlacePageDTO;
@@ -37,46 +26,45 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class MyPageController {
 
-	private PlaceService PLCservice;
+	private PlaceService placeService;
 	private ScheduleService SchService;
-	private PickService PICKservice;
+	private PickService pickService;
 
-	//찜한장소 페이지 들어왔을때 장소 리스트 뽑아와야되니까
 	@GetMapping("/pickPL")
-	public void list(Criteria cri,Model model,HttpServletRequest request,String selected) {
+	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
-		int total = PLCservice.getTotal(cri);
+		int total = placeService.getTotal(cri);
 		cri.setAmount(8);
-		model.addAttribute("list",PLCservice.getList(cri,selected));
+		model.addAttribute("list",placeService.getListWithPaging(cri));
 		model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
 	}
 
-	@RequestMapping(value = "/remove", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/deleteSchedule", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public void remove(@RequestParam("schNo")int schNo) {
-		SchService.remove(schNo);
+	public void deleteSchedule(@RequestParam("schNo")int schNo) {
+		SchService.removeSchdule(schNo);
 	}
 
 	@GetMapping("/pickSch")
-	public void pickSch(Criteria cri,Model model,HttpServletRequest request,String selected) {
+	public void getScheduleList(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
 		cri.setAmount(8);
-		model.addAttribute("list",SchService.getList(cri,selected));
+		model.addAttribute("list",SchService.getList(cri));
 		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
 	}
 
 	@GetMapping({"/past/get","/pickSch/get","/upcomming/get"})
-	public void get(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
+	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 
-		model.addAttribute("board",SchService.get(schNo));
+		model.addAttribute("board",SchService.getSchedule(schNo));
 	}
 
 	@GetMapping("/past")
-	public void past(Criteria cri,Model model,HttpServletRequest request) {
+	public void getPastSchedule(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
@@ -86,7 +74,7 @@ public class MyPageController {
 	}
 
 	@GetMapping("/upcomming")
-	public void upcomming(Criteria cri,Model model,HttpServletRequest request) {
+	public void getUpcomingSchedule(Criteria cri,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
@@ -97,9 +85,28 @@ public class MyPageController {
 
 	@ResponseBody
 	@RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
-	public void heart(HttpServletRequest httpRequest,HttpSession session,PickVO vo) throws Exception {
+	public void deleteLike(HttpSession session,PickVO vo) throws Exception {
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		vo.setMemNo(memNo);
-		PICKservice.remove(vo);
+		pickService.remove(vo);
 	}
+	
+	
+	 @RequestMapping(value = "/getDB", method = RequestMethod.POST
+  		   ,produces = "application/json")
+     @ResponseBody
+     public String ajaxTest(PlaceVO vo) throws Exception {
+
+  	   System.out.println(vo);
+  	   
+  	   try {
+  		   
+  		   placeService.register(vo);
+  	   }
+  	   catch(Exception e) {
+  		   System.out.println("에러발생");
+  		   e.printStackTrace();
+  	   }
+  	   return "/home";
+     }
 }

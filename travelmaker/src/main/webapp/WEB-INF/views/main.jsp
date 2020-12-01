@@ -13,7 +13,7 @@
 
       function drawChart() {
         let data1 = google.visualization.arrayToDataTable([
-          ['daily', '신규 가입자 ','새 글'], ${dailyLog}]);
+          ['daily', '신규 가입자 ','탈퇴 회원', '새 글'], ${dailyLog}]);
         
         let option1 = {  title: '일간 차트'};
         
@@ -24,7 +24,7 @@
 
       function drawChart2() {
         let data2 = google.visualization.arrayToDataTable([
-          ['monthly', '신규 가입자','새 글'], ${monthlyLog}]);
+          ['monthly', '신규 가입자','탈퇴 회원','새 글'], ${monthlyLog}]);
         
         let option2 = {  title: '월간 차트'};
         

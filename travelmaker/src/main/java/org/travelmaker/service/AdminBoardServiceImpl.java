@@ -1,5 +1,6 @@
 package org.travelmaker.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public void removePost(int result) {
-		
-		mapper.removePost(result);
+	public int removePost(ArrayList boardNo) {
+	
+		return mapper.removePost(boardNo);
 	}
 
 	@Override

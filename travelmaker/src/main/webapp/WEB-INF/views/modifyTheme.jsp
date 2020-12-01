@@ -5,11 +5,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+
 지역<br>
 테마<br>
 
 <button id="searchBtn" class="btn btn-sm- btn-primary" 
-onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>	
+onClick = "location.href='/admin/modifyTheme/${themeNo}'">저장하기</button>	
+
 
 <table  class="table table-bordered" id="dataTable" style="width:70%">
 <tr>
@@ -18,9 +20,10 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>
 </tr>
 
 <c:forEach items="${list}" var="list">
-	<tr name = row id = '<c:out value="${list.plcNo}" />'>
+	<t	r name = row id = '<c:out value="${list.plcNo}" />'>
 	<td><c:out value="${list.plcNo}" /></td>
 		<td><c:out value="${list.plcTitle}" /></td>
+		<td><button id = "deleteEle()">X</button></td>
 	</tr>
 </c:forEach>
 </table>

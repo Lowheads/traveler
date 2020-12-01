@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	//	}
 
 	@Override
-	public ScheduleVO get(int schNo) {
+	public ScheduleVO getSchedule(int schNo) {
 
 		log.info("get...."+schNo);
 
@@ -36,13 +36,30 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	}
 	
-	@Override
-	public int statusupdate(int schNo) {
-		return mapper.statusupdate(schNo);
-	}
 
 	@Override
-	public boolean remove(int schNo) {
+	public void statusupdate(int schNo) {
+		ScheduleVO schedule= get(schNo);
+		String status=schedule.getSchStatus();
+		System.out.println(status);
+		//작성일때 -> 미작성으로
+		if(status.equals("작성")) {
+			mapper.statusunWritten(schNo);
+		}
+		//작성중일때-> 작성으로
+		else if(status.equals("작성중")) {
+			mapper.statusWritten(schNo);
+		}
+		//미작성일때 -> 작성중으로
+		else if(status.equals("미작성")) {
+			mapper.statusWritting(schNo);
+		}
+	
+	}
+
+
+	@Override
+	public boolean removeSchdule(int schNo) {
 
 		log.info("remove...."+schNo);
 
@@ -78,19 +95,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
-	public List<ScheduleVO> getList(Criteria cri,String selected) {
+	public List<ScheduleVO> getList(Criteria cri) {
 
-		if(selected!=null) {
-		  //if(selected.equals("like")){
-			//				}
-			if(selected.equals("new")){
-				return mapper.sortNewest(cri);
-			}
-			if(selected.equals("old")){
-				return mapper.sortOldest(cri);
-			}
+		if(cri.getSelected()==null || cri.getSelected().equals("null")) {
+			return mapper.getListWithPaging(cri);
 		}
-		return mapper.getListWithPaging(cri);
+		return mapper.getSortList(cri);
 	}
 
 	@Override
@@ -142,4 +152,5 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+
 }

@@ -24,6 +24,15 @@ public interface ScheduleMapper {
 	// 업데이트 가능해야되고(좋아요 업다운)
 	public int update(ScheduleVO vo);
 
+	//게시글 상태 미작성 -> 작성으로 변경
+	public int statusWritten(int schNo);
+	//게시글 상태 작성 -> 미작성으로 변경
+	public int statusunWritten(int schNo);
+	//게시글 상태 미작성-> 작성중으로 변경
+	public int statusWritting(int schNo);
+	
+	public void upSet(int schNo);
+
 
 	public void upCnt(int schNo);
 
@@ -49,8 +58,15 @@ public interface ScheduleMapper {
 
 	public int insertSelectKey(ScheduleVO schedule);
 	
+<<<<<<< HEAD
 //	public List<ScheduleVO> sortLike(Criteria cri);
 	public List<ScheduleVO> sortNewest(Criteria cri);
 	public List<ScheduleVO> sortOldest(Criteria cri);
 
+
+
+=======
+	public List<ScheduleVO> getSortList(Criteria cri);
+>>>>>>> dev1
 }
+

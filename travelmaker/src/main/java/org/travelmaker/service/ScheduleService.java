@@ -10,9 +10,9 @@ public interface ScheduleService {
 
 
 	//한개장소만가져오기
-	public ScheduleVO get(int schNo);
-	//삭제(하트클릭할때)
-	public boolean remove(int schNo);
+	public ScheduleVO getSchedule(int schNo);
+
+	public boolean removeSchdule(int schNo);
 	//전체리스트
 	public List<ScheduleVO> getList();
 	
@@ -22,11 +22,11 @@ public interface ScheduleService {
 	//memno에 맞는 schedule 공개, 비공개 여부 가져오기
 	public List<ScheduleVO> getHiddenList(int memNo); 
 	
-	public int statusupdate(int schNo);
+
 
 	public boolean modify(ScheduleVO vo);
 
-	public List<ScheduleVO> getList(Criteria cri,String selected);
+	public List<ScheduleVO> getList(Criteria cri);
 
 	public void updateLikeCnt(ScheduleVO vo);
 
@@ -42,6 +42,8 @@ public interface ScheduleService {
 
 	public int register(ScheduleVO schedule);
 
-	public ScheduleVO getListSchedule(int schNo); 
+	public ScheduleVO getListSchedule(int schNo);
+	
+	public void statusupdate(int schNo); 
 
 }

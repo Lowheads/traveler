@@ -1,7 +1,9 @@
 package org.travelmaker.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PageDTO;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
 import org.travelmaker.domain.ScheduleDtVO;
 import org.travelmaker.domain.ScheduleVO;
@@ -49,8 +52,8 @@ public class PlaceController {
 		
 	@PostMapping(value="/")
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO,@RequestParam ("places") String[] plcNoArr, Model model) {
-		if(plcNoArr.length!=0) 
-		model.addAttribute("places", service.get(plcNoArr));
+		List<PlaceVO> list = service.get(plcNoArr);
+		model.addAttribute("places", list);
 		return "/place/home";
 	}
 	

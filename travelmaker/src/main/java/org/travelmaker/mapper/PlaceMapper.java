@@ -10,8 +10,6 @@ import org.travelmaker.domain.PlaceVO;
 public interface PlaceMapper {
 
 	//순규 메서드
-	public List<PlaceVO> getList();
-	
 	public void insert(PlaceVO vo);
 	
 	public List<PlaceVO> read(String[] plcNoArr);
@@ -26,11 +24,9 @@ public interface PlaceMapper {
 	
 	public void downCnt(long plcNo);
 	
-	public List<PlaceVO> sortLike(Criteria cri);
-	public List<PlaceVO> sortNewest(Criteria cri);
-	public List<PlaceVO> sortOldest(Criteria cri);
+	public List<PlaceVO> getSortList(Criteria cri);
 	
-	public int getTotalCount(Criteria cri);
+	public int getTotal(Criteria cri);
 	
 	//종운 메서드
 	public List<PlaceVO> getListWithTitle(@Param("plcTitle")String title,@Param("regionNo") int regionNo,@Param("pageNum") int pageNum, @Param("amount") int amount);
