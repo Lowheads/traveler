@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public interface MemberService {
 
 	public void join(MemberVO mVO); // 회원가입
@@ -44,7 +46,9 @@ public interface MemberService {
 	
 	public void deleteMember(String pwd, String email); // 회원 탈퇴
 	
-	public boolean isTravelMember(String email, RedirectAttributes rttr); // 트래블 회원인지 확인
+	public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session); // api 회원 탈퇴
+	
+	public boolean isNotTravelMember(String email, RedirectAttributes rttr); // 트래블 회원인지 확인
 	
 	public String findPwd(String email); // 비밀번호찾기
 	
@@ -52,12 +56,18 @@ public interface MemberService {
 	
 	public Email writerEmail(String email, Email emailObj); // 메일보내기
 	
+	public Email certEmail(String email, String certNum, Email emailObj); // 소셜 계정 회원탈퇴 인증메일 보내기
+	
 	public void lastLoginSetToday(String email); // 최종로그인
 	
 	public boolean isMyNicknamePass(String nickname, String email); // 정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다
 	
 	public boolean deleteNoAccess(String email); // 삭제한 회원은 접근 못함
 	
-	public boolean isNaverApiJoinCheck(JSONObject responseObj, Model model); // api 로그인할 경우 회원가입 되어 있는지 확인
+	public boolean isNaverApiJoinCheck(JSONObject responseObj, Model model); // 네이버 api 로그인할 경우 회원가입 되어 있는지 확인
+
+	public boolean isKakaoApiJoinCheck(JsonNode userProfile, Model model); // 카카오 api 로그인할 경우 회원가입 되어 있는지 확인
 	
+	public boolean isDeleteAlready(String email, RedirectAttributes rttr); // 소셜계정 탈퇴여부 확인
+
 }

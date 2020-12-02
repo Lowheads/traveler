@@ -13,10 +13,6 @@
       
       <a href="/member/success">로그인여부확인</a><br>
       
-      <!-- 로그인 체크해서 안 됐다면 로그인창.. -->
-      <a href="/member/testPage" onclick="return sessionCheck();">로그인 하고 들오세요</a> 
-   
-
 </body>
 
 </html>

@@ -27,4 +27,6 @@ public interface apiLoginService { // api 로그인에 관한 서비스 인터�
 	
 	public JsonNode getKakaoToken(String code); // 카카오 토큰 얻기
 	
+	public JsonNode getKakaoUserProfile(JsonNode access_token); // 카카오 유저 정보 얻기
+	
 }

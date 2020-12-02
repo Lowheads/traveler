@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.travelmaker.loginapi.KakaoUserInfo;
 import org.travelmaker.loginapi.Kakao_restapi;
 import org.travelmaker.loginapi.NaverLoginBO;
 
@@ -71,5 +72,12 @@ public class apiLoginServiceImpl implements apiLoginService {
 		JsonNode access_token = kakao_restapi.getKakaoAccessToken(code);
 		return access_token;
 	}
+
+	@Override
+	public JsonNode getKakaoUserProfile(JsonNode access_token) {
+		JsonNode userProfile = KakaoUserInfo.getKakaoUserInfo(access_token.get("access_token"));
+		return userProfile;
+	}
+	
 }
 	

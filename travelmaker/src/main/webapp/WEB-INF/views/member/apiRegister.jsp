@@ -69,7 +69,7 @@ img.ui-datepicker-trigger {
 	    document.getElementById('apiNickname').value = nickname	// 네이버 닉네임
 	    document.getElementById('apiPwd').value = randomPwd	// 임시 비밀번호
 	       
-		if(gender == 'M'){
+		if(gender == 'M' || gender == 'male'){
 			$("input:radio[name='gender']:radio[value='M']").prop('checked', true);
 		}else{
 			$("input:radio[name='gender']:radio[value='F']").prop('checked', true);
@@ -83,8 +83,8 @@ img.ui-datepicker-trigger {
 	     let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 
 	    // 스크립트 태그 변수
-	    let myNickname = $("#naverNickname").val(); // 닉네임
-	    let myBirth = $("#naverBirth").val();    // 생년월일
+	    let myNickname = $("#apiNickname").val(); // 닉네임
+	    let myBirth = $("#apiBirth").val();    // 생년월일
 	    
 	    // 닉네임 입력
 	    if(myNickname.length == 0){
@@ -119,33 +119,44 @@ img.ui-datepicker-trigger {
 	    
 	 } // end snsValidCheck()
 	 
+	 
 	// 닉네임 중복체크 버튼 누르면 실행
 	$(function() {
-	    $("#naverNicknameCheck").click(function() { 
+	    $("#apiNicknameCheck").click(function() { 
 	        
-	       let myNickname = $("#naverNickname").val();    // 닉네임
+	       let myNickname = $("#apiNickname").val();     // 닉네임
 	       let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 
 	         // 닉네임 입력
 	          if(myNickname.length == 0){
-	             document.getElementById("naverSpanNickname").innerHTML = "닉네임을 입력해주세요";
-	             naverSpanNickname.style.color='red';
+	             document.getElementById("apiSpanNickname").innerHTML = "닉네임을 입력해주세요";
+	             apiSpanNickname.style.color='red';
 	          	return;
 	       }else{
-	          document.getElementById("naverSpanNickname").innerHTML = "";
+	          document.getElementById("apiSpanNickname").innerHTML = "";
 	       }
+	       
+	       // 닉네임은 2~8자리
+	       if(!(2 < myNickname.length && myNickname.length <= 8)){
+	    	   document.getElementById("apiSpanNickname").innerHTML = "닉네임은 2~8자로 입력해주세요";
+	    	   apiSpanNickname.style.color = 'red';
+	    	   return;
+	       }else{
+	    	   document.getElementById("apiSpanNickname").innerHTML = "";
+	       }
+	       
 	        
 	        // 닉네임 정규식
 	         if(false === jNname.test(myNickname)) {     
-	            document.getElementById("naverSpanNickname").innerHTML = "닉네임은 한글/영문/숫자로 2~8자리 부탁드립니다";
-	            naverSpanNickname.style.color='red';
+	            document.getElementById("apiSpanNickname").innerHTML = "닉네임은 한글/영문/숫자로 2~8자리 부탁드립니다";
+	            apiSpanNickname.style.color='red';
 	             return;  
 	         }else{
-	             document.getElementById("naverSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+	             document.getElementById("apiSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
 	          }       
 	        
 	        
-	       let nickname = $("#naverNickname").val();
+	       let nickname = $("#apiNickname").val();
 	       let sendDate = {'nickname' : nickname}
 
 	       $.ajax({
@@ -155,11 +166,11 @@ img.ui-datepicker-trigger {
 	          url : "/member/hasNickname",
 	           success : function(data) { // 성공하면 여기로 넘어옴
 	              if (data > 0) {
-	                document.getElementById("naverSpanNickname").innerHTML = "닉네임이 중복됩니다.";
-	                naverSpanNickname.style.color = 'red';
+	                document.getElementById("apiSpanNickname").innerHTML = "닉네임이 중복됩니다.";
+	                apiSpanNickname.style.color = 'red';
 	             } else {
-	                document.getElementById("naverSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
-	                naverSpanNickname.style.color = 'blue';
+	                document.getElementById("apiSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+	                apiSpanNickname.style.color = 'blue';
 	             }
 	           }
 	       });
@@ -169,7 +180,7 @@ img.ui-datepicker-trigger {
 
 
 	 $(function() {
-			$("#naverBirth").datepicker(
+			$("#apiBirth").datepicker(
 					{
 						changeMonth : true,
 						changeYear : true,
@@ -224,9 +235,9 @@ img.ui-datepicker-trigger {
                   <!-- 닉네임 -->
                   <div class="reg-font">닉네임</div>
                   <div class="div-reg"><input type="text" name="nickname" id="apiNickname">
-                     <button class="btn" type="button" id="naverNicknameCheck">중복 체크</button>
+                     <button class="btn" type="button" id="apiNicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
-                  <div class="div-reg"><span id="naverSpanNickname"></span></div></div>
+                  <div class="div-reg"><span id="apiSpanNickname"></span></div></div>
                   
                   <!-- 생년월일 -->
                   <div class="reg-font">생일</div>

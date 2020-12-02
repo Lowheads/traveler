@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.loginapi.KakaoUserInfo;
-import org.travelmaker.loginapi.Kakao_restapi;
 import org.travelmaker.service.MemberService;
 import org.travelmaker.service.apiLoginService;
 
@@ -55,11 +54,6 @@ public class MemberController {
 	@GetMapping("/deletePage") // 회원탈퇴 페이지
 	public void delete() {
 		log.info("deletePage");
-	}
-	
-	@GetMapping("/naverRegister") // 네이버 회원가입 페이지
-	public void naverJoin() {
-		log.info("naverRegister");
 	}
 	
 	// 회원가입정보를 다 입력하고 회원가입 버튼을 누른다. 
@@ -168,6 +162,19 @@ public class MemberController {
 		return "/member/accountInfo";
 	}
 	
+	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
+	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
+	public String modifyApiNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
+
+		// 닉네임을 수정하고 저장하기를 눌렀다면..
+		if(service.isNicknameTouch(nickname, email, model)) {
+			return "/member/apiAccountInfo";
+		}
+			
+		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
+		return "/member/apiAccountInfo";
+	}
+	
 	//회원탈퇴 페이지 이동
 	@RequestMapping(value = "/deletePage", method = RequestMethod.POST)
 	public String deletePage(String email, Model model) {
@@ -176,6 +183,17 @@ public class MemberController {
 		
 		return "/member/deletePage";
 	}
+	
+	
+	// 소셜 회원탈퇴 페이지 이동
+	@RequestMapping(value = "/apiDeletePage", method = RequestMethod.POST)
+	public String apiDeletePage(String email, Model model) {
+		// 계정을 삭제하기 위한 페이지로 이동한다. (회원 정보를 가지고)
+		model.addAttribute("member", service.getMember(email));
+		
+		return "/member/apiDeletePage";
+	}
+	
 	
 	// 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
@@ -192,14 +210,28 @@ public class MemberController {
 		return mav;
 	}
 	
+	// api 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
+	@RequestMapping(value = "/deleteApiMember", method = RequestMethod.POST)
+	public String deleteApiMember(String email, HttpSession session, RedirectAttributes rttr) {
+		
+		service.deleteApiMember(email, rttr, session);
+		return "redirect:/member/main";
+	}
+	
 	// 네아로
     @RequestMapping("/main")
     public ModelAndView naverLogin(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로..
+    	try {
+    		
         /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
         String naverAuthUrl = apiService.getNaverAuthUrl(session);
         
         /* 생성한 인증 URL을 View로 전달 */
         return new ModelAndView("/member/main", "url", naverAuthUrl);
+    	}catch(Exception e) {
+    		e.getMessage();
+    		return new ModelAndView("/member/main");
+    	}
     }
     
 	  //네이버 로그인 성공시 callback호출 메소드
@@ -208,7 +240,8 @@ public class MemberController {
      public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rttr) throws IOException, ParseException {
 	    System.out.println("여기는 callback");
 	    
-	    OAuth2AccessToken oauthToken = apiService.getNaverToken(code, state, session);
+	    try {
+	    OAuth2AccessToken oauthToken = apiService.getNaverToken(code, state, session); // 네이버 토큰을 얻는다.
 	    String userInfo = apiService.getNaverUserProfile(oauthToken); // // 로그인한 사용자 정보를 읽어온다.
 	    
 	    // 데이터 파싱
@@ -217,80 +250,60 @@ public class MemberController {
 	    String email = (String)responseObj.get("email"); // 로그인한 사용자의 이메일을 저장한다
 	    
 	    if(service.isNaverApiJoinCheck(responseObj, model)) { // 회원이 아니면 회원가입 창으로 보낸다.
-//	    	model.addAttribute("result", userInfo);
-	    	
 	    	return "/member/apiRegister";
 	    }
+	     
+	    if(service.isDeleteAlready(email, rttr)) { // 탏퇴한 계정이면 로그인 안됩니다.
+	    	return "redirect:/member/main";
+	    }
+	    
 	    // 이미 회원이라면 세션주고 로그인
 	    session.setAttribute("email", email);
 	    System.out.println(userInfo); // 네이버 로그인 정보					
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    	return "/error_Page";
+	    }
 	    return "/member/main";
 	    
      }
     
-    
-    // 로그인 해야 들어갑니다아
-	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
-	public String testPage(HttpSession session, RedirectAttributes rttr) {
-		System.out.println("testPAge");
-		// 회원 로그인
-		String member = (String)session.getAttribute("email");
-		
-		// 로그인 안됐으면 로그인 하라고 알려주자
-		if(member == null) {
-			rttr.addFlashAttribute("msg", "로그인 해주세요!");
-			return "redirect:main";
-		}
-		
-		// testPage로 이동한다.
-		return "/member/testPage";
-	}
-	
-		// 카카오 로그인 시작
-//		 private Kakao_restapi kakao_restapi=new Kakao_restapi();
-		 
-		 @RequestMapping(value="/oauth",method= RequestMethod.GET)
-		 public String kakaoConnect() {
-
-		  // 카카오 소셜로그인 url 얻어오기
-		  StringBuffer url = apiService.getKakaoConnect();
-
+	// 카카오 로그인 시작
+	 @RequestMapping(value="/oauth",method= RequestMethod.GET)
+	 public String kakaoConnect() {
+		  StringBuffer url = apiService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
 		  return "redirect:" + url.toString();
-		 }
+	 }
 		 
-//		 @RequestMapping(value="/kakaoLogin",produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
-//		 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes ra, HttpSession session, HttpServletResponse response, Model model)throws IOException {
-//			 
-//		  System.out.println("kakao code:"+code);
-//		  JsonNode access_token=kakao_restapi.getKakaoAccessToken(code);
-//		 // access_token.get("access_token");
-//		      //   System.out.println("access_token:" + access_token.get("access_token"));
-//
-//		  JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(access_token.get("access_token"));
-//		  System.out.println(userInfo);
-//		         // Get id
-//		         String member_id = userInfo.get("id").asText();
-//		         String member_name = null;
-//		        
-//		         // 유저정보 카카오에서 가져오기 Get properties
-//		         JsonNode properties = userInfo.path("properties");
-//		         JsonNode kakao_account = userInfo.path("kakao_account"); // 내 프로필 정보를 담는다.
-//		         
-//		         String email = kakao_account.get("email").textValue(); // 프로필에서 이메일만 빼온다
-//		         String gender = kakao_account.get("gender").textValue(); // 프로필에서 성별을 빼온다.
-//		         
-//		         
-//		         member_name = properties.path("nickname").asText(); //이름 정보 가져오는 것
-//		         System.out.println("name : " + member_name);
-//		         System.out.println("email : " + email);
-//		         System.out.println("gender : " + gender);
-//		         session.setAttribute("kakaoLogin", kakao_account);
-//		         
-//		         model.addAttribute("name", member_name);
-//		         model.addAttribute("email", email);
-//		         model.addAttribute("gender", gender);
-//		         
-//		         return "/member/kakaoLogin";
-//		 }
-//    
+	 @RequestMapping(value="/kakaoLogin",produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
+	 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes rttr, HttpSession session, HttpServletResponse response, Model model)throws IOException {
+			 
+	  System.out.println("kakao code:"+code);
+		  
+	  try { // 카카오 로그인하고 새로고침하면 에러떠서 예외처리
+		  
+	  JsonNode access_token = apiService.getKakaoToken(code); // 카카오 토큰을 얻어온다
+	  JsonNode userProfile = apiService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
+	  String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일만 빼온다
+		         
+	  		// 회원이 아니면 회원가입해주세요
+	  		if(service.isKakaoApiJoinCheck(userProfile, model)) {
+	  			return "/member/apiRegister";
+	  		}
+	  		
+	  	    if(service.isDeleteAlready(email, rttr)) { // 탏퇴한 계정이면 로그인 안됩니다.
+		    	return "redirect:/member/main";
+		    }
+	  		
+	  		
+	  	// 이미 회원이면 로그인 처리
+	  	session.setAttribute("email", email);
+	    return "/member/main";
+	    
+	  }catch(Exception e) {
+		  e.getMessage();
+		  return "/member/main";
+	  }
+	 }
+    
 }

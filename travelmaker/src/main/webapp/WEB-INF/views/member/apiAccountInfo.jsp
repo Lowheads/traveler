@@ -229,7 +229,7 @@
 		<div class="center">아이디(이메일) : ${member.email }</div> 
 		
 		<!-- 닉네임 저장 폼 -->
-	<form action="/member/modifyNickname" method="post">
+	<form action="/member/modifyApiNickname" method="post">
 		 <div class="center">닉네임 <input type="text" id="apiInfoNickname" name="nickname" value="${member.nickname }">
 		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 		 	<button type="button" class="btn" id="apiInfoNicknameCheck">중복 체크</button>
@@ -249,7 +249,7 @@
 	
 	   <!-- 회원탈퇴 (내 정보를 출력해야하므로, 폼으로 처리)-->
       <div>
-         <form action="/member/deletePage" method="post">
+         <form action="/member/apiDeletePage" method="post">
             <input type="hidden" id="modi_email" name='email' value="<%=session.getAttribute("email")%>">
             <p><button type='submit' class="btn">회원탈퇴</button></p>
             <br>

@@ -755,6 +755,15 @@ text-align: center;
        }else{
           document.getElementById("spanNickname").innerHTML = "";
        }
+       
+	       // 닉네임은 2~8자리
+	       if(!(2 < myNickname.length && myNickname.length <= 8)){
+	    	   document.getElementById("spanNickname").innerHTML = "닉네임은 2~8자로 입력해주세요";
+	    	   spanNickname.style.color = 'red';
+	    	   return;
+	       }else{
+	    	   document.getElementById("spanNickname").innerHTML = "";
+	       }
         
         // 닉네임 정규식
          if(false === jNname.test(myNickname)) {     
