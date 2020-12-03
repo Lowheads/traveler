@@ -17,33 +17,36 @@ import lombok.extern.log4j.Log4j;
 public class PickServiceImpl implements PickService{
 
 	@Setter(onMethod_ = @Autowired)
-	private PickMapper mapper;
+	private PickMapper pickMapper;
 	
 	@Setter(onMethod_ = @Autowired)
-	private PlaceMapper pMapper;
+	private PlaceMapper placeMapper;
 	
 	@Setter(onMethod_ = @Autowired)
-	private ScheduleMapper sMapper;
+	private ScheduleMapper scheduleMapper;
 	
 	@Setter(onMethod_ = @Autowired)
-	private BoardMapper bMapper;
+	private BoardMapper boardMapper;
 	
+	//좋아요 눌렀을때 찜한장소(일정) 리스트에 추가시키는 메서드인데 아직 게시판이랑 연동 x 
 	@Override
+	@Transactional
 	public int register(PickVO vo) {
-		
-		pMapper.upCnt(vo.getPlcNo());
-		return mapper.insert(vo); 
+		placeMapper.upCnt(vo.getPlcNo());
+		return pickMapper.insert(vo); 
 	}
 
 	@Override
+	@Transactional
 	public int remove(PickVO vo) {
 		
 		//장소 좋아요취소일때
 		if(vo.getPlcNo()!=0) {
-			pMapper.downCnt(vo.getPlcNo());
-			return mapper.delete(vo);
+			placeMapper.downCnt(vo.getPlcNo());
+			return pickMapper.delete(vo);
 		}
-
-		return mapper.deleteSch(vo);
+		
+		//일정에 대한 좋아요 취소일때
+		return pickMapper.deleteSch(vo);
 	}
 }

@@ -2,9 +2,13 @@ package org.travelmaker.domain;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ScheduleVO {
 
 	private int schNo;
@@ -20,6 +24,7 @@ public class ScheduleVO {
 	private String schRegion;
 	
 	private String hidden; //board와 조인한 hidden
+	
 	
 }
 

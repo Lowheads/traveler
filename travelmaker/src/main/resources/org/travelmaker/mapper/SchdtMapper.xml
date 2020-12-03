@@ -23,9 +23,8 @@
 </select>
 
 <insert id="insert">
-	insert into sch_dt(board_no, boarddt_img, board_con, num)
-	values (#{boardNo}, #{boarddtImg},#{boardCon}, sch_dt_seq.nextval)
-
+	insert into sch_dt(SCH_DATE, SCH_NO, NUM, FROM_PLC, ,TO_PLC, DISTANCE, DURATION,TRANSIT)
+	values (#{schDate}, #{boarddtImg},#{boardCon}, sch_dt_seq.nextval)
 </insert>
 
 

@@ -111,7 +111,7 @@
 	//좋아요 취소하는 버튼
 	$(".heart a").on("click", function() {
 
-		$(this).hide(30);
+		$(this).hide(5);
 		var sendData = {
 			'schNo' : $(this).attr('sch_no'),
 		}
@@ -126,7 +126,7 @@
 			},
 			error : function(error){
 				
-				alert("에러발생"+error);
+				alert("에러발생!! 다시시도해주세요"+error);
 		}
 		});
 	});
