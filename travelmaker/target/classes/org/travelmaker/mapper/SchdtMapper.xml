@@ -10,7 +10,6 @@
 		<result property="distance" column="distance"/>
 		<result property="duration" column="duration"/>
 		<result property="transit" column="transit"/>
-
 </resultMap>
 
 
@@ -22,11 +21,16 @@
 ]]>
 </select>
 
-<insert id="insert">
-	insert into sch_dt(SCH_DATE, SCH_NO, NUM, FROM_PLC, ,TO_PLC, DISTANCE, DURATION,TRANSIT)
-	values (#{schDate}, #{boarddtImg},#{boardCon}, sch_dt_seq.nextval)
-</insert>
+<!-- <insert id="insert" parameterType="org.travelmaker.domain.SchdtVO">
+	insert into sch_dt(SCH_DATE, SCH_NO, FROM_PLC,TO_PLC, DISTANCE,TRANSIT,DURATION,NUM)
+	values (#{schDate}, #{schNo}, #{fromPlc}, #{toPlc}, #{distance},#{transit},#{duration},#{num})
+</insert> -->
+<!-- schNo를 얻어와야하므로 스케쥴 VO-->
 
+<update id="insert" parameterType="org.travelmaker.domain.SchdtVO"> <foreach collection="array" item="schdt" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+ INTO sch_dt VALUES (#{schdt.schDate},#{schdt.schNo},#{schdt.fromPlc},#{schdt.toPlc},#{schdt.distance},#{schdt.transit},#{schdt.duration},#{schdt.num}) 
+</foreach> 
+</update>
 
 <select id="getplacetitle" resultType="org.travelmaker.domain.Schdt_PlaceVO">
 <![CDATA[

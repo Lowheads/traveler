@@ -10,4 +10,6 @@ public interface SchdtMapper {
 	public List<SchdtVO> getSchdt(int schNo);
 	
 	public List<Schdt_PlaceVO> getplacetitle(int SchNo);
-}
+	
+	public int insert(SchdtVO[] schdtVOs);
+	}

@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<%@ page session="false"%>
+<%@ page session = "true" %>
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -146,6 +146,7 @@ ul {
          <c:forEach items="${places}" var="list">
          <li class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
                   <c:out value="${list.plcTitle}"></c:out>
+                  <img src='<c:out value="${list.plcImg}"></c:out>' style="width:50px;height:60px">
                   <button class="rec-add-button" type="button">
                   <i class="fas fa-plus"></i>
                   </button>
@@ -161,7 +162,6 @@ ul {
    <!-- end place list -->
 <!-- 맵 시작 -->
 <div class="container">
-
      <div id="mapWrapper">
         <div id="map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
         <div id="show" style="display:none;"><button>>></button></div>
@@ -172,7 +172,7 @@ ul {
       <!-- 검색 창의 시작  -->
       <form name="searchForm" id="searchForm">
          <i class="fa fa-map-marker"></i> 
-            <input type="text" id="search-value" onkeypress="return false" /><br>
+            <input type="text" id="search-value"/><br>
             <button class="search-button" type="button">
             <i class="fas fa-search"></i>
          </button>
@@ -202,18 +202,17 @@ ul {
     <button type='button' id="transit-btn-transit" data-transit="traffic">대중교통</button>
 </div>
 </div>
-<form action="/place/test/sch">
-	<button>눌러봐요</button>
-</form>
+  <button onclick="makeSchedule()">거리 계산해오기</button>
+ <button onclick="insertSchedule()">일정 넣기</button>
+ <button id="test">좌표변환계</button>
    <script type="text/javascript" src="/resources/js/place.js"></script>
    <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341&libraries=services"></script>
    <script type="text/javascript">
    
-   
       var markers =[];
       var marker;
-	  var x,y;      
+      var position = [];
       
        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
           mapOption = {
@@ -247,7 +246,7 @@ ul {
       function showAll() {
           let zIndex = 9999;
           let modal = document.getElementById('showAll');
-        let listAll = document.getElementById('Allschedule');
+          let listAll = document.getElementById('Allschedule');
           let dpList = document.getElementsByClassName('daily-place-list');
           
           for (let i = 0; i < dpList.length; i++) {
@@ -267,7 +266,6 @@ ul {
              objs.appendChild(daliyplace);
          }
        }
-          
           
           // 모달 div 뒤에 희끄무레한 레이어
           let bg = document.createElement('div');
@@ -326,7 +324,7 @@ ul {
             startDate: fromDate,
             endDate: toDate, 
             minDate: moment(),
-            locale: {
+            locale: { 
                format: 'YYYY-MM-DD'
             }
            }, function(start, end, label) {
@@ -342,25 +340,7 @@ ul {
          
          init();
       })
-      function test(mX,mY) {
-                	var geocoder = new kakao.maps.services.Geocoder(),
-                	    mX = 37.571210
-                	    mY = 126.976918
-
-                	var callback = function(result, status) {
-                	    if (status === kakao.maps.services.Status.OK) {
-                	        console.log(result[0].x); // 126.570667 //경도랑 위도가 바뀐듯
-                	        console.log(result[0].y); // 33.45070100000001
-                	    }
-                	    x = result[0].x;
-                	    y = result[0].y;
-                	};
-                	// WGS84 좌표를 WCONGNAMUL 좌표계의 좌표로 변환한다
-                	geocoder.transCoord(mX, mY, callback, {
-                	    input_coord: kakao.maps.services.Coords.WGS84,
-                	    output_coord: kakao.maps.services.Coords.WCONGNAMUL
-                	});  
-                   }
+      
       
       function init() { //이벤트 등록 전담용 initial
           computeDate();
@@ -391,9 +371,6 @@ ul {
        }
              
              
-      
-       
-
        //모달 보여지는 메서드
        function modalShow() {
           document.querySelector('.modal_wrap').style.display ='block';
@@ -427,8 +404,8 @@ ul {
        function computeDate() { // date picker apply 이벤트랑, 초기값 계산해서 button 생성하는 function
           let datePicker = document.getElementsByClassName("data-range-picker")[0];
           let dateList = datePicker.value.split(' - ');
-         let fromDate = new Date(dateList[0]);
-         let toDate = new Date(dateList[1]);
+          let fromDate = new Date(dateList[0]);
+          let toDate = new Date(dateList[1]);
           let dateDiff = Math.ceil((toDate.getTime()-fromDate.getTime())/(1000*3600*24));
           let idx =0;
           let totalDate = document.getElementById("left-date-list");
@@ -464,22 +441,26 @@ ul {
        }
        
        function showRecPlace() { // 추천장소 버튼을 누르면 장소들 등장, button을 추가할지 말진 모르겠다.
-             let recPlace = document.querySelectorAll('.rec-place');
-             let len = recPlace.length;
+             let recPlace = document.querySelectorAll('.rec-place')
              let i;
-             for (i = 0; i < len; i++) {
-                recPlace[i].style.display='block';
-            }
+             for (i= 0; i < recPlace.length; i++) {
+                if(recPlace[i].style.display=='' || recPlace[i].style.display==='none' ){
+                   recPlace[i].style.display='block';
+                    }
+                else if(recPlace[i].style.display==='block'){
+                    recPlace[i].style.display='none';
+                 }
+                }
           }
        
        function addRecPlace(event) {
-          let index = getActiveDay();
+         let index = getActiveDay();
          let leftPlaceList = document.getElementsByClassName("daily-place-list");
          let activePlaceList = leftPlaceList[index];
          let compPlaceList = activePlaceList.children
          let currTarget = event.currentTarget.parentElement;
          let targetText = currTarget.innerText;
-          let curClone = currTarget.cloneNode();
+          let curClone = currTarget.cloneNode(true);
           curClone.setAttribute("class", "selected-place");
           let innerText = document.createTextNode(targetText);
              for (var i = 0; i < compPlaceList.length; i++) {
@@ -487,18 +468,39 @@ ul {
                   return;
                }               
             }
-          
-          let btnobj1 = document.createElement("button");
+         let child = curClone.children;
+         child[1].remove()
+         let btnobj1 = document.createElement("button");
          btnobj1.setAttribute('class', 'delete-button');
          let iconobj1 = document.createElement("i");
          iconobj1.setAttribute('class', 'fas fa-times');
-         iconobj1.addEventListener('click',deleteInLeft);
+         btnobj1.addEventListener('click',deleteInLeft);
          btnobj1.appendChild(iconobj1);
          
          curClone.appendChild(innerText);
          curClone.appendChild(btnobj1);
          activePlaceList.appendChild(curClone);
        }
+    	function test(mX,mY) {
+               var geocoder = new kakao.maps.services.Geocoder();
+
+               var callback = function(result, status) {
+                   if (status === kakao.maps.services.Status.OK) {
+                       //console.log(result[0].x); // 126.570667 //경도랑 위도가 바뀐듯
+                       //console.log(result[0].y); // 33.45070100000001
+                     let rSet = {x:result[0].x,y:result[0].y}
+                       position.push(rSet);
+                   }
+               };
+               // WGS84 좌표를 WCONGNAMUL 좌표계의 좌표로 변환한다
+               geocoder.transCoord(mX, mY, callback, {
+                   input_coord: kakao.maps.services.Coords.WGS84,
+                   output_coord: kakao.maps.services.Coords.WCONGNAMUL
+               });  
+           }
+       
+       
+       document.querySelector('#test').addEventListener('click', test);
        
        function makeSchedule() {
           let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
@@ -513,6 +515,8 @@ ul {
             tmpList = placeList[i].children;
             tmplen = tmpList.length;
             for (j = 0; j < tmplen-1; j++) {
+            	test(tmpList[j].dataset['lng'],tmpList[j].dataset['lat']);
+              	test(tmpList[j+1].dataset['lng'],tmpList[j+1].dataset['lat']);
                let tmp = { 
                      schDate:i, // 1일차, 2일차, 3일차
                      fromPlc:tmpList[j].dataset["plcNo"],
@@ -545,28 +549,101 @@ ul {
                type: "POST",
                data: sendJSON,
                contentType: "application/json; charset=utf-8;",
-               dataType: "json",
                success: function(data){
                    alert("success : "+data);
                },
                error: function(){
                    alert("restController err");
                }
-           });  
+           });
        };
+       
+       function insertSchedule() {
+    	  
+    	   let datePicker = document.getElementsByClassName("data-range-picker")[0];
+           let dateList = datePicker.value.split(' - ');
+           let fromDate = new Date(dateList[0]);
+           let toDate = new Date(dateList[1]);
+           
+           let addDays = function(date, days) { // 일을 증가시키는 메소드
+	   		    let rdate= date.setDate(date.getDate() + days);
+	   		    return rdate; 
+   			}
+           let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
+           let i,j;
+           let tmpAllList =[];
+           let tmpList;
+           let placeList = document.getElementsByClassName("daily-place-list");
+           let len = placeList.length;
+           let memNo = sessionStorage.getItem("memNo");
+           let scheduleVO = {
+        		   // schNo: , // 스케쥴로 하는게 아니라 나중에 db에서 하는거임
+        		   memNo:memNo,
+        		   schTitle:"입력받은 그값",
+        		   fromDate:fromDate,
+        		   toDate:toDate,
+        		   img:"hello",
+        		   schStatus:"미완성",
+        		   memo:"아직 테스트중이여요",	   
+        		   schRegion:"지역이라는데 뭐지 이거"
+           }
+           for (i = 0; i < len; i++) {
+             let tmpSchList = [];
+             tmpList = placeList[i].children;
+             tmplen = tmpList.length;
+             for (j = 0; j < tmplen-1; j++) {
+            	let daycount = addDays(fromDate,i)
+                let tmp = { 
+                	  schNo:null,
+                      schDate:daycount, // 1일차, 2일차, 3일차
+                      fromPlc:tmpList[j].dataset["plcNo"],
+                      toPlc:tmpList[j+1].dataset["plcNo"],
+                      distance:1,
+                  	  duration:"1",
+                      transit:transit,
+                      num:j
+                }
+                tmpSchList.push(tmp);
+             }
+          tmpAllList.push(tmpSchList);
+          }
+           let sendData = {
+        		   scheduleVO:scheduleVO,
+        		   schdtVOs:tmpAllList
+           }
+          let sendJSON = JSON.stringify(sendData);
+           $.ajax({
+                url: "/place/put/sch",
+                type: "POST",
+                data: sendJSON,
+                contentType: "application/json; charset=utf-8;",
+                dataType: "text",
+                success:function(data){
+                	location.href = data;
+                },
+                error: function(data){
+                	alert("error : "+data);
+                }
+            });  
+           
+        };
        
        
        function searchAction(event) {
          let placeValue = $("#search-value").val();
+         if(placeValue==""){
+            alert("검색어를 입력해주세요");
+            return;
+         }
          let placeList = $(".right-place-list");
          let currTarget = event.currentTarget;
-		 let pageNum;        
-		 console.log(event.currentTarget.dataset["num"]);
+       let pageNum;        
+       console.log(event.currentTarget.dataset["num"]);
          if(currTarget.getAttribute("class")=="search-button"){
-        	 pageNum = 1;
+            pageNum = 1;
          }
          else{
-        	 pageNum = event.currentTarget.dataset["num"];
+            pageNum = event.currentTarget.dataset["num"];
          }
          let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
          /* let pageNum = document.getElementsByClassName(); */
@@ -580,14 +657,14 @@ ul {
          let tmplist = [];
          
          placeService.getList({title:placeValue,
-        	 regionNo:regionNo,
-        	 pageNum:pageNum},
-        	 function(map) {
-        		 
-        	 	  console.log(map["list"]);
-        	 	  console.log(map["pageMaker"]);
-        	 	  let list = map["list"];
-        	 	  let pageMaker = map["pageMaker"];
+            regionNo:regionNo,
+            pageNum:pageNum},
+            function(map) {
+               
+                 console.log(map["list"]);
+                 console.log(map["pageMaker"]);
+                 let list = map["list"];
+                 let pageMaker = map["pageMaker"];
                   let len = list.length||0;
                   let leng = activePlaceList.length;
                   
@@ -595,7 +672,7 @@ ul {
                      for (j = 0; j < leng||0; j++) {
                            if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
                               list.splice(i,1);
-                     	}
+                        }
                      }
                   }
                   pagingWithpageMaker(pageMaker);
@@ -603,8 +680,6 @@ ul {
                   // str ++ 하는거 같지 않은 세련된 방법이다.
                   // ` ` 백틱 문자를 사용해서 문자열이 아니라 str 그대로 들어간다.
                   for (i = 0; i < len; i++) {
-                	 console.log(test(list[i].lat,list[i].lng));
-                	 let val = test(list[i].lat,list[i].lng);
                      let liobj = document.createElement("li");   
                      liobj.setAttribute('class', 'left clearfix');
                      
@@ -621,6 +696,10 @@ ul {
                      objs1.setAttribute('data-p-cate',list[i].pCate);
                      objs1.innerText=list[i].plcTitle + " ";
                      objs1.addEventListener('mouseover',placeOver);
+                     let objs1img = document.createElement('img');
+                     objs1img.setAttribute('src',list[i].plcImg);
+                     objs1img.setAttribute('style','width:50px;height:60px');
+                     
                      
                      let btnobj1 = document.createElement("button");
                      btnobj1.setAttribute('class', 'add-button');
@@ -636,6 +715,7 @@ ul {
                      btnobj2.addEventListener('click',placeDetail);
                      btnobj2.appendChild(iconobj2);
 
+                     objs1.appendChild(objs1img);
                      objs1.appendChild(btnobj1);
                      objs1.appendChild(btnobj2);
                      liobj.appendChild(objs1);
@@ -647,42 +727,42 @@ ul {
       }
        
       function pagingWithpageMaker(pageMaker) {
-    	 	let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
-    	 	pagingBar.innerHTML = null;
-    	 	let wrapperDiv = document.createElement("div");
-			let k = 1;
-			let endPage = pageMaker.endPage;
-			let startPage = pageMaker.startPage;
-			if(pageMaker.prev) {
-				let btnObj = document.createElement("button");
-				btnObj.setAttribute("type", "button");
-				btnObj.setAttribute("data-num", startPage-1);
-				btnObj.innerText ="이전";
-				btnObj.addEventListener('click',searchAction);
-				pagingBar.appendChild(btnObj);
-			}
-			
-			for (k = startPage; k <= endPage; k++) {
-				let pageObj = document.createElement("div");
-				pageObj.setAttribute("data-num", k);
-				pageObj.innerText = k;
-				pageObj.addEventListener('click',searchAction);
-				wrapperDiv.appendChild(pageObj);
-			}
-			pagingBar.appendChild(wrapperDiv);
-			if(pageMaker.next) {
-				let btnObj = document.createElement("button");
-				btnObj.setAttribute("type", "button");
-				btnObj.setAttribute("data-num", endPage+1);
-				btnObj.addEventListener('click',searchAction);
-				btnObj.innerText ="다음";
-				pagingBar.appendChild(btnObj);
-			}
+           let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
+           pagingBar.innerHTML = null;
+           let wrapperDiv = document.createElement("div");
+         let k = 1;
+         let endPage = pageMaker.endPage;
+         let startPage = pageMaker.startPage;
+         if(pageMaker.prev) {
+            let btnObj = document.createElement("button");
+            btnObj.setAttribute("type", "button");
+            btnObj.setAttribute("data-num", startPage-1);
+            btnObj.innerText ="이전";
+            btnObj.addEventListener('click',searchAction);
+            pagingBar.appendChild(btnObj);
+         }
+         
+         for (k = startPage; k <= endPage; k++) {
+            let pageObj = document.createElement("div");
+            pageObj.setAttribute("data-num", k);
+            pageObj.innerText = k;
+            pageObj.addEventListener('click',searchAction);
+            wrapperDiv.appendChild(pageObj);
+         }
+         pagingBar.appendChild(wrapperDiv);
+         if(pageMaker.next) {
+            let btnObj = document.createElement("button");
+            btnObj.setAttribute("type", "button");
+            btnObj.setAttribute("data-num", endPage+1);
+            btnObj.addEventListener('click',searchAction);
+            btnObj.innerText ="다음";
+            pagingBar.appendChild(btnObj);
+         }
       }
       
       function deleteInLeft(event) {
          let deleteElement = event.currentTarget;
-         deleteElement.parentElement.parentElement.remove(); 
+         deleteElement.parentElement.remove(); 
          }
       
       function getActiveDay(){
@@ -701,6 +781,7 @@ ul {
          let clickedBtn = event.currentTarget;
          let index = document.getElementsByClassName("left-place-list")
          let parentE = clickedBtn.parentElement.dataset;
+         let parentI = (clickedBtn.parentElement.children)[0];
          let currTarget = clickedBtn.parentElement;
          let dailyPlaceList = document.getElementsByClassName("daily-place-list");
          let idx = getActiveDay(); // idx 를 얻었다.
@@ -725,6 +806,7 @@ ul {
                      objs1.setAttribute('data-opening-h',parentE['openingH']);
                      objs1.setAttribute('data-p-cate',parentE['pCate']);
                      objs1.innerText=parentE['title'];
+                     objs1.append(parentI);
                   
 
                      let btnobj1 = document.createElement("button");

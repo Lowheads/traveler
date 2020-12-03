@@ -18,6 +18,6 @@ public class PlaceVO {
 	private String holiday = "무휴";
 	private String openingH = "무휴";
 	private int likeCnt;
-
+	private String plcImg;
 	
 }

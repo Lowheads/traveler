@@ -3,7 +3,6 @@ package org.travelmaker.mapper;
 import java.util.List;
 
 import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 
 public interface ScheduleMapper {
@@ -54,7 +53,7 @@ public interface ScheduleMapper {
 
 	public ScheduleVO getListSchedule(int schNo);
 
-	public void insert(ScheduleVO schedule);
+	public int insert(ScheduleVO schedule);
 
 	public int insertSelectKey(ScheduleVO schedule);
 	
