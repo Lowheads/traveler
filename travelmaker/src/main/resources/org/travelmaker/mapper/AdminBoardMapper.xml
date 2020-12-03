@@ -21,7 +21,7 @@
 		id="Boarddt">
 		<result property="boardNo" column="BOARD_NO" />
 		<result property="boardCon" column="BOARD_CON" />
-		<result property="num" column="NUN" />
+		<result property="num" column="NUM" />
 		<result property="boarddtImg" column="BOOARDDT_IMG" />
 		<result property="dtThumbImg" column="DT_THUMB_IMG" />
 	</resultMap>

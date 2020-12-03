@@ -2,7 +2,6 @@ package org.zerock.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
 import org.travelmaker.mapper.ThemeMapper;
@@ -37,13 +37,13 @@ public class MapperTests {
 //	@Test
 	public void dateTest() {
 
-		Criteria cri = new Criteria();
-		cri.setType("이메일");
-		cri.setKeyword("gmail");
-
-		// List<MemberVO> list = mapper.searchUser(cri);
-
-		// list.forEach(member -> log.info(member.getRegDate()));
+//		Criteria cri = new Criteria();
+//		cri.setType("이메일");
+//		cri.setKeyword("gmail");
+//
+//		 List<MemberVO> list = mapper.searchUser(cri);
+//
+//		 list.forEach(member -> log.info(member.getRegDate()));
 	}
 
 //	@Test
@@ -57,9 +57,9 @@ public class MapperTests {
 	// @Test
 	public void testtt() {
 
-		List<BoarddtVO> list = mapper2.getPostDetail(3);
-
-		list.forEach(member -> log.info(member.toString()));
+//		List<BoarddtVO> list = mapper2.getPostDetail(3);
+//
+//		list.forEach(member -> log.info(member.toString()));
 
 	}
 
@@ -75,43 +75,43 @@ public class MapperTests {
 	//@Test
 	public void mapperTest() {
 
-		Criteria cri = new Criteria();
-
-		List<MemberVO> list = mapper.getUserList(cri);
-
-		cri.setType("회원번호");
-		cri.setKeyword("3");
-		log.info("-----------------------------------------");
-		log.info(cri);
-		log.info("-----------------------------------------");
-		List<MemberVO> list2 = mapper.getUserList(cri);
-
-		list.forEach(member -> log.info(member.toString()));
-
-		log.info("-----------------------------------------");
-
-		list2.forEach(member -> log.info(member.toString()));
+//		Criteria cri = new Criteria();
+//
+//		List<MemberVO> list = mapper.getUserList(cri);
+//
+//		cri.setType("회원번호");
+//		cri.setKeyword("3");
+//		log.info("-----------------------------------------");
+//		log.info(cri);
+//		log.info("-----------------------------------------");
+//		List<MemberVO> list2 = mapper.getUserList(cri);
+//
+//		list.forEach(member -> log.info(member.toString()));
+//
+//		log.info("-----------------------------------------");
+//
+//		list2.forEach(member -> log.info(member.toString()));
 
 	}
 
-	@Test
+//	@Test
 	public void withdrawListTest() {
 		
-		Criteria cri = new Criteria();
-
-		List<MemberVO> list = mapper.getWithdrawUserList(cri);
-
-		cri.setType("회원번호");
-		cri.setKeyword("3");
-		
-		List<MemberVO> list2 = mapper.getWithdrawUserList(cri);
-
-		
-		list.forEach(member -> log.info(member.toString()));
-
-		log.info("-----------------------------------------");
-
-		list2.forEach(member -> log.info(member.toString()));
+//		Criteria cri = new Criteria();
+//
+//		List<MemberVO> list = mapper.getWithdrawUserList(cri);
+//
+//		cri.setType("회원번호");
+//		cri.setKeyword("3");
+//		
+//		List<MemberVO> list2 = mapper.getWithdrawUserList(cri);
+//
+//		
+//		list.forEach(member -> log.info(member.toString()));
+//
+//		log.info("-----------------------------------------");
+//
+//		list2.forEach(member -> log.info(member.toString()));
 
 	}
 	
@@ -121,33 +121,89 @@ public class MapperTests {
 		//int id[] = {15};
 		//int[] ids = {20,21,12};
 		
-		ArrayList list = new ArrayList<>();
-		
-		list.add(38);
-		
-		mapper.removeUser(list);
+//		ArrayList list = new ArrayList<>();
+//		
+//		list.add(38);
+//		
+//		mapper.removeUser(list);
 	}
 	
 //	@Test
 	public void deletePost() {
 		
-		ArrayList posts = new ArrayList<>();
+//		ArrayList posts = new ArrayList<>();
+//		
+//		posts.add(15);
+//		posts.add(16);
+//		posts.add(17);
+//		posts.add(18);
+//		
+//		System.out.println(mapper2.removePost(posts));
+//		
+	}
+	
+	//@Test
+	public void themeTest2() {
+		/*
+		List<PlaceDTO> list =mapper3.getThemeInfo(3);
+		list.forEach(member -> log.info(member.toString()));
+*/
+	}
+	
+	//@Test
+	public void modifyTheme() {
 		
-		posts.add(15);
-		posts.add(16);
-		posts.add(17);
-		posts.add(18);
+//		int[] list = new int[]{8552559};
+//
+//		int themeNo =5;
 		
-		System.out.println(mapper2.removePost(posts));
+		//int result = mapper3.deleteTheme(list, themeNo);
+		
+		//int result = mapper3.insertTheme(list, themeNo);
+		
+		//log.info("---------------------------");
+		//log.info(result);
+		//log.info(result);
+		
+		
+	}
+	
+	//@Test
+	public void searchPlace() {
+		
+//		String keyword = "제주";
+//		
+//		List<PlaceVO> list = mapper3.getPlaceList(keyword);
+//		
+//		list.forEach(member -> log.info(member.toString()));
+		
+	}
+	
+	//@Test
+	public void deleteThemeTests() {
+		
+//		String[]  places = {"8148451","8641860"};
+//		int themeNo = 3;
+//		
+//		int result = mapper3.insertTheme(places, themeNo);
+//		
+//		log.info("@@@@@@@@@@"+result+"@@@@@@@@@@");
 		
 	}
 	
 	@Test
-	public void themeTest2() {
+	public void getTheme() {
 		
-		List<PlaceDTO> list =mapper3.getThemeInfo("3");
-		list.forEach(member -> log.info(member.toString()));
-
+//		int themeNo = 3;
+//		
+//		List<PlaceVO> list = mapper3.getThemeInfo(themeNo);
+//		
+//		list.forEach(member -> log.info(member.toString()));
+		
+		
+		
 	}
+	
+	
 
 }

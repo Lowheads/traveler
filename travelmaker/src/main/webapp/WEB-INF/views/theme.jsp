@@ -9,7 +9,7 @@
 <div class="table-responsive">
 
 
-<table  class="table table-bordered" id="dataTable" style="width:70%">
+<table  class="table table-bordered" style="width:70%">
 <thead>
 <tr>
 	<th>테마번호</th>

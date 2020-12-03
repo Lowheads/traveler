@@ -1,12 +1,13 @@
 package org.travelmaker.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.service.MainService;
 
@@ -37,7 +38,6 @@ public class AdminMainController {
 			}
 		}
 		
-		System.out.println(dailyLog);
 		
 		List<StatisticVO> monthlyStatistic = service.getMonthlyStatistic();
 		
@@ -50,14 +50,9 @@ public class AdminMainController {
 				monthlyLog += ",";
 			}
 		}
-		
-
-		System.out.println(monthlyLog);
 
 		model.addAttribute("dailyLog", dailyLog);
 		model.addAttribute("monthlyLog", monthlyLog);
-		
-
 		return "main";
 	}
 
