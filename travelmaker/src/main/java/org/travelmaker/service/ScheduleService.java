@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceVO;
@@ -26,7 +27,7 @@ public interface ScheduleService {
 
 	public boolean modify(ScheduleVO vo);
 
-	public List<ScheduleVO> getList(Criteria cri);
+	public List<Map<String, Object>> getList(Criteria cri);
 
 	public void updateLikeCnt(ScheduleVO vo);
 

@@ -74,20 +74,19 @@ select * from board where board_no>0
 	update board set hidden='n' where sch_no = #{schNo}
 </update>
 
+<update id="upCnt">
+
+UPDATE BOARD SET PICK_CNT = PICK_CNT +1 where sch_no = #{schNo}
+</update>
+
+<update id="downCnt">
+
+UPDATE BOARD SET PICK_CNT = PICK_CNT -1 where sch_no = #{schNo}
+</update>
 
 
 <select id="getTotalCount" resultType="int">
 	select count(*) from board where hidden='y'
 </select>
-
-<update id="upCnt">
-
-UPDATE place SET pickCnt = pickCnt +1 boardNo  = #{boardNo}
-</update>
-
-<update id="downCnt">
-
-UPDATE place SET pickCnt = pickCnt -1 where boardNo = #{boardNo}
-</update>
 
 </mapper>

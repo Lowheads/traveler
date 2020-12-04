@@ -29,6 +29,7 @@ public class MyPageController {
 	private PlaceService placeService;
 	private ScheduleService SchService;
 	private PickService pickService;
+	private SchdtService SchddtService;
 
 	@GetMapping("/pickPL")
 	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
@@ -61,6 +62,7 @@ public class MyPageController {
 	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 
 		model.addAttribute("board",SchService.getSchedule(schNo));
+		model.addAttribute("Schdt",SchddtService.getSchdt(schNo));
 	}
 
 	@GetMapping("/past")
@@ -84,29 +86,18 @@ public class MyPageController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/heart", method = RequestMethod.POST, produces = "application/json")
-	public void deleteLike(HttpSession session,PickVO vo) throws Exception {
+	@RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
+	public void deletePickPlace(HttpSession session,PickVO vo) throws Exception {
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		vo.setMemNo(memNo);
 		pickService.remove(vo);
 	}
 	
-	
-	 @RequestMapping(value = "/getDB", method = RequestMethod.POST
-  		   ,produces = "application/json")
-     @ResponseBody
-     public String ajaxTest(PlaceVO vo) throws Exception {
-
-  	   System.out.println(vo);
-  	   
-  	   try {
-  		   
-  		   placeService.register(vo);
-  	   }
-  	   catch(Exception e) {
-  		   System.out.println("에러발생");
-  		   e.printStackTrace();
-  	   }
-  	   return "/home";
-     }
+	@ResponseBody
+	@RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
+	public void insertPickPlace(HttpSession session,PickVO vo) throws Exception {
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		vo.setMemNo(memNo);
+		pickService.register(vo);
+	}
 }

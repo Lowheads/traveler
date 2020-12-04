@@ -25,7 +25,7 @@
         </div>
         </div>
       <!-- /.col-lg-3 -->
- <div class="col-lg-9" style="padding-top: 20px;">
+ <div class="content-mypage" style="padding-top: 20px;" >
         <div class="row" style="flex-wrap: inherit;">
     <div style="display:block;" >
                 <h4 class="card-title"><c:out value="${board.schTitle }"/></h4>
@@ -40,11 +40,30 @@
  <div>메모: <c:out value="${board.memo}"/></div>
   
  <div>지역: <c:out value="${board.schRegion }"/></div>
+ <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
+<c:if test="${Schdt[status.index].schDate ne Schdt[status.index-1].schDate  }">
+<div class="dayDate">
+<c:out value="${schdt.schDate }"></c:out>
+<c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt">
+<c:if test="${schdt.schDate eq dt.schDate}">
+<div>
+<c:out value="${dt.fromPlc }"/>
+<c:out value="${dt.toPlc }"/>
+<c:out value="${dt.distance }"/>
+<c:out value="${dt.duration }"/>
+<c:out value="${dt.transit }"/>
+</div>
+</c:if>
+</c:forEach>
+</div>
+</c:if>
+</c:forEach> 
+</div>
+
       <div class="pull-right">
       <button data-oper='list'> 목록으로</button>
       <button id="popup_open_btn">삭제</button>
       </div>
-</div>
 </div>
 </div>
      

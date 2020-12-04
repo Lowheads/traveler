@@ -45,27 +45,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main</title>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- HeartEmoji -->
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
-<!-- Bootstrap cdn 설정 -->
-<!-- JavaScript 파일 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- 생년월일 달력 -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- datepicker 하나 쓰시는 거니까여 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 <style>
 /* left nav */
 .leftNav {  
-	margin-left:5%; 
+	margin-left:3%; 
   	float: left;
  	width: 20%;
 }
@@ -96,19 +85,25 @@
 				
 }
 
+.card-title{
+	margin:0;
+}
 
 /* Right column */
 .content-mypage {
-  float: left;
-  width: 70%;
+  float: right;
+  width: 75%;
 }
 
 .list-group ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15%;
+    background-color: #f1f1f1;
+    top: 175px;
+    position: fixed;
+    overflow: auto;
 }
 .row{
 	display:flex;
@@ -118,11 +113,12 @@
 
 }
 #resultcard{
-	flex-basis:20%;
+	flex-basis:22%;
 	justify-content: space-between;
+	margin-top: 15px;
 	margin-right: 20px;
 	margin-bottom: 30px;
-	height: 180px;
+	height: 300px;
 }
 
 #resultcard a{
@@ -132,6 +128,9 @@
 .card-body{
 	margin-bottom: 15px;
 }
+.heart{
+	margin-top: 10px;
+}
 
 .list-group li a {
   display: block;
@@ -139,6 +138,8 @@
   padding: 8px 16px;
   text-decoration: none;
 }
+
+
 
 /* Change the link color on hover */
 .list-group li a:hover {
@@ -203,7 +204,7 @@ img.ui-datepicker-trigger {
    display: none;
    position: absolute;
    width: 100%;
-   height: 104%;
+   height: 120%;
    background-color: rgba(0, 0, 0, 0.5);
    top: 0;
    left: 0;
@@ -248,7 +249,7 @@ img.ui-datepicker-trigger {
 
 .card-img-top {
    width: 100%;
-   height: 60%;
+   height: 50%;
 }
 
 

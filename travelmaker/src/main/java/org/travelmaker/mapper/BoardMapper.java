@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PickVO;
 
 public interface BoardMapper {
 
@@ -31,6 +32,10 @@ public interface BoardMapper {
 	
 	//게시물 상태 비공개 -> 공개로 변경
 	public void updateY(BoardVO board);
+	
+	public void upCnt(long schNo);
+	
+	public void downCnt(long schNo);
 	
 	public void upCnt(int boardNo);
 	

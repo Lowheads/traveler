@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,7 +96,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
-	public List<ScheduleVO> getList(Criteria cri) {
+	public List<Map<String, Object>> getList(Criteria cri) {
 
 		if(cri.getSelected()==null || cri.getSelected().equals("null")) {
 			return mapper.getListWithPaging(cri);
