@@ -6,10 +6,10 @@ import lombok.Data;
 public class ScheduleDtVO {
 	
 	private int schDate;
-	private int fromPlcLat;
-	private int fromPlcLng;
-	private int toPlcLat;
-	private int toPlcLng;
+	private double fromPlcLat;
+	private double fromPlcLng;
+	private double toPlcLat;
+	private double toPlcLng;
 	private String fromPlcTitle;
 	private String toPlcTitle;
 	private String transit;

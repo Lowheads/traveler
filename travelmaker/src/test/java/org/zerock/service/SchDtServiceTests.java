@@ -38,4 +38,19 @@ public class SchDtServiceTests {
 		
 	}
 
+	
+	@Test
+	public void changeGeoLoca() {
+		ScheduleDtVO sch1 = new ScheduleDtVO();
+		sch1.setDistance(1);
+		sch1.setDuration("1");
+		sch1.setFromPlcLat(33.4976775399288);
+		sch1.setFromPlcLng(126.532278740274);
+		sch1.setToPlcLat(10587558);
+		sch1.setToPlcLng(15259078);
+		sch1.setFromPlcTitle("블루모모");
+		sch1.setToPlcTitle("마세데카");
+		sch1.setSchDate(1);
+		sch1.setTransit("car");
+	}
 }

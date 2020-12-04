@@ -212,7 +212,6 @@ ul {
    
       var markers =[];
       var marker;
-      var position = [];
       
        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
           mapOption = {
@@ -328,7 +327,7 @@ ul {
                format: 'YYYY-MM-DD'
             }
            }, function(start, end, label) {
-              console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); 
+             // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); 
            });
          
          $('input[name="daterange"]').on('apply.daterangepicker', (e, picker) => {
@@ -348,14 +347,12 @@ ul {
           document.querySelector('#transit-btn-car').addEventListener('click', modalShow);
           document.querySelector('#transit-btn-car').addEventListener('click', function(e) {
              document.getElementById("transit-container").setAttribute("data-transit", this.dataset["transit"]);
-             console.log(document.getElementById("transit-container").getAttribute("data-transit")); // 맞게 바뀐지 확인용
           });
           
           
           document.querySelector('#transit-btn-transit').addEventListener('click', modalShow);
          document.querySelector('#transit-btn-transit').addEventListener('click', function(e) {
               document.getElementById("transit-container").setAttribute("data-transit",this.dataset["transit"]); 
-            console.log(document.getElementById("transit-container").getAttribute("data-transit")); // 디버깅용임
           });
          
           document.querySelector('.modal_close').addEventListener('click', modalClose);
@@ -368,7 +365,8 @@ ul {
             recPlaceBtn[i].addEventListener('click', addRecPlace);
          }
          document.querySelector('.btn-make-schedule').addEventListener('click', makeSchedule)
-       }
+         document.querySelector('#test').addEventListener('click', test); 
+      }
              
              
        //모달 보여지는 메서드
@@ -481,26 +479,6 @@ ul {
          curClone.appendChild(btnobj1);
          activePlaceList.appendChild(curClone);
        }
-    	function test(mX,mY) {
-               var geocoder = new kakao.maps.services.Geocoder();
-
-               var callback = function(result, status) {
-                   if (status === kakao.maps.services.Status.OK) {
-                       //console.log(result[0].x); // 126.570667 //경도랑 위도가 바뀐듯
-                       //console.log(result[0].y); // 33.45070100000001
-                     let rSet = {x:result[0].x,y:result[0].y}
-                       position.push(rSet);
-                   }
-               };
-               // WGS84 좌표를 WCONGNAMUL 좌표계의 좌표로 변환한다
-               geocoder.transCoord(mX, mY, callback, {
-                   input_coord: kakao.maps.services.Coords.WGS84,
-                   output_coord: kakao.maps.services.Coords.WCONGNAMUL
-               });  
-           }
-       
-       
-       document.querySelector('#test').addEventListener('click', test);
        
        function makeSchedule() {
           let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
@@ -515,8 +493,6 @@ ul {
             tmpList = placeList[i].children;
             tmplen = tmpList.length;
             for (j = 0; j < tmplen-1; j++) {
-            	test(tmpList[j].dataset['lng'],tmpList[j].dataset['lat']);
-              	test(tmpList[j+1].dataset['lng'],tmpList[j+1].dataset['lat']);
                let tmp = { 
                      schDate:i, // 1일차, 2일차, 3일차
                      fromPlc:tmpList[j].dataset["plcNo"],
@@ -529,20 +505,11 @@ ul {
                      toPlcTitle:tmpList[j+1].dataset["title"],
                      transit:transit
                }
-               console.log(tmp);
-               /* let schData = JSON.stringify(tmp); */
                tmpSchList.push(tmp);
-               console.log(tmpSchList);
             }
          tmpAllList.push(tmpSchList);
          }
-          console.log(tmpAllList);
          let sendJSON = JSON.stringify(tmpAllList);
-         console.log(sendJSON)
-          /* let childPlc = placeList.children;
-         console.log(sendData);
-         let sendJSON = JSON.stringify(sendData);
-         console.log(sendJSON) */
           $.ajax({
               traditional : true,
                url: "/place/test",
@@ -588,6 +555,7 @@ ul {
         		   schRegion:"지역이라는데 뭐지 이거"
            }
            for (i = 0; i < len; i++) {
+        	   
              let tmpSchList = [];
              tmpList = placeList[i].children;
              tmplen = tmpList.length;
@@ -638,7 +606,6 @@ ul {
          let placeList = $(".right-place-list");
          let currTarget = event.currentTarget;
        let pageNum;        
-       console.log(event.currentTarget.dataset["num"]);
          if(currTarget.getAttribute("class")=="search-button"){
             pageNum = 1;
          }
@@ -660,9 +627,6 @@ ul {
             regionNo:regionNo,
             pageNum:pageNum},
             function(map) {
-               
-                 console.log(map["list"]);
-                 console.log(map["pageMaker"]);
                  let list = map["list"];
                  let pageMaker = map["pageMaker"];
                   let len = list.length||0;
@@ -682,7 +646,6 @@ ul {
                   for (i = 0; i < len; i++) {
                      let liobj = document.createElement("li");   
                      liobj.setAttribute('class', 'left clearfix');
-                     
                      let objs1 = document.createElement("div");
                      objs1.setAttribute('class','hoverable-place');
                      objs1.setAttribute('data-title',list[i].plcTitle);
@@ -694,6 +657,7 @@ ul {
                      objs1.setAttribute('data-lng',list[i].lng);
                      objs1.setAttribute('data-opening-h',list[i].openingH);
                      objs1.setAttribute('data-p-cate',list[i].pCate);
+                     objs1.setAttrit
                      objs1.innerText=list[i].plcTitle + " ";
                      objs1.addEventListener('mouseover',placeOver);
                      let objs1img = document.createElement('img');
@@ -863,7 +827,7 @@ ul {
                    position : position, // 마커의 위치
                 });
                 
-                markers.push(marker); 
+                markers.push(marker);
                 marker.setMap(map); // 지도 위에 마커를 표출합니다
                 return marker;
                 
