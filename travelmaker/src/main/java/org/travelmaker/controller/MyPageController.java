@@ -62,7 +62,7 @@ public class MyPageController {
 	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 
 		model.addAttribute("board",SchService.getSchedule(schNo));
-		model.addAttribute("Schdt",SchddtService.getSchdt(schNo));
+		model.addAttribute("Schdt",SchddtService.getSchdtList(schNo));
 	}
 
 	@GetMapping("/past")

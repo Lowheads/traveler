@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.SchdtVO;
@@ -27,6 +28,11 @@ public class SchdtServiceImpl implements SchdtService {
 	public List<Schdt_PlaceVO> getplacetitle(int schNo){
 		log.info("getplacetitle......."+schNo);
 		return mapper.getplacetitle(schNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSchdtList(int schNo) {
+		return mapper.getSchdtList(schNo);
 	}
 
 }

@@ -27,6 +27,22 @@
 	values (#{schDate}, #{boarddtImg},#{boardCon}, sch_dt_seq.nextval)
 </insert>
 
+<!-- 순규 -->
+<select id="getSchdtList" resultType="hashMap">
+<![CDATA[
+select s.sch_date, s.sch_no,s.from_plc, p.plc_img as fromImg, p.plc_title as fromTitle ,s.to_plc, 
+    (select plc_img from place p
+      where s.sch_no= #{schNo}
+      and p.plc_no= s.to_plc) as toImg,
+      (select plc_title from place p
+      where s.sch_no= #{schNo}
+      and p.plc_no= s.to_plc) as toTitle,s.distance, s.duration, s.transit
+      from sch_dt s, place p
+      where s.sch_no= #{schNo}
+      and p.plc_no= s.from_plc
+      ]]>
+</select>
+
 
 <select id="getplacetitle" resultType="org.travelmaker.domain.Schdt_PlaceVO">
 <![CDATA[

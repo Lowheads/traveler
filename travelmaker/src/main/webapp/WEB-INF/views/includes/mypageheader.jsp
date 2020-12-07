@@ -52,68 +52,148 @@
    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
 <style>
-/* left nav */
-.leftNav {  
-	margin-left:3%; 
-  	float: left;
- 	width: 20%;
+
+.overlay {
+  position: absolute;
+  top: -40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
+.text {
+	width:100%;
+  color: black;
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.dailyscheduleDT a:hover .overlay {
+  opacity: 1;
+}
+.contentAll {
+	width: auto;
+	background-color: #ffcc99;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
- #remove_modal {
-                display: none;
-                width: 300px;
-                padding: 20px 30px;
-                background-color: #fefefe;
-                border: 1px solid #888;
-                border-radius: 3px;
-            }
+.dayDt {
+	padding: 7px;
+	justify-content: flex-start;
+	display: flex;
+}
+
+.dailyscheduleDT a{
+	position: relative;
+}
+
+.plcImg {
+	border: 4px solid #ffffff; /* Gray border */
+	border-radius: 4px; /* Rounded border */
+	width: 150px; /* Set a small width */
+}
+
+.marker {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.dayDate {
+	height: 300px;
+	margin-bottom: 40px;
+	display: flex;
+}
+
+/* left nav */
+.leftNav {
+	margin-left: 3%;
+	float: left;
+	width: 20%;
+}
+
+.directionAll {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.direction {
+	width: 50px;
+	height: 50px;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#remove_modal {
+	display: none;
+	width: 300px;
+	padding: 20px 30px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
 
 #remove_modal .modal_close_btn {
-				width:40%;
-				margin-right:10%;
-				background-color:white;
-				color:black;
-				border: 1px solid gray;
-   				border-radius: 5px;
-}
-#remove_modal .remove_btn {
-				width:40%;
-				background-color: #ff6d70;
-				color:white;
-				border: 1px solid gray;
-  				border-radius: 5px;
-				
+	width: 40%;
+	margin-right: 10%;
+	background-color: white;
+	color: black;
+	border: 1px solid gray;
+	border-radius: 5px;
 }
 
-.card-title{
-	margin:0;
+#remove_modal .remove_btn {
+	width: 40%;
+	background-color: #ff6d70;
+	color: white;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+.card-title {
+	margin: 0;
 }
 
 /* Right column */
 .content-mypage {
-  float: right;
-  width: 75%;
+	float: right;
+	width: 75%;
 }
 
 .list-group ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 15%;
-    background-color: #f1f1f1;
-    top: 175px;
-    position: fixed;
-    overflow: auto;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 15%;
+	background-color: #f1f1f1;
+	top: 175px;
+	position: fixed;
+	overflow: auto;
 }
-.row{
-	display:flex;
-	flex-direction : row;
-	flex-wrap: wrap;
-	align-items:stretch;
 
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
 }
-#resultcard{
-	flex-basis:22%;
+
+#resultcard {
+	flex-basis: 22%;
 	justify-content: space-between;
 	margin-top: 15px;
 	margin-right: 20px;
@@ -121,30 +201,30 @@
 	height: 300px;
 }
 
-#resultcard a{
-	text-decoration:none ; color:#000000;
+#resultcard a {
+	text-decoration: none;
+	color: #000000;
 }
 
-.card-body{
+.card-body {
 	margin-bottom: 15px;
 }
-.heart{
+
+.heart {
 	margin-top: 10px;
 }
 
 .list-group li a {
-  display: block;
-  color: #000;
-  padding: 8px 16px;
-  text-decoration: none;
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+	text-decoration: none;
 }
-
-
 
 /* Change the link color on hover */
 .list-group li a:hover {
-  background-color: #555;
-  color: white;
+	background-color: #555;
+	color: white;
 }
 /*datepicker에서 사용한 이미지 버튼 style적용*/
 img.ui-datepicker-trigger {
@@ -152,398 +232,404 @@ img.ui-datepicker-trigger {
 	vertical-align: middle;
 	cursor: pointer;
 }
-.modal_wrap{
-        display: none;
-        width: 70%;
-        position:fixed;
-        height: 500px;
-        top:50%;
-        margin: -250px 0 0 150px;
-        background:#eee;
-        z-index: 2;
-    }
-    .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -30px;
-        right: 0;
-    }
-    .modal_close> a{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
-        text-indent: -9999px;
-    }
-.login_modal {
-   display: none;
-   width: 70%;
-   position: fixed;
-   height: 500px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
-   z-index: 1;
+
+.modal_wrap {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 150px;
+	background: #eee;
+	z-index: 2;
 }
 
-.register_modal{
-   display: none;
-   width: 70%;
-   position: fixed;
-   height: 500px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
-   z-index: 1;
+.modal_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
+.modal_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
+.login_modal {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 -250px;
+	margin-left: 2%;
+	background: #eee;
+	z-index: 1;
+}
+
+.register_modal {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 -250px;
+	margin-left: 2%;
+	background: #eee;
+	z-index: 1;
 }
 
 .black_bg {
-   display: none;
-   position: absolute;
-   width: 100%;
-   height: 120%;
-   background-color: rgba(0, 0, 0, 0.5);
-   top: 0;
-   left: 0;
-   z-index: 1;
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 120%;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 1;
 }
 
 .lModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
 }
 
 .lModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
 }
+
 .rModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
 }
 
 .rModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
 }
 
 #map {
-   width: 100%;
-   height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .card-img-top {
-   width: 100%;
-   height: 50%;
+	width: 100%;
+	height: 50%;
 }
 
-
 .h-100 {
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 10px;
-   margin-bottom: 7px;
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 7px;
 }
 
 .map_wrap, .map_wrap * {
-   margin: 0;
-   padding: 0;
-   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-   font-size: 12px;
+	margin: 0;
+	padding: 0;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	font-size: 12px;
 }
 
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active {
-   color: #000;
-   text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 
 .map_wrap {
-   position: relative;
-   width: 100%;
-   height: 500px;
+	position: relative;
+	width: 100%;
+	height: 500px;
 }
 
 #menu_wrap {
-   position: absolute;
-   top: 0;
-   left: 0;
-   bottom: 0;
-   width: 250px;
-   margin: 10px 0 30px 10px;
-   padding: 5px;
-   overflow-y: auto;
-   background: rgba(255, 255, 255, 0.7);
-   z-index: 1;
-   font-size: 12px;
-   border-radius: 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 250px;
+	margin: 10px 0 30px 10px;
+	padding: 5px;
+	overflow-y: auto;
+	background: rgba(255, 255, 255, 0.7);
+	z-index: 1;
+	font-size: 12px;
+	border-radius: 10px;
 }
 
 .bg_white {
-   background: #fff;
+	background: #fff;
 }
 
 #menu_wrap hr {
-   display: block;
-   height: 1px;
-   border: 0;
-   border-top: 2px solid #5F5F5F;
-   margin: 3px 0;
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 2px solid #5F5F5F;
+	margin: 3px 0;
 }
 
 #menu_wrap .option p {
-   margin: 10px 0;
+	margin: 10px 0;
 }
 
 #menu_wrap .option button {
-   margin-left: 5px;
+	margin-left: 5px;
 }
 
 #placesList {
-   padding-left: 0px;
+	padding-left: 0px;
 }
 
 #placesList li {
-   list-style: none;
+	list-style: none;
 }
 
 #placesList .item {
-   position: relative;
-   border-bottom: 1px solid #888;
-   overflow: hidden;
-   cursor: pointer;
-   min-height: 65px;
+	position: relative;
+	border-bottom: 1px solid #888;
+	overflow: hidden;
+	cursor: pointer;
+	min-height: 65px;
 }
 
 #placesList .item span {
-   display: block;
-   margin-top: 4px;
+	display: block;
+	margin-top: 4px;
 }
 
 #placesList .item h5, #placesList .item .info {
-   text-overflow: ellipsis;
-   overflow: hidden;
-   white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 #placesList .item .info {
-   padding: 10px 0 10px 55px;
+	padding: 10px 0 10px 55px;
 }
 
 #placesList .info .gray {
-   color: #8a8a8a;
+	color: #8a8a8a;
 }
 
 #placesList .info .jibun {
-   padding-left: 26px;
+	padding-left: 26px;
 }
 
 #placesList .info .tel {
-   color: #009900;
+	color: #009900;
 }
 
 #placesList .item .markerbg {
-   float: left;
-   position: absolute;
-   width: 36px;
-   height: 37px;
-   margin: 10px 0 0 10px;
-   background:
-      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-      no-repeat;
+	float: left;
+	position: absolute;
+	width: 36px;
+	height: 37px;
+	margin: 10px 0 0 10px;
+	background:
+		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+		no-repeat;
 }
 
 #placesList .item .marker_1 {
-   background-position: 0 -10px;
+	background-position: 0 -10px;
 }
 
 #placesList .item .marker_2 {
-   background-position: 0 -56px;
+	background-position: 0 -56px;
 }
 
 #placesList .item .marker_3 {
-   background-position: 0 -102px
+	background-position: 0 -102px
 }
 
 #placesList .item .marker_4 {
-   background-position: 0 -148px;
+	background-position: 0 -148px;
 }
 
 #placesList .item .marker_5 {
-   background-position: 0 -194px;
+	background-position: 0 -194px;
 }
 
 #placesList .item .marker_6 {
-   background-position: 0 -240px;
+	background-position: 0 -240px;
 }
 
 #placesList .item .marker_7 {
-   background-position: 0 -286px;
+	background-position: 0 -286px;
 }
 
 #placesList .item .marker_8 {
-   background-position: 0 -332px;
+	background-position: 0 -332px;
 }
 
 #placesList .item .marker_9 {
-   background-position: 0 -378px;
+	background-position: 0 -378px;
 }
 
 #placesList .item .marker_10 {
-   background-position: 0 -424px;
+	background-position: 0 -424px;
 }
 
 #placesList .item .marker_11 {
-   background-position: 0 -470px;
+	background-position: 0 -470px;
 }
 
 #placesList .item .marker_12 {
-   background-position: 0 -516px;
+	background-position: 0 -516px;
 }
 
 #placesList .item .marker_13 {
-   background-position: 0 -562px;
+	background-position: 0 -562px;
 }
 
 #placesList .item .marker_14 {
-   background-position: 0 -608px;
+	background-position: 0 -608px;
 }
 
 #placesList .item .marker_15 {
-   background-position: 0 -654px;
+	background-position: 0 -654px;
 }
 
 #pagination {
-   margin: 10px auto;
-   text-align: center;
+	margin: 10px auto;
+	text-align: center;
 }
 
 #pagination a {
-   display: inline-block;
-   margin-right: 10px;
+	display: inline-block;
+	margin-right: 10px;
 }
 
 #pagination .on {
-   font-weight: bold;
-   cursor: default;
-   color: #777;
+	font-weight: bold;
+	cursor: default;
+	color: #777;
 }
 
 #regBtn {
-   border-top-left-radius: 5px;
-   border-bottom-left-radius: 5px;
-   margin-right: -4px;
-   border: 1px solid skyblue;
-   background-color: #4774d9;
-   color: white;
-   padding: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-right: -4px;
+	border: 1px solid skyblue;
+	background-color: #4774d9;
+	color: white;
+	padding: 5px;
 }
 
 .orgImg {
-   width: 100px;
-   height: 100px;
+	width: 100px;
+	height: 100px;
 }
 
 .select_img img {
-   margin: 20px 0;
+	margin: 20px 0;
 }
 
 #button { /*로그인 버튼*/
-   width: 260px;
-   height: 50px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+	width: 260px;
+	height: 50px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
 }
 
-.wrap-main{
-   padding: 10px;
+.wrap-main {
+	padding: 10px;
 }
 
 .center {
-   text-align: center;
-   padding: 4px;
+	text-align: center;
+	padding: 4px;
 }
 
-.wrap-Addition{ /* email기억하기 & 로그인 */
-text-align: center;
-   padding: 5px;
+.wrap-Addition { /* email기억하기 & 로그인 */
+	text-align: center;
+	padding: 5px;
 }
 
-.findInfo{ /* 비밀번호 찾기 */
-   text-align: center;
+.findInfo { /* 비밀번호 찾기 */
+	text-align: center;
 }
 
-.div-reg{
-   padding: 8px;
+.div-reg {
+	padding: 8px;
 }
 
-#btn{ /* 닉네임 중복체크 버튼 */
-   width: 130px;
-   height: 35px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+#btn { /* 닉네임 중복체크 버튼 */
+	width: 130px;
+	height: 35px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
 }
 
 /* dropdown  */
 .dropbtn {
-  width: 30px;
-  height: 3px;
-  background-color: black;
-  margin: 6px 0;
-  font-size: 16px;
-  border: none;
+	width: 30px;
+	height: 3px;
+	background-color: black;
+	margin: 6px 0;
+	font-size: 16px;
+	border: none;
 }
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
 	margin-top: 10px;
-  position: relative;
-  display: inline-block;
-  float:right;
+	position: relative;
+	display: inline-block;
+	float: right;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  z-index: 1;
+	display: none;
+	position: absolute;
+	right: 0;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	z-index: 1;
 }
-
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  display: block;
+	color: black;
+	padding: 12px 16px;
+	display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
-  display: block;
+	display: block;
+}
 </style>
 
 </head>
