@@ -30,16 +30,20 @@
 <!-- 순규 -->
 <select id="getSchdtList" resultType="hashMap">
 <![CDATA[
-select s.sch_date, s.sch_no,s.from_plc, p.plc_img as fromImg, p.plc_title as fromTitle ,s.to_plc, 
+select s.sch_date, s.sch_no,s.from_plc, p.plc_img as fromImg, p.plc_title as fromTitle,p.p_cate as fromCate ,s.to_plc, 
     (select plc_img from place p
       where s.sch_no= #{schNo}
       and p.plc_no= s.to_plc) as toImg,
       (select plc_title from place p
       where s.sch_no= #{schNo}
-      and p.plc_no= s.to_plc) as toTitle,s.distance, s.duration, s.transit
+      and p.plc_no= s.to_plc) as toTitle,
+      (select p_cate from place p
+      where s.sch_no= #{schNo}
+      and p.plc_no= s.to_plc) as toCate,s.distance, s.duration, s.transit
       from sch_dt s, place p
       where s.sch_no= #{schNo}
       and p.plc_no= s.from_plc
+      order by sch_date asc,s.no asc
       ]]>
 </select>
 
@@ -56,5 +60,9 @@ select s.sch_date, s.sch_no,s.from_plc, p.plc_img as fromImg, p.plc_title as fro
 		and p.plc_no= s.from_plc
 ]]>
 </select>
+
+<delete id="deleteSchdt">
+	delete from sch_dt where sch_no = #{schNo}
+</delete>
 
 </mapper>

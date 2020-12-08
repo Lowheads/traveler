@@ -91,7 +91,7 @@
     	  
     	  $.ajax({
 				type : 'post',
-				url : '/mypage/remove',
+				url : '/mypage/deleteSchedule',
 				data : schNo,
 				success : function(data) {
 					

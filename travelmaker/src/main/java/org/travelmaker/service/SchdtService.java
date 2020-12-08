@@ -13,4 +13,6 @@ public interface SchdtService {
 	List<Schdt_PlaceVO> getplacetitle(int schNo);
 	
 	public List<Map<String,Object>> getSchdtList(int schNo);
+	
+	public int deleteSchdt(int schNo);
 }

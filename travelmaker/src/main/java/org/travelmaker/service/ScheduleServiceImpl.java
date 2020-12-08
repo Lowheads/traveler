@@ -118,10 +118,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public List<ScheduleVO> getUpCommingList(Criteria cri) {
+	public List<ScheduleVO> getUpComingList(Criteria cri) {
 		log.info("get List with criteria: "+cri);
 
-		return mapper.getUpCommingSch(cri);
+		return mapper.getUpComingList(cri);
 	}
 
 	@Override
@@ -131,15 +131,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int getPtotal(Criteria cri) {
+	public int getPastScheduleTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getPastTotal(cri);
+		return mapper.getPastScheduleTotal(cri);
 	}
 
 	@Override
-	public int getCtotal(Criteria cri) {
+	public int getComingScheduleTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getCommingTotal(cri);
+		return mapper.getComingScheduleTotal(cri);
 	}
 
 	@Override

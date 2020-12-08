@@ -14,4 +14,6 @@ public interface SchdtMapper {
 	//스케줄 dt + 사진까지
 	public List<Map<String,Object>> getSchdtList(int schNo);
 	
+	public int deleteSchdt(int schNo);
+	
 }

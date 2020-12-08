@@ -35,4 +35,10 @@ public class SchdtServiceImpl implements SchdtService {
 		return mapper.getSchdtList(schNo);
 	}
 
+	@Override
+	public int deleteSchdt(int schNo) {
+		// TODO Auto-generated method stub
+		return mapper.deleteSchdt(schNo);
+	}
+
 }

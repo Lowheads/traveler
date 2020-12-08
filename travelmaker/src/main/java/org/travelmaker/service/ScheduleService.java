@@ -33,13 +33,13 @@ public interface ScheduleService {
 
 	public List<ScheduleVO> getPastList(Criteria cri);
 
-	public List<ScheduleVO> getUpCommingList(Criteria cri);
+	public List<ScheduleVO> getUpComingList(Criteria cri);
 
 	public int getTotal(Criteria cri);
 
-	public int getPtotal(Criteria cri);
+	public int getPastScheduleTotal(Criteria cri);
 
-	public int getCtotal(Criteria cri);
+	public int getComingScheduleTotal(Criteria cri);
 
 	public int register(ScheduleVO schedule);
 

@@ -38,13 +38,13 @@ public interface ScheduleMapper {
 
 	public List<ScheduleVO> getPastSch(Criteria cri);
 
-	public List<ScheduleVO> getUpCommingSch(Criteria cri);
+	public List<ScheduleVO> getUpComingList(Criteria cri);
 
 	public int getTotalCount(Criteria cri);
 
-	public int getPastTotal(Criteria cri);
+	public int getPastScheduleTotal(Criteria cri);
 
-	public int getCommingTotal(Criteria cri);
+	public int getComingScheduleTotal(Criteria cri);
 
 	public ScheduleVO getListSchedule(int schNo);
 

@@ -29,7 +29,7 @@ public class MyPageController {
 	private PlaceService placeService;
 	private ScheduleService SchService;
 	private PickService pickService;
-	private SchdtService SchddtService;
+	private SchdtService schdtService;
 
 	@GetMapping("/pickPL")
 	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
@@ -46,6 +46,7 @@ public class MyPageController {
 	@ResponseBody
 	public void deleteSchedule(@RequestParam("schNo")int schNo) {
 		SchService.removeSchdule(schNo);
+		schdtService.deleteSchdt(schNo);
 	}
 
 	@GetMapping("/pickSch")
@@ -62,7 +63,7 @@ public class MyPageController {
 	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
 
 		model.addAttribute("board",SchService.getSchedule(schNo));
-		model.addAttribute("Schdt",SchddtService.getSchdtList(schNo));
+		model.addAttribute("Schdt",schdtService.getSchdtList(schNo));
 	}
 
 	@GetMapping("/past")
@@ -72,7 +73,7 @@ public class MyPageController {
 		cri.setMemNo(memNo);
 		cri.setAmount(8);
 		model.addAttribute("list",SchService.getPastList(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getPtotal(cri)));
+		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getPastScheduleTotal(cri)));
 	}
 
 	@GetMapping("/upcomming")
@@ -81,8 +82,8 @@ public class MyPageController {
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		cri.setMemNo(memNo);
 		cri.setAmount(8);
-		model.addAttribute("list",SchService.getUpCommingList(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getCtotal(cri)));
+		model.addAttribute("list",SchService.getUpComingList(cri));
+		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getComingScheduleTotal(cri)));
 	}
 
 	@ResponseBody

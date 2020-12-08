@@ -100,11 +100,8 @@
 			)
 			where rn > (#{pageNum} -1) * #{amount}  
 ]]>
-
-
-
 </select>
-		
+
 		<select id="getPastSch" resultMap="ScheduleResult">
 		<![CDATA[
 		select
@@ -114,17 +111,16 @@
 			select
 				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
 			from
-			schedule s, pick_sch pl
-			where s.to_date < SYSDATE
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+			schedule s
+			where s.to_date < SYSDATE	
+			and s.mem_no = #{memNo} 	
 			and rownum <= #{pageNum} * #{amount}
 			)
-			where rn > (#{pageNum} -1) * #{amount}  
+			where rn > (#{pageNum} -1) * #{amount} 
 ]]>
 		</select>
 		
-		<select id="getUpCommingSch" resultMap="ScheduleResult">
+		<select id="getUpComingList" resultMap="ScheduleResult">
 		<![CDATA[
 		select
 			*
@@ -133,10 +129,9 @@
 			select
 				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
 			from
-			schedule s, pick_sch pl
-			where s.to_date > SYSDATE
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+			schedule s
+			where s.to_date > SYSDATE	
+			and s.mem_no = #{memNo} 	
 			and rownum <= #{pageNum} * #{amount}
 			)
 			where rn > (#{pageNum} -1) * #{amount}  
@@ -152,24 +147,22 @@
 		
 		</select>
 		
-		<select id="getPastTotal" resultType="int">
+		<select id="getPastScheduleTotal" resultType="int">
 				<![CDATA[
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and s.to_date < SYSDATE
+		schedule
+			where mem_no = #{memNo}
+			and to_date < SYSDATE
 		]]>
 		</select>
 		
 		
-		<select id="getCommingTotal" resultType="int">
+		<select id="getComingScheduleTotal" resultType="int">
 				<![CDATA[
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and s.to_date > SYSDATE
+		schedule
+			where mem_no = #{memNo}
+			and to_date > SYSDATE
 		]]>
 		</select>
 

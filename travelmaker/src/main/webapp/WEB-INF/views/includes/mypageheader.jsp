@@ -52,7 +52,14 @@
    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
 <style>
-
+.leftDate{
+	width: 100px;
+	margin-top: auto;
+	margin-bottom: auto;
+	text-align: center;
+	margin-right:20px;
+	font-size: 5px;
+}
 .overlay {
   position: absolute;
   top: -40px;
@@ -82,25 +89,33 @@
 }
 .contentAll {
 	width: auto;
-	background-color: #ffcc99;
+	background-color: #F5F5DC;
 	border: 2px solid black;
 	border-radius: 5px;
+	padding: 20px;
 }
 
 .dayDt {
 	padding: 7px;
 	justify-content: flex-start;
 	display: flex;
+	margin-bottom: 75px;
+	border-bottom: 1px solid gray;
 }
 
 .dailyscheduleDT a{
 	position: relative;
 }
 
+.dailyscheduleDT{
+	width: auto;
+}
+
 .plcImg {
 	border: 4px solid #ffffff; /* Gray border */
 	border-radius: 4px; /* Rounded border */
 	width: 150px; /* Set a small width */
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .marker {
@@ -121,6 +136,15 @@
 	width: 20%;
 }
 
+.dango{
+	background-color: white;
+}
+.dango img{
+	width: auto%;
+	height: auto%;
+}
+
+
 .directionAll {
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -136,8 +160,12 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
+	padding: auto;
 }
-
+.drirection p{
+	margin: auto;
+}
 #remove_modal {
 	display: none;
 	width: 300px;
@@ -171,7 +199,8 @@
 /* Right column */
 .content-mypage {
 	float: right;
-	width: 75%;
+	width: 65%;
+	margin-right: 10%;
 }
 
 .list-group ul {

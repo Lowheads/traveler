@@ -48,11 +48,11 @@
 				<div class="dayDt">
 					<c:set var="count" value="${count+1 }"/>
 						<div class="leftDate">
-						<img alt="" src="data:image/png;base64,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" width="50px" height="50px">
+						<img alt="" src="/resources/img/pngwave.png" width="50px" height="50px;">
 						<br>
-						<h2>${ count}일차</h2>
-						<br>
-						<fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></div>
+						<h4>${ count}일차</h4>
+						<p><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></p>
+						</div>
 					<div class="dayDate">
 						<c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">
 									
@@ -62,7 +62,7 @@
 									<%-- <c:out value="${dt.FROM_PLC }" /> --%>
 									<c:choose>
 									<c:when test="${vs.index % 2.0 != 1 }">
-									<a href="http://place.map.kakao.com/${dt.FROM_PLC }">
+									<a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="blank">
 									<img class="plcImg" alt="" src="${dt.FROMIMG }" height="100px;" width="100px;">
 									<div class="overlay">
   									  <div class="text"><c:out value="${dt.FROMTITLE }"/></div>
@@ -71,13 +71,42 @@
 									
 								<div class="directionAll">
 								<c:choose>
-								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
+								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction"><div class="dango" style="width: 100%; height: 10%;">
+								<p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
 								</c:when>
 								<c:when test="${schdt.SCH_DATE ne Schdt[vs.index-1].SCH_DATE}"><div class="direction"></div>
 								</c:when>
 								</c:choose>
-								<div class="direction"><div style="border-radius:50%; background-color:white; width: 100%; height: 100%"></div></div>
-								<div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
+								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%;">
+								<c:choose>
+								<c:when test="${dt.FROMCATE eq 'CT1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'PO3' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'AT4' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'AD5' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'FD6' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236969.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'CE7' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236960.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'HP8' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'ET1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
+								</c:when>
+								
+								</c:choose>								
+								</div></div>
+								<div class="direction"><div class="dango" style="width: 100%; height: 10%;"><p style="font-size: 12px;"><c:out value="${dt.DURATION }" />시간</p></div></div>
 								</div>
 								<div style="height: 100px; width: 100px"></div>
 									</c:when>
@@ -85,15 +114,46 @@
 									<div style="height: 100px; width: 100px"></div>
 								<div class="directionAll">
 									<c:choose>
-								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
+								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction">
+								<div class="dango" style="width: 100%; height: 10%;">
+								<p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p>
+								</div></div>
 								</c:when>
 								<c:when test="${schdt.SCH_DATE ne Schdt[vs.index-1].SCH_DATE}"><div class="direction"></div>
 								</c:when>
 								</c:choose>
-								<div class="direction"><div style="border-radius:50%; background-color:white; width: 100%; height: 100%"></div></div>
-								<div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
+								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%">
+								<c:choose>
+								<c:when test="${dt.FROMCATE eq 'CT1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'PO3' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'AT4' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'AD5' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'FD6' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236969.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'CE7' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236960.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'HP8' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
+								</c:when>
+								<c:when test="${dt.FROMCATE eq 'ET1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
+								</c:when>
+								
+								</c:choose>
+								</div></div>
+								<div class="direction"><div class="dango" style="width: 100%; height: 10%; "><p style="font-size: 12px;"><c:out value="${dt.DURATION }" />시간</p></div></div>
 								</div>
-								<a href="http://place.map.kakao.com/${dt.FROM_PLC }">
+								<a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="blank">
 									<img class="plcImg" alt="" src="${dt.FROMIMG }" height="100px;" width="100px;">
 									<div class="overlay">
   									  <div class="text"><c:out value="${dt.FROMTITLE }"/></div>
@@ -101,7 +161,8 @@
 									</a>
 									</c:when>
 									</c:choose>
-									<%-- <c:out value="${dt.DISTANCE }" />
+									<%-- 나중에 쓸거 
+									<c:out value="${dt.DISTANCE }" />
 									<c:out value="${dt.DURATION }" />
 									<c:out value="${dt.TRANSIT }" /> --%>
 									</c:if>
@@ -111,15 +172,42 @@
 								<div class="dailyscheduleDT">
 								<c:choose>
 									<c:when test="${vs.index % 2.0 == 1 }">
-									<a href="http://place.map.kakao.com/${dt.TO_PLC }">
+									<a href="http://place.map.kakao.com/${dt.TO_PLC }" target="blank">
 									<img class="plcImg" alt="" src="${dt.TOIMG }" height="100px;" width="100px;">
 									<div class="overlay">
   									  <div class="text"><c:out value="${dt.TOTITLE }"/></div>
  									 </div>
 									</a>
 								<div class="directionAll">
-								<div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
-								<div class="direction"><div style="border-radius:50%; background-color:white; width: 100%; height: 100%"></div></div>
+								<div class="direction"><div class="dango" style="width: 100%; height: 10%; "><p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
+								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%">
+								<c:choose>
+								<c:when test="${dt.TOCATE eq 'CT1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'PO3' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'AT4' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'AD5' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'FD6' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236969.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'CE7' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236960.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'HP8' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'ET1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
+								</c:when>
+								</c:choose>
+								</div></div>
 								<div class="direction"></div>
 								</div>
 								<div style="height: 100px; width: 100px"></div>
@@ -127,11 +215,38 @@
 									<c:when test="${vs.index % 2.0 != 1 }">
 									<div style="height: 100px; width: 100px"></div>	
 								<div class="directionAll">
-								<div class="direction"><div style="width: 100%; height: 10%; background-color:white;"></div></div>
-								<div class="direction"><div style="border-radius:50%; background-color:white; width: 100%; height: 100%"></div></div>
+								<div class="direction"><div class="dango" style="width: 100%; height: 10%;"><p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
+								<div class="direction"><div class="dango" style="border-radius:50%;  width: 100%; height: 100%">
+									<c:choose>
+								<c:when test="${dt.TOCATE eq 'CT1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'PO3' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'AT4' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'AD5' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'FD6' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236969.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'CE7' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236960.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'HP8' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
+								</c:when>
+								<c:when test="${dt.TOCATE eq 'ET1' }">
+								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
+								</c:when>
+								</c:choose>
+								</div></div>
 								<div class="direction"></div>
 								</div>		
-								<a href="http://place.map.kakao.com/${dt.TO_PLC }">
+								<a href="http://place.map.kakao.com/${dt.TO_PLC }" target="blank">
 									<img class="plcImg" alt="" src="${dt.TOIMG }" height="100px;" width="100px;">
 									<div class="overlay">
   									  <div class="text"><c:out value="${dt.TOTITLE }"/></div>
@@ -184,7 +299,7 @@ var operForm = $("#operForm");
     	  
     	  $.ajax({
 				type : 'post',
-				url : '/mypage/remove',
+				url : '/mypage/deleteSchedule',
 				data : schNo,
 				success : function(data) {
 					
