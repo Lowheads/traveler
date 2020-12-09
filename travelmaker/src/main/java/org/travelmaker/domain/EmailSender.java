@@ -12,7 +12,7 @@ public class EmailSender {
 
 	 @Autowired
      protected JavaMailSender  mailSender;
-     public void SendEmail(Email email) throws Exception {
+     public void SendEmail(Email email) throws Exception { // 이메일 발송
           
     	 // 임시 비밀번호 메일
          MimeMessage msg = mailSender.createMimeMessage();
