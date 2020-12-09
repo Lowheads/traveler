@@ -44,7 +44,7 @@
     </bean>
     
     <!-- 종운 Fixed ThreadPool -->
-    <task:executor id="threadPool" pool-size="10" />
+    <task:executor id="threadPool" pool-size="50" />
     <task:annotation-driven executor="threadPool" />
     <!-- <bean id="ps" class="org.travelmaker.service.PositionService"></bean> -->
     <bean id="tpes" class="org.travelmaker.service.ThreadPoolExecutorService">

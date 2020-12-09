@@ -30,7 +30,7 @@ public class ThreadPoolExecutorService {
 	@Async
 	public CompletableFuture<Void> setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
 		// WebDriver 경로 설정
-	    ChromeDriver driver = getDriver();
+		ChromeDriver driver = getDriver();
 	    PositionVO pos = getKakaoGeoChanger(schdtVO);
 	    String fromTitle = schdtVO.getFromPlcTitle();
 	    int fromLat = pos.getFromLat();
@@ -39,8 +39,6 @@ public class ThreadPoolExecutorService {
 	    int toLat = pos.getToLat();
 	    int toLng = pos.getToLng();
 	    String transit = schdtVO.getTransit();
-	    //웹페이지에서 글제목 말고 query랑 그 document전체를 가져올 수 있는지 보자.
-	//  String URL = "https://map.kakao.com/link/from/지은이집,37.571210,126.976918/to/종운이형집,37.321590,127.126611"
 	    //드라이버 로딩
 	//  String URL = "https://map.kakao.com/?map_type=TYPE_MAP&target="+car+"&rt="+schdtVO.getFromPlcLat()+","+schdtVO.getFromPlcLng()+","+schdtVO.getToPlcLat()+",";
 	    String url = "https://map.kakao.com/?map_type=TYPE_MAP&target="+transit+"&rt="+fromLat+","+fromLng+","+toLat+","+toLng+"&rt1="+fromTitle+"&rt2="+toTitle+"&rtIds=%2C&rtTypes=%2C";
@@ -57,8 +55,8 @@ public class ThreadPoolExecutorService {
 	        String distResult =	 text.substring(timeIdx+1, distIdx);
 	        schdtVO.setDistance(distResult);
 	        schdtVO.setDuration(timeResult);
-	        System.out.println(timeResult); 
-	        System.out.println(distResult);
+	        System.out.println(schdtVO.getDistance());
+	        System.out.println(schdtVO.getDuration());
 	    }
 	    // 탭 종료
 	    driver.close();
@@ -77,13 +75,12 @@ public class ThreadPoolExecutorService {
 	private ChromeDriver getDriver() {
 		System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\bin\\chromedriver.exe");
 	    // WebDriver 옵션 설정 
-	    // 기본앱 사용안함
 	    ChromeOptions options = new ChromeOptions();
 	    options.addArguments("--start-maximized");            // 전체화면으로 실행
 	    options.addArguments("--disable-popup-blocking");    // 팝업 무시
 	    options.addArguments("--disable-default-apps"); 
 	    
-	    options.addArguments("headless");
+//	    options.addArguments("headless");
 	    options.addArguments("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36\r\n");
 	    // WebDriver 객체 생성
 	    ChromeDriver driver = new ChromeDriver(options);

@@ -204,7 +204,7 @@ ul {
 </div>
   <button onclick="makeSchedule()">거리 계산해오기</button>
  <button onclick="insertSchedule()">일정 넣기</button>
- <button id="test">좌표변환계</button>
+ <button onclick="drawLine()">drawLiner</button>
    <script type="text/javascript" src="/resources/js/place.js"></script>
    <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341&libraries=services"></script>
@@ -212,8 +212,11 @@ ul {
    
       var markers =[];
       var marker;
+      var pmarkers = [];
+      var pmarker;
       
-       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
           mapOption = {
              center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
              level : 4
@@ -365,7 +368,6 @@ ul {
             recPlaceBtn[i].addEventListener('click', addRecPlace);
          }
          document.querySelector('.btn-make-schedule').addEventListener('click', makeSchedule)
-         document.querySelector('#test').addEventListener('click', test); 
       }
              
              
@@ -519,7 +521,7 @@ ul {
                    let dataArr = data[0];
                    for (var i = 0; i < dataArr.length; i++) {
                 	   var txN = document.createTextNode(dataArr[i]);
-                       appendLi[i].append(txN);
+                	   console.log(txN);
 				}
                },
                error: function(){
@@ -599,6 +601,49 @@ ul {
            
         };
        
+       function drawLine() {
+    	   var latlngList = document.getElementsByClassName("left-place-list");
+    	   let lat1 = latlngList[0].dataset["lat"]
+    	   let lng1 = latlngList[0].dataset["lng"]
+    	   let lat2 = latlngList[1].dataset["lat"]
+    	   let lng2 = latlngList[0].dataset["lng"]
+    	   var polyline = new kakao.maps.Polyline({
+    		    map: map,
+    		    path: [
+    		        new kakao.maps.LatLng(33.452344169439975, 126.56878163224233),
+    		        new kakao.maps.LatLng(33.452739313807456, 126.5709308145358),
+    		        new kakao.maps.LatLng(33.45178067090639, 126.5726886938753),
+    		       /*  new kakao.maps.LatLng(lat,lng) */
+    		    ],
+    		    strokeWeight: 2,
+    		    strokeColor: '#FF00FF',
+    		    strokeOpacity: 0.8,
+    		    strokeStyle: 'dashed'
+    		});
+       }
+       
+       function test(mX,mY) {
+           var geocoder = new kakao.maps.services.Geocoder();
+		   var resultPosX;
+		   var resultPosY;
+           return  callback = function(result, status) {
+               if (status === kakao.maps.services.Status.OK) {
+                   //console.log(result[0].x); // 126.570667 //경도랑 위도가 바뀐듯
+                   //console.log(result[0].y); // 33.45070100000001
+                   // 내가 원하는 리턴값 [0][0].x ,[0][0].y 형태로 있음
+        	  	   //console.log(arguments)
+               		console.log(arguments);
+                   resultPosX = result[0].x;
+                   resultPosY = result[0].y;
+                   return {x:resultPosX,y:resultPosY}
+               }
+           };
+           // WGS84 좌표를 WCONGNAMUL 좌표계의 좌표로 변환한다
+           geocoder.transCoord(mX, mY, callback, {
+               input_coord: kakao.maps.services.Coords.WGS84,
+               output_coord: kakao.maps.services.Coords.WCONGNAMUL
+           });
+       }
        
        function searchAction(event) {
          let placeValue = $("#search-value").val();
