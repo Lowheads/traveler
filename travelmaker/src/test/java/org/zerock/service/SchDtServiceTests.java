@@ -22,7 +22,7 @@ public class SchDtServiceTests {
 	@Test
 	public void setSchdtList() {
 		ScheduleDtVO sch1 = new ScheduleDtVO();
-		sch1.setDistance(1);
+		sch1.setDistance("1km");
 		sch1.setDuration("1");
 		sch1.setFromPlcLat(10680320);
 		sch1.setFromPlcLng(15295237);
@@ -42,7 +42,7 @@ public class SchDtServiceTests {
 	@Test
 	public void changeGeoLoca() {
 		ScheduleDtVO sch1 = new ScheduleDtVO();
-		sch1.setDistance(1);
+		sch1.setDistance("1km");
 		sch1.setDuration("1");
 		sch1.setFromPlcLat(33.4976775399288);
 		sch1.setFromPlcLng(126.532278740274);

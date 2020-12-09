@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +45,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @AllArgsConstructor
+@EnableAsync
 public class PlaceController {
 	private PlaceService service;
 	private ScheduleService schService;
@@ -77,8 +80,22 @@ public class PlaceController {
 	@PostMapping(value = "/test", produces = "application/json;")
 	@ResponseBody
 	public ResponseEntity<ScheduleDtVO[][]> getInitSchedule(@RequestBody ScheduleDtVO[][] scheduleDtVO) {
-		schDtService.getInitSchWithDistAndDu(scheduleDtVO);
-		return new ResponseEntity<>(scheduleDtVO, HttpStatus.OK);
+//		long start = System.currentTimeMillis(); //시작하는 시점 계산
+		List<CompletableFuture<Void>> futureList = schDtService.getInitSchWithDistAndDu(scheduleDtVO);
+//		long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
+//		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초");
+		while(true) {
+			try {
+	            Thread.sleep(500);
+	            for (int i = 0; i < scheduleDtVO.length; i++) {
+	            	if(futureList.get(i).isDone()) {
+		            }
+	            	return new ResponseEntity<>(scheduleDtVO, HttpStatus.OK);
+				}
+	        } catch (InterruptedException e) {
+	            Thread.currentThread().interrupt();
+	        }
+		}
 	}
 
 //	@PostMapping(value="/test/sch",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
@@ -103,7 +120,6 @@ public class PlaceController {
 
 	@PostMapping(value = "/put/sch", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@Transactional(rollbackFor = Exception.class)
 	public ResponseEntity<String> putInitSchedule(@RequestBody SchWrapDTO schwrapDTO) {
 		ScheduleVO scheduleVO = schwrapDTO.getScheduleVO();
 		SchdtVO[][] schdtVOs = schwrapDTO.getSchdtVOs();
@@ -114,7 +130,7 @@ public class PlaceController {
 					schDtService.insertSchDt(schdtVOs[i]);
 					// 에러 처리의 분기가 없다. 이거 좀 어떻게 해라
 					// result =  ? : ;
-			}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

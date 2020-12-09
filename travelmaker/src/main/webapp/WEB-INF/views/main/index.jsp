@@ -40,6 +40,9 @@
 			startDate: moment(),
 			endDate: moment(),
 			minDate: moment(),
+			maxSpan: {
+		        "days": 9 // 9일이어야 1일차부터 10일차까지 가능 <= <=이니까
+		    },
 			locale: {
 				format: 'YYYY-MM-DD'
 			},

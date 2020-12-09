@@ -13,7 +13,7 @@ public class ScheduleDtVO {
 	private String fromPlcTitle;
 	private String toPlcTitle;
 	private String transit;
-	private int distance;
+	private String distance;
 	private String duration;
 	
 }

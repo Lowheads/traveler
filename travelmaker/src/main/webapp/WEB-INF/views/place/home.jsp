@@ -323,6 +323,9 @@ ul {
             startDate: fromDate,
             endDate: toDate, 
             minDate: moment(),
+            maxSpan: {
+                "days": 9 // 9일이어야 1일차부터 10일차까지 가능
+            },
             locale: { 
                format: 'YYYY-MM-DD'
             }
@@ -333,9 +336,6 @@ ul {
          $('input[name="daterange"]').on('apply.daterangepicker', (e, picker) => {
             computeDate(); 
             }); 
-         
-         
-         
          
          init();
       })
@@ -394,9 +394,6 @@ ul {
                dailyPlaceList[i].style.display='none';
             }
          }
-          /* if(!!($('#search-value').val())){
-          searchAction();
-          } */
        }
 
        function computeDate() { // date picker apply 이벤트랑, 초기값 계산해서 button 생성하는 function
@@ -440,8 +437,7 @@ ul {
        
        function showRecPlace() { // 추천장소 버튼을 누르면 장소들 등장, button을 추가할지 말진 모르겠다.
              let recPlace = document.querySelectorAll('.rec-place')
-             let i;
-             for (i= 0; i < recPlace.length; i++) {
+             for (let i= 0; i < recPlace.length; i++) {
                 if(recPlace[i].style.display=='' || recPlace[i].style.display==='none' ){
                    recPlace[i].style.display='block';
                     }
@@ -456,12 +452,15 @@ ul {
          let leftPlaceList = document.getElementsByClassName("daily-place-list");
          let activePlaceList = leftPlaceList[index];
          let compPlaceList = activePlaceList.children
+         if(compPlaceList.length>5) {
+        	 return;
+         }
          let currTarget = event.currentTarget.parentElement;
          let targetText = currTarget.innerText;
-          let curClone = currTarget.cloneNode(true);
-          curClone.setAttribute("class", "selected-place");
-          let innerText = document.createTextNode(targetText);
-             for (var i = 0; i < compPlaceList.length; i++) {
+         let curClone = currTarget.cloneNode(true);
+         curClone.setAttribute("class", "selected-place");
+         let innerText = document.createTextNode(targetText);
+            for (var i = 0; i < compPlaceList.length; i++) {
                if(curClone.dataset["plcNo"]==compPlaceList[i].dataset["plcNo"]){
                   return;
                }               
@@ -481,18 +480,18 @@ ul {
        }
        
        function makeSchedule() {
+    	  let appendLi = document.getElementsByClassName("selected-place ui-sortable-handle");
           let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
-          let i,j;
           let tmpAllList =[];
           let tmpList;
           let placeList = document.getElementsByClassName("daily-place-list");
-          let len = placeList.length;
+          const len = placeList.length;
           
-          for (i = 0; i < len; i++) {
+          for (let i = 0; i < len; i++) {
              let tmpSchList = [];
             tmpList = placeList[i].children;
             tmplen = tmpList.length;
-            for (j = 0; j < tmplen-1; j++) {
+            for (let j = 0; j < tmplen-1; j++) {
                let tmp = { 
                      schDate:i, // 1일차, 2일차, 3일차
                      fromPlc:tmpList[j].dataset["plcNo"],
@@ -517,7 +516,11 @@ ul {
                data: sendJSON,
                contentType: "application/json; charset=utf-8;",
                success: function(data){
-                   alert("success : "+data);
+                   let dataArr = data[0];
+                   for (var i = 0; i < dataArr.length; i++) {
+                	   var txN = document.createTextNode(dataArr[i]);
+                       appendLi[i].append(txN);
+				}
                },
                error: function(){
                    alert("restController err");
@@ -537,12 +540,12 @@ ul {
 	   		    return rdate; 
    			}
            let transit = document.getElementsByClassName("transit-container")[0].dataset["transit"];
-           let i,j;
            let tmpAllList =[];
            let tmpList;
            let placeList = document.getElementsByClassName("daily-place-list");
            let len = placeList.length;
-           let memNo = sessionStorage.getItem("memNo");
+           /* let memNo = sessionStorage.getItem("memNo"); */
+           let memNo = <%= session.getAttribute("memNo") %>
            let scheduleVO = {
         		   // schNo: , // 스케쥴로 하는게 아니라 나중에 db에서 하는거임
         		   memNo:memNo,
@@ -554,7 +557,7 @@ ul {
         		   memo:"아직 테스트중이여요",	   
         		   schRegion:"지역이라는데 뭐지 이거"
            }
-           for (i = 0; i < len; i++) {
+           for (let i = 0; i < len; i++) {
         	   
              let tmpSchList = [];
              tmpList = placeList[i].children;
@@ -613,7 +616,6 @@ ul {
             pageNum = event.currentTarget.dataset["num"];
          }
          let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
-         /* let pageNum = document.getElementsByClassName(); */
          
          let leftPlace = document.getElementsByClassName("selected-place");
          let index = getActiveDay();
@@ -694,7 +696,6 @@ ul {
            let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
            pagingBar.innerHTML = null;
            let wrapperDiv = document.createElement("div");
-         let k = 1;
          let endPage = pageMaker.endPage;
          let startPage = pageMaker.startPage;
          if(pageMaker.prev) {
@@ -706,7 +707,7 @@ ul {
             pagingBar.appendChild(btnObj);
          }
          
-         for (k = startPage; k <= endPage; k++) {
+         for (let k = startPage; k <= endPage; k++) {
             let pageObj = document.createElement("div");
             pageObj.setAttribute("data-num", k);
             pageObj.innerText = k;
@@ -732,7 +733,7 @@ ul {
       function getActiveDay(){
          let dateList = document.getElementsByClassName("daily-place-list");
          let idx, i;
-         for (i = 0; i < dateList.length; i++) {
+         for (let i = 0; i < dateList.length; i++) {
             
             if(dateList[i].style.display=="block"){
                idx = i;
@@ -752,7 +753,11 @@ ul {
          let i;
          let currentList = dailyPlaceList[idx];
          let currentPlaceList = currentList.children;
-         for (i = 0; len = currentPlaceList.length ,i < len; i++) {
+         console.log(currentPlaceList.length);
+         if(currentPlaceList.length>5){
+        	 return;
+         }
+         for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
             if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
                return;
             }

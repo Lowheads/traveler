@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.travelmaker.domain.SchdtVO;
 import org.travelmaker.domain.Schdt_PlaceVO;
@@ -16,6 +17,6 @@ public interface SchdtService {
 	
 	public SchdtVO[][] setAll(int schNo,SchdtVO[][] schdtVOs);
 	
-	public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
+	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
 
 }
