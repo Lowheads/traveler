@@ -40,11 +40,11 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private apiLoginService apiService;
 	
-	// 로그인에 성공하면 여기루 넘어온다.
-	@GetMapping("/success")  // 이거 없애야지
-	public void success() {
-		log.info("Success");
-	}
+//	// 로그인에 성공하면 여기루 넘어온다.
+//	@GetMapping("/success")  // 이거 없애야지
+//	public void success() {
+//		log.info("Success");
+//	}
 	
 	@GetMapping("/accountInfo") // 내 정보 페이지
 	public void accountInfo() {
@@ -76,11 +76,10 @@ public class MemberController {
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
-		ModelAndView mav = new ModelAndView("redirect:/member/success");
+		ModelAndView mav = new ModelAndView("redirect:/member/main");
 		
 		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
 		if(service.isMemberStatus(mVO, rttr, session)) {
-			mav=new ModelAndView("redirect:/member/main");
 			return mav;
 		}
 		// email 저장하기 여부
@@ -89,7 +88,6 @@ public class MemberController {
 		service.login(mVO); // 로그인 시키자..!
 		service.lastLoginSetToday(mVO.getEmail()); // 최종 로그인은 오늘..
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-		session.setAttribute("memNo", service.getMemNo(mVO.getEmail())); // 회원 번호 
 		return mav;
 	
 	}
@@ -240,7 +238,6 @@ public class MemberController {
      public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rttr) throws IOException, ParseException {
 	    System.out.println("여기는 callback");
 	    
-	    try {
 	    OAuth2AccessToken oauthToken = apiService.getNaverToken(code, state, session); // 네이버 토큰을 얻는다.
 	    String userInfo = apiService.getNaverUserProfile(oauthToken); // // 로그인한 사용자 정보를 읽어온다.
 	    
@@ -260,11 +257,7 @@ public class MemberController {
 	    // 이미 회원이라면 세션주고 로그인
 	    session.setAttribute("email", email);
 	    System.out.println(userInfo); // 네이버 로그인 정보					
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    	return "/error_Page";
-	    }
-	    return "/member/main";
+	    return "redirect:/member/main";
 	    
      }
     
@@ -280,8 +273,6 @@ public class MemberController {
 			 
 	  System.out.println("kakao code:"+code);
 		  
-	  try { // 카카오 로그인하고 새로고침하면 에러떠서 예외처리
-		  
 	  JsonNode access_token = apiService.getKakaoToken(code); // 카카오 토큰을 얻어온다
 	  JsonNode userProfile = apiService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
 	  String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일만 빼온다
@@ -295,15 +286,10 @@ public class MemberController {
 		    	return "redirect:/member/main";
 		    }
 	  		
-	  		
 	  	// 이미 회원이면 로그인 처리
 	  	session.setAttribute("email", email);
-	    return "/member/main";
-	    
-	  }catch(Exception e) {
-		  e.getMessage();
-		  return "/member/main";
-	  }
+	    return "redirect:/member/main";
+	  
 	 }
     
 }
