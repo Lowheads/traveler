@@ -1,6 +1,5 @@
 package org.zerock.mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -8,13 +7,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.travelmaker.domain.BoarddtVO;
-import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.MemberVO;
-import org.travelmaker.domain.PlaceDTO;
-import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.ThemeVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
+import org.travelmaker.mapper.ThemeAttachMapper;
 import org.travelmaker.mapper.ThemeMapper;
 
 import lombok.Setter;
@@ -33,6 +29,9 @@ public class MapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private ThemeMapper mapper3;
+
+	@Setter(onMethod_ = @Autowired)
+	private ThemeAttachMapper mapper4;
 
 //	@Test
 	public void dateTest() {
@@ -191,7 +190,7 @@ public class MapperTests {
 		
 	}
 	
-	@Test
+//	@Test
 	public void getTheme() {
 		
 //		int themeNo = 3;
@@ -202,6 +201,40 @@ public class MapperTests {
 		
 		
 		
+	}
+	
+//	@Test
+	public void attTest() {
+		
+//		int themeNo = 1;
+//		
+//		ThemeAttachVO img = mapper4.findByThemeNo(themeNo);
+//		
+//		log.info(img.toString());
+		
+		
+		/*
+		 * int themeNo = 2;
+		 * 
+		 * ThemeAttachVO img = new ThemeAttachVO();
+		 * 
+		 * 
+		 * img.setUuid("knnnnnnnnsssnna"); img.setFileName("filename");
+		 * img.setImage(true); img.setUploadPath("c/upload"); img.setThemeNo(themeNo);
+		 * 
+		 * int result = mapper4.update(img);
+		 * 
+		 * log.info(img.toString());
+		 */	/*
+		int result = mapper4.update(img);
+		
+		log.info("-----------------"+result+"-----------------");
+		*/
+		
+		
+		
+		
+//		
 	}
 	
 	

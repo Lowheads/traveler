@@ -11,7 +11,8 @@
 		<result property="plcTitle" column="PLC_TITLE" />
 	</resultMap>
 
-	<resultMap type="org.travelmaker.domain.PlaceVO" id="searchResult">
+	<resultMap type="org.travelmaker.domain.PlaceVO"
+		id="searchResult">
 		<result property="plcNo" column="PLC_NO" />
 		<result property="regionNo" column="REGION_NO" />
 		<result property="plcTitle" column="PLC_TITLE" />
@@ -23,13 +24,24 @@
 		<result property="openingH" column="OPENING_H" />
 		<result property="likeCnt" column="LIKECNT" />
 	</resultMap>
-
-	<select id="getThemeList" resultType="map">
-		select * from theme ORDER BY THEME_NO
+	
+	 <select id="getThemeList" resultType="map"> 
+	 	select * 
+	 	from theme 
+	 	ORDER BY THEME_NO 
+		</select>
+<!--  	<select id="getThemeList" resultType="map">
+		select t.region_no, t.theme_code, t.theme_no, t.reg_date, t.mod_date,
+		a.filename
+		from theme t, theme_attach a
+		where t.theme_no = a.theme_no
+		order by t.theme_no
 	</select>
+-->
 
 	<select id="getThemeInfo" resultMap="searchResult">
-		SELECT P.PLC_NO, P.PLC_TITLE, P.ADDRESSDT, P.P_CATE, P.LIKECNT
+		SELECT P.PLC_NO,
+		P.PLC_TITLE, P.ADDRESSDT, P.P_CATE, P.LIKECNT
 		FROM THEME_PLC T, PLACE P
 		WHERE T.PLC_NO = P.PLC_NO AND THEME_NO=#{themeNo}
 		ORDER BY P.PLC_TITLE
@@ -39,22 +51,25 @@
 		delete
 		from theme_plc
 		where plc_no in
-		<foreach collection="list" item="place" open="(" close=")" separator=",">
+		<foreach collection="list" item="place" open="(" close=")"
+			separator=",">
 			#{place}
 		</foreach>
 		and theme_no = #{themeNo}
 	</delete>
-	
+
 	<insert id="insertTheme">
-		INSERT ALL 
+		INSERT ALL
 		<foreach collection="list" item="place">
-			INTO THEME_PLC VALUES(#{themeNo},#{place})
+			INTO THEME_PLC
+			VALUES(#{themeNo},#{place})
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
 
-	<select id ="getPlaceList" resultMap = "searchResult" parameterType="String">
-		SELECT * 
+	<select id="getPlaceList" resultMap="searchResult"
+		parameterType="String">
+		SELECT *
 		FROM PLACE
 		WHERE PLC_TITLE LIKE '%'||#{keyword}||'%'
 		ORDER BY PLC_TITLE

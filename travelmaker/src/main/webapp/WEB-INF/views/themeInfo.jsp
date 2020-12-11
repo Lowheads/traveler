@@ -11,6 +11,16 @@
 <button id="searchBtn" class="btn btn-sm- btn-primary" 
 onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>	
 
+<div class="uploadResult">
+	<ul>
+	</ul>
+</div>
+<div class='bigPictureWrapper'>
+	<div class='bigPicture'></div>
+</div>
+<br>
+
+
 <table  class="table table-bordered" id="dataTable" style="width:70%">
 <thead>
 <tr>
@@ -68,6 +78,31 @@ $(document).ready(function() {
 	checkModal(message);
 
 	history.replaceState({}, null, null);
+	
+	var themeNo = ${themeNo};
+	
+	(function(){
+		
+		$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(result){
+			
+			var str="";
+			
+			var fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
+			
+			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
+			"' data-type = '"+result.fileType+"'></div>";
+			
+			str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
+			str+="</div>";
+			str+="</li>";
+			
+			$(".uploadResult ul").html(str);
+		
+		})
+			
+	})();
+	
+	
 
 	function checkModal(message) {
 
@@ -91,11 +126,47 @@ $("tr[name=row]").click(function(){
 	
 })
 
+$(".uploadResult").on("click","li", function(e){
+	
+	let liObj = $(this);
+	
+	const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+	showImage(path.replace(new RegExp(/\\/g),"/"));
+/*	
+	if(liObj.data("type")){
+		showImage(path.replace(new RegExp(/\\/g),"/"));
+	}else{
+		
+		self.location="admin/download?fileName="+path
+	}*/
+	
+});
+
+$(".bigPictureWrapper").on("click",function(e){
+	$(".bigPicture").animate({width:'0px', height:'0px'});
+	setTimeout(() => {
+		$(this).hide();
+		
+	},300);
+	
+});
+
 function showModal(msg){
 	
 	$(".modal-body").html(msg);
 	$("#myModal").modal("show");
 };
+
+
+function showImage(fileCallPath){
+	
+	$(".bigPictureWrapper").css("display","flex").show();
+	
+	$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
+	.animate({width:'100%',height:'100%'},1000);
+
+	
+}
 
 })
 
