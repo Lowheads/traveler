@@ -121,103 +121,56 @@
 
 	};
 
-	//비밀번호 입력 확인(수정)
-	function infoPwdCheck() {
-
-		let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
-		let realPwd = $("#realPwd").val(); // 현재 비밀번호
-		let realPwdCfm = $("#realPwdCfm").val(); // 현재 비밀번호 히든 값
-		let myPwd = $("#infoPwd").val(); // 비밀번호
-		let myPwdCfmm = $("#infoPwdCfm").val(); // 비밀번호 확인
-
-		// 현재 패스워드 입력
-		if (realPwd.length == 0) {
-			alert("현재 비밀번호를 입력해 주세요");
-			$("#realPwd").focus();
-			return false;
-		}
-
-		// 현재 비밀번호 확인
-		if (realPwd != realPwdCfm) {
-			alert("현재 비밀번호와 일치하지 않아요");
-			$("#realPwd").focus();
-			return false;
-		}
-
-		// 패스워드 입력
-		if (myPwd.length == 0) {
-			alert("비밀번호를 입력해 주세요");
-			$("#pwd").focus();
-			return false;
-		}
-
-		// 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
-		if (false === jPwd.test(myPwd)) {
-			alert('비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다.');
-			return false;
-		}
-
-		// 패스워드 확인
-		if (myPwd != myPwdCfmm) {
-			alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");
-			return false;
-		}
-
-		// 비밀번호는 공백없이!!
-		if (myPwd.search(/\s/) != -1) {
-			alert('비밀번호는 공백없이!!');
-			return false;
-		}
-
-		// 비밀번호 변경이 성공적이면 변경한다.
-		alert("비밀번호를 변경하였습니다");
-		return true;
-
-	} // end infoPwdCheck
-
 	//닉네임 변경
 	$(function() {
 
-		$("#infoNicknameCheck").click(function() {
+		$("#apiInfoNicknameCheck")
+				.click(
+						function() {
 
-					let nickname = $("#infoNickname").val();
-					let sendDate = {'nickname' : nickname}
-					
-					let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/;; // 닉네임은 문자 제한없이 2~8자리
-
-					// 현재 닉네임 체크
-					if (nickname == "${member.nickname}") {
-						document.getElementById("infoSpanNickname").innerHTML = "현재 닉네임입니다.";
-						infoSpanNickname.style.color = 'green';
-						return false;
-					}
-
-					// 닉네임 유효성 체크
-					if (false === jNname.test(nickname)) {
-						document.getElementById("infoSpanNickname").innerHTML = "닉네임은 한글/영문/숫자만!!";
-						infoSpanNickname.style.color = 'red';
-						return;
-					}
-
-					$.ajax({
-						type : 'POST',
-						data : sendDate, // sendDate 함수를 contrlr에 보냄
-						url : "/member/hasNickname",
-						success : function(data) {
-							if ($.trim(data) == 1) {
-								document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
-								infoSpanNickname.style.color = 'red';
-								return false;
-							} else {
-								document.getElementById("infoSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
-								infoSpanNickname.style.color = 'blue';
+							let nickname = $("#apiInfoNickname").val();
+							let sendDate = {
+								'nickname' : nickname
 							}
-		 				}
-				});
-			});
-		});
+							let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/;
+							; // 닉네임은 문자 제한없이 2~8자리
 
-	function infoNickSaveCheck() {
+							// 현재 닉네임 체크
+							if (nickname == "${member.nickname}") {
+								document.getElementById("infoSpanNickname").innerHTML = "현재 닉네임입니다.";
+								infoSpanNickname.style.color = 'green';
+								return false;
+							}
+
+							// 닉네임 유효성 체크
+							if (false === jNname.test(nickname)) {
+								document.getElementById("infoSpanNickname").innerHTML = "닉네임은 한글/영문/숫자만!!";
+								infoSpanNickname.style.color = 'red';
+								return;
+							}
+
+							$
+									.ajax({
+										type : 'POST',
+										data : sendDate, // sendDate 함수를 contrlr에 보냄
+										url : "/member/hasNickname",
+										success : function(data) {
+											if ($.trim(data) == 1) {
+												document
+														.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
+												infoSpanNickname.style.color = 'red';
+												return false;
+											} else {
+												document
+														.getElementById("infoSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+												infoSpanNickname.style.color = 'blue';
+											}
+										}
+									});
+						});
+	});
+
+	function apiInfoNickSaveCheck() {
 
 		let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 		let myNickname = $("#infoNickname").val(); // 닉네임
@@ -276,41 +229,17 @@
 		<div class="center">아이디(이메일) : ${member.email }</div> 
 		
 		<!-- 닉네임 저장 폼 -->
-	<form action="/member/modifyNickname" method="post">
-		 <div class="center">닉네임 <input type="text" id="infoNickname" name="nickname" value="${member.nickname }">
+	<form action="/member/modifyApiNickname" method="post">
+		 <div class="center">닉네임 <input type="text" id="apiInfoNickname" name="nickname" value="${member.nickname }">
 		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
-		 	<button type="button" class="btn" id="infoNicknameCheck">중복 체크</button>
-			<button type="submit" id="button" onclick="return infoNickSaveCheck()">저장하기</button>
+		 	<button type="button" class="btn" id="apiInfoNicknameCheck">중복 체크</button>
+			<button type="submit" id="button" onclick="return apiInfoNickSaveCheck()">저장하기</button>
 		 <p><span id="infoSpanNickname"></span></p></div>
 	</form>
 		 <!-- end 닉네임 저장 폼 -->
 		
 		<div class="center">생년월일 ${member.birth }</div>
-		
-		<div class="center">비밀번호 : <input type="hidden" id="realPwdCfm" value="${member.pwd }">
-		<button type='button' id="modal_btn" class="button">비밀번호 변경</button></div>
 	
-		<!-- 비밀번호 변경 모달 -->
-	<div class="modal_wrap">
-		<div class="modal_close"><a href="#">close</a></div>
-	<div>
-			<!-- 비밀번호 -->
-		<form action="/member/modifyPwd" method="post">
-			<div class="pwd-change"><h4 style="font-weight: bold;">비밀번호 변경하기</h4></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="realPwd" id="realPwd" placeholder="현재 비밀번호">
-			<p>현재 비밀번호를 입력해주세요!</p></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="pwd" id="infoPwd" placeholder="변경할 비밀번호">
-			<p>비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
-			<!-- 비밀번호 확인 -->
-			<div class="pwd-change"><input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" placeholder="비밀번호 확인">
-			<p>비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
-			<p><input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>"></p>
-			<div class="center"><button type="submit" class="pwd-pwd" onclick="return infoPwdCheck();">비밀번호 변경하기</button></div>
-			
-			</form>
-		</div>
-	</div>
-
 	<div class="center">가입일 : <fmt:formatDate value="${member.regDate }" type="both" pattern="yyyy-MM-dd"/></div>
 	<div class="center">최종로그인 : <fmt:formatDate value="${member.lastDate }" type="both" pattern="yyyy-MM-dd"/></div>
 		
@@ -320,7 +249,7 @@
 	
 	   <!-- 회원탈퇴 (내 정보를 출력해야하므로, 폼으로 처리)-->
       <div>
-         <form action="/member/deletePage" method="post">
+         <form action="/member/apiDeletePage" method="post">
             <input type="hidden" id="modi_email" name='email' value="<%=session.getAttribute("email")%>">
             <p><button type='submit' class="btn">회원탈퇴</button></p>
             <br>
