@@ -6,6 +6,7 @@
 
 <%@ include file="../includes/header.jsp" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,92 +15,7 @@
 	<!-- JQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 
-<style type="text/css">
-.modal_wrap{ /* 비번 바꾸기 창*/
-        display: none;
-        width: 450px;
-        height: 380px;
-        position: absolute;
-        top:50%;
-        left: 30%;
-        margin: -180px 0 0 400px; /* 모달 위치조절 */
-        background:#eee;
-        background-color:#7FFFD4;
-        z-index: 2;
-        border-radius: 12px;
-    }
-    .black_bg{
-        display: none;
-        position: absolute;
-        content: "";
-        width: 100%;
-        height: 100%;
-        background-color:rgba(0, 0,0, 0.5);
-        top:0;
-        left: 0;
-        z-index: 1;
-    }
-    .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -30px;
-        right: 0;
-    }
-    .modal_close> a{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
-        text-indent: -9999px;
-    }
-    
-.wrap-main{
-	padding: 10px;
-}
-
-.center {
-	text-align: center;
-	padding: 4px;
-}
-
-#button {
-	width: 80px;
-	height: 30px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
-	border-radius: 12px;
-}
-
-.button {
-	width: 130px;
-	height: 30px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
-	border-radius: 12px;
-}
-
-.pwd-change{
-	padding: 5px;
-	padding-left: 13px;
-	text-align: center;
-}
-
-.pwd-pwd{ // /* 비번 바꾸기 버튼 */
-	width: 130px;
-	height: 30px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
-	border-radius: 12px;
-}
-
-</style>
+<link rel="stylesheet" href="/resources/css/accountInfo.css">
 
 <script>
 
@@ -331,3 +247,4 @@
 
 
 </html>
+

@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+
+.container {
+	margin-right: 380px;
+}
+
+.title-wrap {
+	font-size: 50px;
+}
+
+table.board-wrap {
+	width: 1350px;
+	border-collapse: collapse;
+	text-align: center;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	margin: auto;
+	margin-top: 5%;
+}
+
+table.board-wrap thead th {
+	width: 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+	background: #FFD700;
+	margin: 20px 10px;
+	text-align: center;
+}
+
+table.board-wrap tbody th {
+	width: 150px;
+	padding: 10px;
+}
+
+table.board-wrap td {
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+

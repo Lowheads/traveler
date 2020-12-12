@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.travelmaker.mapper.QnABoardMapper">
+
+<resultMap type="org.travelmaker.domain.QnABoardVO" id="UserResult">
+		<result property="bno" column="BNO" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="nickname" column="NICKNAME" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="updateDate" column="UPDATEDATE" />
+		<result property="viewCnt" column="viewCnt" />
+		<result property="memNo" column="MEM_NO" />
+		<result property="secret" column="SECRET" />
+		<result property="replyCnt" column="REPLYCNT" />
+	</resultMap>
+
+	<select id="getList" resultMap="UserResult">
+			<![CDATA[
+	    		SELECT * FROM qna_board WHERE bno > 0
+	    	]]>
+	</select>
+
+	<!-- 게시물 작성 -->
+<!-- 	<insert id="insert">
+		insert into qna_board (bno, title, content, nickname, viewCnt, mem_no, secret)
+		values(seq_bno.nextval, #{title}, #{content}, #{nickname}, 0, #{memNo}, #{secret})
+	</insert> --> 
+	
+	<!-- insert(Sequence) -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+			select seq_bno.nextval from dual
+		</selectKey>
+		
+		insert into qna_board(bno, title, content, nickname, viewCnt, mem_no, secret, replyCnt)
+		values(#{bno}, #{title}, #{content}, #{nickname}, #{viewCnt}, #{memNo}, #{secret}, 0)
+	</insert>
+
+	<!-- 게시물 보기 -->
+	<select id="read" resultMap="UserResult">
+		select * from qna_board where bno = #{bno}
+	</select>
+
+	<!-- 회원번호(FK)가져오기 -->
+	<select id="getMyMemNo" resultType="int">
+		select m.mem_no from member m
+		where m.email = #{email}
+	</select>
+	
+	
+	<!-- 게시물 작성(내 닉네임 넘기기) -->
+	<select id="getMyNickname" resultType="String">
+		select m.nickname from member m
+   		where m.email = #{email}
+	</select>
+	
+	<!-- 조회수 + 1 -->
+	<update id="viewCntUp">
+		update qna_board 
+	    set 
+	    viewCnt = viewCnt + 1
+	    where bno = #{bno}
+	</update>
+	
+	<!-- 게시물 수정 -->
+	<update id="update">
+		update qna_board
+		set
+		title = #{title},
+		content = #{content},
+		updateDate = sysdate
+		where bno = #{bno}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="remove">
+		delete from qna_board where bno = #{bno}
+	</delete>
+	
+	<!-- 게시물에 달린 댓글 삭제 -->
+	<delete id="deleteBoardReply">
+		delete from qna_reply
+		where bno = #{bno}
+	</delete>
+	
+	<!--  페이징 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							nickname like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getListWithPaging" resultMap="UserResult">
+			<![CDATA[
+				select bno, title, content, nickname, reg_date, updateDate, viewCnt, secret, replyCnt
+				from
+				(select /*+INDEX_DESC(qna_board pk_bno) */
+					rownum rn, bno, title, content, nickname, reg_date, updateDate, viewCnt, secret, replyCnt
+				from 
+					qna_board
+				where
+			]]>
+			
+			<include refid="criteria"></include>
+			
+			<![CDATA[
+				rownum <= #{pageNum} * #{amount}
+				)
+				where rn > (#{pageNum} -1) * #{amount}
+			]]>
+	</select>
+	
+	<!-- 전체 페이지 목록구하기 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from qna_board 
+		where
+		<include refid="criteria"></include>
+		bno > 0
+	</select>
+	
+	<!-- 회원 등급 admin 여부 확인 -->
+	<select id="findAdmin" resultType="String">
+		select count(*) from member
+		where mem_no = #{memNo}
+		and mem_grade = 'admin'
+	</select>
+	
+</mapper>

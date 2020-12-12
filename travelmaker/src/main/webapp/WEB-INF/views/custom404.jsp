@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<h1 style="color: red; font-weight: bold;">해당 URL은 존재하지 않습니다.</h1>
+	<h1 style="color: red; font-weight: bold;">URL을 확인해주세요</h1>
 
 </body>
 </html>
