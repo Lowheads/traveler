@@ -32,22 +32,14 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public PlaceVO get(long plcNo) {
-		
-		return mapper.read(plcNo);
-		
+	public List<PlaceVO> get(String[] plcNoArr) {
+		return mapper.read(plcNoArr);
 	}
-
+	
 	@Override
-	public boolean remove(long plcNo) {
+	public boolean removePlace(long plcNo) {
 		
 		return mapper.delete(plcNo)==1;
-	}
-
-	@Override
-	public List<PlaceVO> getList() {
-		
-		return mapper.getList();
 	}
 
 	@Override
@@ -57,20 +49,12 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public List<PlaceVO> getList(Criteria cri,String selected) {
+	public List<PlaceVO> getListWithPaging(Criteria cri) {
 
-		if(selected!=null) {
-			if(selected.equals("like")){
-				return mapper.sortLike(cri);
-			}
-			if(selected.equals("new")){
-				return mapper.sortNewest(cri);
-			}
-			if(selected.equals("old")){
-				return mapper.sortOldest(cri);
-			}
+		if(cri.getSelected()==null) {
+			return mapper.getListWithPaging(cri);
 		}
-		return mapper.getListWithPaging(cri);
+		return mapper.getSortList(cri);
 	}
 
 	@Override
@@ -81,21 +65,26 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public int getTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getTotalCount(cri);
+		return mapper.getTotal(cri);
 	}
 	
 	//종운 메서드
 	@Override
-	public List<PlaceVO> getList(String title) {
+	public List<PlaceVO> getList(String title,int regionNo,Criteria cri) {
 		log.info("get place List of a map" + title);
-		return mapper.getListWithTitle(title);
+		return mapper.getListWithTitle(title,regionNo,cri.getPageNum(),cri.getAmount());
 	}
 
 	@Override
-	public List<PlaceDTO> getListWithTheme(int regionNo, int themeNum) {
-		log.info("get place List with Theme" + regionNo + " " + themeNum);
-		return mapper.getListWithTheme(regionNo, themeNum);
+	public List<PlaceDTO> getListWithTheme(int regionNo, String themeCode) {
+		log.info("get place List with Theme" + regionNo + " " + themeCode);
+		return mapper.getListWithTheme(regionNo, themeCode);
 	}
+	
+	@Override
+	public int getSearchResultTotalCnt(String title,int regionNo) {
+		return mapper.getSearchResultTotalCnt(title,regionNo);
+	}	
 
 	@Override
 	public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs) {
@@ -109,7 +98,7 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 	
 	public void setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
-		 // WebDriver 경로 설정
+		// WebDriver 경로 설정
         System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\bin\\chromedriver.exe");
         // WebDriver 옵션 설정 
         ChromeOptions options = new ChromeOptions();
@@ -130,6 +119,7 @@ public class PlaceServiceImpl implements PlaceService {
         //웹페이지에서 글제목 말고 query랑 그 document전체를 가져올 수 있는지 보자.
 //        String URL = "https://map.kakao.com/link/from/지은이집,37.571210,126.976918/to/종운이형집,37.321590,127.126611"
         //드라이버 로딩
+        String URL = "https://map.kakao.com/?map_type=TYPE_MAP&target="+schdtVO.getTransit()+"&rt="+schdtVO.getFromPlcLat()+","+schdtVO.getFromPlcLng()+","+schdtVO.getToPlcLat()+",";
         driver.get("https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=494902%2C1131020%2C528056%2C1061777&rt1=1&rt2=21&rtIds=%2C&rtTypes=%2C");
         //selector로 지정하기
         WebElement page_summary = driver.findElementByClassName("CarRouteSummaryView");
@@ -148,7 +138,8 @@ public class PlaceServiceImpl implements PlaceService {
             // WebDriver 종료
             driver.quit();
         }
-    }	
+    }
+
 		
 //		return schdtVO;
 //	}

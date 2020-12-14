@@ -36,7 +36,7 @@
 							<div class="form-group uploadDiv">
 								<input type="file" id="boardImg" name="file" class="boardImg" >
 								<div class="select_img">
-									<img src="<c:out value="${board.boardImg}"/>" id="modifyimage" data-image="${board.boardImg }"  />
+									<img src="<c:out value="/resources${board.boardImg}"/>" id="modifyimage" data-image="${board.boardImg }"  />
 								</div>
 							</div>
 						</div>
@@ -91,7 +91,6 @@ $(document).ready(function(){
 				alert('수정할 사진을 등록해주세요');
 				return;
 			}
-	
 		}   
 		
 		else if(operation==='remove'){

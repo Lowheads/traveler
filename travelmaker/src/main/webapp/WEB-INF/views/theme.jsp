@@ -7,7 +7,9 @@
 <%@ include file="includes/adminheader.jsp"%>
 
 <div class="table-responsive">
-<table  class="table table-bordered" id="dataTable" style="width:70%">
+
+
+<table  class="table table-bordered" style="width:70%">
 <thead>
 <tr>
 	<th>테마번호</th>
@@ -20,7 +22,7 @@
 </thead> 	
 <tbody>
 <c:forEach items="${list}" var="list">
-	<tr onClick = "location.href='/admin/themeInfo/<c:out value="${list.REGION_NO}"/>/<c:out value="${list.THEME_CODE}"/>'">
+	<tr onClick = "location.href='/admin/themeInfo/<c:out value="${list.THEME_NO}"/>'">
 	<td><c:out value="${list.THEME_NO}" /></td>
 	<td><c:out value="${list.REGION_NO}" /></td>
 	<td><c:out value="${list.THEME_CODE}" /></td>

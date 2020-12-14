@@ -6,13 +6,7 @@
 <%@ include file="../includes/mypageheader.jsp" %>
 
   <!-- Page Content -->
-      <!-- sort -->
-<select id="listSort" style="float:right; margin-right:10%;" > 
-<option hidden selected disabled ></option>
-<option value="like">좋아요 순</option>
-<option value="new">최근에 찜한 순</option>
-<option value="old">오래전에 찜한 순</option>
-</select>
+ 
       <div class="leftNav">
 
         <div class="list-group">	
@@ -22,7 +16,7 @@
   <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
   <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
 </ul>
-        </div>
+        </div>	
 
 <div class="modal_wrap">
     <div class="modal_close"><a href="#">close</a></div>
@@ -35,33 +29,49 @@
          <div id="pagination"></div>
     </div>
     </div>
-     <!-- End Map -->
     
 </div>
+     <!-- End Map -->
       </div>
 
       <div class="content-mypage" style="padding-top: 20px;" >
-
+     <!-- sort -->
+<select id="listSort" style="float:right; display:block; margin-right:7%;" > 
+<option hidden selected disabled ></option>
+<option value="like">좋아요 순</option>
+<option value="new">최근에 찜한 순</option>
+<option value="old">오래전에 찜한 순</option>
+</select><br>
         <div class="row" id="new">
 
 <c:forEach items="${list }" var="place">
             <div class="card h-100" id="resultcard">
            <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
-           <img class="card-img-top" src="" alt=""></a>
+           <img class="card-img-top" src="${place.plcImg}" alt=""></a>
+     <div class="heart">
+          <i class="fa fa-heart" data-plc_no="${place.plcNo }" style="font-size:24px;color:red" onclick="likeToggle(this)"></i><br>
+          <!-- 빈하트 -->
+          <!-- <i class="fa fa-heart-o" style="font-size:24px; color:red"></i> -->
+   </div>
+   <p style="font-size:3px;	">좋아요 <b><c:out value="${place.likeCnt }"/></b>개
+      </p>
            <input type="hidden" value='${place.plcNo }' id='plc_no'>
            <input type="hidden" data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" data-lng="${place.lng }" data-title="${place.plcTitle }" class="markerlatlng">
               <div class="card-body">
-                <h4 class="card-title">
+                <h5 class="card-title">
                    <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
                    <c:out value="${place.plcTitle }"></c:out></a>
                      <!-- Like  -->
-     <div style="float:right;" class="heart">
-       <a plc_no='${place.plcNo }'>
-          <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
-       </a>
-   </div>          
-             <!-- Like end -->
-                </h4>
+       <!-- Like end -->
+                </h5>
+               	<c:if test="${place.holiday ne null }">
+               	휴무일 :
+               	</c:if>
+                <c:out value="${place.holiday }"/><br>
+                  	<c:if test="${place.openingH ne null }">
+               	영업시간 :
+               	</c:if>
+                <c:out value="${place.openingH}"/>
            
               </div>
             </div>
@@ -71,7 +81,10 @@
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='selected' value = <%= request.getParameter("selected") %>>
 </form>
+
+
         </div>
+<button type='button' id="modal_btn" class="pull-right" style="float:right; display:block; margin-right:7%;">지도에서 보기</button>
         <!-- /.row -->
         <div style="text-align: center;" class="w3-center">
 <ul class="w3-bar">
@@ -90,16 +103,11 @@
 </c:if>
 </ul>
 
-<button type='button' id="modal_btn" class="pull-right" style="float:right">지도에서 보기</button>
 </div>
 <!-- modal -->
 
-
-      </div>
-      <!-- /.col-lg-9 -->
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -108,11 +116,11 @@
 					
 					});
 	
-	var actionForm = $("#actionForm");
-	var markers = [];
+	let actionForm = $("#actionForm");
+	let markers = [];
 	//마커의 좌표값 얻어오기
-	var markerlatlng = document.getElementsByClassName("markerlatlng");
-	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+	let markerlatlng = document.getElementsByClassName("markerlatlng");
+	let infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	/* alert($(".markerlatlng").attr("lat")+""+$(".markerlatlng").attr("lng")); */
 	//모달 보여지는 메서드
 	function modalShow() {
@@ -120,38 +128,36 @@
 		document.querySelector('.black_bg').style.display = 'block';
 		
 		//지도 생성
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
 			level : 3
 		// 지도의 확대 레벨
 		};
-		var map = new kakao.maps.Map(mapContainer,
+		let map = new kakao.maps.Map(mapContainer,
 				mapOption); // 지도를 생성합니다
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-		var bounds = new kakao.maps.LatLngBounds();
-		var i, marker;
-		var listEl = document.getElementById('placesList'), 
+		let bounds = new kakao.maps.LatLngBounds();
+		let i, marker;
+		let listEl = document.getElementById('placesList'), 
 	    menuEl = document.getElementById('menu_wrap'),
 	    fragment = document.createDocumentFragment(), 
 		listStr = '';
 		
 		//장소 NodeList 받아옴
-		var itemVal = document.querySelectorAll(".item");
+		let itemVal = document.querySelectorAll(".item");
 		
 		$("#placesList").children().remove();
 		
 		for (i = 0; i < markerlatlng.length; i++) {
 			
 			// 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-			var placePosition = new kakao.maps.LatLng(
+			let placePosition = new kakao.maps.LatLng(
 					(markerlatlng[i].dataset["lat"]),
 					(markerlatlng[i].dataset["lng"])),
 			marker = addMaker(placePosition),
 			itemEl = getListItem(i,markerlatlng[i],markerlatlng[i].dataset["title"],markerlatlng[i].dataset["plc_dt"]);
-			/* if(itemVal[i] !== null || itemVal[i] !== undefined) {
-				
-			} */
+ 
 			fragment.appendChild(itemEl);
 			// LatLngBounds 객체에 좌표를 추가합니다
 			bounds.extend(placePosition);
@@ -187,7 +193,7 @@
 		    menuEl.scrollTop = 0;
 		function getListItem(index,places,title,dt) {
 
-		    var el = document.createElement('li'),
+		    let el = document.createElement('li'),
 		    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
 		                '<div class="info">' +
 		                '   <h5>' + title + '</h5>';
@@ -217,9 +223,9 @@
 			return marker;
 			}
 		function displayInfowindow(marker, title) {
-			  var content = '<div style="padding:5px;z-index:1; font-size: 13px;">' + title + '</div>';
+			  let content = '<div style="padding:5px;z-index:1; font-size: 13px;">' + title + '</div>';
 
-			    var moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
+			    let moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
 			    infowindow.setContent(content);
 			    infowindow.open(map, marker);
 			    
@@ -238,9 +244,9 @@
 
 	//셀렉트 value 값 설정
 	function selectVal(){
-			var selVal = document.location.href.split("selected=");
+			let selVal = document.location.href.split("selected=");
 			
-			var selArr = $("#listSort option");
+			let selArr = $("#listSort option");
 			if(selVal[1]==undefined || selVal[1] == 'null'){
 			selArr[0].innerHTML = "정렬 기준";
 			}
@@ -274,28 +280,56 @@
 					actionForm.submit();
 				});
 
-		//좋아요 취소하는 버튼
-		$(".heart a").on("click", function() {
-			$(this).hide(5);
-			var sendData = {
-				'plcNo' : $(this).attr('plc_no'),
+		//조와요
+		function likeToggle(heart){
+			if(heart.className == "fa fa-heart"){
+				let sendData = {
+						'plcNo' : heart.dataset['plc_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/deletePick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)-1;
+					 	},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
 			}
-			//ajax 기능 추가 
-			$.ajax({
-				type : 'post',
-				url : '/mypage/heart',
-				data : sendData,
-				success : function(data) {
-					
-					alert("목록에서 삭제되었습니다.")
-					location.reload();
-				},
-				error : function(error){
-					alert("에러발생"+error);
-				}
-			});
-		});
+			
+			if(heart.className == "fa fa-heart fa-heart-o"){
+				let sendData = {
+						'plcNo' : heart.dataset['plc_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/insertPick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)+1;
+						},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
+			}
+			
+		}; 
 		
+		$(".black_bg").on("click",function(){
+			
+			document.querySelector('.modal_wrap').style.display = 'none';
+			document.querySelector('.black_bg').style.display = 'none';
+			
+		});
 
 </script>
 <%@include file="../includes/footer.jsp" %>

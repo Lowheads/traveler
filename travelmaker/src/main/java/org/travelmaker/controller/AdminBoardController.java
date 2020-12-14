@@ -1,5 +1,6 @@
 package org.travelmaker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -51,13 +52,14 @@ private AdminBoardService service;
 	}
 	
 	@GetMapping("/removeContent/{boardNo}")
-	public String removePost(@PathVariable("boardNo") int[] boardNo, RedirectAttributes rttr) {
-		
-		for(int i =0;i<boardNo.length;i++) {
-			service.removePost(boardNo[i]);
+	public String removePost(@PathVariable("boardNo") ArrayList<Integer> boardNo, RedirectAttributes rttr) {
+
+		if(boardNo.size() == service.removePost(boardNo)) {
+			rttr.addFlashAttribute("message", "SUCCESS");
+		}else {
+			rttr.addFlashAttribute("message", "FAIL");
 		}
 		
-		rttr.addFlashAttribute("message", "SUCCESS");
 		return "redirect:/admin/boardList";
 	}
 	

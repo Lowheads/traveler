@@ -7,13 +7,7 @@
 
 
   <!-- Page Content -->
-     <!-- sort -->
-<select id="listSort" style="float:right; margin-right:10%;" > 
-<option hidden selected disabled ></option>
-<!-- <option value="like">좋아요 순</option> -->
-<option value="new">최근에 찜한 순</option>
-<option value="old">오래전에 찜한 순</option>
-</select>
+  
 
      <div class="leftNav">
 
@@ -29,23 +23,31 @@
       <!-- /.col-lg-3 -->
 <!-- col-lg-9(content) -->
       <div class="content-mypage" style="padding-top: 20px;">
+         <!-- sort -->
+     <!-- sort -->
+<select id="listSort" style="float:right; display:block; margin-right:7%;" > 
+<option hidden selected disabled ></option>
+<option value="like">좋아요 순</option>
+<option value="new">최근에 찜한 순</option>
+<option value="old">오래전에 찜한 순</option>
+</select><br>
         <div class="row">
 
 <c:forEach items="${list }" var="sch">
             <div class="card h-100" id="resultcard">
-            <a class='move' href='<c:out value="${sch.schNo }"/>'>
+            <a class='move' href='<c:out value="${sch.SCH_NO }"/>'>
            <img class="card-img-top" src="" alt=""></a>
+             <div class="heart">
+          <i class="fa fa-heart" data-sch_no="${sch.SCH_NO}" style="font-size:24px;color:red" onclick="likeToggle(this)"></i><br>
+   </div>
+   <p style="font-size:3px;	">좋아요 <b><c:out value="${sch.PICK_CNT}"/></b>개
+      </p>
               <div class="card-body">
                 <h4 class="card-title">
-                   <a class='move' href='<c:out value="${sch.schNo }"/>'>
-                   <c:out value="${sch.schTitle }"></c:out>
+                   <a class='move' href='<c:out value="${sch.SCH_NO }"/>'>
+                   <c:out value="${sch.SCH_TITLE }"></c:out>
                    </a>
                         <!-- Like  -->
-     <div style="float:right;" class="heart">
-       <a sch_no='${sch.schNo}'>
-          <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
-       </a>
-   </div>          
              <!-- Like end -->
                 </h4>
               </div>
@@ -77,7 +79,6 @@
 </div>
       <!-- /.col-lg-9 -->
 
-
 <script type="text/javascript">
 		
 	$(document).ready(function() {
@@ -108,29 +109,49 @@
 
 			})
 
-	//좋아요 취소하는 버튼
-	$(".heart a").on("click", function() {
-
-		$(this).hide(30);
-		var sendData = {
-			'schNo' : $(this).attr('sch_no'),
-		}
-		$.ajax({
-			type : 'POST',
-			url : '/mypage/heart',
-			data : sendData,
-			success : function(data) {
-
-				alert("목록에서 삭제되었습니다.")
-				location.reload();
-			},
-			error : function(error){
-				
-				alert("에러발생"+error);
-		}
-		});
-	});
-
+		//조와요
+		function likeToggle(heart){
+			if(heart.className == "fa fa-heart"){
+				let sendData = {
+						'schNo' : heart.dataset['sch_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/deletePick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)-1;
+					 	},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
+			}
+			
+			if(heart.className == "fa fa-heart fa-heart-o"){
+				let sendData = {
+						'schNo' : heart.dataset['sch_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/insertPick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)+1;
+						},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
+			}
+			
+		}; 
 	$("#listSort").change(function() {
 
 		location.replace("/mypage/pickSch?selected=" + this.value);

@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,21 +29,38 @@ public class ScheduleServiceImpl implements ScheduleService{
 	//	}
 
 	@Override
-	public ScheduleVO get(int schNo) {
+	public ScheduleVO getSchedule(int schNo) {
 
 		log.info("get...."+schNo);
 
 		return mapper.read(schNo);
 
 	}
-	
-	@Override
-	public int statusupdate(int schNo) {
-		return mapper.statusupdate(schNo);
-	}
+
 
 	@Override
-	public boolean remove(int schNo) {
+	public void statusupdate(int schNo) {
+		ScheduleVO schedule= getSchedule(schNo);
+		String status=schedule.getSchStatus();
+		System.out.println(status);
+		//작성일때 -> 미작성으로
+		if(status.equals("작성")) {
+			mapper.statusunWritten(schNo);
+		}
+		//작성중일때-> 작성으로
+		else if(status.equals("작성중")) {
+			mapper.statusWritten(schNo);
+		}
+		//미작성일때 -> 작성중으로
+		else if(status.equals("미작성")) {
+			mapper.statusWritting(schNo);
+		}
+
+	}
+
+
+	@Override
+	public boolean removeSchdule(int schNo) {
 
 		log.info("remove...."+schNo);
 
@@ -56,11 +74,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		return mapper.getList();
 	}
-	
+
 	//공개,비공개 여부 알 수 있는 리스트 가져오기
 	@Override
-	public List<ScheduleVO> getHiddenList(int memNo) {
-		// TODO Auto-generated method stub
+	public List<Map<String,Object>> getHiddenList(int memNo) {
 		return mapper.getHiddenList(memNo);
 	}
 
@@ -78,19 +95,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
-	public List<ScheduleVO> getList(Criteria cri,String selected) {
+	public List<Map<String, Object>> getList(Criteria cri) {
 
-		if(selected!=null) {
-		  //if(selected.equals("like")){
-			//				}
-			if(selected.equals("new")){
-				return mapper.sortNewest(cri);
-			}
-			if(selected.equals("old")){
-				return mapper.sortOldest(cri);
-			}
+		if(cri.getSelected()==null || cri.getSelected().equals("null")) {
+			return mapper.getListWithPaging(cri);
 		}
-		return mapper.getListWithPaging(cri);
+		return mapper.getSortList(cri);
 	}
 
 	@Override
@@ -107,10 +117,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public List<ScheduleVO> getUpCommingList(Criteria cri) {
+	public List<ScheduleVO> getUpComingList(Criteria cri) {
 		log.info("get List with criteria: "+cri);
 
-		return mapper.getUpCommingSch(cri);
+		return mapper.getUpComingList(cri);
 	}
 
 	@Override
@@ -120,26 +130,44 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int getPtotal(Criteria cri) {
+	public int getPastScheduleTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getPastTotal(cri);
+		return mapper.getPastScheduleTotal(cri);
 	}
 
 	@Override
-	public int getCtotal(Criteria cri) {
+	public int getComingScheduleTotal(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getCommingTotal(cri);
+		return mapper.getComingScheduleTotal(cri);
 	}
 
 	@Override
-	public void register(ScheduleVO schedule) {
+	public int register(ScheduleVO schedule) {
 
 		log.info("register....."+schedule);
-		mapper.insertSelectKey(schedule);
+		return mapper.insertSelectKey(schedule);
 	}
-
+	
+	@Override
 	public ScheduleVO getListSchedule(int schNo) {
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
 	}
+
+
+	@Override
+	public List<Map<String, Object>> getSchedt(int schNo) {
+		log.info(mapper.getSchedule(schNo));
+		return mapper.getSchedule(schNo);
+	}
+
+	//로그인 된 회원이 일정 찜 했는지 확인
+	@Override
+	public boolean checkPick(ScheduleVO schedule) {
+		if(mapper.checkPicked(schedule)==1) {
+			return true;
+		}
+		else return false;
+	}
+
 }

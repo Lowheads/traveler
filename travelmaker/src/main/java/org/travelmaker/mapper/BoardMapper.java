@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.PickVO;
 
 public interface BoardMapper {
 
@@ -22,7 +23,7 @@ public interface BoardMapper {
 	
 	public int update(BoardVO board);
 
-	public BoardVO readbytitle(BoardVO board);
+	public BoardVO readbySchNo(BoardVO board);
 	
 	public int getTotalCount(Criteria cri);
 
@@ -35,4 +36,6 @@ public interface BoardMapper {
 	public void upCnt(int boardNo);
 	
 	public void downCnt(int boardNo);
+	
+	public void viewCnt(int boardNo);
 }

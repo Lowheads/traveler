@@ -3,7 +3,9 @@ var placeService = (function(){
 	
 		function getList(param,callback,error) {
 			var title = param.title;
-			$.getJSON("/place/pages/" + title + ".json", function(data){
+			var regionNo = param.regionNo;
+			var pageNum = param.pageNum;
+			$.getJSON("/place/pages/"+title+"/"+regionNo+"/"+pageNum+".json", function(data){
 				if(callback) {			
 					callback(data);
 				}

@@ -10,6 +10,7 @@ public class Criteria {
    private int pageNum;
    private int amount;
    private int memNo;
+   private String selected;
    
    private String type;
    private String keyword;

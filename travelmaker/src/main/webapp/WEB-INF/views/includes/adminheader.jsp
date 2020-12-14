@@ -4,6 +4,65 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+
+/* .uploadResult{
+	width:100%;
+	background-color:gray;
+}
+ 
+ 
+.uploadResult ul{
+	display:flex;
+	flex-flow:row;
+	justify-content:center;
+	align-items:center;
+}
+
+.uploadResult ul li{
+	list-style:none;
+	padding:10px;
+	align-content:center;
+	text-align:center;
+	
+}
+
+.uploadResult ul li span{
+	color:white;
+}
+*/
+.bigPictureWrapper{
+	position:absolute;
+	display:none;
+	justify-content:center;
+	align-items:center;
+	top:0%;
+	width:100%;
+	height:100%;
+	background-color:gray;
+	z-index:100;
+	background:rgba(255,255,255,0.5);
+}
+
+.bigPicture{
+	
+	position:relative;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+}
+
+.bigPicture img{
+	
+	width:600px;	
+}
+
+
+
+
+</style>
+
 <head>
 
 <meta charset="utf-8">
@@ -105,7 +164,7 @@
 				<div id="collapsePages" class="collapse"
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Login Screens:</h6>
+						<h6 class="collapse-header">-----</h6>
 						<a class="collapse-item" href="/admin/theme">테마보기</a>
 					</div>
 				</div></li>

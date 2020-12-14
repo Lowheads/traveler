@@ -103,6 +103,14 @@
 		and pwd = #{pwd}
 	</update>
 	
+	<!-- api 계정삭제 -->
+	<update id="deleteApiMember">
+		update member set 
+		status = '탈퇴'
+		where email = #{email} 
+	</update>
+
+	
 	<!-- 비밀번호 찾기 -->
 	<select id="findPwd" parameterType="String" resultType="java.lang.String">
 		select pwd from member where email= #{email}		
@@ -128,4 +136,12 @@
 		email = #{email}
 		and status = '탈퇴'
 	</select>
+	
+	<!-- 정보 수정페이지(api로그인 확인) -->
+	<select id="hasApiMemberCnt" resultType="Integer">
+		select count(*) from member 
+		where mem_grade = 'SNS회원'
+		and email = #{email}
+	</select>
+	
 </mapper>

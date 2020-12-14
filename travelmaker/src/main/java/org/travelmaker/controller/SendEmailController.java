@@ -1,16 +1,13 @@
 package org.travelmaker.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.EmailSender;
 import org.travelmaker.service.MemberService;
@@ -42,7 +39,7 @@ public class SendEmailController {
 	        Email emailObj = new Email();
 	        
 	        // Travel 회원의 이메일이 아니라면..
-	        if(service.isTravelMember(email, rttr)) {
+	        if(service.isNotTravelMember(email, rttr)) {
 	        	mav=new ModelAndView("redirect:/search/searchPwd");
 	        	return mav;
 	        }
@@ -53,4 +50,18 @@ public class SendEmailController {
 	        
 	        return mav;
 	    }
+	    
+	    // 소셜 회원탈퇴(인증 이메일 보내기)
+	   @RequestMapping("/sendEmail")
+	   @ResponseBody
+	    public String sendEmail(@RequestParam("email") String email, @RequestParam("certNum") String certNum) throws Exception {
+		   Email emailObj = new Email();
+
+		   // 스크립트에서 생성한 임시번호를 이메일에 넣어 보낸다.
+		   emailSender.SendEmail(service.certEmail(email, certNum, emailObj));
+		   
+		   return "1";
+	   }
+	   
+	    
 }

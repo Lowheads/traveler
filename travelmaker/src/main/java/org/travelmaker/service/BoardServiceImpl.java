@@ -32,9 +32,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public BoardVO getbytitle(BoardVO board) {
+	public BoardVO getbySchNo(BoardVO board) {
 		log.info("getbytitle......"+board);
-		return mapper.readbytitle(board);
+		return mapper.readbySchNo(board);
 	}
 
 	@Override
@@ -71,10 +71,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void updateHidden(BoardVO board) {
 		
+		//hidden 속성이 공개이면 비공개로 바꿔주기
 		if(board.getHidden().equals("y")) {
 			mapper.updateN(board);
 			System.out.println("y->n");
 		}
+		//hidden 속성이 비공개이면 공개로 바꿔주기
 		if(board.getHidden().equals("n")) {
 			mapper.updateY(board);
 			System.out.println("n->y");

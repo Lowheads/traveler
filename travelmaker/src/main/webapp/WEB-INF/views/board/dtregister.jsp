@@ -20,45 +20,38 @@
 		
 		
 			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
-				
-				<div class="form-group">
-					<label>게시물 번호</label> <input class="form-control" name='boardNo' value='${board.boardNo }' readonly="readonly">
-				</div>
-								
-				<div class="form-group">
+				<table>
+					<tbody>
+					<tr>
+						<td>
+							<label>게시물번호</label><input class="form-control" name='boardNo' value='${board.boardNo }' readonly="readonly">
+						</td>
+					</tr>
+					<tr>
+						<td>
 					<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${board.boardTitle }' readonly="readonly">
-				</div>
-				<!-- 첫번째 사진등록 -->
-				<div class="form-group">
-					<label for="boarddtImg">상세 사진 등록</label>
-					<div class="form-group uploadDiv">
-					<input type="file" class="boarddtImg" id="boarddtImg" name="file" required/>
-					<div class="select_img"><img src=""/></div>
-				</div>
-				</div>
+						</td>
+					</tr>
+					<tr>
+						<td id="fileIndex">
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<label>상세 사진 내용 등록</label><input class="form-control" name='boardCon'>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<button id="Btn" type="submit" class="btn btn-default" >게시글 등록</button>
+						<button id="Btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>	
+						<button id="Btn" type="button" class="fileAdd_btn" >파일추가</button>
+						</td>
+					</tr>			
+					</tbody>
 				
-				<script>
-				//사진등록 시 화면에 보여주는 함수
-				$("#boarddtImg").change(function() {
-					if (this.files && this.files[0]) {
-					var reader = new FileReader;
-						reader.onload = function(data) {
-					$(".select_img img").attr("src", data.target.result)
-						.width(500);
-					}
-					reader.readAsDataURL(this.files[0]);
-					}
-				});
-
-				</script>
-			
-						<div class="form-group"><label>상세 사진 내용 등록</label>
-							<input class="form-control" name='boardCon'>
-						</div>				
-				<br>
-				<button id="Btn" type="submit" class="btn btn-default" >게시글 등록</button>
-				<button id="Btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>
-			</form>
+				</table>
+				</form>
 		</div>
 		<!--  end panel-body -->
 		</div>
@@ -68,3 +61,22 @@
 </div>
 <!-- /.row -->
 </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	fn_addFile();
+	function fn_addFile(){
+		var fileIndex = 1;
+		$(".fileAdd_btn").on("click", function(){
+			$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
+		});
+	
+		$(document).on("click","#fileDelBtn", function(){
+			$(this).parent().remove();
+		
+		});
+	}
+});
+
+
+</script>

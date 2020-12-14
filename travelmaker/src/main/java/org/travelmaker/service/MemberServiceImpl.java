@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.mapper.MemberMapper;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -79,19 +82,19 @@ public class MemberServiceImpl implements MemberService {
 	// 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
 	public boolean isMemberStatus(MemberVO mVO, RedirectAttributes rttr, HttpSession session) { 
 		
-				// 로그인에 실패하면 메인 페이지로
-				if(login(mVO)==null) {
-					rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
-					return true;
-				}
+		// 로그인에 실패하면 메인 페이지로
+		if(login(mVO)==null) {
+			rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
+			return true;
+			}
 	
-				// 탈퇴한 회원은 접속 못함
-				if(deleteNoAccess(mVO.getEmail())) {
-					rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
-					return true;
-				}
+			// 탈퇴한 회원은 접속 못함
+			if(deleteNoAccess(mVO.getEmail())) {
+				rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
+				return true;
+			}
 				
-			return false;
+		return false;
 	}
 
 	
@@ -114,7 +117,16 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getMember(String email) { // 내 정보 조회
 		return mapper.getMember(email);
 	}
+	
+	public boolean isApiLoginCheck(String email, HttpSession session) { // api로그인일경우 apiAccountInfo 페이지로 이동
 
+		if(mapper.hasApiMemberCnt(email) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	@Override
 	public int hasEmail(String email) { // email 체크
 		return mapper.hasEmail(email);
@@ -174,7 +186,14 @@ public class MemberServiceImpl implements MemberService {
 		mapper.deleteMember(pwd, email);
 	}
 	
-	public boolean isTravelMember(String email, RedirectAttributes rttr) { // 트래블 회원인지 확인
+	@Override
+	public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session) { // api 회원탈퇴
+		mapper.deleteApiMember(email);
+		rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
+		session.invalidate();
+	}
+	
+	public boolean isNotTravelMember(String email, RedirectAttributes rttr) { // 트래블 회원인지 확인
 
 		// 트래블 회원이 아니면 안됩니다!
 		  if(getMember(email) == null || deleteNoAccess(email)) {
@@ -188,24 +207,28 @@ public class MemberServiceImpl implements MemberService {
 	public String findPwd(String email) { // 비밀번호 찾기
 		return mapper.findPwd(email);
 	}
-
-	@Override
-	public void setNewPwd(String email) { // 임시 비밀번호 생성
-
+	
+	public String createUUID() {
 		String uuid = UUID.randomUUID().toString().replaceAll("-", ""); // -를 제거해 주었다.
 
 		// 새로운 비밀번호를 생성한다.
 		for (int i = 0; i < 1; i++) {
 			uuid = uuid.substring(0, 10); // uuid를 앞에서부터 10자리 잘라줌.
-			System.out.println(i + ") " + uuid);
 		}
+		return uuid;
+	}
+
+	@Override
+	public void setNewPwd(String email) { // 임시 비밀번호 생성
+
+		String uuid = createUUID();
 
 		// 현재 이메일을 임시 비밀번호로 변경한다.
 		mapper.modifyPwd(uuid, email);
 	}
 	
 	@Override
-	public Email writerEmail(String email, Email emailObj) { // 메일보내기
+	public Email writerEmail(String email, Email emailObj) { // 임시 비밀번호 메일보내기
 		
 		setNewPwd(email); // 비번 찾기 창에서 입력한 이메일에 새로운 비밀번호가 저장된다.
         String newPwd= findPwd(email); // 새로운 비밀번호를 변수 pw에 저장한다.
@@ -214,6 +237,17 @@ public class MemberServiceImpl implements MemberService {
         emailObj.setSubject(email+"님 travle에서 보내드리는 임시 비밀번호 메일입니다."); // 제목
         emailObj.setContent("안녕하세요, travel입니다! \n" + email + "님의 임시 비밀번호는 "+newPwd+" 입니다\n"
         		+ "로그인하시고 새로운 비밀번호로 변경해주세요!"); // 내용
+		
+        return emailObj;
+	}
+	
+	
+	@Override
+	public Email certEmail(String email, String certNum, Email emailObj) { // 소셜 계정 회원탈퇴 인증메일 보내기
+		
+        emailObj.setReceiver(email); // 받는 사람
+        emailObj.setSubject(email+"님 travle에서 보내드리는 회원탈퇴 인증번호입니다."); // 제목
+        emailObj.setContent("안녕하세요, travel입니다! \n" + email + "님의 travel 회원탈퇴 인증번호는 "+certNum+" 입니다\n"); // 내용
 		
         return emailObj;
 	}
@@ -228,6 +262,52 @@ public class MemberServiceImpl implements MemberService {
 	public boolean deleteNoAccess(String email) { // 탈퇴한 회원은 접속 못함
 		return mapper.deleteNoAccess(email) == 1 ? true : false;
 	}
+	
+	public boolean isNaverApiJoinCheck(JSONObject responseObj, Model model) { // api 로그인할 경우 회원가입 되어 있는지 확인
+		 String email = (String)responseObj.get("email"); // 로그인한 사용자의 이메일을 저장한다
+		 String nickname = (String)responseObj.get("nickname"); // 로그인한 사용자의 닉네임을 저장한다
+		 String gender = (String)responseObj.get("gender"); // 로그인한 사용자의 성별을 저장한다
+		
+		// 우리 회원이 아니면 회원가입 창으로 보낸다.
+		if(hasEmail(email) != 1) {
+			model.addAttribute("email", email);
+	    	model.addAttribute("nickname", nickname);
+	    	model.addAttribute("gender", gender);
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public boolean isKakaoApiJoinCheck(JsonNode userProfile, Model model) {
+		
+		  	JsonNode properties = userProfile.path("properties"); // properties 경로를 저장한다.
+	        JsonNode kakao_account = userProfile.path("kakao_account"); // 내 프로필 정보를 담는다.
+	        String email = kakao_account.get("email").textValue(); // 프로필에서 이메일만 빼온다
+	        String gender = kakao_account.get("gender").textValue(); // 프로필에서 성별을 빼온다.
+	        String nickname = properties.path("nickname").asText(); // properties에서 이름을 빼온다.
+	        
+	        // 우리 회원이 아니면 회원가입 창으로 보낸다.
+	        if(hasEmail(email) != 1) {
+	        	model.addAttribute("nickname", nickname);
+		        model.addAttribute("email", email);
+		        model.addAttribute("gender", gender);
+		        return true;
+	        }
+
+		return false;
+	}
+
+	// 소셜계정 탈퇴여부 확인
+	@Override
+	public boolean isDeleteAlready(String email, RedirectAttributes rttr) {
+		
+		if(deleteNoAccess(email)) {
+			rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
+			return true;
+		}
+		
+		return false;
+	}
 
 }

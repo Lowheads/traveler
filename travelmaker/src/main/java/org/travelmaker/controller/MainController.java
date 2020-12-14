@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.travelmaker.domain.ScheduleDTO;
@@ -33,10 +34,9 @@ public class MainController {
 		binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	@PostMapping(value="/theme", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE}) 
-	public void getInitSch(ScheduleDTO schDTO, Model model) {
-		model.addAttribute("schDto",schDTO); 
+	public void getInitSch(@ModelAttribute("schDto") ScheduleDTO schDTO, Model model) {
 		for (int i = 1; i <= 6; i++) {
-			model.addAttribute("theme"+i,placeService.getListWithTheme(schDTO.getSchRegion(),i));
+			model.addAttribute("theme"+i,placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
 		}
 	}
 	

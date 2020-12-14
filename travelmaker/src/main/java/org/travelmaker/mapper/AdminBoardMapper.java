@@ -1,5 +1,6 @@
 package org.travelmaker.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.travelmaker.domain.BoardVO;
@@ -10,7 +11,7 @@ public interface AdminBoardMapper{
 	
 	public List<BoardVO> getBoardList();
 	
-	public void removePost(int result);
+	public int removePost(ArrayList boardNo);
 
 	public List<BoardVO> searchPost(Criteria cri);
 	

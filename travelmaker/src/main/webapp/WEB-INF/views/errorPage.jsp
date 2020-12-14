@@ -13,14 +13,7 @@
 <body>
 
 	<h1 style="color: red;">에러 발생</h1>
-	
-	<h4><c:out value="${exception.getMessage() }"></c:out></h4>
-	
-	<ul>
-		<c:forEach items="${exception.getStackTrace() }" var="stack">
-			<li><c:out value="${stack }"></c:out></li>
-		</c:forEach>
-	</ul>
-
+	<h1> 도움에 불편을 드려 죄송합니다. </h1>
+	<a href="/">홈으로</a>
 </body>
 </html>
