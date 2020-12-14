@@ -88,6 +88,7 @@ public class MemberController {
 		service.login(mVO); // 로그인 시키자..!
 		service.lastLoginSetToday(mVO.getEmail()); // 최종 로그인은 오늘..
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
+		session.setAttribute("memNo",service.getMemNo(mVO.getEmail()));
 		return mav;
 	
 	}

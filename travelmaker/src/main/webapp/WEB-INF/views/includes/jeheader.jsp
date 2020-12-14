@@ -2,7 +2,6 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
  <!-- 쿠키 -->
  <%
  
@@ -39,7 +38,6 @@
 %>
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="utf-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -47,128 +45,224 @@
 <head>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<meta charset="utf-8">
-<!-- JavaScript 파일 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- 생년월일 달력 -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- datepicker 하나 쓰시는 거니까여 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-
 
 /* 지은 스타일 */
 
-a:link, a:visited {
-  color: red;
-  padding: 5px 5px;
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container > div {
+  width: 200px;
+  heigth: 200px;
+  margin: 10px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  line-height: 30px;
+  font-size: 12px;
+}
+
+
+/* 모달창 */
+/* Important part */
+.modal-content{
+overflow-y: initial !important
+}
+.modal-body{
+height: 550px;
+overflow-y: auto;
+}
+
+#register_modal{
+	display: none;
+	width: 600px;
+	height: 600px;
+	padding: 10px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align : center;
+
+
+
+}
+
+
+#hiddenlist_modal, #schedulelist_modal{
+	display: none;
+	width: 450px;
+	height: 90%;
+	padding: 10px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align : center;
+}
+
+
+/* 닫는버튼 */
+#hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
+	width: 20%;
+	margin-right: 10%;
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	text-align : right;
+}
+
+/* 이미지 갤러리 */
+div.gallery {
+	flex-basis: 20%;
+	justify-content: space-between;
+	margin-right: 20px;
+	margin-bottom: 30px;
+	height: 290px;
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 7px;
+}
+
+div.gallery:hover {
+	border: 1px solid #777;
+}
+
+div.gallery img {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+}
+
+div.desc {
+	padding: 15px;
+	text-align: center;
+	object-fit: cover;
+	font-size: 15px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.responsive {
+	padding: 10px 10px;
+	float: left;
+	width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+	.responsive {
+		width: 49.99999%;
+		margin: 6px 0;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.responsive {
+		width: 100%;
+	}
+}
+
+.clearfix:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+a:link, a:visited {
+	color: black;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
 }
 
 a:hover, a:active {
-  background-color: skyblue;
-  color: white;
+	background-color: skyblue;
+	color: white;
 }
 
 /* toggle */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
 }
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
+input:checked+.slider {
+	background-color: #2196F3;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 
-/* Paging Style Set */
-
-.pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
+.container {
+	padding-right: 100px;
+	padding-left: 100px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
-.pagination a.active {
-  background-color: #4CAF50;
-  color: white;
+/* table a {
+	text-decoration: none;
+	color: #f9cf74 bold;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+table a:hover {
+	color: salmon;
+}
 
-.pagination li{ list-style-type:none; float: left;}
-
-	.container {
-		width: 1440px;
-		margin: 0 auto;
-		
-	}
-	table a {
-        text-decoration: none;
-        color: #f9cf74 bold;
-    }
-    table a:hover {
-        color:salmon;
-    }
 .board {
 	border-collapse: collapse;
 	margin: 25px 0;
@@ -214,9 +308,9 @@ body {
 	padding: 0px;
 	margin: 0px;
 	font-family: san-serif;
-}
+} */
 
-#Btn, #regBtn, #hiddenBtn{
+/* #Btn, #regBtn, #hiddenBtn {
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	margin-right: -4px;
@@ -224,6 +318,316 @@ body {
 	background-color: #f9cf74;
 	color: white;
 	padding: 5px;
+}
+ */
+.orgImg {
+	width: 100px;
+	height: 100px;
+}
+
+.select_img img {
+	margin: 20px 0;
+}
+
+/* 여기까지 지은 스타일 */
+
+/*datepicker에서 사용한 이미지 버튼 style적용*/
+img.ui-datepicker-trigger {
+	margin-left: 5px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.modal_wrap {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 0;
+	background: #eee;
+	z-index: 2;
+}
+
+.modal_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
+.modal_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
+.login_modal {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 -250px;
+	margin-left: 2%;
+	background: #eee;
+	z-index: 1;
+}
+
+.register_modal {
+	display: none;
+	width: 70%;
+	position: fixed;
+	height: 500px;
+	top: 50%;
+	margin: -250px 0 0 -250px;
+	margin-left: 2%;
+	background: #eee;
+	z-index: 1;
+}
+
+.black_bg {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 104%;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.lModal_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
+.lModal_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
+.rModal_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
+.rModal_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
+.card-img-top {
+	width: 100%;
+	height: 60%;
+}
+
+.card-title {
+	display: block;
+}
+
+.card-text {
+	display: flex;
+}
+
+.h-100 {
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 7px;
+}
+
+.map_wrap, .map_wrap * {
+	margin: 0;
+	padding: 0;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	font-size: 12px;
+}
+
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+	color: #000;
+	text-decoration: none;
+}
+
+.map_wrap {
+	position: relative;
+	width: 100%;
+	height: 500px;
+}
+
+#menu_wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 250px;
+	margin: 10px 0 30px 10px;
+	padding: 5px;
+	overflow-y: auto;
+	background: rgba(255, 255, 255, 0.7);
+	z-index: 1;
+	font-size: 12px;
+	border-radius: 10px;
+}
+
+.bg_white {
+	background: #fff;
+}
+
+#menu_wrap hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 2px solid #5F5F5F;
+	margin: 3px 0;
+}
+
+#menu_wrap .option p {
+	margin: 10px 0;
+}
+
+#menu_wrap .option button {
+	margin-left: 5px;
+}
+
+#placesList {
+	padding-left: 0px;
+}
+
+#placesList li {
+	list-style: none;
+}
+
+#placesList .item {
+	position: relative;
+	border-bottom: 1px solid #888;
+	overflow: hidden;
+	cursor: pointer;
+	min-height: 65px;
+}
+
+#placesList .item span {
+	display: block;
+	margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#placesList .item .info {
+	padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+	color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+	padding-left: 26px;
+}
+
+#placesList .info .tel {
+	color: #009900;
+}
+
+#placesList .item .markerbg {
+	float: left;
+	position: absolute;
+	width: 36px;
+	height: 37px;
+	margin: 10px 0 0 10px;
+	background:
+		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+		no-repeat;
+}
+
+#placesList .item .marker_1 {
+	background-position: 0 -10px;
+}
+
+#placesList .item .marker_2 {
+	background-position: 0 -56px;
+}
+
+#placesList .item .marker_3 {
+	background-position: 0 -102px
+}
+
+#placesList .item .marker_4 {
+	background-position: 0 -148px;
+}
+
+#placesList .item .marker_5 {
+	background-position: 0 -194px;
+}
+
+#placesList .item .marker_6 {
+	background-position: 0 -240px;
+}
+
+#placesList .item .marker_7 {
+	background-position: 0 -286px;
+}
+
+#placesList .item .marker_8 {
+	background-position: 0 -332px;
+}
+
+#placesList .item .marker_9 {
+	background-position: 0 -378px;
+}
+
+#placesList .item .marker_10 {
+	background-position: 0 -424px;
+}
+
+#placesList .item .marker_11 {
+	background-position: 0 -470px;
+}
+
+#placesList .item .marker_12 {
+	background-position: 0 -516px;
+}
+
+#placesList .item .marker_13 {
+	background-position: 0 -562px;
+}
+
+#placesList .item .marker_14 {
+	background-position: 0 -608px;
+}
+
+#placesList .item .marker_15 {
+	background-position: 0 -654px;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	font-family: san-serif;
 }
 
 .orgImg {
@@ -235,408 +639,90 @@ body {
 	margin: 20px 0;
 }
 
-/*datepicker에서 사용한 이미지 버튼 style적용*/
-img.ui-datepicker-trigger {
-	margin-left: 5px;
-	vertical-align: middle;
-	cursor: pointer;
-}
-.modal_wrap{
-        display: none;
-        width: 70%;
-        position:fixed;
-        height: 500px;
-        top:50%;
-        margin: -250px 0 0 0;
-        background:#eee;
-        z-index: 2;
-    }
-    .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -30px;
-        right: 0;
-    }
-    .modal_close> a{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
-        text-indent: -9999px;
-    }
-.login_modal {
-   display: none;
-   width: 70%;
-   position: fixed;
-   height: 500px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
-   z-index: 1;
-}
-
-.register_modal{
-   display: none;
-   width: 70%;
-   position: fixed;
-   height: 500px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 2%;
-   background: #eee;
-   z-index: 1;
-}
-
-.black_bg {
-   display: none;
-   position: absolute;
-   width: 100%;
-   height: 104%;
-   background-color: rgba(0, 0, 0, 0.5);
-   top: 0;
-   left: 0;
-   z-index: 1;
-}
-
-.lModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
-}
-
-.lModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
-}
-.rModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
-}
-
-.rModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
-}
-
-#map {
-   width: 100%;
-   height: 100%;
-}
-
-.card-img-top {
-   width: 100%;
-   height: 60%;
-}
-
-.card-title {
-   display: block;
-}
-
-.card-text {
-   display: flex;
-}
-
-.h-100 {
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 10px;
-   margin-bottom: 7px;
-}
-
-.map_wrap, .map_wrap * {
-   margin: 0;
-   padding: 0;
-   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-   font-size: 12px;
-}
-
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
-   color: #000;
-   text-decoration: none;
-}
-
-.map_wrap {
-   position: relative;
-   width: 100%;
-   height: 500px;
-}
-
-#menu_wrap {
-   position: absolute;
-   top: 0;
-   left: 0;
-   bottom: 0;
-   width: 250px;
-   margin: 10px 0 30px 10px;
-   padding: 5px;
-   overflow-y: auto;
-   background: rgba(255, 255, 255, 0.7);
-   z-index: 1;
-   font-size: 12px;
-   border-radius: 10px;
-}
-
-.bg_white {
-   background: #fff;
-}
-
-#menu_wrap hr {
-   display: block;
-   height: 1px;
-   border: 0;
-   border-top: 2px solid #5F5F5F;
-   margin: 3px 0;
-}
-
-#menu_wrap .option p {
-   margin: 10px 0;
-}
-
-#menu_wrap .option button {
-   margin-left: 5px;
-}
-
-#placesList {
-   padding-left: 0px;
-}
-
-#placesList li {
-   list-style: none;
-}
-
-#placesList .item {
-   position: relative;
-   border-bottom: 1px solid #888;
-   overflow: hidden;
-   cursor: pointer;
-   min-height: 65px;
-}
-
-#placesList .item span {
-   display: block;
-   margin-top: 4px;
-}
-
-#placesList .item h5, #placesList .item .info {
-   text-overflow: ellipsis;
-   overflow: hidden;
-   white-space: nowrap;
-}
-
-#placesList .item .info {
-   padding: 10px 0 10px 55px;
-}
-
-#placesList .info .gray {
-   color: #8a8a8a;
-}
-
-#placesList .info .jibun {
-   padding-left: 26px;
-}
-
-#placesList .info .tel {
-   color: #009900;
-}
-
-#placesList .item .markerbg {
-   float: left;
-   position: absolute;
-   width: 36px;
-   height: 37px;
-   margin: 10px 0 0 10px;
-   background:
-      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-      no-repeat;
-}
-
-#placesList .item .marker_1 {
-   background-position: 0 -10px;
-}
-
-#placesList .item .marker_2 {
-   background-position: 0 -56px;
-}
-
-#placesList .item .marker_3 {
-   background-position: 0 -102px
-}
-
-#placesList .item .marker_4 {
-   background-position: 0 -148px;
-}
-
-#placesList .item .marker_5 {
-   background-position: 0 -194px;
-}
-
-#placesList .item .marker_6 {
-   background-position: 0 -240px;
-}
-
-#placesList .item .marker_7 {
-   background-position: 0 -286px;
-}
-
-#placesList .item .marker_8 {
-   background-position: 0 -332px;
-}
-
-#placesList .item .marker_9 {
-   background-position: 0 -378px;
-}
-
-#placesList .item .marker_10 {
-   background-position: 0 -424px;
-}
-
-#placesList .item .marker_11 {
-   background-position: 0 -470px;
-}
-
-#placesList .item .marker_12 {
-   background-position: 0 -516px;
-}
-
-#placesList .item .marker_13 {
-   background-position: 0 -562px;
-}
-
-#placesList .item .marker_14 {
-   background-position: 0 -608px;
-}
-
-#placesList .item .marker_15 {
-   background-position: 0 -654px;
-}
-
-#pagination {
-   margin: 10px auto;
-   text-align: center;
-}
-
-#pagination a {
-   display: inline-block;
-   margin-right: 10px;
-}
-
-#pagination .on {
-   font-weight: bold;
-   cursor: default;
-   color: #777;
-}
-
-body {
-   padding : 0px;
-   margin : 0px;
-   font-family: san-serif;
-}
-
-
-.orgImg {
-   width: 100px;
-   height: 100px;
-}
-
-.select_img img {
-   margin: 20px 0;
-}
-
 #button { /*로그인 버튼*/
-   width: 260px;
-   height: 50px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+	width: 260px;
+	height: 50px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
 }
 
-.wrap-main{
-   padding: 10px;
+.wrap-main {
+	padding: 10px;
 }
 
 .center {
-   text-align: center;
-   padding: 4px;
+	text-align: center;
+	padding: 4px;
 }
 
-.wrap-Addition{ /* email기억하기 & 로그인 */
-text-align: center;
-   padding: 5px;
+.wrap-Addition { /* email기억하기 & 로그인 */
+	text-align: center;
+	padding: 5px;
 }
 
-.findInfo{ /* 비밀번호 찾기 */
-   text-align: center;
+.findInfo { /* 비밀번호 찾기 */
+	text-align: center;
 }
 
-.div-reg{
-   padding: 8px;
+.div-reg {
+	padding: 8px;
 }
 
-.btn{ /* 닉네임 중복체크 버튼 */
-   width: 130px;
-   height: 35px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+.btn { /* 닉네임 중복체크 버튼 */
+	width: 140px;
+	height: 35px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
 }
 
 /* dropdown  */
 .dropbtn {
-  width: 30px;
-  height: 3px;
-  background-color: black;
-  margin: 6px 0;
-  font-size: 16px;
-  border: none;
+	width: 30px;
+	height: 3px;
+	background-color: black;
+	margin: 6px 0;
+	font-size: 16px;
+	border: none;
 }
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
 	margin-top: 10px;
-  position: relative;
-  display: inline-block;
-  float:right;
+	position: relative;
+	display: inline-block;
+	float: right;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  z-index: 1;
+	display: none;
+	position: absolute;
+	right: 0;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	z-index: 1;
 }
-
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  display: block;
+	color: black;
+	padding: 12px 16px;
+	display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
-  display: block;
+	display: block;
+}
 </style>
 
 </head>

@@ -1,10 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="../includes/jeheader.jsp"%>
 
+<link rel="stylesheet" href="/resources/css/main.css">
 
-<div class="container">
-	<h3>${board.boardTitle } </h3>
-	<table class="board">
+<div class="wrapper">
+ 	
+ <div class="header_wrapper">
+ 	<div class="header">
+	<h3> ${board.boardTitle} </h3>
+	</div>
+</div>
+	<div class="contents">
+
+		<div class="ct_body">
+		
+		<div class="heart" style="float:right;">
+			<c:choose>
+				<c:when test="${pick eq 'picked' }"> 
+						찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i>
+				</c:when>
+
+				<c:when test="${pick eq 'unpicked'}">
+						찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i>
+				</c:when>
+			</c:choose>
+		</div>	
+		
+		<div class="form-group">
+		<table class="board">
 		<thead>
 			<tr>
 				<th>회원번호</th>
@@ -20,8 +45,9 @@
 			</tr>
 		</tbody>
 	</table>
-
-	<div>${schedule.schNo}: ${schedule.schTitle }</div>
+	</div>
+	<div class="form-group">
+	<div>일정 : ${schedule.schTitle }</div>
 	<table class="board">
 		<thead>
 			<tr>
@@ -47,9 +73,10 @@
 		</tbody>
 
 	</table>
-
-	<div>게시물상세</div>
-
+	</div>
+	
+	<div>게시글</div>
+	<div class="form-group">
 	<table class="board">
 		<thead>
 			<tr>
@@ -68,34 +95,51 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<span>파일 목록</span>
-	<div class="form-group" style="border: 1px solid #dbdbdb;">
-		<c:forEach var="file" items="${file}">
-			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>" width="200" height="200"/><br>
-		</c:forEach>
 	</div>
-
+	
+	<div class="form-group">
+	<span>사진 목록</span>
+	
+	<div style="border: 1px solid #dbdbdb;">
+		
+		
+		
+		<div class="flex-container">
+		<c:forEach var="file" items="${file}">
+		<div>
+			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>" width="200" height="200"/><br>${file.FILE_CONTENT}<br>
+		</div>
+		</c:forEach>
+		</div>
+	</div>
+</div>
 
 	<c:choose>
   <c:when test="${memNo eq schedule.memNo}">
-    <button id="Btn" data-oper='modify' class="btn btn-default">Modify</button>
-    <button id="Btn" data-oper='dtmodify' class="btn btn-default">dtModify</button>
+    <button id="Btn" data-oper='modify' class="btn btn-default">게시글수정</button>
+    <button id="Btn" data-oper='dtmodify' class="btn btn-default">사진목록수정</button>
   </c:when>
 </c:choose>
 	
-	<button id="Btn" data-oper='list' class="btn btn-info">List</button>
+	<button id="Btn" data-oper='list' class="btn btn-info">목록으로</button>
 
 	<form name='operForm' id='operForm' action="/board/modify" method="get">
 		<input type='hidden' id='boardNo' name='boardNo' value='<c:out value="${board.boardNo }"/>'> 
 		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
 		<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+	</form>
+	<form name='fileForm' action="/board/fileDown" method="get">
 		<input type='hidden' id="FILE_NO" name='FILE_NO' value="">
 	</form>
+</div>
+</div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+
 	var operForm = $("#operForm");
 	
 	$("button[data-oper='modify']").on("click",function(e){
@@ -110,14 +154,55 @@ $(document).ready(function(){
 		operForm.find("#boardNo").remove();
 		operForm.attr("action","/board/list")
 		operForm.submit();
-	});
+	});	
 });
 
 function fn_fileDown(fileNo){
-	var formObj = $("form[name='operForm']");
+	var formObj = $("form[name='fileForm']");
 	$("#FILE_NO").attr("value", fileNo);
-	formObj.attr("action", "/board/fileDown");
 	formObj.submit();
 }
+
+//좋아요
+function likeToggle(heart){
+   if(heart.className == "fa fa-heart"){
+       let sendData = {
+            'schNo' : heart.dataset['sch_no'],
+         }
+         //ajax 기능 추가 
+         $.ajax({
+            type : 'post',
+            url : '/board/deletePick',
+            data : sendData,
+            success : function(data) {
+               heart.classList.toggle("fa-heart-o");
+              
+             },
+            error : function(error){
+               alert("에러발생!! 다시시도해주세요"+error);
+            }
+         });
+   }
+   
+  if(heart.className == "fa fa-heart fa-heart-o"){
+      let sendData = {
+            'schNo' : heart.dataset['sch_no'],
+         }
+         //ajax 기능 추가 
+         $.ajax({
+            type : 'post',
+            url : '/board/insertPick',
+            data : sendData,
+            success : function(data) {
+               heart.classList.toggle("fa-heart-o");
+              
+            },
+            error : function(error){
+               alert("에러발생!! 다시시도해주세요"+error);
+            }
+         });
+   } 
+    
+}; 
 </script>
 	
