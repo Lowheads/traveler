@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+
+li {
+   list-style:none;
+}
+
+.comment{
+	width : 960px;
+	margin-top:  20px;
+	margin-left: 90px;
+	margin-bottom : 20px;
+/* 	border: 1px solid red;
+   	border-radius: 10px; */
+}
+
+.comment-title{
+	margin-left: 10px;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+.comment-list{
+	margin-left: 15px;
+}
+
+.comment-reply{
+	margin-top : 2px;
+	margin-left: 20px;	
+}
+
+.replyarea{
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+
+.button {
+	width: 100px;
+	height: 50px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
+	border-radius: 12px;
+	margin-bottom: 20px;
+}
+
+.replyRegiBtn{ /*댓글 등록 버튼*/
+	background-color : orange;	
+	color : white;
+	height : 89px;
+	width : 80px;
+	margin-left : 3px;
+	border: 1px solid #4e266d;
+	border-radius: 8px;
+}
+
+.replyRegi-wrap{ /*댓글 등록 텍스트*/
+	 /* background-color: chartreuse; */
+   width: 100%;
+   height: 110px;
+   display: flex;
+   justify-content: center;
+   /* justify-content: flex-start; */
+   align-items: center;
+}
+
+.replyBtn_modify{ /* 댓글 수정 버튼 */
+	height : 20px; 
+	background-color : white;
+	color : black;
+	margin-left : 2px;
+	font-size : 10px;
+	outline:none;
+	border : 0;
+}
+
+.replyBtn_delete{ /* 댓글 삭제 버튼 */
+	height : 20px;
+	background-color : white;
+	color : black;
+	margin-left : 2px;
+	font-size : 10px;
+	outline:none;
+	border : 0;
+}
+
+.modiText{ /* 댓글 수정 textarea */
+	margin-right : 2px;
+}
+
+.small{ /*small 태그*/
+	float : right;
+	margin-right : 13px;
+}
+
+.replyModiBtn{ /*댓글 수정완료 버튼*/
+  	width: 100px;
+	height: 66px;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	border: 1px solid #4e266d;
+	border-radius: 8px;
+}
+
+.textContent{ /* 댓글 수정 div */
+   /* background-color: chartreuse; */
+   width: 100%;
+   height: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

@@ -52,6 +52,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO login(MemberVO mVO) { // 로그인 기능
+		
+		lastLoginSetToday(mVO.getEmail()); // 최종 로그인은 오늘..
+		
 		return mapper.login(mVO);
 	}
 	

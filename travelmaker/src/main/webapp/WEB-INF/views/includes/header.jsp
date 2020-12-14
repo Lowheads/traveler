@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+
  <!-- 쿠키 -->
  <%
  
@@ -14,6 +15,7 @@
         String deleteBtn = "";
  		String mypage = "";
  		String registerBtn = "";
+ 		
    // 쿠키 확인
       Cookie[] cookies = request.getCookies();
    if(cookies != null){
@@ -526,6 +528,7 @@ text-align: center;
             <li>
             <a class="navbar-brand" href="/admin/boardList">관리자</a>
             <a class="navbar-brand" href="/board/list">게시판</a>
+            <a class="navbar-brand" href="/qnaboard/list">Q&A 게시판</a>
             
             <div class="dropdown">
   <div class="dropbtn"></div>
@@ -581,7 +584,7 @@ text-align: center;
             <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
             <br>
             
-            <a href="/member/oauth"> <!-- 카카오 로그인 -->
+            <a href="/member/kakao"> <!-- 카카오 로그인 -->
 				<img src="/resources/img/kakaoBtn.png" style="height: 60px" width="288px"></a></div>
 				<br>
             

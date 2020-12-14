@@ -1,0 +1,174 @@
+.ct_body {
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 30px 20px;
+    margin-top: 30px;
+    box-sizing: border-box;
+}
+.form-group input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 7px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.form-group textarea {
+    width: 100%;
+    height: 500px;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+#form {
+    width: 650px;
+    margin: 0 auto;
+}
+.form-group label {
+    font-weight: bold;
+    font-size: 15px;
+}
+.btn {
+    margin: 10px 0;
+    height: 40px;
+    font-size: 13px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.btn:hover {
+    color: #4279ff;
+    border: 1px solid #4279ff;
+}
+.uploadDiv {
+    width: 650px;
+    margin: 30px auto;
+}
+.uploadDiv>input {
+    margin: 10px 0;
+}
+.uploadDiv>label {
+    font-size: 15px;
+    font-weight: bold;
+}
+.uploadResult {
+    margin: 50px 0;
+}
+
+/* 추가 */
+.ct_body>div {
+    width: 650px;
+    margin: 30px auto;
+}
+.reply {
+    width: 650px;
+    margin: 0 auto;
+}
+.reply_header>p {
+    position: relative;
+    border-top: 1px solid #000;
+    padding: 10px 0;
+}
+#addReplyBtn {
+    position: absolute;
+    right: 0;
+    height: 30px;
+    font-size: 13px;
+    padding: 0 9px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+}
+#addReplyBtn:hover {
+    color: #4279ff;
+    border: 1px solid #4279ff;
+}
+.chat {
+    font-size: 14px;
+}
+.chat li {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+.chat>li>p {
+    position: relative;
+}
+.chat span {
+    position: absolute;
+    right: 0;
+    font-size: 13px;
+    color: #999;
+}
+
+
+.paging {
+    position: relative;
+    padding: 50px 0;
+}
+.paginate {
+    display: inline-block;
+    position: absolute;
+    background-color: #c8c8c8;
+    border-radius: 3px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.reply-footer {
+    padding: 50px;
+    box-sizing: border-box;
+    position: relative;
+}
+.paginate::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+.paginate li {
+    /* padding: 10px; */
+    float: left;
+    cursor: pointer;
+    border-radius: 3px;
+    display: block;
+}
+.paginate>li>a {
+    display: inline-block;
+    padding: 10px;
+}
+
+.paginate li.active {
+    background-color: #4279ff;
+    color: #fff;
+}
+.uploadResult {
+    border: 1px solid #999;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+.uploadResult ul li {
+    display: inline-block;
+    margin: 5px 10px;
+}
+
+.uploadResult img {
+    max-width: 100px;
+    height: 100px;
+}
+
+.btn{
+	color: white;
+	background-color: orange;
+}
+
+.ct_body>div {
+    width: 650px;
+    margin: 30px auto;
+}
