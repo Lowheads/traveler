@@ -123,16 +123,18 @@
 	$(document).ready(function() {
 
 		const message = '<c:out value="${message}"/>';
+		
+		let modalMsg = "";
 
 		if (message === '') {
 			return;
 		}else if(message === 'success'){
-			$(".modal-body").html("삭제를 완료하였습니다");
+			modalMsg="삭제를 완료하였습니다";
 		}else{
-			$(".modal-body").html("삭제중 오류가 발생했습니다 다시 시도해주세요");
+			modalMsg="삭제중 오류가 발생했습니다 다시 시도해주세요";
 		}
-		$("#myModal").modal("show");
 		
+		showModal(modalMsg);
 
 	})
 
@@ -140,11 +142,7 @@
 		
 		const type = $("select[id=type]").val();
 		const keyword = $("input[id=keyword]").val();
-		//var type = $("#searchForm").find("option:selected").val();
-		//var keyword = $("#searchForm").find("input[name='keyword']").val();
 		
-		let msg="";
-
 		if (type == null) {
 			showModal("검색할 대상을 선택하세요");
 			return false;
@@ -166,8 +164,9 @@
 			msg = "검색은 100자리 이하만 가능합니다";
 			showModal(msg);
 			return false;
+		}else{	
+			return true;
 		}
-		return true;
 		
 	})
 

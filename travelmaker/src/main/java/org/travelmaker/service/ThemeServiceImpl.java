@@ -1,11 +1,15 @@
 package org.travelmaker.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.travelmaker.domain.PlaceDTO;
+import org.springframework.transaction.annotation.Transactional;
+import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.domain.ThemeVO;
+import org.travelmaker.mapper.ThemeAttachMapper;
 import org.travelmaker.mapper.ThemeMapper;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +20,7 @@ import lombok.extern.log4j.Log4j;
 public class ThemeServiceImpl implements ThemeService {
 	
 	private ThemeMapper mapper;
+	private ThemeAttachMapper attMapper;
 
 	@Override
 	public List<ThemeVO> getThemeList() {
@@ -25,11 +30,53 @@ public class ThemeServiceImpl implements ThemeService {
 	}
 
 	@Override
-	public List<PlaceDTO> getThemeInfo(int themeNo) {
+	public List<PlaceVO> getThemeInfo(int themeNo) {
 	
 		return mapper.getThemeInfo(themeNo);
 	}
-
 	
+	@Transactional
+	@Override
+	public Map<String, Integer> updateTheme(String[] removedPlaces,String[] addedPlaces, int themeNo, ThemeAttachVO attachment) {
+		
+		attMapper.delete(themeNo);
+		
+		if(attachment.isImage()) {
+			
+			attMapper.update(attachment);
+					
+		}
+
+		
+		Map<String, Integer> result = new HashMap<>();
+		
+		result.put("deleteResult",0);
+		result.put("insertResult",0);
+		
+		if(removedPlaces.length!=0) {
+			result.put("deleteResult", mapper.deleteTheme(removedPlaces, themeNo));
+		}
+		
+		if(addedPlaces.length!=0) {
+			result.put("insertResult", mapper.insertTheme(addedPlaces, themeNo));
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<PlaceVO> getPlaceList(String keyword) {
+		
+		return mapper.getPlaceList(keyword);
+	}
+
+	@Override
+	public ThemeAttachVO getAttachment(int themeNo) {
+
+		return attMapper.findByThemeNo(themeNo);
+	}
+	
+	
+
 
 }
