@@ -66,7 +66,7 @@
 
 			<div class="form-group">
 					<label>게시글 설명</label>
-					<input class="form-control" name='boardCon'>
+					<input class="form-control" name='boardCon' >
 			</div>
 			<div class="form-group">
 			<div style="border: 1px solid #dbdbdb;">

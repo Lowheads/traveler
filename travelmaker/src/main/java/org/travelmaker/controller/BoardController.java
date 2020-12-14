@@ -219,6 +219,7 @@ public class BoardController {
 		
 		model.addAttribute("memNo",memNo);
 	
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 	}
 	
 	@PostMapping("/modify")

@@ -49,21 +49,328 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 
-/* 지은 스타일 */
-
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
+.overlay {
+  position: absolute;
+  top: -40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
 }
-
-.flex-container > div {
-  width: 200px;
-  heigth: 200px;
-  margin: 10px;
+.text {
+   width:100%;
+  color: black;
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   text-align: center;
-  line-height: 30px;
-  font-size: 12px;
 }
+.dailyscheduleDT a:hover .overlay {
+  opacity: 1;
+}
+.contentAll {
+   width: auto;
+   background-color: #F5F5DC;
+   border: 2px solid black;
+   border-radius: 5px;
+   padding: 20px;
+}
+
+.dayDt {
+   padding: 7px;
+   justify-content: flex-start;
+   display: flex;
+   margin-bottom: 75px;
+   border-bottom: 1px solid gray;
+}
+
+.dailyscheduleDT a{
+   position: relative;
+}
+
+.dailyscheduleDT{
+   width: auto;
+}
+
+.plcImg {
+   border: 4px solid #ffffff; /* Gray border */
+   border-radius: 4px; /* Rounded border */
+   width: 150px; /* Set a small width */
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.marker {
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+.dayDate {
+   height: 300px;
+   margin-bottom: 40px;
+   display: flex;
+}
+
+.dango{
+   background-color: white;
+}
+.dango img{
+   width: 50px;
+   height: 50px;
+}
+
+
+.directionAll {
+   margin-top: 20px;
+   margin-bottom: 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.direction {
+   width: 50px;
+   height: 50px;
+   flex-grow: 1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   padding: auto;
+}
+.drirection p{
+   margin: auto;
+}
+
+/* Right column */
+.content-mypage {
+   float: right;
+   width: 65%;
+   margin-right: 10%;
+}
+
+.modal_wrap {
+   display: none;
+   width: 70%;
+   position: fixed;
+   height: 500px;
+   top: 50%;
+   left: 15%;
+   margin: -250px 0 0 0;
+   background: #eee;
+   z-index: 2;
+}
+
+.modal_close {
+   width: 26px;
+   height: 26px;
+   position: absolute;
+   top: -30px;
+   right: 0;
+}
+
+.modal_close>a {
+   display: block;
+   width: 100%;
+   height: 100%;
+   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+   text-indent: -9999px;
+}
+
+.black_bg {
+   display: none;
+   position: fixed;
+   width: 100%;
+   height: 100%;
+    overflow: auto;
+   background-color: rgba(0, 0, 0, 0.5);
+   top: 0;
+   left: 0;
+   z-index: 1;
+}
+
+#map {
+   width: 100%;
+   height: 100%;
+}
+
+
+.map_wrap, .map_wrap * {
+   margin: 0;
+   padding: 0;
+   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+   font-size: 12px;
+}
+
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+   color: #000;
+   text-decoration: none;
+}
+
+.map_wrap {
+   position: relative;
+   width: 100%;
+   height: 500px;
+}
+
+#menu_wrap {
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   width: 250px;
+   margin: 10px 0 30px 10px;
+   padding: 5px;
+   overflow-y: auto;
+   background: rgba(255, 255, 255, 0.7);
+   z-index: 1;
+   font-size: 12px;
+   border-radius: 10px;
+}
+
+.bg_white {
+   background: #fff;
+}
+
+
+#menu_wrap hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 2px solid #5F5F5F;
+   margin: 3px 0;
+}
+
+#menu_wrap .option p {
+   margin: 10px 0;
+}
+
+#menu_wrap .option button {
+   margin-left: 5px;
+}
+
+#placesList {
+   padding-left: 0px;
+}
+
+#placesList li {
+   list-style: none;
+}
+
+#placesList .item {
+   position: relative;
+   border-bottom: 1px solid #888;
+   overflow: hidden;
+   cursor: pointer;
+   min-height: 65px;
+}
+
+#placesList .item span {
+   display: block;
+   margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+#placesList .item .info {
+   padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+   color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+   padding-left: 26px;
+}
+
+#placesList .info .tel {
+   color: #009900;
+}
+
+#placesList .item .markerbg {
+   float: left;
+   position: absolute;
+   width: 36px;
+   height: 37px;
+   margin: 10px 0 0 10px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+      no-repeat;
+}
+
+#placesList .item .marker_1 {
+   background-position: 0 -10px;
+}
+
+#placesList .item .marker_2 {
+   background-position: 0 -56px;
+}
+
+#placesList .item .marker_3 {
+   background-position: 0 -102px
+}
+
+#placesList .item .marker_4 {
+   background-position: 0 -148px;
+}
+
+#placesList .item .marker_5 {
+   background-position: 0 -194px;
+}
+
+#placesList .item .marker_6 {
+   background-position: 0 -240px;
+}
+
+#placesList .item .marker_7 {
+   background-position: 0 -286px;
+}
+
+#placesList .item .marker_8 {
+   background-position: 0 -332px;
+}
+
+#placesList .item .marker_9 {
+   background-position: 0 -378px;
+}
+
+#placesList .item .marker_10 {
+   background-position: 0 -424px;
+}
+
+#placesList .item .marker_11 {
+   background-position: 0 -470px;
+}
+
+#placesList .item .marker_12 {
+   background-position: 0 -516px;
+}
+
+#placesList .item .marker_13 {
+   background-position: 0 -562px;
+}
+
+#placesList .item .marker_14 {
+   background-position: 0 -608px;
+}
+
+#placesList .item .marker_15 {
+   background-position: 0 -654px;
+}
+
+/* 지은 스타일 */
 
 
 /* 모달창 */
