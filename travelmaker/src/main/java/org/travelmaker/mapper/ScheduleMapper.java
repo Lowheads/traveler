@@ -1,6 +1,7 @@
 package org.travelmaker.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceVO;
@@ -16,7 +17,7 @@ public interface ScheduleMapper {
 	//memno에 맞는 schedulelist가져오기
 	public List<ScheduleVO> getList(int memNo);
 	
-	public List<ScheduleVO> getHiddenList(int memNo);
+	public List<Map<String, Object>> getHiddenList(int memNo);
 	
 	// 삭제가능해야되고
 	public int delete(int schNo);
@@ -31,26 +32,19 @@ public interface ScheduleMapper {
 	//게시글 상태 미작성-> 작성중으로 변경
 	public int statusWritting(int schNo);
 	
-	public void upSet(int schNo);
-
-
-	public void upCnt(int schNo);
-
 	public int statusupdate(int schNo);
 
-	public void downCnt(int schNo);
-
-	public List<ScheduleVO> getListWithPaging(Criteria cri);
+	public List<Map<String,Object>> getListWithPaging(Criteria cri);
 
 	public List<ScheduleVO> getPastSch(Criteria cri);
 
-	public List<ScheduleVO> getUpCommingSch(Criteria cri);
+	public List<ScheduleVO> getUpComingList(Criteria cri);
 
 	public int getTotalCount(Criteria cri);
 
-	public int getPastTotal(Criteria cri);
+	public int getPastScheduleTotal(Criteria cri);
 
-	public int getCommingTotal(Criteria cri);
+	public int getComingScheduleTotal(Criteria cri);
 
 	public ScheduleVO getListSchedule(int schNo);
 
@@ -58,11 +52,10 @@ public interface ScheduleMapper {
 
 	public int insertSelectKey(ScheduleVO schedule);
 	
-//	public List<ScheduleVO> sortLike(Criteria cri);
-	public List<ScheduleVO> sortNewest(Criteria cri);
-	public List<ScheduleVO> sortOldest(Criteria cri);
+	public List<Map<String, Object>> getSortList(Criteria cri);
 
-	public List<ScheduleVO> getSortList(Criteria cri);
-
+	public List<Map<String, Object>> getSchedule(int schNo);
+	
+	public int checkPicked(ScheduleVO schedule);
 }
 

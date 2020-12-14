@@ -14,8 +14,6 @@
 	<result property="schStatus" column="sch_status"/>
 	<result property="memo" column="memo"/>
 	<result property="schRegion" column="sch_region"/>
-	<result property="hidden" column="hidden"/>
-
 
 </resultMap>
 
@@ -27,10 +25,11 @@
 </select>
 
 <!-- schedule, board 조인해서 공개, 비공개 여부 확인 -->
-<select id="getHiddenList" resultMap="ScheduleResult">
+<select id="getHiddenList" resultType="hashMap">
 <![CDATA[
-	select s.sch_no, s.sch_title, b.hidden from schedule s, board b
-	where mem_no = #{memNo} and s.sch_no=b.sch_no
+   select s.sch_no as schNo, s.sch_title as schTitle, b.hidden, b.board_title as boardTitle 
+   from schedule s, board b
+   where mem_no = #{memNo} and s.sch_no=b.sch_no
 ]]>
 </select>
 
@@ -59,6 +58,12 @@
 	select * from schedule where sch_no=#{schNo} 
 </select>
 
+<select id="getSchedule" resultType="hashMap">
+<![CDATA[
+	select * from schedule s, board b where s.sch_no = #{schNo} and s.sch_no = b.sch_no
+]]>
+</select>
+
 <delete id="delete">
 	delete from schedule where sch_no = #{schNo}
 </delete>
@@ -66,54 +71,41 @@
 <!-- status 값 받아서 설정  (setstatus)-->
 <!-- 게시물 작성할 때 게시물 상태 '작성'으로 변경 -->
 <update id="statusWritten">
-	update schedule set sch_status='작성' where sch_no= #{schNo}
+   update schedule set sch_status='BS001' where sch_no= #{schNo}
 </update>
 
 <update id="statusunWritten">
-	update schedule set sch_status='미작성' where sch_no= #{schNo}
+   update schedule set sch_status='BS003' where sch_no= #{schNo}
 </update>
 
 <update id="statusWritting">
-	update schedule set sch_status='작성중' where sch_no = #{schNo}
+   update schedule set sch_status='BS002' where sch_no = #{schNo}
 </update>
-
 
 <update id="update">
 	update schedule
 	set mem_no=#{memNo}, sch_title= #{schTitle},from_date =#{fromDate}, to_date=#{toDate}, sch_last_date= sysdate,
 	sch_status = #{schStatus}, memo= #{memo}, sch_region=#{schRegion} where sch_no = #{schNo}
 </update>
-<select id="getListWithPaging" resultMap="ScheduleResult">
+<select id="getListWithPaging" resultType="hashMap">
 <![CDATA[
 		select
 			*
 			from
 			(
 			select
-				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
+				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt
 			from
-			schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
+			schedule s, pick_sch pl, board b
+			where b.sch_no = s.sch_no
+			and s.sch_no = pl.sch_no 
 			and pl.mem_no = #{memNo}
 			and rownum <= #{pageNum} * #{amount}
 			)
 			where rn > (#{pageNum} -1) * #{amount}  
 ]]>
-
-
-
 </select>
 
-<update id="upCnt">
-
-UPDATE schedule SET likecnt = likecnt +1 where plc_no = #{plc_no}
-</update>
-
-<update id="downCnt">
-
-UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
-</update>
-		
 		<select id="getPastSch" resultMap="ScheduleResult">
 		<![CDATA[
 		select
@@ -123,17 +115,16 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
 			select
 				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
 			from
-			schedule s, pick_sch pl
-			where s.to_date < SYSDATE
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+			schedule s
+			where s.to_date < SYSDATE	
+			and s.mem_no = #{memNo} 	
 			and rownum <= #{pageNum} * #{amount}
 			)
-			where rn > (#{pageNum} -1) * #{amount}  
+			where rn > (#{pageNum} -1) * #{amount} 
 ]]>
 		</select>
 		
-		<select id="getUpCommingSch" resultMap="ScheduleResult">
+		<select id="getUpComingList" resultMap="ScheduleResult">
 		<![CDATA[
 		select
 			*
@@ -142,10 +133,9 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
 			select
 				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
 			from
-			schedule s, pick_sch pl
-			where s.to_date > SYSDATE
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+			schedule s
+			where s.to_date > SYSDATE	
+			and s.mem_no = #{memNo} 	
 			and rownum <= #{pageNum} * #{amount}
 			)
 			where rn > (#{pageNum} -1) * #{amount}  
@@ -161,42 +151,42 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
 		
 		</select>
 		
-		<select id="getPastTotal" resultType="int">
+		<select id="getPastScheduleTotal" resultType="int">
 				<![CDATA[
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and s.to_date < SYSDATE
+		schedule
+			where mem_no = #{memNo}
+			and to_date < SYSDATE
 		]]>
 		</select>
 		
 		
-		<select id="getCommingTotal" resultType="int">
+		<select id="getComingScheduleTotal" resultType="int">
 				<![CDATA[
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and s.to_date > SYSDATE
+		schedule
+			where mem_no = #{memNo}
+			and to_date > SYSDATE
 		]]>
 		</select>
 
 
-<select id="getSortList" resultMap="ScheduleResult">
+<select id="getSortList" resultType="hashMap">
 <![CDATA[
    select *
     from (
     select rownum no,a.*
     from
 (select 
-        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt
        from
-			schedule s, pick_sch pl
-       where s.sch_no = pl.sch_no 
+			schedule s, pick_sch pl, board b
+       where s.sch_no = b.sch_no
+       		and s.sch_no = pl.sch_no 
 			and pl.mem_no = #{memNo}
             order by case when #{selected}='old' then pl.ps_date end desc,
             case when #{selected}='new' then pl.ps_date end asc,
+            case when #{selected}='like' then b.pick_cnt end desc,
             s.sch_no desc
             )a
             where rownum <= #{pageNum} * #{amount}
@@ -205,4 +195,7 @@ UPDATE schedule SET likecnt = likecnt -1 where plc_no = #{plc_no}
 ]]>
 </select>
 
+<select id="checkPicked" resultType="int">
+   select count(*) from pick_sch where sch_no=#{schNo} and mem_no=#{memNo}
+</select>
 </mapper>

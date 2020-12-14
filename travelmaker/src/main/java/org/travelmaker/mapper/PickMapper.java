@@ -4,7 +4,9 @@ import org.travelmaker.domain.PickVO;
 
 public interface PickMapper {
 
-	public int insert(PickVO vo);
+	public void insert(PickVO vo);
+	
+	public void insertSch(PickVO vo);
 	
 	public int delete(PickVO vo);
 	
