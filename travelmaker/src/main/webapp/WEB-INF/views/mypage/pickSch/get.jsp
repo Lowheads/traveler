@@ -18,7 +18,7 @@
 	</div>
 </div>
 <!-- /.col-lg-3 -->
-<div class="col-lg-9" style="padding-top: 20px;">
+<div class="content-mypage" style="padding-top: 20px;" >
 	<div class="row" style="flex-wrap: inherit;">
 		<div style="display: block;">
 			<h4 class="card-title">

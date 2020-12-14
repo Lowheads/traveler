@@ -33,6 +33,20 @@ var user=(function(){
 		})
 		*/
 	}
+	
+	function place(keyword, callback, error){
+		
+		$.getJSON("/admin/getPlaceList/"+keyword+".json"
+		,function(data){
+			if(callback){
+				callback(data)}}
+				).fail(
+			function(xhr, status,err){
+				if(error){
+					error();
+				}
+			});		
+	}
 
 function list(callback,error){
 		$.ajax({
@@ -87,7 +101,8 @@ function list(callback,error){
 		});
 	}
 	
-	return {detail:detail};
+	return {detail:detail,
+			place:place};
 })();
 
 

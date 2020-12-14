@@ -6,13 +6,7 @@
 <%@ include file="../includes/mypageheader.jsp" %>
 
   <!-- Page Content -->
-      <!-- sort -->
-<select id="listSort" style="float:right; margin-right:10%;" > 
-<option hidden selected disabled ></option>
-<option value="like">좋아요 순</option>
-<option value="new">최근에 찜한 순</option>
-<option value="old">오래전에 찜한 순</option>
-</select>
+ 
       <div class="leftNav">
 
         <div class="list-group">	
@@ -22,7 +16,7 @@
   <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
   <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
 </ul>
-        </div>
+        </div>	
 
 <div class="modal_wrap">
     <div class="modal_close"><a href="#">close</a></div>
@@ -35,33 +29,49 @@
          <div id="pagination"></div>
     </div>
     </div>
-     <!-- End Map -->
     
 </div>
+     <!-- End Map -->
       </div>
 
       <div class="content-mypage" style="padding-top: 20px;" >
-
+     <!-- sort -->
+<select id="listSort" style="float:right; display:block; margin-right:7%;" > 
+<option hidden selected disabled ></option>
+<option value="like">좋아요 순</option>
+<option value="new">최근에 찜한 순</option>
+<option value="old">오래전에 찜한 순</option>
+</select><br>
         <div class="row" id="new">
 
 <c:forEach items="${list }" var="place">
             <div class="card h-100" id="resultcard">
            <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
-           <img class="card-img-top" src="" alt=""></a>
+           <img class="card-img-top" src="${place.plcImg}" alt=""></a>
+     <div class="heart">
+          <i class="fa fa-heart" data-plc_no="${place.plcNo }" style="font-size:24px;color:red" onclick="likeToggle(this)"></i><br>
+          <!-- 빈하트 -->
+          <!-- <i class="fa fa-heart-o" style="font-size:24px; color:red"></i> -->
+   </div>
+   <p style="font-size:3px;	">좋아요 <b><c:out value="${place.likeCnt }"/></b>개
+      </p>
            <input type="hidden" value='${place.plcNo }' id='plc_no'>
            <input type="hidden" data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" data-lng="${place.lng }" data-title="${place.plcTitle }" class="markerlatlng">
               <div class="card-body">
-                <h4 class="card-title">
+                <h5 class="card-title">
                    <a href='https://place.map.kakao.com/${place.plcNo}' target="_blank">
                    <c:out value="${place.plcTitle }"></c:out></a>
                      <!-- Like  -->
-     <div style="float:right;" class="heart">
-       <a plc_no='${place.plcNo }'>
-          <i id="heart"  class="fa fa-heart" style="font-size:24px;color:red"></i>
-       </a>
-   </div>          
-             <!-- Like end -->
-                </h4>
+       <!-- Like end -->
+                </h5>
+               	<c:if test="${place.holiday ne null }">
+               	휴무일 :
+               	</c:if>
+                <c:out value="${place.holiday }"/><br>
+                  	<c:if test="${place.openingH ne null }">
+               	영업시간 :
+               	</c:if>
+                <c:out value="${place.openingH}"/>
            
               </div>
             </div>
@@ -71,7 +81,10 @@
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='selected' value = <%= request.getParameter("selected") %>>
 </form>
+
+
         </div>
+<button type='button' id="modal_btn" class="pull-right" style="float:right; display:block; margin-right:7%;">지도에서 보기</button>
         <!-- /.row -->
         <div style="text-align: center;" class="w3-center">
 <ul class="w3-bar">
@@ -90,16 +103,11 @@
 </c:if>
 </ul>
 
-<button type='button' id="modal_btn" class="pull-right" style="float:right">지도에서 보기</button>
 </div>
 <!-- modal -->
 
-
-      </div>
-      <!-- /.col-lg-9 -->
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -272,28 +280,56 @@
 					actionForm.submit();
 				});
 
-		//좋아요 취소하는 버튼
-		$(".heart a").on("click", function() {
-			$(this).hide(5);
-			let sendData = {
-				'plcNo' : $(this).attr('plc_no'),
+		//조와요
+		function likeToggle(heart){
+			if(heart.className == "fa fa-heart"){
+				let sendData = {
+						'plcNo' : heart.dataset['plc_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/deletePick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)-1;
+					 	},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
 			}
-			//ajax 기능 추가 
-			$.ajax({
-				type : 'post',
-				url : '/mypage/heart',
-				data : sendData,
-				success : function(data) {
-					
-					alert("목록에서 삭제되었습니다.")
-					location.reload();
-				},
-				error : function(error){
-					alert("에러발생!! 다시시도해주세요"+error);
-				}
-			});
-		});
+			
+			if(heart.className == "fa fa-heart fa-heart-o"){
+				let sendData = {
+						'plcNo' : heart.dataset['plc_no'],
+					}
+					//ajax 기능 추가 
+					$.ajax({
+						type : 'post',
+						url : '/mypage/insertPick',
+						data : sendData,
+						success : function(data) {
+							heart.classList.toggle("fa-heart-o");
+							heart.parentElement.nextElementSibling.firstElementChild.innerText = 
+								Number(heart.parentElement.nextElementSibling.firstElementChild.innerText)+1;
+						},
+						error : function(error){
+							alert("에러발생!! 다시시도해주세요"+error);
+						}
+					});
+			}
+			
+		}; 
 		
+		$(".black_bg").on("click",function(){
+			
+			document.querySelector('.modal_wrap').style.display = 'none';
+			document.querySelector('.black_bg').style.display = 'none';
+			
+		});
 
 </script>
 <%@include file="../includes/footer.jsp" %>

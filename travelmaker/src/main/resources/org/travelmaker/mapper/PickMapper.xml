@@ -9,6 +9,12 @@
 	values (#{memNo},#{plcNo})
 </insert>
 
+<insert id="insertSch">
+	insert into PICK_SCH (mem_no,sch_no)
+	values (#{memNo},#{schNo})
+</insert>
+
+
 <delete id="delete">
 	delete from PICK_PL where plc_no = #{plcNo} and mem_no = #{memNo}
 </delete>

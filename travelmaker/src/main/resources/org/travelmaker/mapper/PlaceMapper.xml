@@ -13,7 +13,7 @@
 			<result property="holiday" column="HOLIDAY"/>
 			<result property="openingH" column="OPENING_H"/>
 			<result property="likeCnt" column="LIKECNT"/>
-		
+			<result property="plcImg" column="PLC_IMG"/>
 		</resultMap>
 	
 	
@@ -62,7 +62,7 @@
 			from
 			(
 			select
-				rownum rn,p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+				rownum rn,p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt,p.PLC_IMG
 			from
 			place p, pick_pl pl
 			where p.plc_no = pl.plc_no 
@@ -90,7 +90,7 @@ UPDATE place SET likecnt = likecnt -1 where plc_no = #{plcNo}
     select rownum no,a.*
     from
 (select 
-        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt
+        p.plc_no,p.region_no,p.plc_title,p.lat,p.lng,p.address_dt,p.p_cate,p.holiday,p.opening_h,p.likecnt,p.PLC_IMG
         from place p,pick_pl pl
         where p.plc_no = pl.plc_no 
 			and pl.mem_no = #{memNo}

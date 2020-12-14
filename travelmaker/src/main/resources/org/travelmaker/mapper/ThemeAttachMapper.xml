@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="org.travelmaker.mapper.ThemeAttachMapper">
+
+	<resultMap type="org.travelmaker.domain.ThemeAttachVO" id="attachment">
+		<result property="uuid" column="UUID" />
+		<result property="uploadPath" column="UPLOADPATH" />
+		<result property="fileName" column="FILENAME" />
+		<result property="fileType" column="FILETYPE" />
+		<result property="themeNo" column="THEME_NO" />
+	</resultMap>
+
+<insert id="update">
+	INSERT INTO THEME_ATTACH (UUID, UPLOADPATH, FILENAME, FILETYPE, THEME_NO)
+	VALUES(#{uuid},#{uploadPath},#{fileName},#{image},#{themeNo})
+</insert>
+<!--  
+<update id="update" parameterType = "org.travelmaker.domain.ThemeAttachVO">
+        update theme_attach set uuid=#{uuid}, filename =#{fileName}, uploadPath=#{uploadPath}, filetype=#{image} where theme_no=#{themeNo}
+</update>
+-->
+
+<delete id="delete">
+	DELETE FROM THEME_ATTACH WHERE THEME_NO = #{themeNo}
+</delete>
+
+<select id="findByThemeNo" resultMap="attachment">
+	SELECT * FROM THEME_ATTACH WHERE THEME_NO = #{themeNo}
+</select>
+
+</mapper>

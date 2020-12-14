@@ -23,8 +23,5 @@ public class ScheduleVO {
 	private String memo;
 	private String schRegion;
 	
-	private String hidden; //board와 조인한 hidden
-	
-	
 }
 
