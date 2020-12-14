@@ -10,17 +10,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ErrorPage</title>
 </head>
+
+<style>
+.img-wrap{ /* 이미지 */
+	text-align: center;
+}
+
+h3{ /* 메인 문구 */
+	color: #4169E1;
+	text-align: center;
+}
+
+p{ /* 내용 */
+	text-align: center;
+	color: #708090;
+	margin: 9px;
+}
+</style>
+
 <body>
 
-	<h1 style="color: red; align-content: center;">에러 떳으 ..</h1>
-	
-	<h4><c:out value="${exception.getMessage() }"></c:out></h4>
-	
-	<ul>
-		<c:forEach items="${exception.getStackTrace() }" var="stack">
-			<li><c:out value="${stack }"></c:out></li>
-		</c:forEach>
-	</ul>
+	<div class="img-wrap">
+		<img id="img" src="/resources/img/500error.jpg" style="width: 700px" height="550px"> 
+	</div>
+
+	<h3>잘못된 요청입니다.</h3>
+	<p>서비스 이용에 불편을 드려 죄송합니다.</p>
+		
 
 </body>
 </html>

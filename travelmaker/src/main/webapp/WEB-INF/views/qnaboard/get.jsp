@@ -268,10 +268,10 @@
 			
 			let str = "";
 		
-			if(list == null || list.length == 0){
+		/* 	if(list == null || list.length == 0){
 				return;
 			}
-			
+			 */
 		
 		for(var i=0, len = list.length||0; i<len; i++){
 			str += "<li class='comment-li' data-rno='" + list[i].rno + "''>";
@@ -292,7 +292,7 @@
 			str += "<p class='comment-reply'>" + list[i].reply+ "</p></div></li>";
 		}
 		replyUrl.html(str); // 댓글창 출력
-		showReplyPage(replyCnt);
+		/* showReplyPage(replyCnt); */
 	});
 	
 		

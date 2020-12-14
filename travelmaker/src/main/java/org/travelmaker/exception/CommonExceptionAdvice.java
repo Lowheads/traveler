@@ -9,7 +9,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import lombok.extern.log4j.Log4j;
 
-@ControllerAdvice
+@ControllerAdvice // 모든 예외를 한곳에서 처리
 @Log4j
 public class CommonExceptionAdvice {
 
@@ -18,12 +18,13 @@ public class CommonExceptionAdvice {
 		log.error("Exception...." + ex.getMessage());
 		model.addAttribute("exception", ex);
 		log.error(model);
-		return "errorPage";
+		return "/error/errorPage";
 	}
 	
+	// 404 에러 페이지
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handle404(NoHandlerFoundException ex) {
-		return "custom404";
+		return "/error/custom404";
 	}
 }
