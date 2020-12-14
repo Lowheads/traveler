@@ -21,9 +21,9 @@ public interface ScheduleService {
 	public List<ScheduleVO> getList(int memNo);
 	
 	//memno에 맞는 schedule 공개, 비공개 여부 가져오기
-	public List<ScheduleVO> getHiddenList(int memNo); 
+	public List<Map<String, Object>> getHiddenList(int memNo); 
 	
-
+	public List<Map<String, Object>> getSchedt(int schNo);
 
 	public boolean modify(ScheduleVO vo);
 
@@ -46,5 +46,7 @@ public interface ScheduleService {
 	public ScheduleVO getListSchedule(int schNo);
 	
 	public void statusupdate(int schNo); 
+	
+	public boolean checkPick(ScheduleVO schedule); 
 
 }

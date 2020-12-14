@@ -29,9 +29,9 @@
          <div id="pagination"></div>
     </div>
     </div>
-     <!-- End Map -->
     
 </div>
+     <!-- End Map -->
       </div>
 
       <div class="content-mypage" style="padding-top: 20px;" >

@@ -17,7 +17,7 @@ public interface ScheduleMapper {
 	//memno에 맞는 schedulelist가져오기
 	public List<ScheduleVO> getList(int memNo);
 	
-	public List<ScheduleVO> getHiddenList(int memNo);
+	public List<Map<String, Object>> getHiddenList(int memNo);
 	
 	// 삭제가능해야되고
 	public int delete(int schNo);
@@ -54,5 +54,8 @@ public interface ScheduleMapper {
 	
 	public List<Map<String, Object>> getSortList(Criteria cri);
 
+	public List<Map<String, Object>> getSchedule(int schNo);
+	
+	public int checkPicked(ScheduleVO schedule);
 }
 

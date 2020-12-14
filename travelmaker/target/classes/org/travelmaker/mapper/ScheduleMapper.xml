@@ -14,8 +14,6 @@
 	<result property="schStatus" column="sch_status"/>
 	<result property="memo" column="memo"/>
 	<result property="schRegion" column="sch_region"/>
-	<result property="hidden" column="hidden"/>
-
 
 </resultMap>
 
@@ -27,10 +25,11 @@
 </select>
 
 <!-- schedule, board 조인해서 공개, 비공개 여부 확인 -->
-<select id="getHiddenList" resultMap="ScheduleResult">
+<select id="getHiddenList" resultType="hashMap">
 <![CDATA[
-	select s.sch_no, s.sch_title, b.hidden from schedule s, board b
-	where mem_no = #{memNo} and s.sch_no=b.sch_no
+   select s.sch_no as schNo, s.sch_title as schTitle, b.hidden, b.board_title as boardTitle 
+   from schedule s, board b
+   where mem_no = #{memNo} and s.sch_no=b.sch_no
 ]]>
 </select>
 
@@ -59,6 +58,12 @@
 	select * from schedule where sch_no=#{schNo} 
 </select>
 
+<select id="getSchedule" resultType="hashMap">
+<![CDATA[
+	select * from schedule s, board b where s.sch_no = #{schNo} and s.sch_no = b.sch_no
+]]>
+</select>
+
 <delete id="delete">
 	delete from schedule where sch_no = #{schNo}
 </delete>
@@ -66,17 +71,16 @@
 <!-- status 값 받아서 설정  (setstatus)-->
 <!-- 게시물 작성할 때 게시물 상태 '작성'으로 변경 -->
 <update id="statusWritten">
-	update schedule set sch_status='작성' where sch_no= #{schNo}
+   update schedule set sch_status='BS001' where sch_no= #{schNo}
 </update>
 
 <update id="statusunWritten">
-	update schedule set sch_status='미작성' where sch_no= #{schNo}
+   update schedule set sch_status='BS003' where sch_no= #{schNo}
 </update>
 
 <update id="statusWritting">
-	update schedule set sch_status='작성중' where sch_no = #{schNo}
+   update schedule set sch_status='BS002' where sch_no = #{schNo}
 </update>
-
 
 <update id="update">
 	update schedule
@@ -191,4 +195,7 @@
 ]]>
 </select>
 
+<select id="checkPicked" resultType="int">
+   select count(*) from pick_sch where sch_no=#{schNo} and mem_no=#{memNo}
+</select>
 </mapper>

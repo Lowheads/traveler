@@ -33,11 +33,9 @@ public interface BoardMapper {
 	//게시물 상태 비공개 -> 공개로 변경
 	public void updateY(BoardVO board);
 	
-	public void upCnt(long schNo);
-	
-	public void downCnt(long schNo);
-	
 	public void upCnt(int boardNo);
 	
 	public void downCnt(int boardNo);
+	
+	public void viewCnt(int boardNo);
 }

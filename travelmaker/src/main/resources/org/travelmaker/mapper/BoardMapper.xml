@@ -3,18 +3,18 @@
 <mapper namespace ="org.travelmaker.mapper.BoardMapper">
 
 <resultMap type="org.travelmaker.domain.BoardVO" id="BoardResult">
-	<result property="boardNo" column="board_no"/>
-	<result property="schNo" column="sch_no"/>
-	<result property="boardTitle" column="board_title"/>
-	<result property="wDate" column="w_date"/>
-	<result property="pickCnt" column="pick_cnt"/>
-	<result property="modDate" column="mod_date"/>
-	<result property="vCnt" column="v_cnt"/>
-	<result property="hidden" column="hidden"/>
-	<result property="boardImg" column="board_img"/>
-	<result property="thumbImg" column="thumbimg"/>
-	<result property="writer" column="mem_no"/>
-	
+   <result property="boardNo" column="board_no"/>
+   <result property="schNo" column="sch_no"/>
+   <result property="boardTitle" column="board_title"/>
+   <result property="wDate" column="w_date"/>
+   <result property="pickCnt" column="pick_cnt"/>
+   <result property="modDate" column="mod_date"/>
+   <result property="vCnt" column="v_cnt"/>
+   <result property="hidden" column="hidden"/>
+   <result property="boardImg" column="board_img"/>
+   <result property="thumbImg" column="thumbimg"/>
+   <result property="writer" column="nickname"/>
+   
 </resultMap>
 
 
@@ -27,66 +27,81 @@ select * from board where board_no>0
 
 
 <insert id="insertSelectKey">
-	insert into board (board_no,sch_no, board_title, hidden, board_img, thumbImg)
-	values (seq_board.nextval,#{schNo}, #{boardTitle},#{hidden},#{boardImg},#{thumbImg})
+   insert into board (board_no,sch_no, board_title, hidden, board_img, thumbImg)
+   values (seq_board.nextval,#{schNo}, #{boardTitle},#{hidden},#{boardImg},#{thumbImg})
 </insert>
 
 
 <select id="read" resultMap="BoardResult">
-	select * from board where board_no=#{boardNo}
+   select * from board where board_no=#{boardNo}
 </select>
 
 <select id="readbySchNo" resultMap="BoardResult">
-	select * from board where sch_no = #{schNo}
+   select * from board where sch_no = #{schNo}
 </select>
 
 <select id="getListWithPaging" resultMap="BoardResult">
-	<![CDATA[
-		select b.board_no, b.sch_no, board_title, w_date, mod_date, pick_cnt, v_cnt, hidden, board_img, thumbImg, s.mem_no
-		from(
-			select /*+INDEX_DESC(board board_pk)*/
-				rownum rn, board_no, sch_no, board_title, w_date, mod_date, pick_cnt, v_cnt, hidden, board_img, thumbImg
-			from board
-			where rownum<=#{pageNum} * #{amount} and hidden='y'
-			) b , schedule s
-			where rn> (#{pageNum}-1) * #{amount} and s.sch_no=b.sch_no
-	]]>
+   <![CDATA[
+  select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+         b.board_no, b.sch_no, board_title, w_date, mod_date, pick_cnt, v_cnt, hidden, board_img, thumbImg, m.nickname
+       from
+         schedule s, member m,board b
+       where s.sch_status = 'BS001'
+             and hidden='y'
+         and s.sch_no=b.sch_no and s.mem_no=m.mem_no 
+            order by
+            board_no desc
+            )a
+            where rownum <= #{pageNum} * #{amount}
+            )
+            where no >= (#{pageNum} -1) *#{amount}+1 
+   ]]>
 
 </select>
 
-
 <delete id="delete">
-	delete from board where board_no = #{boardNo}
+   delete from board where board_no = #{boardNo}
 </delete>
 
 <update id="update">
-	update board
-	set  board_title= #{boardTitle}, mod_date= sysdate, hidden= #{hidden}, board_img= #{boardImg} 
-	where board_no = #{boardNo}
-	
+   update board
+   set  board_title= #{boardTitle}, mod_date= sysdate, hidden= #{hidden}, board_img= #{boardImg} 
+   where board_no = #{boardNo}
+   
 </update>
 
 <update id="updateY">
-	update board set hidden='y' where sch_no = #{schNo}
+   update board set hidden='y' where sch_no = #{schNo}
 </update>
 
 <update id="updateN">
-	update board set hidden='n' where sch_no = #{schNo}
+   update board set hidden='n' where sch_no = #{schNo}
 </update>
 
+
+
+<select id="getTotalCount" resultType="int">
+   select count(*) from board where hidden='y'
+</select>
+
+<!-- pickCnt -->
 <update id="upCnt">
 
-UPDATE BOARD SET PICK_CNT = PICK_CNT +1 where sch_no = #{schNo}
+UPDATE board SET pick_cnt = pick_cnt +1 where sch_no = #{schNo}
 </update>
 
 <update id="downCnt">
 
-UPDATE BOARD SET PICK_CNT = PICK_CNT -1 where sch_no = #{schNo}
+UPDATE board SET pick_cnt = pick_cnt -1 where sch_no = #{schNo}
 </update>
 
-
-<select id="getTotalCount" resultType="int">
-	select count(*) from board where hidden='y'
-</select>
+<!-- viewCnt -->
+<update id="viewCnt">
+update board set v_cnt = v_cnt +1 where board_no = #{boardNo}
+</update>
 
 </mapper>

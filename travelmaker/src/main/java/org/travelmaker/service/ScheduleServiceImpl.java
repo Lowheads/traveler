@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return mapper.read(schNo);
 
 	}
-	
+
 
 	@Override
 	public void statusupdate(int schNo) {
@@ -55,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		else if(status.equals("미작성")) {
 			mapper.statusWritting(schNo);
 		}
-	
+
 	}
 
 
@@ -74,11 +74,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		return mapper.getList();
 	}
-	
+
 	//공개,비공개 여부 알 수 있는 리스트 가져오기
 	@Override
-	public List<ScheduleVO> getHiddenList(int memNo) {
-		// TODO Auto-generated method stub
+	public List<Map<String,Object>> getHiddenList(int memNo) {
 		return mapper.getHiddenList(memNo);
 	}
 
@@ -148,10 +147,27 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info("register....."+schedule);
 		return mapper.insertSelectKey(schedule);
 	}
-
+	
+	@Override
 	public ScheduleVO getListSchedule(int schNo) {
 		log.info("getschedule......"+schNo);
 		return mapper.getListSchedule(schNo);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getSchedt(int schNo) {
+		log.info(mapper.getSchedule(schNo));
+		return mapper.getSchedule(schNo);
+	}
+
+	//로그인 된 회원이 일정 찜 했는지 확인
+	@Override
+	public boolean checkPick(ScheduleVO schedule) {
+		if(mapper.checkPicked(schedule)==1) {
+			return true;
+		}
+		else return false;
 	}
 
 }

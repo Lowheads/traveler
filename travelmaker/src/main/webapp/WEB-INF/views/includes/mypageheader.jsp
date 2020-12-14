@@ -52,6 +52,10 @@
    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
 <style>
+ a:link { text-decoration: none;}
+ a:visited { text-decoration: none;}
+ a:hover { text-decoration: underline;}
+
 .leftDate{
 	width: 100px;
 	margin-top: auto;
@@ -140,8 +144,8 @@
 	background-color: white;
 }
 .dango img{
-	width: auto%;
-	height: auto%;
+	width: 50px;
+	height: 50px;
 }
 
 
@@ -268,7 +272,8 @@ img.ui-datepicker-trigger {
 	position: fixed;
 	height: 500px;
 	top: 50%;
-	margin: -250px 0 0 150px;
+	left: 15%;
+	margin: -250px 0 0 0;
 	background: #eee;
 	z-index: 2;
 }
@@ -315,9 +320,10 @@ img.ui-datepicker-trigger {
 
 .black_bg {
 	display: none;
-	position: absolute;
+	position: fixed;
 	width: 100%;
-	height: 120%;
+	height: 100%;
+    overflow: auto;
 	background-color: rgba(0, 0, 0, 0.5);
 	top: 0;
 	left: 0;
