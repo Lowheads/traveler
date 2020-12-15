@@ -17,6 +17,6 @@ public interface SchdtService {
 	
 	public SchdtVO[][] setAll(int schNo,SchdtVO[][] schdtVOs);
 	
-	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
+//	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
 
 }

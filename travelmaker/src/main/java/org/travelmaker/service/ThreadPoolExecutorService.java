@@ -27,7 +27,6 @@ import lombok.Data;
 public class ThreadPoolExecutorService {
 	
 	
-	@Async
 	public CompletableFuture<Void> setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
 		// WebDriver 경로 설정
 		ChromeDriver driver = getDriver();
@@ -80,7 +79,7 @@ public class ThreadPoolExecutorService {
 	    options.addArguments("--disable-popup-blocking");    // 팝업 무시
 	    options.addArguments("--disable-default-apps"); 
 	    
-//	    options.addArguments("headless");
+	    options.addArguments("headless");
 	    options.addArguments("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36\r\n");
 	    // WebDriver 객체 생성
 	    ChromeDriver driver = new ChromeDriver(options);

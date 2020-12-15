@@ -79,23 +79,24 @@ public class PlaceController {
 
 	@PostMapping(value = "/test", produces = "application/json;")
 	@ResponseBody
-	public ResponseEntity<ScheduleDtVO[][]> getInitSchedule(@RequestBody ScheduleDtVO[][] scheduleDtVO) {
+	public ResponseEntity<String> getInitSchedule(@RequestBody ScheduleDtVO[][] scheduleDtVO) {
 //		long start = System.currentTimeMillis(); //시작하는 시점 계산
-		List<CompletableFuture<Void>> futureList = schDtService.getInitSchWithDistAndDu(scheduleDtVO);
+//		List<CompletableFuture<Void>> futureList = schDtService.getInitSchWithDistAndDu(scheduleDtVO);
 //		long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
 //		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초");
-		while(true) {
-			try {
-	            Thread.sleep(500);
-	            for (int i = 0; i < scheduleDtVO.length; i++) {
-	            	if(futureList.get(i).isDone()) {
-		            }
-	            	return new ResponseEntity<>(scheduleDtVO, HttpStatus.OK);
-				}
-	        } catch (InterruptedException e) {
-	            Thread.currentThread().interrupt();
-	        }
-		}
+//		while(true) {
+//			try {
+//	            Thread.sleep(500);
+//	            for (int i = 0; i < scheduleDtVO.length; i++) {
+//	            	if(futureList.get(i).isDone()) {
+//		            }
+//	            	return new ResponseEntity<>(scheduleDtVO, HttpStatus.OK);
+//				}
+//	        } catch (InterruptedException e) {
+//	            Thread.currentThread().interrupt();
+//	        }
+//		}
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
 //	@PostMapping(value="/test/sch",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})

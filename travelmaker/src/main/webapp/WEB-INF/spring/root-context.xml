@@ -44,12 +44,12 @@
     </bean>
     
     <!-- 종운 Fixed ThreadPool -->
-    <task:executor id="threadPool" pool-size="50" />
+    <!-- <task:executor id="threadPool" pool-size="50" />
     <task:annotation-driven executor="threadPool" />
-    <!-- <bean id="ps" class="org.travelmaker.service.PositionService"></bean> -->
+    <bean id="ps" class="org.travelmaker.service.PositionService"></bean>
     <bean id="tpes" class="org.travelmaker.service.ThreadPoolExecutorService">
-    	<!-- <property name="ps" ref="ps"></property> -->
-    </bean>
+    	<property name="ps" ref="ps"></property>
+    </bean> -->
     
     <bean id="email" class="org.travelmaker.domain.Email"></bean>
     <bean id="emailSender" class="org.travelmaker.domain.EmailSender"></bean>

@@ -45,5 +45,4 @@ public class MainController {
 		log.info(service.getList());
 		model.addAttribute("list", service.getList());
 	}
-	
 }

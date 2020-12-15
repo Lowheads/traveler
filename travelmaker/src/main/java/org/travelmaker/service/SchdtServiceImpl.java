@@ -21,10 +21,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @AllArgsConstructor
-@EnableAsync
 public class SchdtServiceImpl implements SchdtService {
 	
-	private ThreadPoolExecutorService tpes;
 	private SchdtMapper mapper;
 	@Override
 	public List<SchdtVO> getSchdt(int schNo) {
@@ -56,20 +54,20 @@ public class SchdtServiceImpl implements SchdtService {
 		return schdtVOss;
 	}
 
-	@Override
-	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs) {
-		CompletableFuture<Void> future = null;
-		List<CompletableFuture<Void>> list = new ArrayList<>();
-		for (ScheduleDtVO[] scheduleDtVOs : schdtVOs) {
-			for (ScheduleDtVO scheduleDtVOs2 : scheduleDtVOs) {
-				System.out.println(Thread.currentThread());
-				// 여기서 caller 에 의해서 new Thread에 의해 실행제어;
-				list.add(tpes.setInitSchWithDistAndDu(scheduleDtVOs2));
-				
-			}
-		}
-			return list;
-	}
+//	@Override
+//	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs) {
+//		CompletableFuture<Void> future = null;
+//		List<CompletableFuture<Void>> list = new ArrayList<>();
+//		for (ScheduleDtVO[] scheduleDtVOs : schdtVOs) {
+//			for (ScheduleDtVO scheduleDtVOs2 : scheduleDtVOs) {
+//				System.out.println(Thread.currentThread());
+//				// 여기서 caller 에 의해서 new Thread에 의해 실행제어;
+//				list.add(tpes.setInitSchWithDistAndDu(scheduleDtVOs2));
+//				
+//			}
+//		}
+//			return list;
+//	}
 	
 //	@Async
 //	public void setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
