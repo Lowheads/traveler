@@ -15,6 +15,7 @@ public class BoardVO {
 	private int vCnt;
 	private String hidden;
 	private String writer;  //schedule과 조인한 mem_no
+	private String grade;   //member 테이블  member_grade
 	
 	private String boardImg;
 	private String thumbImg;

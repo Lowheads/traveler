@@ -193,7 +193,6 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 
-		log.info("/get");
 		BoardVO board=boardservice.get(boardNo);
 		int schNo=board.getSchNo();
 		ScheduleVO schedule = scheduleservice.getSchedule(schNo);
@@ -207,7 +206,6 @@ public class BoardController {
 			model.addAttribute("pick","unpicked");
 		}
 		
-		System.out.println(schdtservice.getplacetitle(schNo));
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
 		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));

@@ -444,6 +444,10 @@ div.gallery img {
 	object-fit: cover;
 }
 
+div.cardgallery img{
+	width: 100%;
+	height: 150px;
+}
 div.desc {
 	padding: 15px;
 	text-align: center;
@@ -554,13 +558,13 @@ input:checked+.slider:before {
 	border-radius: 50%;
 }
 
-.container {
+/* .container {
 	padding-right: 100px;
 	padding-left: 100px;
 	margin-right: auto;
 	margin-left: auto;
 }
-
+ */
 /* table a {
 	text-decoration: none;
 	color: #f9cf74 bold;

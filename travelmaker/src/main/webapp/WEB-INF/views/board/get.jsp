@@ -395,9 +395,11 @@ $(document).ready(function(){
 	});
 	
 	$("button[data-oper='list']").on("click",function(e){
-		operForm.find("#boardNo").remove();
+/* 		operForm.find("#boardNo").remove();
 		operForm.attr("action","/board/list")
-		operForm.submit();
+		operForm.submit(); */
+		
+		window.history.back();
 	});	
 });
 

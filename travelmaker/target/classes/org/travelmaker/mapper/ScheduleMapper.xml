@@ -21,6 +21,7 @@
 <select id="getList" resultMap="ScheduleResult">
 <![CDATA[
 	select * from schedule where mem_no = #{memNo}
+	order by sch_no asc
 ]]>
 </select>
 
