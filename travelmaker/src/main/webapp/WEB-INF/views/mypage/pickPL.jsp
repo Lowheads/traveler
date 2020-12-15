@@ -84,26 +84,26 @@
 
 
         </div>
-<button type='button' id="modal_btn" class="pull-right" style="float:right; display:block; margin-right:7%;">지도에서 보기</button>
+<button type='button' id="modal_btn" class="pull-right" style="float:right; display:block; margin-right:7%;">지도에서 보기</button><br>
         <!-- /.row -->
-        <div style="text-align: center;" class="w3-center">
-<ul class="w3-bar">
+        
+        
+<ul class="paging" style="text-align: center">
 <c:if test="${pageMaker.prev }">
-<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+<li class="page-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
 </c:if>
 
 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-<li class="w3-button" "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
-<a> ${num }</a></li>
+<li class="page-button" "${pageMaker.cri.pageNum == num ? 'active':'' }" num="${num}">
+<a class="${pageMaker.cri.pageNum == num ? 'active':'' }"> ${num }</a></li>
 </c:forEach>
 
 <c:if test="${pageMaker.next }">
-<li class="w3-button" num="${pageMaker.endPage +1 }">
+<li class="page-button" num="${pageMaker.endPage +1 }">
 <a>&raquo;</a></li>
 </c:if>
 </ul>
 
-</div>
 <!-- modal -->
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
@@ -271,7 +271,7 @@
 		
 	
 		//페이지정보 보내는 function
-		$(".w3-button").on("click",function(e) {
+		$(".page-button").on("click",function(e) {
 
 					e.preventDefault();
 

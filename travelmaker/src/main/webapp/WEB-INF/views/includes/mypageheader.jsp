@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
- <!-- 쿠키 -->
- <%
+<!-- 쿠키 -->
+<%
  
       String remember = "";
         String id = "";
@@ -39,58 +39,113 @@
 %>
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="utf-8">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
+<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Main</title>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- HeartEmoji -->
 <link rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="utf-8">
 <style>
- a:link { text-decoration: none;}
- a:visited { text-decoration: none;}
- a:hover { text-decoration: underline;}
+.page-button a {
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+}
 
-.leftDate{
+.page-button a:hover:not(.active) {
+	font-weight: bold;
+	color: #9966CC;
+}
+
+.page-button a.active {
+	background-color: white;
+	text-decoration: underline;
+	font-weight: bold;
+	color: #9966CC;
+}
+
+.paging {
+	text-align: center;
+	list-style: none;
+	padding-left: 25%;
+}
+
+.page-button li {
+	list-style-type: none;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#modal_btn {
+	background-color: white;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#modal_btn:hover {
+	color: white;
+	background-color: black;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+.leftDate {
 	width: 100px;
 	margin-top: auto;
 	margin-bottom: auto;
 	text-align: center;
-	margin-right:20px;
+	margin-right: 20px;
 	font-size: 5px;
 }
+
 .overlay {
-  position: absolute;
-  top: -40px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: white;
+	position: absolute;
+	top: -40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100px;
+	width: 100%;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: white;
 }
+
 .text {
-	width:100%;
-  color: black;
-  font-size: 15px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
+	width: 100%;
+	color: black;
+	font-size: 15px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
+
 .dailyscheduleDT a:hover .overlay {
-  opacity: 1;
+	opacity: 1;
 }
+
 .contentAll {
 	width: auto;
 	background-color: #F5F5DC;
@@ -107,11 +162,11 @@
 	border-bottom: 1px solid gray;
 }
 
-.dailyscheduleDT a{
+.dailyscheduleDT a {
 	position: relative;
 }
 
-.dailyscheduleDT{
+.dailyscheduleDT {
 	width: auto;
 }
 
@@ -119,7 +174,8 @@
 	border: 4px solid #ffffff; /* Gray border */
 	border-radius: 4px; /* Rounded border */
 	width: 150px; /* Set a small width */
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
 }
 
 .marker {
@@ -140,14 +196,14 @@
 	width: 20%;
 }
 
-.dango{
+.dango {
 	background-color: white;
 }
-.dango img{
+
+.dango img {
 	width: 50px;
 	height: 50px;
 }
-
 
 .directionAll {
 	margin-top: 20px;
@@ -167,9 +223,11 @@
 	text-align: center;
 	padding: auto;
 }
-.drirection p{
+
+.drirection p {
 	margin: auto;
 }
+
 #remove_modal {
 	display: none;
 	width: 300px;
@@ -323,7 +381,7 @@ img.ui-datepicker-trigger {
 	position: fixed;
 	width: 100%;
 	height: 100%;
-    overflow: auto;
+	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.5);
 	top: 0;
 	left: 0;
@@ -671,155 +729,195 @@ img.ui-datepicker-trigger {
 
 <body>
 
-   <!-- 네비게이션(nav) 컨트롤에 사요하는 드롭다운. -->
-   <div style="margin: 20px;">
-      <nav id="navbar-example" class="navbar navbar-default navbar-static">
-         <div class="container-fluid">
-            <!-- 네비게이션(nav)의 기본 설정으로 모바일일 때, 메뉴 버튼이 나온다. -->
-            <div class="navbar-header">
-               <button class="navbar-toggle collapsed" type="button"
-                  data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span> <span
-                     class="icon-bar"></span> <span class="icon-bar"></span> <span
-                     class="icon-bar"></span>
-               </button>
-               <!-- 타이틀임. -->
-               <a class="navbar-brand" href="/main/index">여정</a>
-               
-            </div>
-            <!-- 메뉴 설정 -->
-            <div class="collapse navbar-collapse">
-               <!-- 메뉴는 왼쪽으로 두개 설정 -->
-               <ul class="nav navbar-nav">
-                  <!-- 메뉴 이름은 Hello로 서브 옵션은 Test1과 Test2가 있다. -->
+	<!-- 네비게이션(nav) 컨트롤에 사요하는 드롭다운. -->
+	<div style="margin: 20px;">
+		<nav id="navbar-example" class="navbar navbar-default navbar-static">
+			<div class="container-fluid">
+				<!-- 네비게이션(nav)의 기본 설정으로 모바일일 때, 메뉴 버튼이 나온다. -->
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button"
+						data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<!-- 타이틀임. -->
+					<a class="navbar-brand" href="/main/index">여정</a>
 
-                  <!-- 메뉴 이름은 World로 서브 옵션은 Test3과 Test4가 있다. -->
+				</div>
+				<!-- 메뉴 설정 -->
+				<div class="collapse navbar-collapse">
+					<!-- 메뉴는 왼쪽으로 두개 설정 -->
+					<ul class="nav navbar-nav">
+						<!-- 메뉴 이름은 Hello로 서브 옵션은 Test1과 Test2가 있다. -->
 
-               </ul>
-                <!-- 메뉴를 오른쪽 정렬로 설정 가능 -->
-          <ul class="nav navbar-nav navbar-right">
-            <!-- 메뉴 이름은 Right!로 서브 옵션은 Test5와 Test6가 있다. -->
-            <li>
-            <a class="navbar-brand" href="/admin/boardList">관리자</a>
-            <a class="navbar-brand" href="/board/list">게시판</a>
-            
-            <div class="dropdown">
-  <div class="dropbtn"></div>
-  <div class="dropbtn"></div>
-  <div class="dropbtn"></div>
-  <div class="dropdown-content">
-  <%= sessionBtn %>
-  <%= modifyBtn %>
-  <%= mypage %>
-  <%= registerBtn %>
-  
-  </div>
-</div>
-            
-            </li>
-          </ul> 
-        </div>
-      </div>
-    </nav>
-  </div>
-<div class="container">
-            <!-- 모달 클릭시 뒷 배경 -->
-    <div class="black_bg"></div>
-    
-    <!-- Login Modal -->
-    <div class="login_modal">
-    <div class="w3-container w3-orange"> 
-    <div class="lModal_close"><a href="#">close</a></div>
-                 <p style="text-align: center; font-size: 30px">로그인</p>
-            </div>
-            <p style="padding-bottom: 20px"></p>
-            
-            <div class="wrap-main">
-            
-            <form action="/member/login" onsubmit="return loginCheck();" method="post">
-               <div class="center">&nbsp;이메일&nbsp; <input type="text" style="width: 210px; height: 30px;" 
-               placeholder="이메일" id="login_email" name="email" value="<%=id %>"></div>
-               
-               <div class="center">비밀번호 <input type="password" style="width: 210px; height: 30px;" 
-               placeholder="비밀번호" id="login_pwd" name="pwd"></div>
-               
-               <div class="wrap-Addition"> <input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
-               <div class="wrap-Addition"> <button type="submit" id="button">로그인</button> </div>
-            </form>
-         
-            </div>
+						<!-- 메뉴 이름은 World로 서브 옵션은 Test3과 Test4가 있다. -->
 
-            <div id="naverIdLogin" style="text-align:center;"><a href="${url}">
-            <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a></div>
-            <br>
-            
-            <div class="findInfo">
-            
-         <a onclick="moveRegisterPage()">회원가입</a>
-         <span>|</span>
-         <a href="/search/searchPwd">비밀번호 찾기</a>
-            </div>
-    </div>
-   <!-- end Login Modal -->
-   
-   
-   <!-- register Modal  -->
-    <!-- Modal -->
-    <div class="register_modal">
-    <div id="register">
-        <div class="modal-dialog w3-modal-content" style="width: 600px; height:400px; display: table;">
-            <p style="text-align: center; font-size: 30px">회원가입</p>
-         <div class="wrap-main" style="margin-left: 15px">
-            <form action="/member/register" method="post">
-                  <!-- 회원번호 -->
-                  <!-- <div class="div-reg"><input type="text" name="memNo" placeholder="회원번호"></div> -->
-                  
-                  <!-- 이메일 -->
-                  <div class="div-reg"><input type="email" name="email" id="email" placeholder="이메일주소">
-                     <button type="button" id="emailCheck" id="btn">이메일 중복체크</button>
-                  <span id="spanEmail"></span></div>
-                  
-                  <!-- 비밀번호 -->
-                  <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" onblur="pwdCheck()">
-                     비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
-                  <div class="div-reg"><span id="spanPwd"></span></div></div>
-                  
-                  <!-- 비밀번호 확인 -->
-                   <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" onblur="pwdCheck()">
-                     비밀번호 확인
-                  <p><span id="spanPwdCfm"></span></p></div>
-                     
-                  
-                  <!-- 닉네임 -->
-                  <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임">
-                     <button type="button" id="btn" class="nicknameCheck">중복 체크</button>
-                     닉네임은 2~8내로 입력해주세요
-                  <div class="div-reg"><span id="spanNickname"></span></div></div>
-                  
-                  <!-- 생년월일 -->
-                  <div class="div-reg"><input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!"></div>
-                  
-                  <!-- 성별 -->
-                  본인의 성별은 ?  
-                     <input type="radio" name="gender" id="man_gender" value="M">남 
-                     <input type="radio" name="gender" id="woman_gender" value="F">여
-                     <p><span id="spanGender"></span></p>
-                  
-                  <!-- 상태(정상, 휴면 등...) -->
-                  <p><input type="hidden" name="status" id="status" value="정상"></p>
-                  
-                  <!-- 등급?(일반회원, 관계자 등..) -->
-                  <p><input type="hidden" name="memGrade" id="mem_grade" value="일반회원"><p>
-                  
-               <div class="wrap-Addition"><button type="submit" id="button" onclick="return inputCheck();">가입하기</button></div>
-            </form>
-            </div>
-      </div>
-   </div>
-        <!-- 닫기버 버튼 -->
-        <div class="rModal_close"><a href="#">close</a></div>
-    </div>
-    <script type="text/javascript">
+					</ul>
+					<!-- 메뉴를 오른쪽 정렬로 설정 가능 -->
+					<ul class="nav navbar-nav navbar-right">
+						<!-- 메뉴 이름은 Right!로 서브 옵션은 Test5와 Test6가 있다. -->
+						<li><a class="navbar-brand" href="/admin/boardList">관리자</a> <a
+							class="navbar-brand" href="/board/list">게시판</a>
+
+							<div class="dropdown">
+								<div class="dropbtn"></div>
+								<div class="dropbtn"></div>
+								<div class="dropbtn"></div>
+								<div class="dropdown-content">
+									<%= sessionBtn %>
+									<%= modifyBtn %>
+									<%= mypage %>
+									<%= registerBtn %>
+
+								</div>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="container">
+		<!-- 모달 클릭시 뒷 배경 -->
+		<div class="black_bg"></div>
+
+		<!-- Login Modal -->
+		<div class="login_modal">
+			<div class="w3-container w3-orange">
+				<div class="lModal_close">
+					<a href="#">close</a>
+				</div>
+				<p style="text-align: center; font-size: 30px">로그인</p>
+			</div>
+			<p style="padding-bottom: 20px"></p>
+
+			<div class="wrap-main">
+
+				<form action="/member/login" onsubmit="return loginCheck();"
+					method="post">
+					<div class="center">
+						&nbsp;이메일&nbsp; <input type="text"
+							style="width: 210px; height: 30px;" placeholder="이메일"
+							id="login_email" name="email" value="<%=id %>">
+					</div>
+
+					<div class="center">
+						비밀번호 <input type="password" style="width: 210px; height: 30px;"
+							placeholder="비밀번호" id="login_pwd" name="pwd">
+					</div>
+
+					<div class="wrap-Addition">
+						<input type="checkbox" name="remember" <%=remember %>>
+						email 기억하기
+					</div>
+					<div class="wrap-Addition">
+						<button type="submit" id="button">로그인</button>
+					</div>
+				</form>
+
+			</div>
+
+			<div id="naverIdLogin" style="text-align: center;">
+				<a href="${url}"> <img src="/resources/img/naverLogin.PNG"
+					style="height: 50px" width="260px"></a>
+			</div>
+			<br>
+
+			<div class="findInfo">
+
+				<a onclick="moveRegisterPage()">회원가입</a> <span>|</span> <a
+					href="/search/searchPwd">비밀번호 찾기</a>
+			</div>
+		</div>
+		<!-- end Login Modal -->
+
+
+		<!-- register Modal  -->
+		<!-- Modal -->
+		<div class="register_modal">
+			<div id="register">
+				<div class="modal-dialog w3-modal-content"
+					style="width: 600px; height: 400px; display: table;">
+					<p style="text-align: center; font-size: 30px">회원가입</p>
+					<div class="wrap-main" style="margin-left: 15px">
+						<form action="/member/register" method="post">
+							<!-- 회원번호 -->
+							<!-- <div class="div-reg"><input type="text" name="memNo" placeholder="회원번호"></div> -->
+
+							<!-- 이메일 -->
+							<div class="div-reg">
+								<input type="email" name="email" id="email" placeholder="이메일주소">
+								<button type="button" id="emailCheck" id="btn">이메일 중복체크</button>
+								<span id="spanEmail"></span>
+							</div>
+
+							<!-- 비밀번호 -->
+							<div class="div-reg">
+								<input type="password" name="pwd" id="pwd" placeholder="비밀번호"
+									onblur="pwdCheck()"> 비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
+								<div class="div-reg">
+									<span id="spanPwd"></span>
+								</div>
+							</div>
+
+							<!-- 비밀번호 확인 -->
+							<div class="div-reg">
+								<input type="password" name="pwdCfm" id="pwdCfm"
+									placeholder="비밀번호 확인" onblur="pwdCheck()"> 비밀번호 확인
+								<p>
+									<span id="spanPwdCfm"></span>
+								</p>
+							</div>
+
+
+							<!-- 닉네임 -->
+							<div class="div-reg">
+								<input type="text" name="nickname" id="nickname"
+									placeholder="닉네임">
+								<button type="button" id="btn" class="nicknameCheck">중복
+									체크</button>
+								닉네임은 2~8내로 입력해주세요
+								<div class="div-reg">
+									<span id="spanNickname"></span>
+								</div>
+							</div>
+
+							<!-- 생년월일 -->
+							<div class="div-reg">
+								<input type="text" name="birth" id="birth"
+									placeholder="누르면 달력이 나와요!">
+							</div>
+
+							<!-- 성별 -->
+							본인의 성별은 ? <input type="radio" name="gender" id="man_gender"
+								value="M">남 <input type="radio" name="gender"
+								id="woman_gender" value="F">여
+							<p>
+								<span id="spanGender"></span>
+							</p>
+
+							<!-- 상태(정상, 휴면 등...) -->
+							<p>
+								<input type="hidden" name="status" id="status" value="정상">
+							</p>
+
+							<!-- 등급?(일반회원, 관계자 등..) -->
+							<p>
+								<input type="hidden" name="memGrade" id="mem_grade" value="일반회원">
+							<p>
+							<div class="wrap-Addition">
+								<button type="submit" id="button" onclick="return inputCheck();">가입하기</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- 닫기버 버튼 -->
+			<div class="rModal_close">
+				<a href="#">close</a>
+			</div>
+		</div>
+		<script type="text/javascript">
     
     //모달보고 닫는 이벤트 추가
     document.getElementById('login_modal_btn').addEventListener('click', lModalShow);
