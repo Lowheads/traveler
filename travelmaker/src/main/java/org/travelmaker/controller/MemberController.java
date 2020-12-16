@@ -121,13 +121,21 @@ public class MemberController {
 	
 	// 비밀번호 변경
 	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
-	public String modifyPwd(String pwd, String email, Model model) {
+	public String modifyPwd(String newPwd, String inputPwd, String email, HttpSession session, RedirectAttributes rttr) {
+		
+		
+		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
+		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
+			return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		}
+		
 		// 비밀번호를 바꾼다.
-		service.modifyPwd(pwd, email);
+		service.modifyPwd(newPwd, email);
 		
 		// 바뀐 회원의 정보를 화면에 출력한다.
-		model.addAttribute("member", service.getMember(email));
-		return "/member/accountInfo";
+		rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
+		rttr.addFlashAttribute("member", service.getMember(email));
+		return "redirect:/member/getMember?email=" + session.getAttribute("email");
 	}
 	
 	// Ajax Email체크
@@ -153,29 +161,25 @@ public class MemberController {
 	
 	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
 	@RequestMapping(value = "/modifyNickname", method = RequestMethod.POST)
-	public String modifyNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
-
-		// 닉네임 한번 더 검사
-		if(service.isNicknameTouch(nickname, email, model)) {
-			return "/member/accountInfo";
-		}
+	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
+		
+		// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
+		service.isNicknameTouch(nickname, email, rttr);
 		
 		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "/member/accountInfo";
+		return "redirect:/member/getMember?email=" + session.getAttribute("email");
 	}
 	
-	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
-	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
-	public String modifyApiNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
-
-		// 닉네임을 수정하고 저장하기를 눌렀다면..
-		if(service.isNicknameTouch(nickname, email, model)) {
-			return "/member/apiAccountInfo";
-		}
-			
-		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "/member/apiAccountInfo";
-	}
+//	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
+//	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
+//	public String modifyApiNickname(String nickname, String email, RedirectAttributes rttr, HttpSession session) {
+//
+//		// 닉네임을 수정하고 저장하기를 눌렀다면..
+//		service.isNicknameTouch(nickname, email, rttr);
+//			
+//		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
+//		return "redirect:/member/getMember?email=" + session.getAttribute("email");
+//	}
 	
 	//회원탈퇴 페이지 이동
 	@RequestMapping(value = "/deletePage", method = RequestMethod.POST)

@@ -22,12 +22,6 @@
 	    	]]>
 	</select>
 
-	<!-- 게시물 작성 -->
-<!-- 	<insert id="insert">
-		insert into qna_board (bno, title, content, nickname, viewCnt, mem_no, secret)
-		values(seq_bno.nextval, #{title}, #{content}, #{nickname}, 0, #{memNo}, #{secret})
-	</insert> --> 
-	
 	<!-- insert(Sequence) -->
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
@@ -70,6 +64,7 @@
 		set
 		title = #{title},
 		content = #{content},
+		secret = #{secret},
 		updateDate = sysdate
 		where bno = #{bno}
 	</update>
@@ -138,7 +133,7 @@
 	<select id="findAdmin" resultType="String">
 		select count(*) from member
 		where mem_no = #{memNo}
-		and mem_grade = 'admin'
+		and mem_grade = 'MG002'
 	</select>
 	
 </mapper>

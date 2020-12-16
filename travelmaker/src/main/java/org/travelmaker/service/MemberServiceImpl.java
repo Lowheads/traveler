@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
@@ -52,9 +53,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO login(MemberVO mVO) { // 로그인 기능
-		
-		lastLoginSetToday(mVO.getEmail()); // 최종 로그인은 오늘..
-		
 		return mapper.login(mVO);
 	}
 	
@@ -139,28 +137,44 @@ public class MemberServiceImpl implements MemberService {
 	public void modifyNickname(String nickname, String email) { // 닉네임 변경
 		mapper.modifyNickname(nickname, email);
 	}
+	
+	// QnA게시판의 작성자 변경(닉네임 변경시 적용)
+	public void modifyBoardNickname(String nickname, int memNo) {
+		mapper.modifyBoardNickname(nickname, memNo);
+	}
 
+	// QnA게시판의 작성자 변경(닉네임 변경시 적용)
+	public void modifyBoardReplyer(String nickname, String replyer) {
+		mapper.modifyBoardReplyer(nickname, replyer);
+	}
+	
 	@Override
 	public int hasNickname(String nickname) { // 닉네임 중복체크
 		return mapper.hasNickname(nickname);
 	}
 	
 	@Override
-	public boolean isNicknameTouch(String nickname, String email, Model model) { // 닉네임 수정했어?
+	@Transactional // 트랜잰션
+	public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr) { // 닉네임 수정했어?
 		
 		// nickNameResult : 닉네임 있으면 1, 없으면 0
 		int nicknameResult = hasNickname(nickname);
 		
 		// 닉네임을 수정했는데 중복이라면..
 		if(isMyNicknamePass(nickname, email) && nicknameResult > 0) {
-			model.addAttribute("msg", "닉네임이 다른 회원과 중복됩니다.");
-			model.addAttribute("member", getMember(email));
+			rttr.addFlashAttribute("msg", "닉네임이 다른 회원과 중복됩니다.");
+			rttr.addFlashAttribute("member", getMember(email));
 			return true;
 		}
+		
 		// 정보가 정상적으로 저장되었습니다.
-		modifyNickname(nickname, email);
-		model.addAttribute("msg", "정보가 저장되었습니다.");
-		model.addAttribute("member", getMember(email));
+		String changeBeforeNickname = mapper.getMyNickname(email); // 변경 전 닉네임을 저장..
+		
+		modifyNickname(nickname, email); // 닉네임 변경
+		modifyBoardNickname(nickname, getMemNo(email)); // Q&A게시판 작성자를 바뀐 닉네임으로 수정
+		modifyBoardReplyer(nickname, changeBeforeNickname); // 변경 전 닉네임을 전부 바뀐 닉네임으로 수정
+		rttr.addFlashAttribute("msg", "정보가 저장되었습니다.");
+		rttr.addFlashAttribute("member", getMember(email));
 		return false;
 	}
 
@@ -200,7 +214,7 @@ public class MemberServiceImpl implements MemberService {
 
 		// 트래블 회원이 아니면 안됩니다!
 		  if(getMember(email) == null || deleteNoAccess(email)) {
-	        	rttr.addFlashAttribute("msg", "travel회원이 아닙니다. 회원가입해주세요");
+	        	rttr.addFlashAttribute("msg", "travel회원이 아닙니다. 이메일을 확인해주세요");
 	        	return true;
 	        }
 		  return false;
@@ -221,6 +235,7 @@ public class MemberServiceImpl implements MemberService {
 		return uuid;
 	}
 
+	
 	@Override
 	public void setNewPwd(String email) { // 임시 비밀번호 생성
 
@@ -307,6 +322,40 @@ public class MemberServiceImpl implements MemberService {
 		
 		if(deleteNoAccess(email)) {
 			rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
+			return true;
+		}
+		
+		return false;
+	}
+
+	// api 회원인지 확인(비번찾기 메일)
+	@Override
+	public boolean isApiMember(String email, RedirectAttributes rttr) { 
+		
+		if(mapper.hasApiMemberCnt(email) == 1) {
+			rttr.addFlashAttribute("msg", "소셜회원입니다. 소셜로그인해주세요!");
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isInputValidCheck(String email, String inputPwd, String newPwd, 
+			HttpSession session, RedirectAttributes rttr) {
+		String sessionEmail = (String)session.getAttribute("email");
+		String presentPwd = getMember(sessionEmail).getPwd();
+		
+		// 개발자 도구 email 바꾸기 막기(hidden)
+		if(!(email.equals(sessionEmail))) {
+			rttr.addFlashAttribute("msg", "이메일이 회원과 일치하지 않습니다.");
+			rttr.addFlashAttribute("member", getMember(email));
+			return true;
+		}
+				
+		// 개발자도구 accountInfo에서 비밀번호 못 보게 하자
+		if(!(inputPwd.equals(presentPwd))) {
+			rttr.addFlashAttribute("msg", "사용자의 비밀번호와 일치하지 않습니다.");
+			rttr.addFlashAttribute("member", getMember(email));
 			return true;
 		}
 		

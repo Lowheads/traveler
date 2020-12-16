@@ -5,8 +5,20 @@
 
 <%@ include file="../includes/header.jsp" %>
 
+<%
+	String secret = (String)request.getAttribute("secret"); // 비밀글 여부를 위한 변수 선언
+	
+	if(secret.equals("Y")){ // 비밀글이었다면 체크되어 있고
+		secret = "checked ='checked'";
+	}else{ 					// 비밀글이 아니었다면 체크가 안 되어 있다.
+		secret = "";
+	}
+	
+%>
+
 <link rel="stylesheet" href="/resources/css/common.css">
 <link rel="stylesheet" href="/resources/css/register.css">
+<link rel="stylesheet" href="/resources/css/modify.css">
 
   <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,15 +27,13 @@
 
 <div class="wrapper">
         <div class="header_wrapper">
-            <div class="header">
-                <div class="logo">
-                    <a href="/qnaboard/list">Q&A 게시판</a>
-                </div>      
-            </div>
+        
+            <div class="title-head">
+        	<h4>Q&A 게시글 수정</h4>
+        </div>
         </div>
         <div class="contents">
             <div class="ct_head">
-                <h2>게시글</h2>
             </div>
             <div class="ct_body">
             				
@@ -34,11 +44,8 @@
             				<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
             				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
             				
-            					<div class="form-group">
-                        		<label>#게시물 번호</label> 
-                        		<input class="form-control" name="bno" id="bno" 
-                        		value='<c:out value="${board.bno }"/>' readonly="readonly">
-                        	</div>
+            				<!-- 히든값 bno -->
+                        	<input type="hidden" name="bno" id="bno" value='<c:out value="${board.bno }"/>'>
             				
                         	<div class="form-group">
                         		<label>제목</label> 
@@ -46,28 +53,37 @@
                         		value='<c:out value="${board.title }"/>'>
                         	</div>
                         	
+                        	<div class="form-secret" style="padding : 5px; padding-left: -2px; margin-left: -4px; margin-bottom: 2%;">
+                        		<input type="checkbox" id="secret"  name="secret" <%=secret %>> 비밀글
+                        		 <img src="/resources/img/lock.png" style="height: 15px" width="15px">
+                        	</div>
+                        	
+                      		<div class="form-group">
+                        		<label>작성자</label>
+                        		<input style="background-color: white;" class="form-control" name='nickname' 
+                        		id="boardModNickname" value='<c:out value="${board.nickname }"/>' readonly="readonly">
+                			</div>
+                			
+                			<div class="form-group">
+                        		<label>최종수정일</label>
+                        		<input style="background-color: white;" class="form-control" name='updateDate' value='<fmt:formatDate pattern="yyyy/MM/dd" 
+                        		value="${board.updateDate }"/>' readonly="readonly">
+                        	</div>
+                        	
                         	<div class="form-group">
                         		<label>내용</label>
                         	    <textarea class="form-control" rows="3" name='content' id="content"><c:out value="${board.content}" /></textarea>
                         	</div>
                         	
-                        	<div class="form-group">
-                        		<label>작성자</label>
-                        		<input class="form-control" name='nickname' id="nickname" 
-                        		value='<c:out value="${board.nickname }"/>' readonly="readonly">
-                			</div>
-                			
-                        	<div class="form-group">
-                        		<label>최종수정일</label>
-                        		<input class="form-control" name='updateDate' value='<fmt:formatDate pattern="yyyy/MM/dd" 
-                        		value="${board.updateDate }"/>' readonly="readonly">
-                        	</div>
                 
-                <c:if test="${board.memNo == loginMemNo }">		                	
-            	<button type="submit" data-oper='modify' class="btn" onclick="return boardModifyValid()">수정완료</button>
-            	<button type="submit" data-oper='remove' class="btn">게시글 삭제</button>
-            	</c:if>
-            	<button type="submit" data-oper='list' class="btn">목록</button>
+	                <div class="btn-wrap">
+		                <c:if test="${board.memNo == loginMemNo }">		                	
+		            	<button type="submit" data-oper='modify' class="mod-btn" 
+		            	onclick="return boardModifyValid()">수정완료</button>
+		            	<button type="submit" data-oper='remove' class="del-btn">게시글 삭제</button>
+		            	</c:if>
+		            	<button type="submit" data-oper='list' class="list-btn">목록</button>
+	            	</div>
 				</form>  
             </div>
 			<!-- ct_body -->
@@ -87,6 +103,7 @@
 			e.preventDefault();
 			
 			let operation = $(this).data("oper");
+			let titleLenVal = $("#title").val(); // 제목 길이
 			
 			 // 삭제전 물어보자
 			if(operation === 'remove'){
@@ -109,10 +126,30 @@
 				formObj.append(amountTag);
 				formObj.append(keywordTag);
 				formObj.append(typeTag);
+			}else if(operation === 'modify'){
+				
+				if(titleLenVal.length > 30){
+					alert("제목은 30자리까지 가능합니다");
+					return;
+				}
 			}
+			
 			formObj.submit();
 		});
-    }); // end document
+		
+		
+		$("#secret").change(function(){
+            if($("#secret").is(":checked")){
+            	// 비밀 체크했으면 checked!
+    			<% secret = "checked"; %>
+            }else{
+            	//아니면 null
+                <% secret = ""; %>
+            }
+        });
+	
+		
+}); // end document
     
     // 수정 유효성 검사
     function boardModifyValid(){
@@ -133,5 +170,6 @@
     	}
     	return true;
     }
+    
     
 </script>

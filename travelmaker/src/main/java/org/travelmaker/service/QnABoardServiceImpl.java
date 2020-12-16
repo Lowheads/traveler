@@ -29,7 +29,7 @@ public class QnABoardServiceImpl implements QnABoardService {
 	public List<QnABoardVO> getList(QnABoardCriteria cri) { // 게시글 목록
 		return mapper.getListWithPaging(cri);
 	}
-	
+
 
 	public String isSecret(String secret) { // 게시글 등록할 경우, 비밀 선택여부 판단
 		// 비밀이면 Y, 아니면 N
@@ -68,6 +68,10 @@ public class QnABoardServiceImpl implements QnABoardService {
 
 	@Override
 	public boolean modify(QnABoardVO qnaBoard) { // 게시물 수정
+		
+		// 비밀여부 변경 됐을 수도 있으니까..
+		qnaBoard.setSecret(isSecret(qnaBoard.getSecret()));
+		
 		return mapper.update(qnaBoard) == 1 ? true : false;
 	}
 	
@@ -93,10 +97,9 @@ public class QnABoardServiceImpl implements QnABoardService {
 
 
 	public String getMyGrade(String email) { // 로그인 중인 회원이 어드민인지 확인
-//		String myEmail = (String)session.getAttribute("email");
 		int memNo = mapper.getMyMemNo(email); // 로그인 중인 회원의 번호를 저장한다.
 		
-		String grade = mapper.findAdmin(memNo).equals("1") ? "admin":"member";
+		String grade = mapper.findAdmin(memNo).equals("1") ? "MG002":"MG001";
 		
 		return grade;
 	}

@@ -105,24 +105,73 @@ img.ui-datepicker-trigger {
    display: none;
    width: 40%;
    position: fixed;
-   height: 500px;
+   height: 550px;
    top: 50%;
    margin: -250px 0 0 -250px;
    margin-left: 15%;
    background: white;
    z-index: 1;
+   border: 3px solid black;
+}
+
+.cancelBtn{ /* 로그인 닫기 버튼 */
+	float: right;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    margin: 2%;
+}
+
+.reg-cancelBtn{
+	float: right;
+	font-size: 17px;
+    font-weight: bold;
+    color: black;
+     margin-right: 2%;
+     margin-top: -3%;
+}
+
+/* --- 또는 ---- */
+.hr-sect {
+	display: flex;
+	flex-basis: 100%;
+	align-items: center;
+	font-size: 18px;
+	color : black;
+	margin: 8px 0px;
+	padding-left: 20%;
+	padding-right: 20%;
+}
+.hr-sect::before,
+.hr-sect::after {
+	content: "";
+	flex-grow: 1;
+	background: #D3D3D3;
+	height: 2px;
+	font-size: 0px;
+	line-height: 0px;
+	margin: 0px 16px;
 }
 
 .register_modal{
    display: none;
-   width: 45%;
+   width: 40%;
    position: fixed;
-   height: 600px;
+   height: 580px;
    top: 50%;
-   margin: -300px 0 0 -250px;
-   margin-left: 13%;
+   margin: -250px 0 0 -250px;
+   margin-left: 15%;
    background: white;
    z-index: 1;
+   border: 3px solid black;
+}
+
+#man_gender{
+	margin-left: 7px;
+}
+
+#woman_gender{
+	margin-left: 7px;
 }
 
 .black_bg {
@@ -136,35 +185,69 @@ img.ui-datepicker-trigger {
    z-index: 1;
 }
 
-.lModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
+.aTag{ /* a태그 글씨색 */
+	color: black;
 }
 
-.lModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
-}
-.rModal_close {
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: -30px;
-   right: 0;
+#email{ /* 회원가입 편지 이미지 */
+	background-image: url("/resources/img/email.png");
+	background-position: right;
+    background-size: 22px 17px;
+    background-repeat: no-repeat;
 }
 
-.rModal_close>a {
-   display: block;
-   width: 100%;
-   height: 100%;
-   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-   text-indent: -9999px;
+#pwd{ /* 회원가입 열쇠 이미지 */
+	background-image: url("/resources/img/key.jpg");
+	background-position: right;
+    background-size: 22px 17px;
+    background-repeat: no-repeat;
+}
+
+#pwdCfm{ /* 회원가입 열쇠 이미지 */
+	background-image: url("/resources/img/key.jpg");
+	background-position: right;
+    background-size: 22px 17px;
+    background-repeat: no-repeat;
+}
+
+#nickname{ /* 회원가입 사람 이미지 */
+	background-image: url("/resources/img/human.png");
+	background-position: right;
+    background-size: 22px 17px;
+    background-repeat: no-repeat;
+}
+
+#birth{ /* 회원가입 케이크 이미지 */
+	background-image: url("/resources/img/cake.png");
+	background-position: right;
+    background-size: 22px 17px;
+    background-repeat: no-repeat;
+}
+
+.searchPwd_modal{ /* 비밀번호 찾기 모달 */
+   display: none;
+   width: 40%;
+   position: fixed;
+   height: 550px;
+   top: 50%;
+   margin: -250px 0 0 -250px;
+   margin-left: 15%;
+   background: white;
+   z-index: 1;
+   border: 3px solid black;
+}
+
+.pwdPTag{ /* 비밀번호 찾기 P태그 */
+	font-size: 18px;
+}
+
+#searchPwdBtn{
+	width: 260px;
+    height: 50px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border: 1px solid #4e266d;
 }
 
 #map {
@@ -404,7 +487,7 @@ body {
    width: 260px;
    height: 50px;
    text-align: center;
-   background-color: orange;
+   background-color: black;
    color: white;
    border: 1px solid #4e266d;
 }
@@ -423,12 +506,16 @@ text-align: center;
    padding: 5px;
 }
 
+.wrap-regi-regiBtn{ /* 회원가입 - 가입하기 버튼 */
+	text-align: center;
+}
+
 .findInfo{ /* 비밀번호 찾기 */
    text-align: center;
 }
 
 .div-reg{
-   padding: 8px;
+   padding: 5px;
    padding-top: 2px;
 }
 
@@ -436,7 +523,7 @@ text-align: center;
    width: 130px;
    height: 35px;
    text-align: center;
-   background-color: orange;
+   background-color: black;
    color: white;
    border: 1px solid #4e266d;
 }
@@ -487,7 +574,7 @@ text-align: center;
 
 .reg-font{
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 17px;
 	padding-left: 10px;
 }
 
@@ -550,35 +637,37 @@ text-align: center;
     </nav>
   </div>
 <div class="container">
+
             <!-- 모달 클릭시 뒷 배경 -->
     <div class="black_bg"></div>
     
     <!-- Login Modal -->
     <div class="login_modal">
     <div class="w3-container w3-orange"> 
-    <div class="lModal_close"><a href="#">close</a></div>
-                 <p style="text-align: center; font-size: 30px; padding-top: 40px">로그인</p>
-            </div>
-            <p style="padding-bottom: 20px"></p>
+    	<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>			
+        	<p style="text-align: center; font-size: 30px; padding-top: 40px; margin-left: 9%">로그인</p>
+        </div>
+            <p style="padding-bottom: 10px"></p>
             
             <div class="wrap-main">
             
-            <form action="/member/login" onsubmit="return loginCheck();" method="post">
+            <form action="/member/login" method="post">
                <div class="center"><p style="font-weight: bold; font-size: 15px">&nbsp;&nbsp;이메일&nbsp;&nbsp;
                <input type="text" style="width: 210px; height: 30px;" 
-               placeholder="이메일" id="login_email" name="email" value="<%=id %>"></p></div>
+               placeholder="이메일" id="login_inputEmail" name="email" value="<%=id %>"></p></div>
                
                <div class="center"><p style="font-weight: bold; font-size: 15px">비밀번호 
                <input type="password" style="width: 210px; height: 30px;" 
                placeholder="비밀번호" id="login_pwd" name="pwd"></p></div>
                
-               <div class="wrap-Addition"> <input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
+               <div class="wrap-Addition"  style="font-size: 15px;"> <input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
                <div class="wrap-Addition"> 
-               <button style="font-size: 20px" type="submit" id="button">로그인</button> </div>
+               <button style="font-size: 20px" type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
             </form>
-         
             </div>
-            
+				<!-- 또는 영역 -->
+			<div class="hr-sect">또는</div> 
+				   
 			<!-- 네이버 로그인 -->
             <div id="naverIdLogin" style="text-align:center;"><a href="${url}">
             <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
@@ -590,52 +679,103 @@ text-align: center;
             
             <div class="findInfo">
             
-         <a onclick="moveRegisterPage()">회원가입</a>
-         <span>|</span>
-         <a href="/search/searchPwd">비밀번호 찾기</a>
+         <a class="aTag" onclick="fromLoginToRegister()" style="font-size: 15px;">회원가입</a>
+         <span style="color: black;">|</span>
+         <a class="aTag" onclick="fromLoginToSearchPwd()" id="searchPwd_modal_btn" style="font-size: 15px;">비밀번호 찾기</a>
             </div>
     </div>
    <!-- end Login Modal -->
+   
+   
+           <!-- 모달 클릭시 뒷 배경 -->
+    <div class="black_bg"></div>
+    
+    <!-- searchPwd Modal -->
+    <div class="searchPwd_modal">
+    <div class="w3-container w3-orange"> 
+    	<div class="spModal_close"><a class="cancelBtn" href="#">X</a></div>
+    				
+        	<p style="text-align: center; font-size: 30px; padding-top: 70px; margin-left: 3%">
+        	비밀번호를 잊으셨나요?</p>
+        </div>
+            <p style="padding-bottom: 10px"></p>
+            
+         <div class="wrap-main">
+            
+           <form action="/search/sendPwd" method="post">
+           
+            <div class="center"><p style="font-weight: bold; font-size: 20px">이메일
+               <input type="text" style="width: 210px; height: 30px;" 
+               id="serachEmail" name="email"></p></div>
+			
+			<div class="center">
+			<p class="pwdPTag">계정으로 사용하시는 이메일 주소를 입력하시면</p>
+			<p class="pwdPTag">임시 비밀번호를 전송해드리겠습니다.</p></div>
+			
+			<div class="center"><input type="submit" id="searchPwdBtn" onclick="return inputCheck()" value="메일 보내기"></div>
+			</form>
+			
+         </div>
+         
+         <div style="text-align: center;">
+         	<img src="/resources/img/searchPwd.png" alt="search" style="width: 180px; margin-bottom: 8px;">
+         </div>
+         
+          <div class="findInfo">
+            
+         <a class="aTag" onclick="fromSearchPwdToRegister()" style="font-size: 15px;">회원가입</a>
+         <span style="color: black;">|</span>
+         <a class="aTag" onclick="fromSearchPwdToLogin()" style="font-size: 15px;">로그인하러가기</a>
+            </div>
+         
+    </div>
+   <!-- end searchPwd Modal -->
    
    
    <!-- register Modal  -->
     <!-- Modal -->
     <div class="register_modal">
     <div id="register">
+        <!-- 닫기버튼 -->
+        <div class="rModal_close"><a class="reg-cancelBtn" href="#">X</a></div>
+
         <div class="modal-dialog w3-modal-content" style="width: 600px; height:400px; display: table;">
-            <p style="text-align: center; font-size: 30px">회원가입</p>
-         <div class="wrap-main" style="margin-left: 15px">
+            <p style="text-align: center; font-size: 30px; margin-left: 11%;">회원가입</p>
+         <div class="wrap-main" style="margin-left: 15px;">
             <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
                   <div class="reg-font">이메일</div>
-                  <div class="div-reg"><input type="email" name="email" id="email" placeholder="이메일주소">
+                  <div class="div-reg"><input type="text" name="email" id="email" placeholder="이메일주소" size="30">
                      <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
                   <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
                   <div class="reg-font">비밀번호</div>
-                  <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" onblur="pwdCheck()">
+                  <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" 
+                  onblur="pwdCheck()" size="30">
                      비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
                   <div class="div-reg"><span id="spanPwd"></span></div></div>
                   
                   <!-- 비밀번호 확인 -->
                   <div class="reg-font">비밀번호 확인</div>
-                   <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" onblur="pwdCheck()">
+                   <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" 
+                   onblur="pwdCheck()" size="30">
                      비밀번호 확인
                   <p><span id="spanPwdCfm"></span></p></div>
                      
                   
                   <!-- 닉네임 -->
                   <div class="reg-font">닉네임</div>
-                  <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임">
+                  <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
                   <div class="div-reg"><span id="spanNickname"></span></div></div>
                   
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
-                  <div class="div-reg"><input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!"></div>
+                  <div class="div-reg">
+                  <input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
                   
                   <!-- 성별 -->
                   <div class="reg-font">성별</div>
@@ -644,19 +784,26 @@ text-align: center;
                      <p><span id="spanGender"></span></p>
                   
                   <!-- 상태(정상, 휴면 등...) -->
-                  <p><input type="hidden" name="status" id="status" value="정상"></p>
+                  <p><input type="hidden" name="status" id="status" value="MS001"></p>
                   
                   <!-- 등급?(일반회원, 관계자 등..) -->
-                  <p><input type="hidden" name="memGrade" id="mem_grade" value="일반회원"><p>
+                  <p><input type="hidden" name="memGrade" id="mem_grade" value="MG001"><p>
                   
-               <div class="wrap-Addition">
+               <div class="wrap-regi-regiBtn">
                <button style="font-size: 20px" type="submit" id="button" onclick="return registerValidCheck();">가입하기</button></div>
             </form>
             </div>
+            
+             <div class="findInfo" style="margin-top: 5px;">
+            
+         <a class="aTag" onclick="fromRegisterToSearchPwd()" style="font-size: 15px; ">비밀번호 찾기</a>
+         <span>|</span>
+         <a class="aTag" onclick="fromRegisterToLogin()" style="font-size: 15px;">로그인하러가기</a>
+            </div>
+            
       </div>
    </div>
-        <!-- 닫기버 버튼 -->
-        <div class="rModal_close"><a href="#">close</a></div>
+        
     </div>
     <script type="text/javascript">
     
@@ -665,6 +812,8 @@ text-align: center;
     document.querySelector('.lModal_close').addEventListener('click', lModalClose);
     document.getElementById('register_modal_btn').addEventListener('click', rModalShow);
     document.querySelector('.rModal_close').addEventListener('click', rModalClose);
+    document.getElementById('searchPwd_modal_btn').addEventListener('click', spModalShow);
+    document.querySelector('.spModal_close').addEventListener('click', spModalClose);
 
     
     //모달 보여지는 메서드
@@ -675,6 +824,11 @@ text-align: center;
     //모달 보여지는 메서드
     function rModalShow() {
         document.querySelector('.register_modal').style.display = 'block';
+        document.querySelector('.black_bg').style.display = 'block';
+    };
+  //모달 보여지는 메서드
+    function spModalShow() {
+        document.querySelector('.searchPwd_modal').style.display = 'block';
         document.querySelector('.black_bg').style.display = 'block';
     };
     
@@ -688,12 +842,47 @@ text-align: center;
         document.querySelector('.register_modal').style.display = 'none';
         document.querySelector('.black_bg').style.display = 'none';
     }
+  //모달 사라지는 메서드
+    function spModalClose() {
+        document.querySelector('.searchPwd_modal').style.display = 'none';
+        document.querySelector('.black_bg').style.display = 'none';
+    }
     
     // 로그인창에서 회원가입 누르면 실행
-    function moveRegisterPage(){
+    function fromLoginToRegister(){
  	   lModalClose();
  	   rModalShow();
     }; // end moveRegisterPage()
+    
+    // 로그인창에서 비밀번호찾기 누르면 실행
+    function fromLoginToSearchPwd(){
+ 	   lModalClose();
+ 	   spModalShow();
+    }; // end moveRegisterPage()
+    
+ 	// 비밀번호 찾기 창에서 회원가입 누르면 실행
+    function fromSearchPwdToRegister(){
+ 	   spModalClose();
+ 	   rModalShow();
+    }; 
+    
+    // 비밀번호 찾기창에서 로그인 누르면 실행
+    function fromSearchPwdToLogin(){
+    	spModalClose();
+ 	   lModalShow();
+    }; 
+    
+    // 회원가입 찾기창에서 로그인 누르면 실행
+    function fromRegisterToLogin(){
+    	rModalClose();
+ 	   lModalShow();
+    }; 
+    
+ 	// 회원가입 찾기창에서 비밀번호 찾기 누르면 실행
+    function fromRegisterToSearchPwd(){
+    	rModalClose();
+ 	   spModalShow();
+    }; 
     
     
     /* 회원가입 */
@@ -716,8 +905,7 @@ text-align: center;
         // 이메일 정규식
          if(false === jEmail.test(myEmail)) {     
             document.getElementById("spanEmail").innerHTML = "이메일 형식이 잘못되었습니다";
-                spanEmail.style.color='red';
-                
+            spanEmail.style.color='red';
              return;  
          }else{
              document.getElementById("spanEmail").innerHTML = "사용할 수 있는 이메일입니다.";
@@ -760,7 +948,7 @@ text-align: center;
        }
        
 	       // 닉네임은 2~8자리
-	       if(!(2 < myNickname.length && myNickname.length <= 8)){
+	       if(!(2 <= myNickname.length && myNickname.length <= 8)){
 	    	   document.getElementById("spanNickname").innerHTML = "닉네임은 2~8자로 입력해주세요";
 	    	   spanNickname.style.color = 'red';
 	    	   return;
@@ -815,7 +1003,7 @@ text-align: center;
     let myPwdCfm = $("#pwdCfm").val();  // 비밀번호 확인
     let myNickname = $("#nickname").val(); // 닉네임
     let myBirth = $("#birth").val();    // 생년월일
-    
+	
     // 이메일 입력
     if(myEmail.length == 0){
        alert("이메일 입력 후, 중복체크를 눌러주세요");
@@ -825,7 +1013,7 @@ text-align: center;
     
     // 이메일 정규식
      if(false === jEmail.test(myEmail)) {     
-        alert('이메일 형식이 잘못되었습니다. @앞에 3글자 이상은 넣으셨나요?');
+        alert('이메일 형식이 잘못되었습니다. \n@앞에 3글자 이상은 넣으셨나요? 공백은 없으시죠?');
           return false;         
      }                            
     
@@ -837,12 +1025,12 @@ text-align: center;
     }
      
     // 비밀번호 정규식
-    if(false === jPwd.test(myPwd)) {     
-		alert('비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다.');
+    if(false === jPwd.test(myPwd) || myPwd.length > 12) {     
+		alert('비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.');
 		$("#pwd").focus();
         return false;         
     }   
-     
+    
      // 패스워드 확인
      if(myPwd != myPwdCfm){
         alert("비밀번호가 일치하지 않습니다.");
@@ -864,7 +1052,7 @@ text-align: center;
     }
     
     // 닉네임은 2~8자리까지만
-    if(!(myNickname.length >= 2 && myNickname.length <= 8)){
+    if(!(2 <= myNickname.length && myNickname.length <= 8)){
 	   	alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
 	   	$("#nickname").focus();
 	   	return false;
@@ -883,7 +1071,7 @@ text-align: center;
        $("#birth").focus();
        return false;
     }
-
+	
      // 성별 선택
     if($("input[name=gender]:radio:checked").length < 1){
        alert("성별을 선택해주세요.");
@@ -904,9 +1092,9 @@ text-align: center;
     let myPwd = $("#pwd").val();       // 비밀번호
     let myPwdCfm = $("#pwdCfm").val();    // 비밀번호 확인
     
-    // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리(공백 당연히 안됨!)
+    // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8~12자리 (공백 당연히 안됨!)
     if(false === jPwd.test(myPwd) || myPwd.search(/\s/) != -1) {
-       document.getElementById("spanPwdCfm").innerHTML = "비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다. 공백없이!!";
+       document.getElementById("spanPwdCfm").innerHTML = "비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다. 공백없이!!";
          spanPwdCfm.style.color='red';         
          return false;
     }else{
@@ -954,13 +1142,13 @@ text-align: center;
  // 로그인 모달 유효성 체크
  function loginCheck(){
     
-    let loginEmail = $("#login_email").val();    // 이메일
+    let loginInputEmail = $("#login_inputEmail").val();    // 이메일
     let loginPwd = $("#login_pwd").val();       // 비밀번호
     
     // 이메일 입력(로그인)
-    if(loginEmail.length == 0){
+    if(loginInputEmail.length == 0){
        alert("이메일을 입력해주세요");
-       $("#login_email").focus();
+       $("#login_inputEmail").focus();
        return false;
     }
     
@@ -986,6 +1174,18 @@ text-align: center;
     };
        return true;
     };
+    
+	function inputCheck(){ // 입력 널 체크
+		
+		let searchEmail = $("#serachEmail").val();    // 이메일
+		
+		// 이메일을 입력 안했다면..
+		if(searchEmail.length == 0){
+			alert("이메일을 입력해주세요");
+	        return false;
+		}
+		return true;
+	}
      
        //rttr 창띄우기
         	$(function(){

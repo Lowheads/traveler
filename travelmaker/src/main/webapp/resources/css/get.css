@@ -1,59 +1,25 @@
 @charset "UTF-8";
 
 
+.comment{
+	width : 960px;
+	margin-top: 3%;
+	margin-left: 90px;
+	margin-bottom : 20px;
+}
+
 li {
    list-style:none;
 }
 
-.comment{
-	width : 960px;
-	margin-top:  20px;
-	margin-left: 90px;
-	margin-bottom : 20px;
-/* 	border: 1px solid red;
-   	border-radius: 10px; */
-}
-
-.comment-title{
-	margin-left: 10px;
-	font-size: 13px;
-	font-weight: bold;
-	font-family: sans-serif;
-}
-
-.comment-list{
-	margin-left: 15px;
-}
-
-.comment-reply{
-	margin-top : 2px;
-	margin-left: 20px;	
-}
-
-.replyarea{
-	margin-left: 15px;
-	margin-bottom: 10px;
-}
-
-.button {
-	width: 100px;
-	height: 50px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
-	border-radius: 12px;
-	margin-bottom: 20px;
-}
-
 .replyRegiBtn{ /*댓글 등록 버튼*/
-	background-color : orange;	
+	background-color : black;	
 	color : white;
-	height : 89px;
+	height : 70px;
 	width : 80px;
 	margin-left : 3px;
 	border: 1px solid #4e266d;
-	border-radius: 8px;
+	/* border-radius: 8px; */
 }
 
 .replyRegi-wrap{ /*댓글 등록 텍스트*/
@@ -62,8 +28,8 @@ li {
    height: 110px;
    display: flex;
    justify-content: center;
-   /* justify-content: flex-start; */
    align-items: center;
+   margin-bottom: 20%;
 }
 
 .replyBtn_modify{ /* 댓글 수정 버튼 */
@@ -87,12 +53,15 @@ li {
 }
 
 .modiText{ /* 댓글 수정 textarea */
-	margin-right : 2px;
+	margin-right: 2px;
+    margin-left: -6%;
+    margin-bottom: 1%;
 }
 
 .small{ /*small 태그*/
 	float : right;
 	margin-right : 13px;
+	padding: 10px;
 }
 
 .replyModiBtn{ /*댓글 수정완료 버튼*/
@@ -103,6 +72,7 @@ li {
 	color: white;
 	border: 1px solid #4e266d;
 	border-radius: 8px;
+	margin-bottom: 1%;
 }
 
 .textContent{ /* 댓글 수정 div */
@@ -112,4 +82,9 @@ li {
    display: flex;
    justify-content: center;
    align-items: center;
+}
+
+.paging-wrap{
+	font-size: 12px;
+	text-align: center;
 }

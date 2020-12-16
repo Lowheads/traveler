@@ -2,11 +2,17 @@
 
 
 .container {
-	margin-right: 380px;
+	margin-right: 350px;
 }
 
-.title-wrap {
+.title-wrap { /* 메인 타이틀 div */
 	font-size: 50px;
+	margin-top: 20%;
+    margin-bottom: 8%;
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    margin-left: 15%;
 }
 
 table.board-wrap {
@@ -20,15 +26,17 @@ table.board-wrap {
 	margin-top: 5%;
 }
 
-table.board-wrap thead th {
+table.board-wrap thead th { /* 게시판 제목 라인 */
 	width: 150px;
 	padding: 10px;
 	font-weight: bold;
 	vertical-align: top;
-	color: #fff;
-	background: #FFD700;
+	color: black;
+	background: white;
 	margin: 20px 10px;
 	text-align: center;
+	border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 
 table.board-wrap tbody th {
@@ -43,3 +51,56 @@ table.board-wrap td {
 	border-bottom: 1px solid #ccc;
 }
 
+.boardRegiBtn-wrap{ /* 글 쓰기 버튼 div */
+	text-align: right;
+	margin-right: -15%;
+	margin-top: 0.5%;
+}
+
+.boardRegiBtn-wrap button{ /* 글 쓰기 버튼 div */
+	background-color: black;
+	color: white;
+	size: 4%;
+	font-size: 10px;
+	width : 5%;
+    height: 30px;
+}
+
+.w3-bar{ /* 페이징 버튼 */
+	padding-right: 100px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.w3-button{ /* 페이징 버튼 사이 간격 */
+	padding: 10px;
+}
+
+.paging-wrap{ /* 페이징 버튼 div */
+	padding-left: 30%;
+	padding-top: 5%;
+}
+
+.search{ /* 검색 기능 div */
+	text-align: center;
+	margin-bottom: 20%;
+}
+
+#searchForm{
+	margin-left: 170px;
+	display: inline-flex;
+}
+
+#searchKeyword{
+	height: 22px;
+}
+
+.searchBtn{ /* 검색 버튼 */
+	background-color: black;
+    color: white;
+    font-size: 10px;
+}
+
+button, input, select, textarea, optgroup {
+    margin: 2px;
+}
