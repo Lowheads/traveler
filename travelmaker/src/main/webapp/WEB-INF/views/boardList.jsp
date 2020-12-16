@@ -9,45 +9,35 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-	<p class="mb-4">
-		DataTables is a third party plugin that is used to generate the demo
-		table below. For more information about DataTables, please visit the <a
-			target="_blank" href="https://datatables.net">official DataTables
-			documentation</a>.
-	</p>
-
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+			<h6 class="m-0 font-weight-bold text-primary">게시글 관리</h6>
 		</div>
 		<div class="card-body">
 			<div class="form-group row justify-content-center">
-			<form id='searchForm' action="/admin/boardList" method='get'>
-				<div class="w100" style="padding-right: 10px">
+				<form id='searchForm' action="/admin/boardList" method='get'>
+				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
-						<option selected disabled hidden><c:out
-								value="${criteria.type}" /></option>
+						<option selected disabled hidden><c:out value="${criteria.type}" /></option>
 						<option value="회원번호">회원번호</option>
 						<option value="닉네임">닉네임</option>
 						<option value="제목">제목</option>
 					</select>
-				</div>
-				<div class="w300" style="padding-right: 10px">
 					<input type="text" class="form-control form-control-sm"
 						name="keyword" id="keyword" placeholder="키워드를 입력하시오"
 						value='<c:out value="${criteria.keyword}"/>'>
+					<span class="input-group-btn">
+						<button onclick="return search()" class="btn btn-default" type="submit">
+						<i class="fa fa-search"></i></button>
+					</span>
 				</div>
-				<div>
-					<button id="searchBtn" class="btn btn-sm- btn-primary">검색</button>
-				</div>
-			</form>
+				</form>
+			
 			<div class="table-responsive">
-				<button id="removePost" type="button" class="btn btn-primary"
-					onClick="deletePost()">게시물 삭제하기</button>
-				<table class="table table-bordered" id="dataTable" width="100%"
+				<button id="removePost" type="button" class="btn btn-primary float-right"
+					onClick="deletePost()">삭제하기</button>
+				<table class="table table-hover" id="dataTable" width="100%"
 					cellspacing="0">
 					<thead>
 						<tr>
@@ -121,6 +111,17 @@
 <script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 	$(document).ready(function() {
+		
+		
+		const _sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
+		const timer = async () => {
+		    await _sleep(2000);
+		    $("#dataTable_filter")[0].hidden=true;
+		    console.log("gg");
+		};
+		
+		timer();
 
 		const message = '<c:out value="${message}"/>';
 		
@@ -136,39 +137,44 @@
 		
 		showModal(modalMsg);
 
-	})
 
-	$("#searchForm button").on("click", function(e) {
+	})
+	
+	function search(){
 		
 		const type = $("select[id=type]").val();
 		const keyword = $("input[id=keyword]").val();
 		
-		if (type == null) {
-			showModal("검색할 대상을 선택하세요");
+		let msg="";
+		
+		if (type == "") {
+			msg = "검색할 대상을 선택하세요";
+			showModal(msg);
 			return false;
 		}
 
 		if (keyword == "") {
-			showModal("검색할 단어를 입력하세요");
+			msg = "검색할 단어를 입력하세요"
+			showModal(msg);
 			return false;
 		}
 		
 		if(type =="회원번호"){
 			if(isNaN(keyword)){
-				showModal("회원번호는 숫자만 입력해주세요");
+				msg = "회원번호는 숫자만 입력해주세요"
+				showModal(msg);
 				return false;
 			}
 		}
-
+		
 		if(keyword.length>100){
 			msg = "검색은 100자리 이하만 가능합니다";
 			showModal(msg);
 			return false;
-		}else{	
-			return true;
 		}
 		
-	})
+		return true;
+	}
 
 	function deletePost() {
 
@@ -211,7 +217,7 @@
 			let str = boardNo+"번 게시글 상세정보 <br>";
 			for (let i = 0; i < list.length; i++) {
 				
-				str+="내용	:	"+list[i].boardCon	+"	num	:	"+list[i].num+"	이미지	:	"+list[i].boarddtImg+"	썸네일 이미지	:	"+list[i].boardThumbImg+"<br>";
+				str+="내용	:	"+list[i].boardCon	+"<br>";
 			}
 			
 			showModal(str);

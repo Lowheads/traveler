@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.domain.ThemeVO;
@@ -22,8 +23,7 @@ public class ThemeServiceImpl implements ThemeService {
 	private ThemeMapper mapper;
 	private ThemeAttachMapper attMapper;
 
-	@Override
-	public List<ThemeVO> getThemeList() {
+	public List<String> getThemeList() {
 
 		return mapper.getThemeList();
 		 
@@ -39,6 +39,8 @@ public class ThemeServiceImpl implements ThemeService {
 	@Override
 	public Map<String, Integer> updateTheme(String[] removedPlaces,String[] addedPlaces, int themeNo, ThemeAttachVO attachment) {
 		
+		System.out.println("1");
+		
 		attMapper.delete(themeNo);
 		
 		if(attachment.isImage()) {
@@ -46,7 +48,9 @@ public class ThemeServiceImpl implements ThemeService {
 			attMapper.update(attachment);
 					
 		}
-
+		System.out.println("update시작 ");
+		int update = mapper.updateTheme(themeNo);
+		System.out.println("update끝 "+update);
 		
 		Map<String, Integer> result = new HashMap<>();
 		
@@ -63,11 +67,11 @@ public class ThemeServiceImpl implements ThemeService {
 		
 		return result;
 	}
-
+	
 	@Override
-	public List<PlaceVO> getPlaceList(String keyword) {
+	public List<PlaceVO> getPlaceList(String keyword, int pageNum ) {
 		
-		return mapper.getPlaceList(keyword);
+		return mapper.getPlaceList(keyword, pageNum);
 	}
 
 	@Override
@@ -76,6 +80,11 @@ public class ThemeServiceImpl implements ThemeService {
 		return attMapper.findByThemeNo(themeNo);
 	}
 	
+
+	public int getTotal(String keyword) {
+		
+		return mapper.getTotalCount(keyword);
+	}
 	
 
 

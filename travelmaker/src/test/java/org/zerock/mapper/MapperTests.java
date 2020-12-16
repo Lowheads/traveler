@@ -7,11 +7,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ThemeVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
 import org.travelmaker.mapper.ThemeAttachMapper;
 import org.travelmaker.mapper.ThemeMapper;
+import java.util.Date;
+import java.util.HashMap;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -230,11 +233,60 @@ public class MapperTests {
 		
 		log.info("-----------------"+result+"-----------------");
 		*/
-		
-		
-		
-		
 //		
+	}
+	
+//	@Test
+	public void updateThemeTest() {
+		/*
+		 * int themeNo = 2; log.info(mapper3.updateTheme(themeNo));
+		 * 
+		 * assertTrue(mapper3.updateTheme(themeNo)==1);
+		 */	
+		
+	}
+	
+	//@Test
+	public void codeTest() {
+		
+		List<String> list = mapper3.getThemeList();
+		//List<ThemeVO> list = mapper3.getThemeList();
+		
+		
+		
+	//	HashMap<List<>, V>
+		
+		//List<ThemeVO> list = mapper3.getThemeList();
+		
+		//list.forEach(theme->log.info(theme.toString()));
+	}
+	
+//	@Test
+	public void getPostDetail() {
+		
+//		int boardNo = 19;
+//		mapper2.getPostDetail(boardNo);
+//		
+		
+	}
+	@Test
+	public void mappertest() {
+		
+		/*
+		 * int themeNo = 3;
+		 * 
+		 * List<PlaceVO> list = mapper3.getThemeInfo(themeNo);
+		 * 
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		int pageNum = 3;
+		
+		String keyword = "바다";
+		
+		List<PlaceVO> list = mapper3.getPlaceList(keyword, pageNum);
+		
+		list.forEach(theme->log.info(theme.toString()));
+		
 	}
 	
 	

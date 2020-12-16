@@ -5,13 +5,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-지역<br>
-테마<br>
+<div class="container fluid">	
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">상세 조회하기 </h6>
+		</div>
+<div class="card-body">
+<div class="form-group row justify-content-center">
 
-<button id="searchBtn" class="btn btn-sm- btn-primary" 
-onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>	
 
-<div class="uploadResult">
+<button id="searchBtn" class="btn btn-primary float-right" 
+onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><br>	
+
+<div class="uploadResult col-sm-12 col-md-6 float-right">
 	<ul>
 	</ul>
 </div>
@@ -21,7 +27,9 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>
 <br>
 
 
-<table  class="table table-bordered" id="dataTable" style="width:70%">
+<div class="table-responsive">
+	
+<table  class="table table-hover" style="width:70%">
 <thead>
 <tr>
 	<th>장소번호</th>
@@ -68,6 +76,11 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>
 						<!-- /.modal-dialog -->
 					</div>
 					<!-- /.modal -->
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
 
 <script>
 
@@ -90,13 +103,19 @@ $(document).ready(function() {
 			var fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
 			
 			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
-			"' data-type = '"+result.fileType+"'></div>";
+			"' data-type = '"+result.fileType+"'><div>";
 			
 			str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
 			str+="</div>";
 			str+="</li>";
 			
 			$(".uploadResult ul").html(str);
+			
+			const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+			showImage(path.replace(new RegExp(/\\/g),"/"));
+			
+			
+			$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
 		
 		})
 			
@@ -126,19 +145,13 @@ $("tr[name=row]").click(function(){
 	
 })
 
-$(".uploadResult").on("click","li", function(e){
+$(".uploadResult").on("click","img", function(e){
 	
 	let liObj = $(this);
 	
 	const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
 	showImage(path.replace(new RegExp(/\\/g),"/"));
-/*	
-	if(liObj.data("type")){
-		showImage(path.replace(new RegExp(/\\/g),"/"));
-	}else{
-		
-		self.location="admin/download?fileName="+path
-	}*/
+
 	
 });
 
@@ -164,7 +177,6 @@ function showImage(fileCallPath){
 	
 	$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
 	.animate({width:'100%',height:'100%'},1000);
-
 	
 }
 

@@ -5,35 +5,50 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-지역
-<br>
-테마
-<br>
+
+<div class="container fluid">	
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">여행 테마 수정하기 </h6>
+		</div>
+<div class="card-body">
+<div class="form-group">
+
+<span class="input-group-btn">
+<button id="addBtn" class="btn btn-sm- btn-primary float-right">
+<i class="fas fa-plus"></i></button>
+</span>
 
 <form method="POST" action="/admin/modifyTheme/${themeNo}" id=sendData>
 	<input type="submit" class="btn btn-sm- btn-primary" } value="저장하기">
 </form>
 
-<div class="uploadDiv">
+
+<div class="uploadDiv inline">
 	<input type='file' name='uploadFile' accept="image/*" required>
+</div><br>
 </div>
+<div>
 <div class="uploadResult">
 	<ul>
 	</ul>
 </div>
+
+
+
+
 <div class='bigPictureWrapper'>
 	<div class='bigPicture'></div>
 </div>
 
-<buttno id='uploadBtn'>upload</buttno>
-
-<table class="table table-bordered" id="dataTable" style="width: 70%">
+<table class="table table-hover" id="dataTable" style="width: 70%">
 	<tr>
 		<th>장소번호</th>
 		<th>장소명</th>
 		<th>상세주소</th>
 		<th>카테고리</th>
 		<th>좋아요 수</th>
+		<th> </th>
 	</tr>
 
 	<c:forEach items="${list}" var="list">
@@ -43,12 +58,16 @@
 			<td><c:out value="${list.addressDt}" /></td>
 			<td><c:out value="${list.PCate}" /></td>
 			<td><c:out value="${list.likeCnt}" /></td>
-			<td><button id="deleteBtn"
-					value='<c:out value="${list.plcNo}" />'>X</button></td>
+			<td><button class="btn btn-default" id="deleteBtn"
+					value='<c:out value="${list.plcNo}" />'>
+					<i class="fas fa-times"></i></button>
+					</button></td>
 		</tr>
 	</c:forEach>
 </table>
+</div>
 
+</div></div></div>
 
 
 
@@ -56,7 +75,7 @@
 	<!--  <input type="text" class="form-control form-control-sm" name="keyword"
 		id="keyword">-->
 </div>
-<button id="addBtn" class="btn btn-sm- btn-primary">검색</button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -64,30 +83,44 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+			<h6 class="modal-title" id="myModalLabel">새로운 장소 검색하기</h6>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
+			<div></div>
+			
 			<div class="modal-body">
-				<input type="text" class="form-control form-control-sm"
-					name="keyword" id="keyword">
-				<button id="searchBtn" class="btn btn-sm- btn-primary">검색</button>
-				<div id="resultPage"></div>
-				<div class="modal-footer">
-					<div id="addedResult"></div>
+
+				<div class="w100 input-group custom-search-form">
+ 					<input type="text" class="form-control form-control-sm"
+							name="keyword" id="keyword">
+					<span class="input-group-btn">
+						<button id="searchBtn" class="btn btn-default">
+						<i class="fa fa-search"></i></button>
+					</span>
+				</div>
+				
+				<div id="resultPage">
+				</div>
+				
+				<div id="pagination"></div>
+				<div id="addedResult"></div>
 					<button id="modalInBtn" type="button" class="btn btn-primary"
 						data-dismiss="modal">확인</button>
+				
+				<div class="modal-footer">
 
 				</div>
+				
 			</div>
 			<!-- /.modal-content -->
 
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
-	<!-- /.modal -->
 </div>
-
+<!-- /.modal -->
+	
 <script type="text/javascript" src="/resources/js/admin.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -98,6 +131,7 @@
 	$(document).ready(
 			function() {
 				
+				if($(".uploadResult img").length!=0){$(".uploadDiv").hide()}
 				
 				let removedPlaces = [];
 				let addedPlaces = [];
@@ -125,27 +159,28 @@
 						
 						str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
 						"' data-type = '"+result.fileType+"'></div>";
-						
+						str+="<div>";
 						str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
 						str += "<span> "+result.fileName+"</span>";
 						str += "<button type = 'button' data-file =\ '"+fileCallPath+"\'";
-						str += "data-type ='image' class='btn btn-warning btn-circle'> X <iclass = 'fa fa-times'></i></button><br>";
+						str += "data-type ='image' class='btn btn-warning btn-circle btn-sm'><i class = 'fas fa-times'></i></button>";
 						str+="</div>";
-						str+="</li>";
-						
+						str+="</li>"; 
 						$(".uploadResult ul").html(str);
 					
 					})
 						
 				})();
 				
-				$(".uploadResult").on("click","li", function(e){
+				$(".uploadResult").on("click","img", function(e){
 					
-					let liObj = $(this);
+					let liObj = $(this).parent().parent();
 					
 					const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+					console.log(path);
+					console.log(path.replace(new RegExp(/\\/g),"/"));
 					imgupload.showImage(path.replace(new RegExp(/\\/g),"/"));
-					console.log("done");
+					"<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>"
 				});
 				
 				
@@ -161,16 +196,18 @@
 						
 						let str = "";
 						
-						const fileCallPath = encodeURIComponent("/s_"+image.uuid+"_"+image.fileName);
+						const fileCallPath = "/s_"+image.uuid+"_"+image.fileName;
 						
 						str += "<li data-path = '"+image.uploadPath+"' ";
 						str += "data-uuid='"+image.uuid+"' data-filename='"+image.fileName+"' data-type='"+image.image+"'";
 						str += "><div>";
-						str +="<img src = '/admin/display?fileName="+fileCallPath+"'>";
+						str +="<img src ='/admin/display?fileName="+encodeURI(fileCallPath)+"'>";
 						str += "<span> "+image.fileName+"</span>";
 						str += "<button type = 'button' data-file =\ '"+fileCallPath+"\'";
-						str += "data-type ='image' class='btn btn-warning btn-circle'> X <iclass = 'fa fa-times'></i></button><br>";
+						str += "data-type ='image' class='btn btn-warning btn-circle btn-sm'><i class='fas fa-times'></i></button><br>";
 						str += "</div></li>";
+						
+						console.log(str);
 						
 						uploadResult.append(str);
 					}, 
@@ -234,18 +271,23 @@
 				})
 				
 				$("input[type='file']").change(function(e){
-
+					
 					const formData = new FormData();
 					
 					const inputFile = $("input[name='uploadFile']");
 					
 					const file = inputFile[0].files[0];
-					
+
+					if($(".uploadResult li").length==2){
+						$(".uploadResult li")[0].remove();
+					}
+
+				
 					if(!imgupload.checkExtension(file.size, file.type)){
 						$(".uploadDiv").html(cloneObj.html());
 						return false;
 					}
-
+					
 					formData.append("uploadFile",file);
 
 					$.ajax({
@@ -261,6 +303,7 @@
 						}
 						
 					});
+					
 
 				})
 
@@ -305,17 +348,23 @@
 									return;
 								}
 								
-								$.getJSON("/admin/getPlaceList/" + keyword
-										+ ".json", function(list) {
+								
+/* 								$.getJSON("/admin/getPlaceList?"+"keyword="+keyword+"&pageNum=1&amount=10", function(list) {
 									
 									for (let i = 0; i < list.length; i++) {
+										
+										let plus;
+										
+										plus = document.createElement('i')
+										plus.setAttribute('class', 'fas fa-plus')
 
 										let obj;
 										obj = document.createElement('button');
 										obj.setAttribute('id', 'added');
+										obj.setAttribute('class','btn btn-default');
 										obj.setAttribute('name', list[i].plcNo);
-										obj.innerText = "+";
 										obj.addEventListener('click', added);
+										obj.append(plus);
 
 										let ob;
 										ob = document.createElement('li');
@@ -325,15 +374,86 @@
 										ob.append(obj);
 										
 										$("div[id=resultPage]").append(ob);
+										
 									}
 									
+								}); */
+								
+							$.getJSON("/admin/getPlaceList/"+keyword+"/1", function(list) {
+
+								var pageDto = list.pageMaker;
+								var placeList = list.list;
+								
+//								console.log(pageDto);
+//								console.log(placeList);
+								
+ 									for (let i = 0; i < placeList.length; i++) {
+ 										
+										let plus;
+										
+										plus = document.createElement('i')
+										plus.setAttribute('class', 'fas fa-plus')
+
+										let obj;
+										obj = document.createElement('button');
+										obj.setAttribute('id', 'added');
+										obj.setAttribute('class','btn btn-default');
+										obj.setAttribute('name', placeList[i].plcNo);
+										obj.addEventListener('click', added);
+										obj.append(plus);
+										
+										let title = document.createElement('span');
+										title.innerText = placeList[i].plcTitle;
+										
+										let address = document.createElement('span');
+										address.innerText = placeList[i].addressDt;
+										
+										/* console.log(placeList[i].plcNo);
+										console.log(placeList[i].plcTitle);
+										console.log(placeList[i].addressDt);
+										console.log(placeList[i].pcate);
+										console.log(placeList[i].likeCnt);
+										 */
+
+										
+										ob = document.createElement('li');
+										ob.setAttribute('id', placeList[i].plcNo);
+										ob.setAttribute('title', placeList[i].plcTitle);
+										ob.setAttribute('addressDt', placeList[i].addressDt);
+										ob.setAttribute('PCate', placeList[i].pcate);
+										ob.setAttribute('likeCnt', placeList[i].likeCnt); 
+										
+									//	let ob = "<li id="+placeList[i].plcNo+">"
+										
+										
+										
+									//	console.log(placeList[i]); 
+										
+										/* ob.innerText = placeList[i].plcTitle + "	"
+												+ placeList[i].addressDt;
+										 */
+										 
+										// ob.append(obj);
+										 //ob.append(title);
+										 
+										 ob.append(title,address,obj);
+										 
+										$("div[id=resultPage]").append(ob);
+									} 
+									
+									
+								}).fail(function(result){
+									
+									console.log("fail");
 								});
 								
 							})
 
 				function added(event) {
 
-					let num = $(this).attr("name")
+					let num = $(this).attr("name");
+					
+//					let num = $(this).parent();
 					
 					let idx = list.indexOf(num);
 					
@@ -343,6 +463,17 @@
 
 						newlist.push(num);
 						
+						var data = $("li[id="+num+"]")[0]
+						
+						var str = '<tr name="row" id='+num+'>'
+						str+='<td>'+data.id+'</td>'
+						str+='<td>'+data.title+'</td>'
+						str+='<td>'+data.pcate+'</td>'
+						str+='<td>'+data.likecnt+'</td>'
+						str+='<td>'+data.addressdt+'</td></tr>'
+						
+						$("tbody").append(str);
+						
 						$("li[id=" + num + "]").remove();
 
 					}else{
@@ -351,6 +482,13 @@
 						return;
 					}
 				}
+				
+				$("#modalInBtn").click(function(e){
+					
+					e.preventDefault();
+					
+					
+				})
 				
 				$("form[id=sendData]").click(function(e){
 					

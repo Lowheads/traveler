@@ -10,16 +10,6 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-	<p class="mb-4">
-		DataTables is a third party plugin that is used to generate the demo
-		table below. For more information about DataTables, please visit the <a
-			target="_blank" href="https://datatables.net">official DataTables
-			documentation</a>.
-	</p>
-
-
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -27,28 +17,35 @@
 		</div>
 		<div class="card-body">
 			<div class="form-group row justify-content-center">
-				<form id='searchForm' action="/admin/userInfo" method='get'>
-				<div class="w100" style="padding-right: 10px">
+			<div class="float-left">
+				<form id='searchForm' action="/admin/userInfo" method='get'><!-- 
+				<div class="w100 input-group custom-search-form" style="padding-right: 10px"> -->
+				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
 						<option selected disabled hidden><c:out value="${criteria.type}"/></option>
 						<option value="회원번호">회원번호</option>
 						<option value="이메일">이메일</option>
 						<option value="닉네임">닉네임</option>
 					</select>
-				</div>
-				<div class="w300" style="padding-right: 10px">
-							<input type="text" class="form-control form-control-sm"
+ 					<input type="text" class="form-control form-control-sm" placeholder="키워드를 입력하시오"
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
-				</div>
-				<div>
-				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
+					<span class="input-group-btn">
+						<button onclick="return search()" class="btn btn-default" type="submit">
+						<i class="fa fa-search"></i></button>
+					</span>
 				</div>
 				</form>
+				</div>
+				
+				<!-- <div>
+				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
+				</div>
+				 -->
 
 				<div class="table-responsive">
-					<button type="button" class="btn btn-primary"
+					<br><button type="button" class="btn btn-primary float-right"
 						onClick="deleteUser()">강제 탈퇴</button>
-					<table class="table table-bordered" id="dataTable" width="100%"
+					<table class="table table-hover" id="dataTable" width="100%"
 						cellspacing="0">
 						<thead>
 							<tr>
@@ -153,7 +150,6 @@
 <script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 	$(document).ready(function() {
-
 		const message = '<c:out value="${message}"/>';
 
 		checkModal(message);
@@ -171,6 +167,16 @@
 				showModal("삭제를 완료하였습니다");
 			}
 		}
+
+		const _sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
+		const timer = async () => {
+		    await _sleep(1000);
+		    $("#dataTable_filter")[0].hidden=true;
+		};
+		
+		timer();
+		
 	})
 
 	function deleteUser() {
@@ -203,14 +209,14 @@
 		}
 
 	};
-
-	$("#searchForm button").on("click",function(e) {
+	
+	function search(){
 		
 		const type = $("select[id=type]").val();
 		const keyword = $("input[id=keyword]").val();
 		
 		let msg="";
-
+		
 		if (type == "") {
 			msg = "검색할 대상을 선택하세요";
 			showModal(msg);
@@ -236,9 +242,10 @@
 			showModal(msg);
 			return false;
 		}
+		
 		return true;
-	})
-	
+	}
+
 		function showModal(msg){
 			
 			$(".modal-body").html(msg);

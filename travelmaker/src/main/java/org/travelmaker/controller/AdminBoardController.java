@@ -67,6 +67,8 @@ private AdminBoardService service;
 	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<BoarddtVO>> getDetail(@PathVariable("boardNo") int boardNo) {
 		
+		System.out.println("controller");
+		
 		ResponseEntity<List<BoarddtVO>> result = null;
 		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostDetail(boardNo));
 		

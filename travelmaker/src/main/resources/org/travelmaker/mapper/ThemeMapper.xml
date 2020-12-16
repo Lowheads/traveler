@@ -21,30 +21,24 @@
 		<result property="addressDt" column="ADDRESSDT" />
 		<result property="pCate" column="P_CATE" />
 		<result property="holiday" column="HOLIDAY" />
-		<result property="openingH" column="OPENING_H" />
+		<result property="openingH" column="OPENING_suH" />
 		<result property="likeCnt" column="LIKECNT" />
 	</resultMap>
 	
-	 <select id="getThemeList" resultType="map"> 
-	 	select * 
-	 	from theme 
-	 	ORDER BY THEME_NO 
-		</select>
-<!--  	<select id="getThemeList" resultType="map">
-		select t.region_no, t.theme_code, t.theme_no, t.reg_date, t.mod_date,
-		a.filename
-		from theme t, theme_attach a
-		where t.theme_no = a.theme_no
-		order by t.theme_no
+	<select id="getThemeList" resultType="map">
+ 		SELECT T.THEME_NO, T.REGION_NO, C.CODE_NAME AS THEME_CODE, T.REG_DATE, T.MOD_DATE
+		FROM THEME T, CODE_TABLE C
+		WHERE CONCAT(C.CODE_TYPE_ID,C.CODE) = t.theme_code
+		ORDER BY THEME_NO 
 	</select>
--->
 
-	<select id="getThemeInfo" resultMap="searchResult">
-		SELECT P.PLC_NO,
-		P.PLC_TITLE, P.ADDRESSDT, P.P_CATE, P.LIKECNT
-		FROM THEME_PLC T, PLACE P
-		WHERE T.PLC_NO = P.PLC_NO AND THEME_NO=#{themeNo}
-		ORDER BY P.PLC_TITLE
+		<select id="getThemeInfo" resultMap = "searchResult">
+SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESSDT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT 
+FROM THEME_PLC,
+(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESSDT,C.CODE_NAME, LIKECNT
+FROM CODE_TABLE C, PLACE P
+WHERE C.CODE = P.P_CATE) V
+WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}
 	</select>
 
 	<delete id="deleteTheme" parameterType="int[]">
@@ -57,6 +51,10 @@
 		</foreach>
 		and theme_no = #{themeNo}
 	</delete>
+	
+	<update id="updateTheme">
+		UPDATE THEME SET mod_date=SYSDATE WHERE THEME_NO = #{themeNo}
+	</update>
 
 	<insert id="insertTheme">
 		INSERT ALL
@@ -66,13 +64,29 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
-
-	<select id="getPlaceList" resultMap="searchResult"
-		parameterType="String">
-		SELECT *
+ 
+  	<select id="getPlaceList" resultMap="searchResult" parameterType="map">
+ 	<![CDATA[
+ 	SELECT PLC_NO, PLC_TITLE, P_CATE, REGION_NO, LAT,LNG, ADDRESSDT,HOLIDAY, OPENING_H,LIKECNT
+ 	FROM (SELECT ROWNUM RN, PLC_NO, P_CATE, REGION_NO, PLC_TITLE, LAT,LNG, ADDRESSDT,HOLIDAY, OPENING_H,LIKECNT
 		FROM PLACE
-		WHERE PLC_TITLE LIKE '%'||#{keyword}||'%'
-		ORDER BY PLC_TITLE
+		WHERE PLC_TITLE LIKE
+		'%'||#{keyword}||'%'
+		AND ROWNUM <= #{pageNum} * 10
+		ORDER BY PLC_TITLE)
+ 	WHERE RN > (#{pageNum} -1) *10
+	
+		]]>
 	</select>
+	 
+	
+	<select id="getTotalCount" resultType="int">
+	SELECT count(*)
+		FROM PLACE
+		WHERE PLC_TITLE LIKE
+		'%'||#{keyword}||'%'
+</select>
+
+	
 
 </mapper>
