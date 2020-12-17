@@ -250,10 +250,10 @@ img.ui-datepicker-trigger {
                    <p><span id="spanGender"></span></p>
                   
                   <!-- 상태(정상, 휴면 등...) -->
-                  <p><input type="hidden" name="status" id="status" value="정상"></p>
+                  <p><input type="hidden" name="status" id="status" value="MS001"></p>
                   
                   <!-- 등급 : 네이버회원..) -->
-                  <p><input type="hidden" name="memGrade" id="mem_grade" value="SNS회원"><p>
+                  <p><input type="hidden" name="memGrade" id="mem_grade" value="MG003"><p>
                   
          			</div>
          			

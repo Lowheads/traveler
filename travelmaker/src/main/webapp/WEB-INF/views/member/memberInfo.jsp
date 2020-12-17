@@ -53,13 +53,6 @@
 			return false;
 		}
 
-		/* // 현재 비밀번호 확인
-		if (realPwd != realPwdCfm) {
-			alert("현재 비밀번호와 일치하지 않아요");
-			$("#realPwd").focus();
-			return false;
-		}  */
-
 		// 패스워드 입력
 		if (myPwd.length == 0) {
 			alert("비밀번호를 입력해 주세요");
@@ -201,7 +194,7 @@
 	</form>
 		 <!-- end 닉네임 저장 폼 -->
 		
-		<div class="center">생년월일 ${member.birth }</div>
+		<div class="center">생년월일 : <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/></div>
 		
 		<div class="center">비밀번호 : <%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
 		<button type='button' id="modal_btn" class="button">비밀번호 변경</button></div>

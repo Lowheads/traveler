@@ -32,6 +32,11 @@ public interface MemberService {
 
    public MemberVO getMember(String email); // 정보 조회
    
+   public boolean isApiMember(String email, RedirectAttributes rttr); // 비번찾기 메일보낼 때 소셜회원은 비밀번호가 없으므로 안 보내기로 하자
+
+	// 정보 변경창(개발자도구 등 유효성 체크)
+   public boolean isInputValidCheck(String email, String inputPwd, String newPwd, HttpSession session, RedirectAttributes rttr);
+   
    public boolean isApiLoginCheck(String email, HttpSession session); // api로그인일경우 apiAccountInfo 페이지로 이동
    
    public int hasEmail(String email); // 이메일 중복체크
@@ -40,7 +45,7 @@ public interface MemberService {
    
    public int hasNickname(String nickname); // 닉네임 중복체크
    
-   public boolean isNicknameTouch(String nickname, String email, Model model); // 닉네임 수정 여부 확인
+   public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr); // 닉네임 수정 여부 확인 // 닉네임 수정 여부 확인
    
    public boolean isMemberValid(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
    

@@ -30,19 +30,14 @@ p{ /* 내용 */
 
 <body>
 
-<<<<<<< HEAD:travelmaker/src/main/webapp/WEB-INF/views/errorPage.jsp
-	<h1 style="color: red;">에러 발생</h1>
-	<h1> 도움에 불편을 드려 죄송합니다. </h1>
-	<a href="/">홈으로</a>
-=======
+
 	<div class="img-wrap">
 		<img id="img" src="/resources/img/500error.jpg" style="width: 700px" height="550px"> 
 	</div>
-
+	
+	
 	<h3>잘못된 요청입니다.</h3>
 	<p>서비스 이용에 불편을 드려 죄송합니다.</p>
-		
-
->>>>>>> seonghyun:travelmaker/src/main/webapp/WEB-INF/views/error/errorPage.jsp
+	
 </body>
 </html>
