@@ -40,15 +40,9 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private apiLoginService apiService;
 	
-//	// 로그인에 성공하면 여기루 넘어온다.
-//	@GetMapping("/success")  // 이거 없애야지
-//	public void success() {
-//		log.info("Success");
-//	}
-	
-	@GetMapping("/accountInfo") // 내 정보 페이지
-	public void accountInfo() {
-		log.info("accountInfo");
+	@GetMapping("/memberInfo") // 내 정보 페이지
+	public void memberInfo() {
+		log.info("memberInfo");
 	}
 	
 	@GetMapping("/deletePage") // 회원탈퇴 페이지
@@ -109,22 +103,29 @@ public class MemberController {
 		model.addAttribute("member", service.getMember(email));
 		
 		if(service.isApiLoginCheck(email, session)) {
-			return "/member/apiAccountInfo";
+			return "/member/apiMemberInfo";
 		}
 		
 		// 조회페이지로 이동한다.
-		return "/member/accountInfo";
+		return "/member/memberInfo";
 	}
 	
 	// 비밀번호 변경
 	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
-	public String modifyPwd(String pwd, String email, Model model) {
+	public String modifyPwd(String newPwd, String inputPwd, String email, HttpSession session, RedirectAttributes rttr) {
+		
+		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
+		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
+			return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		}
+
 		// 비밀번호를 바꾼다.
-		service.modifyPwd(pwd, email);
+		service.modifyPwd(newPwd, email);
 		
 		// 바뀐 회원의 정보를 화면에 출력한다.
-		model.addAttribute("member", service.getMember(email));
-		return "/member/accountInfo";
+		rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
+		rttr.addFlashAttribute("member", service.getMember(email));
+		return "redirect:/member/getMember?email=" + session.getAttribute("email");
 	}
 	
 	// Ajax Email체크
@@ -137,7 +138,7 @@ public class MemberController {
         return count;
     }
 	
-	// Ajax 닉네임 체크(accountInfo)
+	// Ajax 닉네임 체크(memberInfo)
 	@RequestMapping("/hasNickname")
 	@ResponseBody
 	public String hasNickname(@RequestParam("nickname") String nickname) {
@@ -150,29 +151,27 @@ public class MemberController {
 	
 	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
 	@RequestMapping(value = "/modifyNickname", method = RequestMethod.POST)
-	public String modifyNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
-
-		// 닉네임을 수정하고 저장하기를 눌렀다면..
-		if(service.isNicknameTouch(nickname, email, model)) {
-			return "/member/accountInfo";
-		}
+	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
+		
+		// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
+		service.isNicknameTouch(nickname, email, rttr);
 		
 		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "/member/accountInfo";
+		return "redirect:/member/getMember?email=" + session.getAttribute("email");
 	}
 	
-	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
-	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
-	public String modifyApiNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
-
-		// 닉네임을 수정하고 저장하기를 눌렀다면..
-		if(service.isNicknameTouch(nickname, email, model)) {
-			return "/member/apiAccountInfo";
-		}
-			
-		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "/member/apiAccountInfo";
-	}
+//	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
+//	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
+//	public String modifyApiNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
+//
+//		// 닉네임을 수정하고 저장하기를 눌렀다면..
+//		if(service.isNicknameTouch(nickname, email, model)) {
+//			return "/member/apimemberInfo";
+//		}
+//			
+//		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
+//		return "/member/apimemberInfo";
+//	}
 	
 	//회원탈퇴 페이지 이동
 	@RequestMapping(value = "/deletePage", method = RequestMethod.POST)
@@ -263,11 +262,12 @@ public class MemberController {
      }
     
 	// 카카오 로그인 시작
-	 @RequestMapping(value="/oauth",method= RequestMethod.GET)
+	 @RequestMapping(value="/kakao",method= RequestMethod.GET)
 	 public String kakaoConnect() {
 		  StringBuffer url = apiService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
 		  return "redirect:" + url.toString();
 	 }
+	 
 		 
 	 @RequestMapping(value="/kakaoLogin",produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
 	 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes rttr, HttpSession session, HttpServletResponse response, Model model)throws IOException {

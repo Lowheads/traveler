@@ -87,6 +87,22 @@
           nickname = #{nickname}
    </select>
    
+   <!-- Q&A게시글의 닉네임을 변경한다.(닉변시 적용) -->
+	<update id="modifyBoardNickname">
+		update qna_board
+		set
+		nickname = #{nickname}
+		where mem_no = #{memNo}		
+	</update> 
+
+	<!-- Q&A게시글의 댓글의 작성자를 변경한다.(닉변시 적용) -->
+	<update id="modifyBoardReplyer">
+		update qna_reply
+		set 
+		replyer = #{nickname}
+		where replyer = #{replyer}
+	</update>
+   
    <!-- 계정 삭제 전, 유효성체크 -->
    <select id="memberValidCnt" parameterType="String" resultType="Integer">
       select count(*) from member 
@@ -98,7 +114,7 @@
    <!-- 계정삭제 -->
    <update id="deleteMember">
       update member set 
-      status = '탈퇴'
+   	  status = 'MS002'
       where email = #{email} 
       and pwd = #{pwd}
    </update>
@@ -106,7 +122,7 @@
    <!-- api 계정삭제 -->
    <update id="deleteApiMember">
       update member set 
-      status = '탈퇴'
+      status = 'MS002'
       where email = #{email} 
    </update>
 
@@ -134,13 +150,13 @@
       select count(*) from member
       where
       email = #{email}
-      and status = '탈퇴'
+      and status = 'MS002'
    </select>
    
    <!-- 정보 수정페이지(api로그인 확인) -->
    <select id="hasApiMemberCnt" resultType="Integer">
       select count(*) from member 
-      where mem_grade = 'SNS회원'
+      where mem_grade = 'MG003'
       and email = #{email}
    </select>
    
