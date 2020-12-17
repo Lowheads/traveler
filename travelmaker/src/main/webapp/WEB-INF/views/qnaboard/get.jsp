@@ -31,52 +31,59 @@
 
 <div class="wrapper">
         <div class="header_wrapper">
-            <div class="header">
+            <!-- <div class="header">
                 <div class="logo">
                     <a href="/qnaboard/list">Q&A 게시판</a>
                 </div>      
-            </div>
+            </div> -->
+            <div class="title-head">
+	        	<h4>Q&A 게시글 조회</h4>
+	        </div>
         </div>
         <div class="contents">
-            <div class="ct_head">
-                <h2>게시글</h2>
-            </div>
             <div class="ct_body">
             				
             				<div class="form-group">
             					<img alt="eye" src="/resources/img/eye.png" width="18px" height="18px">
             					 : ${board.viewCnt }
             				</div>
-            					<div class="form-group">
+            					
+            				<%-- <div class="form-group">
                         		<label>#게시물 번호</label> 
                         		<input class="form-control" name="bno" id="bno" 
                         		value='<c:out value="${board.bno }"/>' readonly="readonly">
-                        	</div>
+                        	</div> --%>
             				
                         	<div class="form-group">
                         		<label>제목</label> 
-                        		<input class="form-control" name="title"
+                        		<input style="background-color: white;" class="form-control" name="title"
                         		value='<c:out value="${board.title}" />' readonly="readonly">
                         	</div>
                         	
                         	<div class="form-group">
-                        		<label>내용</label>
-                        	    <textarea class="form-control" rows="3" name='content' readonly="readonly"><c:out value="${board.content}" /></textarea>
-
-                        	</div>
+                        		<label>작성자</label>
+                        		<input style="background-color: white;" class="form-control" name='nickname' 
+                        		id="boardNickname" value='<c:out value="${board.nickname }"/>' readonly="readonly">
+                			</div>
+                			
+                			<div class="form-group">
+                        		<label>작성일</label>
+                        		<input style="background-color: white;" class="form-control" name='regDate'
+                        		value='<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd (E)"/>' readonly="readonly">
+                			</div>
                         	
                         	<div class="form-group">
-                        		<label>작성자</label>
-                        		<input class="form-control" name='nickname' id="boardNickname" 
-                        		value='<c:out value="${board.nickname }"/>' readonly="readonly">
-                			</div>
-                
-                <div>
+                        		<label>내용</label>
+                        	    <textarea style="background-color: white; resize: none;" class="form-control" 
+                        	    rows="3" name='content' readonly="readonly"><c:out value="${board.content}" /></textarea>
+                        	</div>
+                        	
+            <div class="getBtn-wrap" style="text-align: right; margin-top: 20px;">
                 <c:if test="${board.memNo == loginMemNo }">	
-            	<button data-oper='modify' class="btn">수정하기</button>
+            	<button data-oper='modify' class="reg-btn">수정하기</button>
             	</c:if>
-				<button data-oper='list' class="btn">목록</button>
-                </div>
+				<button data-oper='list' class="cancel-btn">목록</button>
+            </div>
 				
 				<form id='operForm' action="/qnaboard/modify" method="get">
 					<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
@@ -90,6 +97,7 @@
 			<!-- ct_body -->
         </div>
 	
+	<hr>
 	
 	<!-- 댓글 창 -->
 	<div class="comment">
@@ -99,18 +107,17 @@
 			<ui class="chat">
 			
 			<li class="comment-li" data-rno="">
-			<div class="comment-wrap">
+			   <!-- <div class="comment-wrap">
 				<div class ="comment-list">
 					<strong class="comment-writer"></strong>
 					<samll class="small"></samll>
-						<!-- <button onclick='replyModify(this)'>수정</button> -->
 					<div class="textContent">
 						<textarea class='modiText' rows='3' cols='100' style='display: none;'></textarea>
 						<button type='button' class='replyModBtn' style='display: none;'>수정완료</button>
 					</div>
 				</div>
-					<p class="comment-reply"></p>
-			</div>
+					<p class="comment-reply">아직 등록된 댓글이 없습니다.</p>
+			</div>  -->
 			</li>
 			</ui>
 			
@@ -121,7 +128,7 @@
 				<!-- end paging -->
 		<hr>
 			<div class="replyRegi-wrap">
-				<textarea class="replyArea" rows="4" cols="90" id="reply" name="reply"></textarea>
+				<textarea class="replyArea" rows="3" cols="90" id="reply" name="reply"></textarea>
 				<input class="replyRegiBtn" type="button" id="replyResigerBtn"  value="댓글등록">
 			</div>
 	</div>
@@ -268,15 +275,17 @@
 			
 			let str = "";
 		
-		/* 	if(list == null || list.length == 0){
+		 	if(list == null || list.length == 0){
+		 		let str = "<p class='comment-reply' style='margin-bottom : 2%; text-align: center;'>아직 등록된 글이 없습니다.</p>";
+				replyUrl.html(str); // 댓글창 출력
 				return;
 			}
-			 */
+			 
 		
 		for(var i=0, len = list.length||0; i<len; i++){
 			str += "<li class='comment-li' data-rno='" + list[i].rno + "''>";
-			str += "<div class='comment-wrap'><div class='comment-list'>" + 
-			"<strong class='comment-writer'> [" + list[i].rno +"] " + list[i].replyer + " </strong>";
+			str += "<div class='comment-wrap'><div class='comment-list' style='margin-bottom : 1%;'>" + 
+			"<strong class='comment-writer'> " + list[i].replyer + " </strong>";
 			str += "<small class='small'>" + replyService.displayTime(list[i].replyDate) + "</small>";
 			
 			// 내가 작성한 댓글만 수정 가능
@@ -286,13 +295,14 @@
 			}
 			
 			str += "<div class='textContent' style='display : none;'>";
-			str += "<textarea class='modiText' rows='3' cols='90' style='display: none;'></textarea>";
-			str += "<button class='replyModiBtn' type='button' class='replyModBtn' style='display: none;' onclick='replyModiSuccess(this)'>수정완료</button>";
+			str += "<textarea class='modiText' rows='3' cols='90' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
+			str += "<button class='replyModiBtn' type='button' class='replyModBtn' style='display: none; margin-bottom : 1%' onclick='replyModiSuccess(this)'>수정완료</button>";
 			str += "</div>";
-			str += "<p class='comment-reply'>" + list[i].reply+ "</p></div></li>";
+			str += "<p class='comment-reply' style='margin-bottom : 2%;'>" + list[i].reply+ "</p></div></li>";
+			str += "<hr>";
 		}
 		replyUrl.html(str); // 댓글창 출력
-		/* showReplyPage(replyCnt); */
+		showReplyPage(replyCnt);
 	});
 	
 		
@@ -323,22 +333,20 @@
 			let str = "<ul class='paging-wrap'>";
 			
 			if(prev){
-				str += "<li class='w3-button'> <a href='" + (startNum - 1) + "'>이전</a> </li>";
+				str += "<li class='w3-button w3-hover-none'> <a href='" + (startNum - 1) + "'>prev</a> </li>";
 			}
 			
 			for(let i=startNum; i<= endNum; i++){
 				let active = pageNum == i ? "active" : "";
 				
-				str += "<li class='w3-button w3-hover-orange " + active + " '><a href='"+i+"'>"+ i +"</a></li>"
+				str += "<li class='w3-button w3-hover-none " + active + " '><a href='"+i+"'>"+ i +"</a></li>"
 			}
 			
 			if(next){
-				str += "<li class='w3-button'><a href='" + (endNum + 1) + "' >다음</a>";
+				str += "<li class='w3-button w3-hover-none'><a href='" + (endNum + 1) + "' >next</a>";
 			}
 			
 			str += "</ul></div>";
-			
-			console.log(str);
 			
 			replyPageFooter.html(str);
 		} // end showReplyPage

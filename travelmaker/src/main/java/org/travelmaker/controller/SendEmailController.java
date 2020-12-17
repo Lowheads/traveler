@@ -40,7 +40,10 @@ public class SendEmailController {
 	        
 	        // Travel 회원의 이메일이 아니라면..
 	        if(service.isNotTravelMember(email, rttr)) {
-	        	mav=new ModelAndView("redirect:/search/searchPwd");
+	        	return mav;
+	        }
+	        // api 회원이면 비밀번호 찾을 필요 없이 api 로그인 해주세요
+	        if(service.isApiMember(email,rttr)) {
 	        	return mav;
 	        }
 	        

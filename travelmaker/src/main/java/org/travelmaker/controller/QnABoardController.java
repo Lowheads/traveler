@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.QnAPageDTO;
 import org.travelmaker.domain.QnABoardCriteria;
 import org.travelmaker.domain.QnABoardVO;
+import org.travelmaker.service.MemberService;
 import org.travelmaker.service.QnABoardService;
 
 import lombok.Setter;
@@ -27,6 +28,9 @@ public class QnABoardController {
 
 	@Setter(onMethod_ = @Autowired)
 	private QnABoardService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MemberService memberService;
 	
 	@GetMapping("/list")
 	public void list(QnABoardCriteria cri, Model model, HttpSession session) {
@@ -56,20 +60,29 @@ public class QnABoardController {
 	// 게시물을 서버에 올리면(저장)하면 포스트 방식
 	@PostMapping("/register")
 	public String register(QnABoardVO qnaBoard, RedirectAttributes rttr,HttpSession sessoin, HttpServletRequest request) {
+		// 현재 로그인 중인 회원의 닉네임을 nickname에 저장한다
+		String nickname = memberService.getMember((String)sessoin.getAttribute("email")).getNickname();
+		
+		if(!(qnaBoard.getNickname().equals(nickname))) { // 개발자 도구로 닉네임 변경 막기
+			rttr.addFlashAttribute("msg", "회원의 닉네임과 일치하지 않습니다.");
+			return "redirect:/qnaboard/register";
+		}
 		
 		service.register(qnaBoard, request); // 게시글 등록
-		rttr.addFlashAttribute("result", qnaBoard.getBno()); // 게시글 등록엔 등록하는 회원의 멤버번호도 필요
+		rttr.addFlashAttribute("msg", qnaBoard.getBno() +"번 글이 등록되었습니다."); // 게시글 등록엔 등록하는 회원의 멤버번호도 필요
 		return "redirect:/qnaboard/list";
 	}
 	
 	@GetMapping({"/get", "/modify"}) // 특정 게시물 조회
 	public void get(@RequestParam("bno") int bno, @ModelAttribute("cri") QnABoardCriteria cri, Model model,
 			HttpSession session, RedirectAttributes rttr) {
+		
 			// 게시물 정보
 			QnABoardVO pageObj = service.get(bno); 
 			
 			// 선택한 페이지 조회 (게시글 목록 출력)
-			model.addAttribute("board", pageObj); 
+			model.addAttribute("board", pageObj);
+			model.addAttribute("secret", pageObj.getSecret());
 			
 			// 로그인한 회원의 번호를 넘겨준다.(글의 수정여부를 판별하기 위함)
 			model.addAttribute("loginMemNo", service.getMyMemNo((String)session.getAttribute("email")));
@@ -81,7 +94,7 @@ public class QnABoardController {
 	
 	@PostMapping("/modify") // 게시물 수정
 	public String modify(QnABoardVO qnaBoard, @ModelAttribute("cri") QnABoardCriteria cri, RedirectAttributes rttr) {
-		log.info("여기는 수정 작업 : " + qnaBoard);
+		log.info("여기는 게시글 수정 : " + qnaBoard);
 		
 		if(service.modify(qnaBoard)) {
 			rttr.addFlashAttribute("msg", qnaBoard.getBno() + "번글이 수정되었습니다.");

@@ -124,56 +124,49 @@
 	//닉네임 변경
 	$(function() {
 
-		$("#apiInfoNicknameCheck")
-				.click(
-						function() {
+		$("#apiInfoNicknameCheck").click(function() {
 
-							let nickname = $("#apiInfoNickname").val();
-							let sendDate = {
-								'nickname' : nickname
-							}
-							let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/;
-							; // 닉네임은 문자 제한없이 2~8자리
+			let nickname = $("#apiInfoNickname").val();
+			let sendDate = {'nickname' : nickname}
+			
+			let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 
-							// 현재 닉네임 체크
-							if (nickname == "${member.nickname}") {
-								document.getElementById("infoSpanNickname").innerHTML = "현재 닉네임입니다.";
-								infoSpanNickname.style.color = 'green';
-								return false;
-							}
+					// 현재 닉네임 체크
+				if (nickname == "${member.nickname}") {
+					document.getElementById("infoSpanNickname").innerHTML = "현재 닉네임입니다.";
+					infoSpanNickname.style.color = 'green';
+					return false;
+				}
 
-							// 닉네임 유효성 체크
-							if (false === jNname.test(nickname)) {
-								document.getElementById("infoSpanNickname").innerHTML = "닉네임은 한글/영문/숫자만!!";
-								infoSpanNickname.style.color = 'red';
-								return;
-							}
+					// 닉네임 유효성 체크
+				if (false === jNname.test(nickname)) {
+					document.getElementById("infoSpanNickname").innerHTML = "닉네임은 한글/영문/숫자만!!";
+					infoSpanNickname.style.color = 'red';
+					return;
+				}
 
-							$
-									.ajax({
-										type : 'POST',
-										data : sendDate, // sendDate 함수를 contrlr에 보냄
-										url : "/member/hasNickname",
-										success : function(data) {
-											if ($.trim(data) == 1) {
-												document
-														.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
-												infoSpanNickname.style.color = 'red';
-												return false;
-											} else {
-												document
-														.getElementById("infoSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
-												infoSpanNickname.style.color = 'blue';
-											}
-										}
-									});
-						});
+					$.ajax({
+						type : 'POST',
+						data : sendDate, // sendDate 함수를 contrlr에 보냄
+						url : "/member/hasNickname",
+						success : function(data) {
+						if ($.trim(data) == 1) {
+							document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
+							infoSpanNickname.style.color = 'red';
+							return false;
+						} else {
+							document.getElementById("infoSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+							infoSpanNickname.style.color = 'blue';
+						}
+						}
+					});
+			});
 	});
 
 	function apiInfoNickSaveCheck() {
 
 		let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
-		let myNickname = $("#infoNickname").val(); // 닉네임
+		let myNickname = $("#apiInfoNickname").val(); // 닉네임
 
 		// 공백확인
 		if (myNickname.length == 0) {
@@ -229,7 +222,7 @@
 		<div class="center">아이디(이메일) : ${member.email }</div> 
 		
 		<!-- 닉네임 저장 폼 -->
-	<form action="/member/modifyApiNickname" method="post">
+	<form action="/member/modifyNickname" method="post">
 		 <div class="center">닉네임 <input type="text" id="apiInfoNickname" name="nickname" value="${member.nickname }">
 		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 		 	<button type="button" class="btn" id="apiInfoNicknameCheck">중복 체크</button>

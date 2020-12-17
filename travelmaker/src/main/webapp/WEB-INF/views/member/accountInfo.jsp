@@ -41,35 +41,35 @@
 	function infoPwdCheck() {
 
 		let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
-		let realPwd = $("#realPwd").val(); // 현재 비밀번호
-		let realPwdCfm = $("#realPwdCfm").val(); // 현재 비밀번호 히든 값
+		let inputPwd = $("#inputPwd").val() // 현재 비밀번호 입력 태그
+		/* let realPwdCfm = $("#realPwdCfm").val(); // 현재 비밀번호 히든 값  */
 		let myPwd = $("#infoPwd").val(); // 비밀번호
 		let myPwdCfmm = $("#infoPwdCfm").val(); // 비밀번호 확인
 
-		// 현재 패스워드 입력
-		if (realPwd.length == 0) {
+		 // 현재 패스워드 입력
+		if (inputPwd.length == 0) {
 			alert("현재 비밀번호를 입력해 주세요");
-			$("#realPwd").focus();
+			$("#inputPwd").focus();
 			return false;
 		}
 
-		// 현재 비밀번호 확인
+		/* // 현재 비밀번호 확인
 		if (realPwd != realPwdCfm) {
 			alert("현재 비밀번호와 일치하지 않아요");
 			$("#realPwd").focus();
 			return false;
-		}
+		}  */
 
 		// 패스워드 입력
 		if (myPwd.length == 0) {
 			alert("비밀번호를 입력해 주세요");
-			$("#pwd").focus();
+			$("#infoPwd").focus();
 			return false;
 		}
 
 		// 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
-		if (false === jPwd.test(myPwd)) {
-			alert('비밀번호는 8자리 이상이며, 영문/숫자/특수문자를 포함해야합니다.');
+		if (false === jPwd.test(myPwd) || myPwd.length > 12) {
+			alert('비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.');
 			return false;
 		}
 
@@ -86,7 +86,6 @@
 		}
 
 		// 비밀번호 변경이 성공적이면 변경한다.
-		alert("비밀번호를 변경하였습니다");
 		return true;
 
 	} // end infoPwdCheck
@@ -177,6 +176,7 @@
 		if (responseMessage != "") {
 			alert(responseMessage);
 		}
+		return false;
 
 	});
 </script>
@@ -203,7 +203,7 @@
 		
 		<div class="center">생년월일 ${member.birth }</div>
 		
-		<div class="center">비밀번호 : <input type="hidden" id="realPwdCfm" value="${member.pwd }">
+		<div class="center">비밀번호 : <%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
 		<button type='button' id="modal_btn" class="button">비밀번호 변경</button></div>
 	
 		<!-- 비밀번호 변경 모달 -->
@@ -213,9 +213,9 @@
 			<!-- 비밀번호 -->
 		<form action="/member/modifyPwd" method="post">
 			<div class="pwd-change"><h4 style="font-weight: bold;">비밀번호 변경하기</h4></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="realPwd" id="realPwd" placeholder="현재 비밀번호">
+			<div class="pwd-change"><input class="pwd-change" type="password" name="inputPwd" id="inputPwd" placeholder="현재 비밀번호">
 			<p>현재 비밀번호를 입력해주세요!</p></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="pwd" id="infoPwd" placeholder="변경할 비밀번호">
+			<div class="pwd-change"><input class="pwd-change" type="password" name="newPwd" id="infoPwd" placeholder="변경할 비밀번호">
 			<p>비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
 			<!-- 비밀번호 확인 -->
 			<div class="pwd-change"><input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" placeholder="비밀번호 확인">

@@ -61,10 +61,6 @@ a { text-decoration: none;
     margin: 0 auto;
     background-color: #fff;
 }
-.ct_head {
-    padding: 30px 0;
-    position: relative;
-}
 .ct_head>h2 {
     padding: 15px 0;
     border-bottom: 1px solid #ddd;
@@ -83,6 +79,4 @@ a { text-decoration: none;
 }
 .ct_head>a:hover {
     background-color: #c8c8c8;
-}
-
 }

@@ -8,10 +8,8 @@
  <!-- 쿠키 -->
 
 
-<h1 style="text-align: center; color: deeppink;">Travel HomePage</h1>
+<h1 style="text-align: center; color: black;">Travel HomePage</h1>
          
-      
-      <a href="/member/success">로그인여부확인</a><br>
       
 </body>
 

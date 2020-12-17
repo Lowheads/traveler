@@ -12,7 +12,11 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+
 	<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+
+	<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@3.15.200.191:1521:XE"></property>
+
 	<property name="username" value="team"></property>
 	<property name="password" value="1234"></property>
 	</bean>
@@ -43,7 +47,6 @@
         </property>
     </bean>
     
-    <bean id="email" class="org.travelmaker.domain.Email"></bean>
     <bean id="emailSender" class="org.travelmaker.domain.EmailSender"></bean>
 
 	
