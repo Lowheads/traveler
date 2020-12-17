@@ -1,3 +1,8 @@
-    .rec-place {
-    	display: none;
-    }
+#rec-place {
+	z-index: 1000;
+	display:none;
+	position:absolute;
+	top:5rem;
+	left:20rem;
+	
+}

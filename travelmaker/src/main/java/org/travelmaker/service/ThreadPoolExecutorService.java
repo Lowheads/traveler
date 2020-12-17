@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.client.RestTemplate;
 import org.travelmaker.domain.PositionDTO;
 import org.travelmaker.domain.PositionVO;
@@ -24,6 +23,7 @@ import org.travelmaker.domain.ScheduleDtVO;
 import lombok.Data;
 
 @Data
+@Deprecated
 public class ThreadPoolExecutorService {
 	
 	

@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.PageDTO;
+import org.travelmaker.domain.PagefDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.SchWrapDTO;
 import org.travelmaker.domain.SchdtVO;
@@ -35,8 +33,6 @@ import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.service.PlaceService;
 import org.travelmaker.service.SchdtService;
 import org.travelmaker.service.ScheduleService;
-
-import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -70,7 +66,7 @@ public class PlaceController {
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable String title, @PathVariable int regionNo,
 			@PathVariable int pageNum) {
 		Criteria cri = new Criteria(pageNum, 10);
-		PageDTO pageMaker = new PageDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
+		PagefDTO pageMaker = new PagefDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", service.getList(title, regionNo, cri));
 		map.put("pageMaker", pageMaker);
