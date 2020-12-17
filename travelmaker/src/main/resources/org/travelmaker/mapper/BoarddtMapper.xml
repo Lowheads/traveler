@@ -8,6 +8,7 @@
 
 </resultMap>
 
+
 <select id="read" resultMap="boarddtResult">
 <![CDATA[
 	select *
@@ -36,32 +37,45 @@
 	
 </update>
 
-<!-- 사진첨부 -->
+<!-- 사진 첨부  -->
 <insert id="insertFile" parameterType="hashMap">
 	INSERT INTO MP_FILE(
 		FILE_NO,
 		BOARD_NO,
 		ORG_FILE_NAME,
 		STORED_FILE_NAME,
-		FILE_SIZE
-	)VALUES(
+		FILE_SIZE,
+		FILE_CONTENT
+	)VALUES
+		(
 		SEQ_MP_FILE_NO.NEXTVAL,
 		#{BOARD_NO},
 		#{ORG_FILE_NAME},
 		#{STORED_FILE_NAME},
-		#{FILE_SIZE}
-	)
+		#{FILE_SIZE},
+		#{FILE_CONTENT})
+		
 </insert>
+
+
+<!-- 사진은 수정하지 않고 내용만 수정 할 떄 -->
+<update id="updateContent" >
+	update mp_file
+	set FILE_CONTENT = #{fileContent}
+	where FILE_NO=#{fileNo}
+
+</update>
 
 <!-- 첨부파일 조회 -->
 <select id="selectFileList" parameterType="int" resultType="hashMap">
 	SELECT FILE_NO,
 		   ORG_FILE_NAME,
 		   STORED_FILE_NAME,
-		   ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+		   ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,
+		   FILE_CONTENT 
 		   FROM MP_FILE
-		   WHERE BOARD_NO=#{BOARD_NO}
-		   AND DEL_GB='N'
+		   WHERE DEL_GB='N'
+		   AND BOARD_NO=#{boardNo}
 		   ORDER BY FILE_NO ASC
 </select>
 
@@ -69,7 +83,7 @@
 <select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
 	SELECT
 		STORED_FILE_NAME,
-		ORG_FILE_NAME
+		ORG_FILE_NAME 
 		FROM MP_FILE
 		WHERE FILE_NO = #{FILE_NO}
 </select>
@@ -77,8 +91,8 @@
 <!-- 첨부파일 수정 -->
 <update id="updateFile" parameterType="hashMap">
 	UPDATE MP_FILE SET
-	DEL_GB='Y'
-	WHERE FILE_NO =#{FILE_NO}
+	DEL_GB='Y' 
+	WHERE FILE_NO = #{FILE_NO}
 </update>
 
 

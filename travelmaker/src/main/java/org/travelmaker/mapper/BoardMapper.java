@@ -38,4 +38,6 @@ public interface BoardMapper {
 	public void downCnt(int boardNo);
 	
 	public void viewCnt(int boardNo);
+
+	public List<BoardVO> getAdminList();
 }

@@ -1,5 +1,8 @@
 package org.travelmaker.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +33,7 @@ public class MyPageController {
 	private ScheduleService SchService;
 	private PickService pickService;
 	private SchdtService schdtService;
+	private MemberService memberService;
 
 	@GetMapping("/pickPL")
 	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
@@ -85,19 +89,40 @@ public class MyPageController {
 		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getComingScheduleTotal(cri)));
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
-	public void deletePickPlace(HttpSession session,PickVO vo) throws Exception {
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		vo.setMemNo(memNo);
-		pickService.remove(vo);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
-	public void insertPickPlace(HttpSession session,PickVO vo) throws Exception {
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		vo.setMemNo(memNo);
-		pickService.register(vo);
-	}
+	   @ResponseBody
+	   @RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
+	   public int deletePickPlace(HttpSession session,PickVO vo) throws Exception {
+	      if(session.getAttribute("memNo")==null) {
+	         return 0;
+	      }
+	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+	      vo.setMemNo(memNo);
+	      return pickService.remove(vo);
+	   }
+
+	   @ResponseBody
+	   @RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
+	   public int insertPickPlace(HttpSession session,PickVO vo) throws Exception {
+	      
+	      if(session.getAttribute("memNo")==null) {
+	         return 0;
+	      }
+	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+	      vo.setMemNo(memNo);
+	      return pickService.register(vo);
+	   }
+
+	   @ResponseBody
+	   @RequestMapping(value = "/testResult", method = RequestMethod.POST, produces = "application/json")
+	   public List<Map<String,Object>> resultType(String type,HttpSession session){
+
+	      if(session.getAttribute("memNo") == null) {
+	         return placeService.getYourList(type, 0);
+	      }
+	      
+	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+
+	      memberService.updateTT(type,memNo);
+	      return placeService.getYourList(type,memNo);
+	   }
 }

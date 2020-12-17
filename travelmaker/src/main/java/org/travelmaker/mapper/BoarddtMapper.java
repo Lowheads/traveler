@@ -3,9 +3,12 @@ package org.travelmaker.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.travelmaker.domain.BoarddtVO;
+import org.travelmaker.domain.MpFileVO;
 
 public interface BoarddtMapper {
+
 
 	public BoarddtVO read(int boardNo);
 
@@ -25,4 +28,11 @@ public interface BoarddtMapper {
 
 	public void updateFile(Map<String, Object> tempMap);
 
+	public void contentupdate(MpFileVO mpfile);
+	
+	public int filecount(int i);
+
+	public List<Integer> findfileno(int boardNo);
+
+	public void updateContent(@Param("fileNo") int fileNo, @Param("fileContent") String fileContent);
 }

@@ -14,6 +14,7 @@
    <result property="boardImg" column="board_img"/>
    <result property="thumbImg" column="thumbimg"/>
    <result property="writer" column="nickname"/>
+   <result property="grade" column="mem_grade"/>
    
 </resultMap>
 
@@ -24,6 +25,18 @@
 select * from board where board_no>0
 ]]>
 </select>
+
+<select id="getAdminList" resultMap="BoardResult">
+<![CDATA[
+	select b.board_no , b.sch_no, board_title, b.w_date, b.pick_cnt, b.mod_date, b.v_cnt, b.hidden, b.board_img, b.thumbimg, m.mem_grade
+	from board b, schedule s, member m
+	where b.sch_no=s.sch_no
+	and s.mem_no=m.mem_no
+	and m.mem_grade='관리자'
+]]>
+</select>
+
+
 
 
 <insert id="insertSelectKey">
@@ -52,7 +65,7 @@ select * from board where board_no>0
          schedule s, member m,board b
        where s.sch_status = 'BS001'
              and hidden='y'
-         and s.sch_no=b.sch_no and s.mem_no=m.mem_no 
+         and s.sch_no=b.sch_no and s.mem_no=m.mem_no and m.mem_grade='일반회원'
             order by
             board_no desc
             )a

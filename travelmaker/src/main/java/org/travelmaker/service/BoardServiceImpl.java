@@ -82,6 +82,11 @@ public class BoardServiceImpl implements BoardService{
 			System.out.println("n->y");
 		}
 	}
+
+	@Override
+	public List<BoardVO> getAdminList() {
+		return mapper.getAdminList();
+	}
 	
 	
 }
