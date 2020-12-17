@@ -37,8 +37,14 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired) // 무조건 주입
 	private MemberService service;
 	
-	@Setter(onMethod_ = @Autowired) // api로그인
+	@Setter(onMethod_ = @Autowired)
 	private apiLoginService apiService;
+	
+//	// 로그인에 성공하면 여기루 넘어온다.
+//	@GetMapping("/success")  // 이거 없애야지
+//	public void success() {
+//		log.info("Success");
+//	}
 	
 	@GetMapping("/accountInfo") // 내 정보 페이지
 	public void accountInfo() {
@@ -50,6 +56,8 @@ public class MemberController {
 		log.info("deletePage");
 	}
 	
+	// 회원가입정보를 다 입력하고 회원가입 버튼을 누른다. 
+	// value : 폼액션에서 넘겨줄 주소이다.
 	@RequestMapping(value = "/joinMember", method = RequestMethod.POST)
 	public ModelAndView joinMember(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
 		ModelAndView mav = new ModelAndView("redirect:/member/main");
@@ -68,26 +76,21 @@ public class MemberController {
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
-		
 		ModelAndView mav = new ModelAndView("redirect:/member/main");
-		String getMovoPath = (String)session.getAttribute("movePath");
-    	
-		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 로그인 실패!
-		if(service.isMemberStatus(mVO, rttr, session)) {
-			return mav = new ModelAndView("redirect:/member/main");
-		}
 		
+		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
+		if(service.isMemberStatus(mVO, rttr, session)) {
+			return mav;
+		}
 		// email 저장하기 여부
 		service.RememberEmail(mVO.getEmail(), request, response);	
-
-		service.login(mVO); // 로그인 시키자..!
-		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-
-		if(getMovoPath != null) { // 다른 페이지 조회 중 로그인페이지로 이동됐다면 로그인 후 요청했던 주소로 이동하자.
-    		return new ModelAndView("redirect:" + getMovoPath);
-    	}
 		
+		service.login(mVO); // 로그인 시키자..!
+		service.lastLoginSetToday(mVO.getEmail()); // 최종 로그인은 오늘..
+		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
+		session.setAttribute("memNo",service.getMemNo(mVO.getEmail()));
 		return mav;
+	
 	}
 	
 	// 로그아웃
@@ -101,16 +104,10 @@ public class MemberController {
 	
 	// 회원 조회
 	@RequestMapping(value = "/getMember", method = RequestMethod.GET)
-	public String getMember(String email, Model model, HttpSession session, HttpServletRequest request) {
-		
-		// URL에 다른 회원의 계정으로 접근하면 메인으로 보내버리자
-		if(!(email.equals(session.getAttribute("email")))) {
-			return "redirect:/member/main";
-		}
+	public String getMember(String email, Model model, HttpSession session) {
 		
 		model.addAttribute("member", service.getMember(email));
 		
-		// api로그인 사용자는 비밀번호가 없는 정보조회 페이지로 이동하자
 		if(service.isApiLoginCheck(email, session)) {
 			return "/member/apiAccountInfo";
 		}
@@ -121,21 +118,13 @@ public class MemberController {
 	
 	// 비밀번호 변경
 	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
-	public String modifyPwd(String newPwd, String inputPwd, String email, HttpSession session, RedirectAttributes rttr) {
-		
-		
-		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
-		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
-			return "redirect:/member/getMember?email=" + session.getAttribute("email");
-		}
-		
+	public String modifyPwd(String pwd, String email, Model model) {
 		// 비밀번호를 바꾼다.
-		service.modifyPwd(newPwd, email);
+		service.modifyPwd(pwd, email);
 		
 		// 바뀐 회원의 정보를 화면에 출력한다.
-		rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
-		rttr.addFlashAttribute("member", service.getMember(email));
-		return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		model.addAttribute("member", service.getMember(email));
+		return "/member/accountInfo";
 	}
 	
 	// Ajax Email체크
@@ -161,25 +150,29 @@ public class MemberController {
 	
 	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
 	@RequestMapping(value = "/modifyNickname", method = RequestMethod.POST)
-	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
-		
-		// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
-		service.isNicknameTouch(nickname, email, rttr);
+	public String modifyNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
+
+		// 닉네임을 수정하고 저장하기를 눌렀다면..
+		if(service.isNicknameTouch(nickname, email, model)) {
+			return "/member/accountInfo";
+		}
 		
 		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		return "/member/accountInfo";
 	}
 	
-//	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
-//	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
-//	public String modifyApiNickname(String nickname, String email, RedirectAttributes rttr, HttpSession session) {
-//
-//		// 닉네임을 수정하고 저장하기를 눌렀다면..
-//		service.isNicknameTouch(nickname, email, rttr);
-//			
-//		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-//		return "redirect:/member/getMember?email=" + session.getAttribute("email");
-//	}
+	// 소셜로그인 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
+	@RequestMapping(value = "/modifyApiNickname", method = RequestMethod.POST)
+	public String modifyApiNickname(String nickname, String email, Model model, RedirectAttributes rttr) {
+
+		// 닉네임을 수정하고 저장하기를 눌렀다면..
+		if(service.isNicknameTouch(nickname, email, model)) {
+			return "/member/apiAccountInfo";
+		}
+			
+		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
+		return "/member/apiAccountInfo";
+	}
 	
 	//회원탈퇴 페이지 이동
 	@RequestMapping(value = "/deletePage", method = RequestMethod.POST)
@@ -227,12 +220,17 @@ public class MemberController {
 	// 네아로
     @RequestMapping("/main")
     public ModelAndView naverLogin(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로..
-    	
-    	/* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
+    	try {
+    		
+        /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
         String naverAuthUrl = apiService.getNaverAuthUrl(session);
         
         /* 생성한 인증 URL을 View로 전달 */
         return new ModelAndView("/member/main", "url", naverAuthUrl);
+    	}catch(Exception e) {
+    		e.getMessage();
+    		return new ModelAndView("/member/main");
+    	}
     }
     
 	  //네이버 로그인 성공시 callback호출 메소드
@@ -244,33 +242,31 @@ public class MemberController {
 	    OAuth2AccessToken oauthToken = apiService.getNaverToken(code, state, session); // 네이버 토큰을 얻는다.
 	    String userInfo = apiService.getNaverUserProfile(oauthToken); // // 로그인한 사용자 정보를 읽어온다.
 	    
+	    // 데이터 파싱
 	    // 토큰과 네이버 프로필을 JSON형태로 
 	    JSONObject responseObj = apiService.getJsonByNaver(oauthToken, userInfo);
 	    String email = (String)responseObj.get("email"); // 로그인한 사용자의 이메일을 저장한다
-	    String getMovoPath = (String)session.getAttribute("movePath");
 	    
-	    if(service.isNaverApiJoinCheck(responseObj, model)) // 회원이 아니면 회원가입 창으로 보낸다.
+	    if(service.isNaverApiJoinCheck(responseObj, model)) { // 회원이 아니면 회원가입 창으로 보낸다.
 	    	return "/member/apiRegister";
-	    
+	    }
 	     
-	    if(service.isDeleteAlready(email, rttr))  // 탏퇴한 계정이면 로그인 안됩니다.
+	    if(service.isDeleteAlready(email, rttr)) { // 탏퇴한 계정이면 로그인 안됩니다.
 	    	return "redirect:/member/main";
+	    }
 	    
 	    // 이미 회원이라면 세션주고 로그인
 	    session.setAttribute("email", email);
-	    
-	    if(getMovoPath != null) { // 다른 페이지 조회 중 로그인페이지로 이동됐다면 로그인 후 요청했던 주소로 이동하자.
-    		return "redirect:" + getMovoPath;
-    	}
-	    
+	    System.out.println(userInfo); // 네이버 로그인 정보					
 	    return "redirect:/member/main";
+	    
      }
     
 	// 카카오 로그인 시작
-	 @RequestMapping(value="/kakao",method= RequestMethod.GET)
+	 @RequestMapping(value="/oauth",method= RequestMethod.GET)
 	 public String kakaoConnect() {
 		  StringBuffer url = apiService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
-		  return "redirect:" + url;
+		  return "redirect:" + url.toString();
 	 }
 		 
 	 @RequestMapping(value="/kakaoLogin",produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
@@ -281,24 +277,20 @@ public class MemberController {
 	  JsonNode access_token = apiService.getKakaoToken(code); // 카카오 토큰을 얻어온다
 	  JsonNode userProfile = apiService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
 	  String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일만 빼온다
-	  String getMovoPath = (String)session.getAttribute("movePath");
-	  
+		         
 	  		// 회원이 아니면 회원가입해주세요
-	  		if(service.isKakaoApiJoinCheck(userProfile, model)) 
+	  		if(service.isKakaoApiJoinCheck(userProfile, model)) {
 	  			return "/member/apiRegister";
+	  		}
 	  		
-	  		// 탏퇴한 계정이면 로그인 안됩니다.
-	  	    if(service.isDeleteAlready(email, rttr))  
+	  	    if(service.isDeleteAlready(email, rttr)) { // 탏퇴한 계정이면 로그인 안됩니다.
 		    	return "redirect:/member/main";
+		    }
 	  		
 	  	// 이미 회원이면 로그인 처리
 	  	session.setAttribute("email", email);
-	  	
-		if(getMovoPath != null) { // 다른 페이지 조회 중 로그인페이지로 이동됐다면 로그인 후 요청했던 주소로 이동하자.
-    		return "redirect:" + getMovoPath;
-    	}
-		
-	  return "redirect:/member/main";
+	    return "redirect:/member/main";
+	  
 	 }
     
 }
