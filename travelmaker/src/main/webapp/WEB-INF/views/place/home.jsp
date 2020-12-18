@@ -9,17 +9,21 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="/resources/css/home.css" rel="stylesheet">
    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-   <link href="/resources/css/home.css" rel="stylesheet">
    <style>
-button {
-	border:0;
-}   
+* {
+outline:0;
+}
+img {
+	width:80px;
+	height:80px;
+}
 .daily-place-list {
    list-style-type: none;
    margin: 0;
@@ -41,7 +45,7 @@ button {
 
 .mainContainer {
    display: flex;
-   align-content: space-between;
+   flex: 0 0 400px;
 }
 
 .menu {
@@ -51,14 +55,19 @@ button {
 }
 
 .left-menu {
+   position:relative;
+   height:100%;
+   background-color:#ffffff;
    flex: 0 0 18%;
    margin : 0 0 10px;
    display: flex;
 }
 
 .left-date {
+   background-color:#203341;
    flex: 0 0 25%;
-   border-right-style: solid;
+   height:100%;
+   
 }
 
 .left-date ul {
@@ -67,10 +76,12 @@ button {
 
 .left-place-list {
    padding: 0 5px 0 5px;
+   width:250px;
 }
 
 .container {
    flex: 0 0 70%;
+   width:50%;
 }
 
 .daily-place-all {
@@ -81,16 +92,6 @@ button {
 ul {
    list-style: none;
    padding: 0;
-}
-
-#show {
-   position: absolute;
-   top: 10px;
-   left: 10px;
-   width: 42px;
-   height: 42px;
-   z-index: 1;
-   cursor: pointer;
 }
 
 #Allschedule {
@@ -106,12 +107,7 @@ ul {
    border: 1px solid #888;
    border-radius: 3px;
 }
-#left-date-list > {
-	width:2rem;
-}
-.daily-all-place {
-   border: 1px solid #888;
-}
+
 
 #all-date {
 	display: flex;
@@ -131,12 +127,6 @@ ul {
 	display:flex;
 	width:20%;
 }
-.left-date-list > button {
-	width: 3.5rem;
-    height: 3.5rem;
-    
-}
-
 
 .daily-place-all {
 	display:none;
@@ -180,15 +170,18 @@ html {
 	font-size: 62.5%; 
 }
 button {
-	width: 2rem;
-	height: 2rem;
+	border:0;
+	width: 40px;
+	height: 40px;
 }
 div.hoverable-place > img {
     grid-area:img;
-    width:100rem;
-    height:100rem;
+    width:10rem;
+    height:10rem;
 }
 div.hoverable-place > span {
+	text-align:left;
+	line-height:1.3rem;
 	width:10rem;
 	font-size:1rem;
     grid-area:text;
@@ -213,7 +206,7 @@ div.hoverable-place > button.detail-button {
 }
 
 .hoverable-place:hover {
-	box-shadow: 0 0 0 0.1rem rgba(207, 207, 207, 0.6); 
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 	transition: all 0.2s ease-in-out;
 }
 
@@ -225,10 +218,12 @@ div.hoverable-place > button.detail-button {
 	justify-content:space-around;
 }
 .left-date-list>button {
+	border:1px #263846 solid;
+	box-sizing:border-box;
 	background-color:#203341;
 	width:100%;
 	color:white;
-	height:4rem;
+	height:72px;
 }
 .left-date-list>button:hover {
 	background-color:rgb(22,76,136);
@@ -236,9 +231,109 @@ div.hoverable-place > button.detail-button {
 
 .selected-place {
 	display:flex;
+	width:10rem;
 }
 .selected-place > span {
-	width:5rem;
+	width:7rem;
+}
+#left-date-list > button.daily-place-btn.active{
+	background-color:#1a7ad9;
+}
+
+#rec-place {
+	overflow:auto;
+	background-color:#203341;
+	color:white;
+	z-index: 1000;
+	display:none;
+	position:absolute;
+	top:80px;
+	left:20px;
+}
+#map>.btn-rec-place {
+	z-index:10;
+	position:absolute;
+	width:100px;
+	height:42px;
+	top:10px;
+	text-align: center;
+	left:20px;
+	border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+#map>.transit-btn-transit{
+	z-index:10;
+	position:absolute;
+	right: 120px;
+	bottom:10px;
+	background-color:#ffffff;
+	width:100px;
+	height:42px;
+	text-align: center;
+	border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+#map>.transit-btn-car {
+	z-index:10;
+	position:absolute;
+	right:20px;
+	bottom:10px;
+	background-color:#ffffff;
+	width:100px;
+	height:42px;
+	text-align: center;
+	border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+#map>.make-button {
+	background-color:#ff9320;
+	color:white;
+	z-index:10;
+	position:absolute;
+	right:20px;
+	top:10px;
+	width:100px;
+	height:42px;
+	text-align: center;
+	border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+#map>.insert-button {
+	z-index:10;
+	position:absolute;
+	right:20rem;
+	top:10px;
+	width:100px;
+	height:42px;
+	padding:0;
+	text-align: center;
+}
+
+body > div.mainContainer > div.right.menu {
+	overflow:auto;
+	width:400px;
+}
+.data-range-picker {
+	border:0;
+}
+#hide {
+    top: 200px;
+    right: -40px;
+    position:absolute;
+    z-index: 100;
+    width: 40px;
+    height: 40px;
+}
+#show {
+    z-index: 1000;
+    top: 200px;
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 40px;
+    left: 0px;
 }
 
 </style>
@@ -265,7 +360,7 @@ div.hoverable-place > button.detail-button {
 			  <div id="in-mapWrapper" style="width:100%;height:100%">
 			  	<div id="in-map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
 			  </div>
-		  </div>
+		  </div> 
 		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">닫기</button></div>
       	<button class="submit-btn" style="position: absolute;top:60px;right:30px;z-index:110;">저장</button>
       </div>    
@@ -282,8 +377,12 @@ div.hoverable-place > button.detail-button {
       	</div>
         
       <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
-      <div class="mainContainer">
+<div class="mainContainer">
+
       <div class="left-menu">
+      
+      	<button id="hide"> << </button>
+      
       <div class="left-date">
       
       <ul class="left-date-list" id="left-date-list">
@@ -293,28 +392,12 @@ div.hoverable-place > button.detail-button {
       </div>
       
       <div class="left-place-list">
-      <div class="date-wrapper">일정 작성
-      <button id="hide" style="float:right;"> << </button>
+      <div class="date-wrapper">
          <p>
             <input type="text" name="daterange" class="data-range-picker" data-region-no='<c:out value="${schDto.schRegion}" />' data-init-todate='<c:out value="${schDto.toDate}" />' data-init-fromdate='<c:out value="${schDto.fromDate}" />' />
          </p>
       </div>
       
-      
-      <button class="btn-rec-place">추천 장소</button>
-      <div class="left-place-rec-list">
-         <ul class="left clearfix" id="rec-place">
-         <c:forEach items="${places}" var="list">
-         <li class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
-                  <img src='<c:out value="${list.plcImg}"></c:out>' style="width:50px;height:60px">
-                  <c:out value="${list.plcTitle}"></c:out>
-                  <button class="rec-add-button" type="button">
-                  <i class="fas fa-plus"></i>
-                  </button>
-            </li>
-            </c:forEach>
-         </ul>
-      </div>
       <div class="left-place-list" id="left-place-list">
             
       </div>
@@ -324,22 +407,42 @@ div.hoverable-place > button.detail-button {
 <!-- 맵 시작 -->
 <div class="container">
      <div id="mapWrapper">
-        <div id="map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
-        <div id="show" style="display:none;"><button>>></button></div>
+        <div id="map" style="width:100%;height:100% position:relative;">
+	        <div class="left-place-rec-list">
+	         <div class="left clearfix" id="rec-place">
+	         <c:forEach items="${places}" var="list">
+	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
+	                  <img src='<c:out value="${list.plcImg}"></c:out>'>
+	                  <c:out value="${list.plcTitle}"></c:out>
+	                  <button class="rec-add-button" type="button">
+	                  <i class="fas fa-plus"></i>
+	                  </button>
+	            </div>
+	            </c:forEach>
+	         </div>
+	      </div>
+        <button class="btn-rec-place">추천 장소</button>
+        <button type='button' class="transit-btn-car">차</button>
+		<button type='button' class="transit-btn-transit">대중교통</button>
+		<!-- <button class="insert-button" onclick="insertSchedule()">일정 넣기</button> -->
+		<button class="make-button" onclick="initSch()">일정 만들기</button>
+		<div id="show"><button>>></button></div>
+        
+        </div> <!-- 지도를 표시할 div 입니다 -->
     </div>
-   </div>
+</div>
 <!-- 맵 끗 -->
 <div class="right menu">
       <!-- 검색 창의 시작  -->
-      <form name="searchForm" id="searchForm">
-            <input type="text" placeholder="검색어를 입력해주세요" id="search-value"/><br>
-            <button class="search-button" type="button">
-            <i class="fas fa-search"></i>
+      <form name="searchForm" id="searchForm" style="width:100%;">
+            <input type="text" style="border:0;margin-left:2px" placeholder="검색어를 입력해주세요" id="search-value"/><br>
+            <button class="search-button" type="button" style="background-color:#1a7ad9;">
+            <i class="fas fa-search" style="color:#ffffff"></i>
          </button>
       </form>
       <!-- 검색 창의 끝 -->
    <!-- /.panel-heading -->
-   <div class="panel-body" style="border: 1px;">
+   <div class="panel-body">
       <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
       <ul class="right-place-list">
       </ul>
@@ -348,14 +451,8 @@ div.hoverable-place > button.detail-button {
    
     <div class="right-paging-bar"></div>
     
-    <div id="transit-container" class="transit-container" data-transit="car"></div>
-    <button type='button' id="transit-btn-car">차</button>
-    <button type='button' id="transit-btn-transit">대중교통</button>
 </div>
 </div>
- <button onclick="insertSchedule()">일정 넣기</button>
- <button onclick="initSch()">일정 만들기</button>
- 
    <script type="text/javascript" src="/resources/js/place.js"></script>
    <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341&libraries=services"></script>
@@ -378,19 +475,18 @@ div.hoverable-place > button.detail-button {
                    mapContainer.style.height = '100%';
                    map.relayout();
       
-                   $("#hide").click(function(){
-                       $(".left-menu").hide();
-                       document.querySelector('#show').style.display = 'block';
-                       document.querySelector('.container').style.flex = '0 0 88%';
-                    })
-                    
-                    $("#show").click(function(){
-                       $(".left-menu").show();
+      function hide() {
+    	  dnd(".left-menu").hide("slide", { direction: "left" }, 100);
+          document.querySelector('#show').style.display = 'block';
+          document.querySelector('.container').style.flex = '0 0 88%';
+          map.relayout();
+      }              
+      function show() {
+                	   dnd(".left-menu").show("slide", { direction: "left" }, 100);
                        document.querySelector('#show').style.display = 'none';
                        document.querySelector('.container').style.flex = '0 0 70%';
-                       
-                    })
-                    
+                       map.relayout();   
+      }
                  //전체보기
       function showAll() {
           let zIndex = 9999;
@@ -464,7 +560,6 @@ div.hoverable-place > button.detail-button {
                    
       $(document).ready(function(){ // document ready, datepicker의 초기값과 이벤트 등록 전담
          
-    	 sessionStorage.setItem("transit","car");          
          let datePicker = document.getElementsByClassName("data-range-picker")[0];
          let fromDate = datePicker.dataset["initFromdate"];
          let toDate = datePicker.dataset["initTodate"];
@@ -494,16 +589,10 @@ div.hoverable-place > button.detail-button {
       function init() { //이벤트 등록 전담용 initial
           computeDate();
        //모달보는 버튼에 이벤트 추가
-       const setAttr = function(e) {
-    	   document.getElementById("transit-container").setAttribute("data-transit",this.dataset["transit"]);
-       }
-         document.querySelector('#transit-btn-car').addEventListener('click', ()=>{
+         document.querySelector('.transit-btn-car').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","car");     
          });
-         $('#testbt').click(function() {
-             $('#test').toggleClass('red');
-          });
-         document.querySelector('#transit-btn-transit').addEventListener('click', ()=>{
+         document.querySelector('.transit-btn-transit').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","traffic"); 
          }); 
          document.querySelector('.submit-btn').addEventListener('click', ()=>{
@@ -521,6 +610,9 @@ div.hoverable-place > button.detail-button {
                      }
          });
          
+         $("#hide").click(hide)
+         $("#show").click(show);
+         
          document.querySelector('.daily-place-list').style.display ='block';
          let recPlaceBtn = document.getElementsByClassName("rec-add-button");
          for (var i = 0; i < recPlaceBtn.length; i++) {
@@ -529,7 +621,7 @@ div.hoverable-place > button.detail-button {
                 let leftPlaceList = document.getElementsByClassName("daily-place-list");
                 let activePlaceList = leftPlaceList[index];
                 let compPlaceList = activePlaceList.children
-                if(compPlaceList.length>5) {
+                if(compPlaceList.length>6) { //span wrap div
                	 return;
                 }
                 let currTarget = event.currentTarget.parentElement;
@@ -563,6 +655,9 @@ div.hoverable-place > button.detail-button {
           let fromDate = new Date(dateList[0]);
           let toDate = new Date(dateList[1]);
           let dateDiff = Math.ceil((toDate.getTime()-fromDate.getTime())/(1000*3600*24));
+          const transDate = (date) => {
+			 return date.toISOString().substring(5, 10).split('-').join('.')       	  
+          }
           let totalDate = document.getElementById("left-date-list");
           let totalPlace = document.getElementById("left-place-list");
           totalDate.innerHTML = null;
@@ -575,63 +670,93 @@ div.hoverable-place > button.detail-button {
           objs.addEventListener('click', showAll);
           
           totalDate.appendChild(objs);
-          
+            
          for(let idx=0; idx<=dateDiff; idx++ ){
-            let objs;
-            objs = document.createElement('button');
-             objs.setAttribute('class', 'daily-place-btn');
-             objs.innerText="DAY"+(idx+1);
-             objs.addEventListener('click',  (event) => {
+        	 var week = ['일','월','화','수','목','금','토']
+	             let objs;
+	             objs = document.createElement('button');
+	             objs.setAttribute('class', 'daily-place-btn');
+	             objs.innerText="DAY"+(idx+1);
+	             objs.addEventListener('click',  (event) => {
                  let currTarget = event.currentTarget;
                  let btnList = document.getElementsByClassName("daily-place-btn")
                  let dailyPlaceList = document.querySelectorAll('.daily-place-list')
+                 let arr = [...btnList];
+                 let psuedoidx = arr.indexOf(currTarget);
+                 // 토글 버튼 인덱스 추가 삭제 총괄
                  for (let i=0; i < btnList.length; i++) {
-                   if(btnList[i] == currTarget) {
-                      dailyPlaceList[i].style.display='block';
-                   }
-                   else{
-                      dailyPlaceList[i].style.display='none';
-                   }
-                }
+                    dailyPlaceList[i].style.display='none';
+	             	btnList[i].classList.remove("active");
+                 }
+                 dailyPlaceList[psuedoidx].style.display='block';
+	             btnList[psuedoidx].classList.add("active");
               });
-             
-             totalDate.appendChild(objs);
-              
-             let liobjs
-             liobjs = document.createElement('ul');
-             liobjs.setAttribute('class', 'daily-place-list');
-             liobjs.setAttribute('style','display:none');
-             liobjs.innerText=(idx+1)+"일차 장소리스트";
-             totalPlace.appendChild(liobjs);
+	             totalDate.appendChild(objs);
+	             let liobjs = document.createElement('ul');
+	             liobjs.setAttribute('class', 'daily-place-list');
+	             liobjs.setAttribute('style','display:none');
+	             let currDate = addDays(fromDate,idx);
+	             let div = document.createElement('div');
+	             div.setAttribute("class","span-wrap-div");
+				 let span1 = document.createElement('span');
+	             span1.innerText = `DAY\${idx+1}`;
+	             let span2 = document.createElement('span');
+	             span2.innerText = "|";
+	             let span3 = document.createElement('span');
+	             span3.innerText = `\${transDate(currDate)}(\${week[currDate.getDay()]}요일)`;
+	             div.appendChild(span1);
+	             div.appendChild(span2);
+	             div.appendChild(span3);
+	             liobjs.appendChild(div);
+	             totalPlace.appendChild(liobjs);
          }
+         totalDate.children[1].classList.add("active");
          document.querySelector('.daily-place-list').style.display='block';
        }
        
+       function addDays(date, days) { // 일을 증가시키는 메소드
+    	    let ndate = new Date(date);
+  		    let rdate= ndate.setDate(ndate.getDate() + days);
+  		    return new Date(rdate); 
+		}
+       
        function insertSchedule() {
-    	  
-    	   let datePicker = document.getElementsByClassName("data-range-picker")[0];
+    	     /*  // 유빈 누나 코드
+              const formData = new FormData();
+              
+              const inputFile = $("input[name='uploadFile']");
+              
+              const file = inputFile[0].files[0];
+
+              if($(".uploadResult li").length==1){
+                 $(".uploadResult li")[0].remove();
+              }
+              formData.append("uploadFile",file);
+			  // 유빈누나 코드 end */
+              
+           let datePicker = document.getElementsByClassName("data-range-picker")[0];
            let dateList = datePicker.value.split(' - ');
            let fromDate = new Date(dateList[0]);
            let toDate = new Date(dateList[1]);
            
-           const addDays = function(date, days) { // 일을 증가시키는 메소드
-	   		    let rdate= date.setDate(date.getDate() + days);
-	   		    return rdate; 
-   		}
-           let transit = sessionStorage.getItem("transit");
+           let transit = sessionStorage.getItem("transit") || "car";
            let tmpAllList =[];
            let tmpList;
            let placeList = document.getElementsByClassName("daily-place-list");
            let len = placeList.length;
            let memNo = <%= session.getAttribute("memNo") %> || 0;
+           let schRegion = ${schDto.schRegion};
            let scheduleVO = {
         		   memNo:memNo,
-        		   schTitle:"입력받은 그값",
+        		   schTitle:"테스트 제목",
         		   fromDate:fromDate,
         		   toDate:toDate,
-        		   schStatus:"미완성",
-        		   memo:"아직 테스트중이여요",	   
-        		   schRegion:"지역이라는데 뭐지 이거"
+        		   // 이미지 추가 멀티파일 부분
+        		   img:formData,
+        		   // 이미지 추가 멀티파일 부분
+        		   schStatus:"작성중",
+        		   memo:"테스트 메모",	   
+        		   schRegion:schRegion
            }
            for (let i = 0; i < len; i++) {
         	   
@@ -665,7 +790,7 @@ div.hoverable-place > button.detail-button {
                 contentType: "application/json; charset=utf-8;",
                 dataType: "text",
                 success:function(data){
-                	location.href = data;
+                	/* location.href = data; */
                 },
                 error: function(data){
                 	alert("error : "+data);
@@ -688,6 +813,7 @@ div.hoverable-place > button.detail-button {
                width: '100%',
                height: '100%',
            });
+           
            let dateAll = document.getElementById('all-date');
            let listAll = document.getElementById('all-schedule');
            // 노드를 이어붙일 애들 target
@@ -726,9 +852,9 @@ div.hoverable-place > button.detail-button {
               listAll.appendChild(objs);
 			  // 일차 리스트에 이어 붙여주기          
 			  
-              let len = dpList[i].children.length;
+              let len = dpList[i].children.length-1; //span wrap div -1 
               for (let j = 0; j < len; j++) {
-              let dailyplace = dpList[i].children[j].cloneNode(true);
+              let dailyplace = dpList[i].children[j+1].cloneNode(true); //span wrap div +1
               dailyplace.setAttribute('class','place-perday-list');
               dailyplace.lastElementChild.addEventListener('click',deleteInLeft);
               objs.appendChild(dailyplace);
@@ -980,6 +1106,7 @@ div.hoverable-place > button.detail-button {
                      btnobj1.setAttribute('class', 'add-button');
                      let iconobj1 = document.createElement("i");
                      iconobj1.setAttribute('class', 'fas fa-plus');
+                     btnobj1.addEventListener('click', show);
                      btnobj1.addEventListener('click', (event) => {
                          let currTarget = event.currentTarget.parentElement;
                          let index = document.getElementsByClassName("left-place-list")
@@ -988,7 +1115,8 @@ div.hoverable-place > button.detail-button {
                          let idx = getActiveDay(); // idx 를 얻었다.
                          let currentList = dailyPlaceList[idx];
                          let currentPlaceList = currentList.children;
-                         if(currentPlaceList.length>5){
+                         if(currentPlaceList.length>8){
+                        	 alert("6개까지만 가능합니다.")
                         	 return;
                          }
                          for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
@@ -1057,7 +1185,7 @@ div.hoverable-place > button.detail-button {
       
       function getActiveDay(){
          let dateList = document.getElementsByClassName("daily-place-list");
-         let idx, i;
+         let idx;
          for (let i = 0; i < dateList.length; i++) {
             
             if(dateList[i].style.display=="block"){
