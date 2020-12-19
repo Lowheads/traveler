@@ -294,9 +294,9 @@
 				str += "<button class='replyBtn_delete' onclick='replyDelete(this)' data-rno='" + list[i].rno + "'>삭제</button></div>";
 			}
 			
-			str += "<div class='textContent' style='display : none;'>";
+			str += "<div class='textContent' style='display : none; margin-top:4%; margin-left:2%;'>";
 			str += "<textarea class='modiText' rows='3' cols='90' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
-			str += "<button class='replyModiBtn' type='button' class='replyModBtn' style='display: none; margin-bottom : 1%' onclick='replyModiSuccess(this)'>수정완료</button>";
+			str += "<button class='replyRegiBtn' type='button' class='replyModBtn' style='display: none; margin-bottom : 1%' onclick='replyModiSuccess(this)'>수정완료</button>";
 			str += "</div>";
 			str += "<p class='comment-reply' style='margin-bottom : 2%;'>" + list[i].reply+ "</p></div></li>";
 			str += "<hr>";

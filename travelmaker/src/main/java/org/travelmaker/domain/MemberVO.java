@@ -12,7 +12,7 @@ public class MemberVO {
 	private String email; // 이메일
 	private String nickname; // 닉네임
 	private String pwd; // 비밀번호
-	private Date birth; // 생년월일 (19930419)
+	private String birth; // 생년월일 (19930419)
 	private String gender; // 성별(남,여)
 	private Date regDate; // 가입일
 	private Date lastDate; // 최종로그인

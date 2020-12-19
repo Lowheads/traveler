@@ -15,26 +15,208 @@
 	<!-- JQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 
-<link rel="stylesheet" href="/resources/css/accountInfo.css">
+<link rel="stylesheet" href="/resources/css/member/memberInfo.css">
+
+</head>
+<body>
+
+<!-- 전체 div -->
+<div class="container-info">
+	<!-- 정보 div -->
+	<div class="info-wrap">	
+		<!-- 내정보 div -->
+		<div class="info-head">내 정보</div>
+
+			<%-- <p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p> --%>
+		
+			<!-- 정보 출력 div  -->
+			<div class="main-wrap">
+				<!-- 이메일 -->
+				<div class="info-content">
+					<div class="content-name">이메일</div>
+					<div class="content-proper">${member.email }</div> 
+				</div>
+			
+			<!-- 닉네임 중복체크 -->
+			 <div class="info-content">
+			 	<div class="content-name">닉네임</div>
+				<div class="content-proper">
+				 <form id="saveForm" action="/member/modifyNickname" method="post">
+				 	<input type="text" id="infoNickname" name="nickname" value="${member.nickname }">	
+				 	<input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
+				 	<button type="button" class="dupl-btn" id="infoNicknameCheck">중복 체크</button>
+				 	<p style="margin-top: 3%;"><span id="infoSpanNickname"></span></p>
+				 </form>
+			 	</div>
+			 	<!-- end proper -->
+			 </div>
+			 <!-- end 닉네임 중복체크 -->
+			
+			<!-- 성별 -->
+			<div class="info-content">
+				<div class="content-name">성별</div>
+				<div class="content-proper">${member.gender }</div> 
+			</div>
+			
+			<!-- 생년월일 -->
+			<div class="info-content"> 
+				<div class="content-name">생일</div>
+				<div class="content-proper">${member.birth }</div> 
+			<%-- <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/> --%>
+			</div>
+			
+			<!-- 비밀번호 -->
+			<div class="info-content"><%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
+				<div class="content-name">비밀번호</div>
+				<button class="pwd-modiBtn" type='button' id="modal_btn" class="button">비밀번호 재설정</button></div>
+		
+			<!-- 비밀번호 변경 모달 -->
+		<div class="pwdModify_modal">
+			<div class="pwModal_close"><a class="pwdModi-aTag" href="#">X</a></div>
+		<div>
+				<!-- 비밀번호 -->
+				<form action="/member/modifyPwd" method="post">
+			
+				<p style="text-align: center; font-size: 20px; margin-top: 10%; margin-bottom : 10%; font-weight: bold;">비밀번호 변경</p>
+				
+				<div class="pwd-change-wrap">
+				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">현재 비밀번호</div> 
+				<input class="pwd-change" type="password" name="inputPwd" id="inputPwd" placeholder="현재 비밀번호"></div>
+					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">현재 비밀번호를 입력해주세요!</p>
+				
+				<!-- 새로운 비번 -->					
+				<div class="pwd-change-wrap">
+				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">새로운 비밀번호</div> 
+				<input class="pwd-change" type="password" name="newPwd" id="infoPwd" placeholder="변경할 비밀번호"></div>
+					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p>
+
+				<!-- 비밀번호 확인 -->
+				<div class="pwd-change-wrap">
+				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">새로운 비밀번호 확인</div> 
+				<input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" placeholder="비밀번호 확인"></div>
+					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p>
+					<p><input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>"></p>
+				<div class="pwd-change-confirm-btn">
+					<button type="submit" class="pwd-pwd" onclick="return infoPwdCheck();">비밀번호 변경하기</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		<!-- end 변경모달 -->
+		
+		
+		<!-- 회원탈퇴 모달 -->
+		<div class="member_delete_modal">
+			<div class="mdModal_close"><a class="pwdModi-aTag" href="#">X</a></div>
+		<div>
+
+			<form action="/member/deleteMember" method="post" onsubmit="return deleteAsk();">
+			
+				<p style="text-align: center; font-size: 20px; margin-top: 10%; 
+				margin-bottom : 10%; font-weight: bold;">여행의정석 회원 탈퇴 확인</p>
+				
+				<div class="delete_announce">
+					<p>회원탈퇴하시면 즉시 해지처리 되며,</p>
+					<p style="margin-bottom: 50px">해당 아이디로는 재 가입하실 수 없습니다.</p>
+				</div>
+				
+				<div class="delete-wrap">
+					<div class="del-div">회원 이메일 &nbsp;&nbsp;&nbsp; : &nbsp;</div>
+					<input style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px"
+					value="<%=session.getAttribute("email")%>">  
+						<input type="hidden" name="email" value="<%=session.getAttribute("email")%>" readonly="readonly">
+				</div>
+				
+				<div class="delete-wrap">				
+					<div class="del-div">현재 비밀번호 : &nbsp;</div>
+					<input type="password" id="deletePwd"  name="pwd" placeholder="현재 비밀번호">
+				</div>
+				
+				<div class="delete-wrap">
+					<div class="del-div">비밀번호 확인 : &nbsp;</div>
+					<input type="password" id="deletePwdCfm" placeholder="비밀번호 확인">
+				</div>
+				
+				<div class="delete_confirm_btn">
+					<button type="submit" id="delete_confirm" onclick="return memberDeleteValid();">탈퇴하기</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		<!-- end 탈퇴모달 -->
+		
+	
+		<div class="info-content">
+			<div class="content-name">가입일</div>
+			<div class="content-proper"><fmt:formatDate value="${member.regDate }" type="both" pattern="yyyy-MM-dd"/></div> 
+		</div>
+		
+		<div class="info-content">
+			<div class="content-name">최종로그인</div>
+			<div class="content-proper"><fmt:formatDate value="${member.lastDate }" type="both" pattern="yyyy-MM-dd"/></div>
+		</div>
+	</div>
+	<!-- end main-wrap-->
+			
+			<div class="info-foot">
+				<!-- 탈퇴 버튼 -->
+		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
+	        	 <!-- 탈퇴 버튼 끝 -->
+	        	 
+	        	 <!-- 홈 버튼 -->
+					<!-- <button type="button" class="home-btn" onclick="location.href = '/member/main'">홈으로</button> -->
+	        	 <!-- 홈 버튼 끝 -->
+	        	 
+	        	 <!-- 저장하기 버튼 -->
+					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
+	        	 <!-- 저장하기 버튼 끝 -->
+			</div>
+			<!-- end foot -->
+			
+		</div>
+		<!-- end info-wrap -->
+	</div>
+<!-- end container-info -->
+		
+</body>
 
 <script>
 
-	//모달 기능(accountInfo)
+	//모달 기능
 	window.onload = function() {
-
+		
+		// 비밀번호 변경
+		document.getElementById('modal_btn').addEventListener('click', onClick);
+		document.querySelector('.pwModal_close').addEventListener('click', offClick);
+		
+		// 회원 탈퇴
+		document.getElementById('deleteBtn').addEventListener('click', deleteOnClick);
+		document.querySelector('.mdModal_close').addEventListener('click', deleteOffClick);
+		
+		// 모달 오픈
 		function onClick() {
-			document.querySelector('.modal_wrap').style.display = 'block';
+			document.querySelector('.pwdModify_modal').style.display = 'block';
 			document.querySelector('.black_bg').style.display = 'block';
 		}
+		// 모달 오픈
+		function deleteOnClick() {
+			document.querySelector('.member_delete_modal').style.display = 'block';
+			document.querySelector('.black_bg').style.display = 'block';
+		}
+		
+		// 모달 닫기
 		function offClick() {
-			document.querySelector('.modal_wrap').style.display = 'none';
+			document.querySelector('.pwdModify_modal').style.display = 'none';
 			document.querySelector('.black_bg').style.display = 'none';
 		}
-
-		document.getElementById('modal_btn').addEventListener('click', onClick);
-		document.querySelector('.modal_close').addEventListener('click',
-				offClick);
-
+		// 모달 닫기
+		function deleteOffClick() {
+			document.querySelector('.member_delete_modal').style.display = 'none';
+			document.querySelector('.black_bg').style.display = 'none';
+		}
+		
 	};
 
 	//비밀번호 입력 확인(수정)
@@ -113,7 +295,7 @@
 						url : "/member/hasNickname",
 						success : function(data) {
 							if ($.trim(data) == 1) {
-								document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
+								document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다.";
 								infoSpanNickname.style.color = 'red';
 								return false;
 							} else {
@@ -129,6 +311,7 @@
 
 		let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
 		let myNickname = $("#infoNickname").val(); // 닉네임
+		
 
 		// 공백확인
 		if (myNickname.length == 0) {
@@ -157,9 +340,42 @@
 		}
 
 		// 정상 입력? 저장하자
-		return true;
+		$("#saveForm").submit();
 
 	} // end nickSaveCheck
+	
+	
+		//탈퇴하기 누르면 비밀번호 입력여부만 체크
+	function memberDeleteValid(){
+		
+		let pwdChk =  $("#deletePwd").val(); // 비밀번호
+		let pwdCfm =  $("#deletePwdCfm").val(); // 비밀번호 확인
+		
+		if(pwdChk.length == 0){
+			//입력 안하면
+			alert("비밀번호를 입력해주세요");
+			return false;
+		}
+		
+		if(pwdChk != pwdCfm){
+			// 비밀번호가 일치하지 않으면...
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		}
+		
+		return true;
+	}
+
+	
+ 	// 탈퇴 전 한번 더 묻기
+	function deleteAsk() {
+		if (confirm("정말 탈퇴하시겠습니까?") == true) { //확인
+			document.form.submit();
+		} else { //취소
+			return false;
+		}
+	} 
+	
 
 	//rttr 창띄우기
 	$(function() {
@@ -173,71 +389,6 @@
 
 	});
 </script>
-
-</head>
-<body>
-	
-	
-		<p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p>
-	
-	<div class="wrap-main">
-	
-		<div class="center">아이디(이메일) : ${member.email }</div> 
-		
-		<!-- 닉네임 저장 폼 -->
-	<form action="/member/modifyNickname" method="post">
-		 <div class="center">닉네임 <input type="text" id="infoNickname" name="nickname" value="${member.nickname }">
-		 <input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
-		 	<button type="button" class="btn" id="infoNicknameCheck">중복 체크</button>
-			<button type="submit" id="button" onclick="return infoNickSaveCheck()">저장하기</button>
-		 <p><span id="infoSpanNickname"></span></p></div>
-	</form>
-		 <!-- end 닉네임 저장 폼 -->
-		
-		<div class="center">생년월일 : <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/></div>
-		
-		<div class="center">비밀번호 : <%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
-		<button type='button' id="modal_btn" class="button">비밀번호 변경</button></div>
-	
-		<!-- 비밀번호 변경 모달 -->
-	<div class="modal_wrap">
-		<div class="modal_close"><a href="#">close</a></div>
-	<div>
-			<!-- 비밀번호 -->
-		<form action="/member/modifyPwd" method="post">
-			<div class="pwd-change"><h4 style="font-weight: bold;">비밀번호 변경하기</h4></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="inputPwd" id="inputPwd" placeholder="현재 비밀번호">
-			<p>현재 비밀번호를 입력해주세요!</p></div>
-			<div class="pwd-change"><input class="pwd-change" type="password" name="newPwd" id="infoPwd" placeholder="변경할 비밀번호">
-			<p>비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
-			<!-- 비밀번호 확인 -->
-			<div class="pwd-change"><input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" placeholder="비밀번호 확인">
-			<p>비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
-			<p><input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>"></p>
-			<div class="center"><button type="submit" class="pwd-pwd" onclick="return infoPwdCheck();">비밀번호 변경하기</button></div>
-			
-			</form>
-		</div>
-	</div>
-
-	<div class="center">가입일 : <fmt:formatDate value="${member.regDate }" type="both" pattern="yyyy-MM-dd"/></div>
-	<div class="center">최종로그인 : <fmt:formatDate value="${member.lastDate }" type="both" pattern="yyyy-MM-dd"/></div>
-		
-		</div>
-		
-	<p><a href="/member/main" class="btn">홈으로</a></p>
-	
-	   <!-- 회원탈퇴 (내 정보를 출력해야하므로, 폼으로 처리)-->
-      <div>
-         <form action="/member/deletePage" method="post">
-            <input type="hidden" id="modi_email" name='email' value="<%=session.getAttribute("email")%>">
-            <p><button type='submit' class="btn">회원탈퇴</button></p>
-            <br>
-         </form> 
-      </div>
-	
-</body>
-
 
 </html>
 

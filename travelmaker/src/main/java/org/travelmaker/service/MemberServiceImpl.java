@@ -118,7 +118,19 @@ public class MemberServiceImpl implements MemberService {
 
    @Override
    public MemberVO getMember(String email) { // 내 정보 조회
-      return mapper.getMember(email);
+	   
+	   MemberVO vo = mapper.getMember(email);
+	   
+	   // 내 성별이 "M"이면 "남"
+	   if(vo.getGender().equals("M")) {
+		   vo.setGender("남");
+		   
+	   }else if(vo.getGender().equals("F")) {
+		   // "F"면 "여" 저장
+		   vo.setGender("여");
+	   }
+	   
+      return vo;
    }
    
    public boolean isApiLoginCheck(String email, HttpSession session) { // api로그인일경우 apimemberInfofo 페이지로 이동
@@ -196,7 +208,7 @@ public class MemberServiceImpl implements MemberService {
       session.invalidate();
                
       // 정상적으로 탈퇴 되었다는 메세지를 보낸다.
-      rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
+      rttr.addFlashAttribute("msg", "여행의정석을 이용해주셔서 감사했습니다.");
       return false;
    }
    
@@ -208,7 +220,7 @@ public class MemberServiceImpl implements MemberService {
    @Override
    public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session) { // api 회원탈퇴
       mapper.deleteApiMember(email);
-      rttr.addFlashAttribute("msg", "travel을 이용해주셔서 감사했습니다.");
+      rttr.addFlashAttribute("msg", "여행의정석을 이용해주셔서 감사했습니다.");
       session.invalidate();
    }
    
@@ -216,7 +228,7 @@ public class MemberServiceImpl implements MemberService {
 
       // 트래블 회원이 아니면 안됩니다!
         if(getMember(email) == null || deleteNoAccess(email)) {
-        	  rttr.addFlashAttribute("msg", "travel회원이 아닙니다. 이메일을 확인해주세요");
+        	  rttr.addFlashAttribute("msg", "회원이 아닙니다. 이메일을 확인해주세요");
               return true;
            }
         return false;
@@ -253,8 +265,8 @@ public class MemberServiceImpl implements MemberService {
         String newPwd= findPwd(email); // 새로운 비밀번호를 변수 pw에 저장한다.
             
         emailObj.setReceiver(email); // 받는 사람
-        emailObj.setSubject(email+"님 travle에서 보내드리는 임시 비밀번호 메일입니다."); // 제목
-        emailObj.setContent("안녕하세요, travel입니다! \n" + email + "님의 임시 비밀번호는 "+newPwd+" 입니다\n"
+        emailObj.setSubject(email+"님 여행의정석에서 보내드리는 임시 비밀번호 메일입니다."); // 제목
+        emailObj.setContent("안녕하세요, 여행의정석입니다! \n" + email + "님의 임시 비밀번호는 "+newPwd+" 입니다\n"
               + "로그인하시고 새로운 비밀번호로 변경해주세요!"); // 내용
       
         return emailObj;
@@ -265,8 +277,8 @@ public class MemberServiceImpl implements MemberService {
    public Email certEmail(String email, String certNum, Email emailObj) { // 소셜 계정 회원탈퇴 인증메일 보내기
       
         emailObj.setReceiver(email); // 받는 사람
-        emailObj.setSubject(email+"님 travle에서 보내드리는 회원탈퇴 인증번호입니다."); // 제목
-        emailObj.setContent("안녕하세요, travel입니다! \n" + email + "님의 travel 회원탈퇴 인증번호는 "+certNum+" 입니다\n"); // 내용
+        emailObj.setSubject(email+"님 여행의정석에서 보내드리는 회원탈퇴 인증번호입니다."); // 제목
+        emailObj.setContent("안녕하세요, 여행의정석입니다! \n" + email + "님의 여행의정석 회원탈퇴 인증번호는 "+certNum+" 입니다\n"); // 내용
       
         return emailObj;
    }
