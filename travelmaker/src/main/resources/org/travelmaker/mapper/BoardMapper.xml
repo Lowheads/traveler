@@ -28,7 +28,7 @@ select * from board where board_no>0
 
 <select id="getAdminList" resultMap="BoardResult">
 <![CDATA[
-	select b.board_no , b.sch_no, board_title, b.w_date, b.pick_cnt, b.mod_date, b.v_cnt, b.hidden, b.board_img, b.thumbimg, m.mem_grade
+	select b.board_no , b.sch_no, board_title, b.w_date, b.pick_cnt, b.mod_date, b.v_cnt, b.hidden, b.board_img, b.thumbimg, m.mem_grade, m.nickname
 	from board b, schedule s, member m
 	where b.sch_no=s.sch_no
 	and s.mem_no=m.mem_no

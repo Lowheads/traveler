@@ -35,26 +35,37 @@
 	height: auto;
 	background-color: white;
 	display:flex;
+	overflow: hidden;
 }
 
 .gallery {
 	width: 100%;
-	height: 100%;
+	height: auto;
 	display : flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
-	margin: 0 auto;
+	border-radius: 8px;
+	margin-top: 10px;
+	
 }
+
 
 .card-contents{
 	width: 250px;
 	height: 200px;
 	margin-bottom: 50px;
+	position: relative;
+ 	z-index: 1;
+  	display: block;
+  	box-shadow: 2px 2px 2px 2px #D4D4D4;
+  	border-radius: 10px;
 }
 
 .card-img{
+	position : relative;
+	background-size: cover;
 	width: 100%;
-	height: 85%;
+	height: 70%;
 	
 }
 
@@ -65,12 +76,21 @@
 	
 } 
 
+.card-img a{
+	font-size : 12px;
+}
+
 .card-desc{
-	margin-top: 30px;
+	
+	margin-left: 10px;
 	height: auto;
 	font-size: 15px;
 }
-
+.desc-bottom{
+	 margin: 40px 0 0;
+	 font-size : 12px;
+	 float: right;
+}
 .paging{
 	
 	bottom: 0;
@@ -91,18 +111,48 @@
 
 }
 
+.col-25{
+  float: left;
+
+  margin-top: 6px;
+
+}
+
+.col-75{
+  float: left;
+
+  margin-top: 6px;
+}
+.form-control, select, textarea {
+  margin-left: 10px;
+  width: 500px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .heart{
 	color:white;
 	float:right;
 }
 
 .left {
-     width: 50%;
-
+     width: 49%;
+     margin-right: 2%;
 }
 
 .right {
-     width: 50%;
+     width: 49%;
+     overflow: hidden;
 
 }
 
@@ -175,6 +225,11 @@ overflow-y: auto;
 .schedule_dt_box {
    width: 100%;
 }
+
+.schedule_dt_box a {
+   text-decoration: none;
+}
+
 
 .schedule_dt{
    width:100%;
@@ -249,6 +304,7 @@ overflow-y: auto;
    line-height: 100px;  
    border-right: 1px solid gray;
    border-top: 1px solid gray;
+   
 }
 .dt_bottom_right img{
    width: 75px;
@@ -582,92 +638,107 @@ overflow-y: auto;
 		<!--좌측 사진갤러리 -->
 		<div class="left">
 	
+	 	<div class="row">
+	 	<div class="col-25">
+	 	<label>MEMO</label></div>
+	 	<div class="col-75">
+	 	<input class="form-control" value='${boarddt.boardCon }' readonly="readonly">
+	 	</div>
+	 	</div>
+	
+
 	 	<div class="gallery">
 		<c:forEach var="file" items="${file}">
 		<div class="card-contents">
 		<div class="card-img">
-			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
 			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
 		</div>
 		<div class="card-desc">
 			${file.FILE_CONTENT}
+			<a class="desc-bottom" href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">
+			<i class="fa fa-arrow-circle-o-down"></i>
+			${file.ORG_FILE_NAME}(${file.FILE_SIZE}kb)</a><br>
 		</div>
 		</div>
 		</c:forEach>
+
 	</div>
 	</div>
 	
 	<div class="right">
 
-	        <div class="schedule_dt_box">
-            <c:set var="count" value="0"></c:set>
-            <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
-            <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[status.index-1].SCH_DATE  }">
-            <c:set var="count" value="${count+1 }"/>
-            <div class="schedule_dt">
-               <div class="schdt_top">
-                  <div class=dt_top_left>DAY<c:out value="${count }"/></div>
-                  <div class=dt_top_right>
-                  <div class="daily_date"><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></div>
-                   <div class="showMap" onclick="showMap(${count})">지도에서보기</div></div>
-               </div>
-                           <c:set var="dtCnt" value="0"/>
-               
-                  <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">
-                           <!-- 처음~막전 -->
-                           <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE }">
-                           
-                              <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE}">
-                              <c:set var="dtCnt" value="${dtCnt+1 }"/>
-                              <div class="schdt_bottom">
-                                 <div class="dt_bottom_left">
+<div class="schedule_dt_box">
+    <c:set var="count" value="0"></c:set>
+    <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
+    <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[status.index-1].SCH_DATE  }">
+    <c:set var="count" value="${count+1 }"/>
+    <div class="schedule_dt">
+        <div class="schdt_top">
+            <div class=dt_top_left>DAY<c:out value="${count }"/></div>
+            <div class=dt_top_right>
+            <div class="daily_date"><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></div>
+             <div class="showMap" onclick="showMap(${count})">지도에서보기</div></div>
+        </div>
+                        <c:set var="dtCnt" value="0"/>
+        
+            <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">
+                        <!-- 처음~막전 -->
+                        <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE }">
+                        
+                            <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE}">
+                            <c:set var="dtCnt" value="${dtCnt+1 }"/>
+                            <div class="schdt_bottom">
+                                <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt }</div>
-                                 </div>
-                                 <div class="dt_bottom_right">
-                                 <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
+                                </div>
+                                <div class="dt_bottom_right">
+                                <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
                                     <img class="plcImg plcImg_${count}" data-plc_no="${dt.FROM_PLC}" data-plc_dt="${dt.FROMADT}" data-lat="${dt.FROMLAT}" data-lng="${dt.FROMLNG}" data-title="${dt.FROMTITLE}" alt="place" src='<c:out value="${dt.FROMIMG }"/>'>
                                     </a>
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
                                     <c:out value="${dt.FROMTITLE }"/>
-                                 </a>
-                                 <a href="http://place.map.kakao.com/${dt.TO_PLC }" style="float:right; margin-right: 30px;" target="_blank">
-                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                </a>
+                                <a href="http://place.map.kakao.com/${dt.TO_PLC }" style="float:right; margin-right: 30px;" target="_blank">
+                                    <i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>
                                     </a>
-                                 </div>
-                              </div>
+                                <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.FROMADT }"/></b>
+                                </div>
+                            </div>
 
-                              <!-- distance -->
-                              <div class="dt_box_footer">
-                                 <div class="dt_footer_left"></div>
-                                 <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE } km</div>
-                              </div>
-                           </c:if>
-                           
-                           <!-- 마지막 -->
-                           <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
-                                 <div class="dt_bottom_left">
+                            <!-- distance -->
+                            <div class="dt_box_footer">
+                                <div class="dt_footer_left"></div>
+                                <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE } km</div>
+                            </div>
+                        </c:if>
+                        
+                        <!-- 마지막 -->
+                        <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
+                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                                <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
-                                 </div>
-                                 <div class="dt_bottom_right">
-                                 <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
+                                </div>
+                                <div class="dt_bottom_right">
+                                <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
                                     <img class="plcImg plcImg_${count}" data-plc_no="${dt.TO_PLC}" data-plc_dt="${dt.TOADT}" data-lat="${dt.TOLAT}" data-lng="${dt.TOLNG}" data-title="${dt.TOTITLE}" alt="place" src='<c:out value="${dt.TOIMG }"/>'>
                                     </a>
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="margin-left: 10px;"  target="_blank">
                                     <c:out value="${dt.TOTITLE }"/>
                                     </a>
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="float:right; margin-right: 30px;" target="_blank">
-                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>
                                     </a>
-                                 </div>
-                              </div>
-                           </c:if>
-                           </c:if>
-                        </c:forEach>
-               </div>
-               </c:if>
-            </c:forEach>
-         </div>
+                                    <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.TOADT }"/></b>
+                                </div>
+                            </div>
+                        </c:if>
+                        </c:if>
+                    </c:forEach>
+        </div>
+        </c:if>
+    </c:forEach>
+</div>
+
 	
 	</div>
 	<!--contents 끝 -->
@@ -702,11 +773,17 @@ $(document).ready(function(){
 	});
 	
 	$("button[data-oper='list']").on("click",function(e){
-/* 		operForm.find("#boardNo").remove();
-		operForm.attr("action","/board/list")
-		operForm.submit(); */
 		
-		window.history.back();
+		var referrer = document.referrer;
+		if (referrer=="http://127.0.0.1:8080/main/index"){
+			operForm.attr("action","/main/index")
+			operForm.submit();
+		}
+		else{
+ 		operForm.find("#boardNo").remove();
+		operForm.attr("action","/board/list")
+		operForm.submit(); 
+		}
 	});	
 });
 

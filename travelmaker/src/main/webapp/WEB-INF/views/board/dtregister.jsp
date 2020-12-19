@@ -275,7 +275,7 @@ label {
 			
 				<div class="row">
 				<div class="col-25">
-				<label>게시물 제목</label> 
+				<label>게시글 제목</label> 
 				</div>
 				<div class="col-75">
 				<input class="form-control" name='boardTitle' value='${board.boardTitle}' readonly="readonly">

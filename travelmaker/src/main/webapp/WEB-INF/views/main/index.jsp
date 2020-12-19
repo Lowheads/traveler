@@ -191,41 +191,61 @@ a{text-decoration: none}
 
 .boardContents{
 	width: 100%;
-	height: 600px;
+	height: auto;
 	background-color: white;
+	display:inline-block;
 }
 
 .gallery {
-	width: 100%;
+	width: 90%;
 	height: 100%;
 	display : flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
+	margin : 0 auto;
 }
 
 .card-contents{
 	width: 23%;
-	height: 50%;
+	height: 300px;
+	position: relative;
+ 	z-index: 1;
+  	display: block;
+ 
+  	margin-bottom: 10px;
+  	border-radius: 10px;
+  	box-shadow: 2px 2px 2px 2px #D4D4D4;
 }
 
 .card-Img{
+	position : relative;
+	background-size: cover;
 	width: 100%;
-	height: 80%;
-	
+	height: 70%;
 }
 
 .card-Img Img{
 	width: 100%;
 	height: 100%;
-	border-radius: 5%;
+	border-radius: 10px;
 	
 }
 
-.card-Title{
-	margin-top: 10px;
+.card-desc{
+	margin: 10px;
 	height: auto;
 	font-size: 15px;
 }
+
+.desc_bottom{
+	 margin: 30px 0 0;
+	 font-size : 12px;
+}
+/* .card-Title{
+	margin-top: 10px;
+	height: auto;
+	font-size: 15px;
+} */
 
 /* selectbox */
 
@@ -430,8 +450,9 @@ a{text-decoration: none}
 
 
 		<!-- 관리자 게시판리스트 출력 -->
-			<button id="goList" onclick="location.href='/board/list'" style="float: right;">더보기</button>
-
+	
+			<button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
+	
 			<div class="boardContents">
 				<div class="gallery">
 					<c:forEach items="${adminlist }" var="adminlist">
@@ -442,9 +463,16 @@ a{text-decoration: none}
 									<img src="/resources${adminlist.boardImg}">
 								</a>
 							</div>
-								<div class="card-Title">
+								<div class="card-desc">
 									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
 									<c:out value="${adminlist.boardTitle }" /></a></b>
+									<div class="desc_bottom">
+										<i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
+										<i class="fa fa-heart-o"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
+										<div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
+									
+									</div>
+									
 								</div>
 						</div>
 					</c:forEach>

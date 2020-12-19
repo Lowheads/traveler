@@ -103,7 +103,7 @@ input:checked+.slider:before {
 
 #hiddenlist_open_btn{
 	font-size:15px;
-	margin-right:10%;
+	margin-right:8%;
 	margin-bottom: 50px;
 	background-color:white;
 	border: 1px solid gray;
@@ -119,6 +119,12 @@ input:checked+.slider:before {
 	border: 1px solid gray;
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
+
+}
+
+#schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
+	background-color: #203341;
+   	color:white;
 
 }
 
@@ -139,7 +145,7 @@ input:checked+.slider:before {
 }
 
 .gallery {
-	width: 80%;
+	width: 85%;
 	height: 100%;
 	display : flex;
 	justify-content: space-around;
@@ -150,13 +156,29 @@ input:checked+.slider:before {
 .card-contents{
 	width: 23%;
 	height: 300px;
+	position: relative;
+ 	z-index: 1;
+  	display: block;
+ 
+  	margin-bottom: 10px;
+  	border-radius: 10px;
+  	box-shadow: 2px 2px 2px 2px #D4D4D4;
+  
 }
 
 .card-Img{
+	position : relative;
+	background-size: cover;
 	width: 100%;
 	height: 70%;
 	
 }
+/* .img-cover{
+	 position: absolute;
+     height: 100%;
+     width: 100%;                                                              
+     z-index:1;
+} */
 
 .card-Img img{
 	width: 100%;
@@ -165,16 +187,26 @@ input:checked+.slider:before {
 	
 }
 
+.card-Img .heart{
+     position: absolute;
+     top:2%;
+     left:93%;
+     transform: translate(-50%, -50%);                                                                   
+     font-size:5rem;
+     color: white;
+     z-index: 2;
+     text-align: center;
+  }
+
 .card-desc{
-	margin-top: 10px;
+	margin: 10px;
 	height: auto;
 	font-size: 15px;
 }
 
-.paging{
-	
-	bottom: 0;
-	width:100%;
+.desc_bottom{
+	 margin: 30px 0 0;
+	 font-size : 12px;
 }
 
 .mainMsg{
@@ -186,6 +218,7 @@ input:checked+.slider:before {
 	color:white;
 
 }
+
 </style>
 
 </head>
@@ -217,13 +250,19 @@ input:checked+.slider:before {
 						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
 							<img src="/resources${board.boardImg}" >
 					</a>
+								<div class="heart">
+								<i class="fa fa-heart" data-sch_no="${board.schNo}" style="font-size:24px;color:red;" onclick="likeToggle(this)"></i>
+								</div>
+								<div class="img-cover"></div>
 					</div>
 					<div class="card-desc">
+					<b><c:out value="${board.boardTitle }" /></b>
+					<div class="desc_bottom">
 					<i class="fa fa-eye"></i>&nbsp<c:out value="${board.VCnt }"/>
 					<i class="fa fa-heart-o"></i>&nbsp<c:out value="${board.pickCnt }"/>
 					<div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${board.writer }"/></div>
-					<br>
-					<b><c:out value="${board.boardTitle }" /></b>
+					</div>
+<%-- 					<div class="heart"> <i class="fa fa-heart" data-sch_no="${board.schNo}" style="font-size:24px;color:red;" onclick="likeToggle(this)"></i></div> --%>
 					</div>
 			</div>
 			</c:forEach>
@@ -238,8 +277,8 @@ input:checked+.slider:before {
 
 
 <!-- 페이징 -->
-<div class="paging">
-	<ul class="w3-bar" style='text-align:center'>
+
+<ul class="w3-bar" style='text-align:center'>
 	<c:if test="${pageMaker.prev }">
 		<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
 	</c:if>
@@ -256,7 +295,7 @@ input:checked+.slider:before {
 		<li class="w3-button" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
 	</c:if>
 </ul>
-</div>
+
 
 
 
@@ -465,6 +504,49 @@ input:checked+.slider:before {
 				$('.schedulelistbg').hide();
 				modal('register_modal');
 			});
+	
+	//좋아요
+    function likeToggle(heart){
+       if(heart.className == "fa fa-heart"){
+           let sendData = {
+                'schNo' : heart.dataset['sch_no'],
+             }
+             //ajax 기능 추가 
+             $.ajax({
+                type : 'post',
+                url : '/board/deletePick',
+                data : sendData,
+                success : function(data) {
+                   heart.classList.toggle("fa-heart-o");
+                  
+                 },
+                error : function(error){
+                   alert("에러발생!! 다시시도해주세요"+error);
+                }
+             });
+       }
+       
+      if(heart.className == "fa fa-heart fa-heart-o"){
+          let sendData = {
+                'schNo' : heart.dataset['sch_no'],
+             }
+             //ajax 기능 추가 
+             $.ajax({
+                type : 'post',
+                url : '/board/insertPick',
+                data : sendData,
+                success : function(data) {
+                   heart.classList.toggle("fa-heart-o");
+                  
+                },
+                error : function(error){
+                   alert("에러발생!! 다시시도해주세요"+error);
+                }
+             });
+       } 
+        
+    }; 	
+	
 </script>
 
 </body>

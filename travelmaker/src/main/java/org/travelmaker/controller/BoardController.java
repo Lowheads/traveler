@@ -73,7 +73,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model,  HttpServletRequest request) {
 
-		cri.setAmount(12);
+		cri.setAmount(8);
 		model.addAttribute("list",boardservice.getList(cri));
 
 		HttpSession session = request.getSession();
@@ -206,7 +206,7 @@ public class BoardController {
 		}
 		
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
-		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
+		model.addAttribute("boarddt",boarddtservice.get(boardNo));
 		model.addAttribute("board",board);
 		
 		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
