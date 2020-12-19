@@ -1,43 +1,245 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../includes/jeheader.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../includes/headerN.html"%> 
 
-<div class="container">
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+<style>
+.modal-content{
+overflow-y: initial !important
+}
+.modal-body{
+height: 550px;
+overflow-y: auto;
+}
+#register_modal{
+	display: none;
+	width: 600px;
+	height: 600px;
+	padding: 10px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align : center;
+}
+#hiddenlist_modal, #schedulelist_modal{
+	display: none;
+	width: 450px;
+	height: 90%;
+	padding: 10px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align : center;
+}
+/* 닫는버튼 */
+#hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
+	width: 20%;
+	margin-right: 10%;
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	text-align : right;
+}
+/* toggle */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+input:checked+.slider {
+	background-color: #2196F3;
+}
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+.slider.round:before {
+	border-radius: 50%;
+}
 
-	<div>
-		<h1>테마 게시판</h1>
-	</div>
-	<!-- 모달여는버튼 -->
+#hiddenlist_open_btn{
+	font-size:15px;
+	margin-right:10%;
+	margin-bottom: 50px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+	float: right;
+}
 
-    <button id="schedulelist_open_btn" class="btn">내 일정 공유</button>
-    <button id="hiddenlist_open_btn" class="btn">공개/비공개 설정</button>
+#schedulelist_open_btn{
+	font-size:15px;
+	margin-bottom: 50px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
 
+}
+
+.ct_body{
+	padding: 30px;
+	background-image: url('/resources/img/boardimg.jpg');
+	height: 300px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	margin-bottom:50px; 
+}
+
+.boardContents{
+	width: 100%;
+	height: auto;
+	background-color: white;
+	display:inline-block;
+}
+
+.gallery {
+	width: 80%;
+	height: 100%;
+	display : flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin: 0 auto;
+}
+
+.card-contents{
+	width: 23%;
+	height: 300px;
+}
+
+.card-Img{
+	width: 100%;
+	height: 70%;
 	
-	<div>
-	<c:forEach items="${list }" var="board">
-	<div class="responsive" >
-	<div class ="row" id="new">
-		<div class="gallery">
-			<a target="_self" href='/board/get?boardNo=<c:out value="${board.boardNo }"/>
-			&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
-				<img src="/resources${board.boardImg}" >
-			</a>
-			<div class="desc">
-			<c:out value="${board.boardTitle }" /><br>
-			작성자 : <c:out value="${board.writer }"/><br>
-			조회수 : <c:out value="${board.VCnt }"/> 좋아요 수 : <c:out value="${board.pickCnt }"/><br>
-			작성일  : <c:out value="${board.WDate }"/>
+}
+
+.card-Img img{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	
+}
+
+.card-desc{
+	margin-top: 10px;
+	height: auto;
+	font-size: 15px;
+}
+
+.paging{
+	
+	bottom: 0;
+	width:100%;
+}
+
+.mainMsg{
+	margin-left: 5%;
+}
+
+.mainMsg b{
+	font-size:30px;
+	color:white;
+
+}
+</style>
+
+</head>
+
+<body>
+<div class="contents">
+
+	<!-- 상단  -->
+	<div class="ct_body">
+		<div class="mainMsg">
+		<b>일정 게시판</b>	
+		<br><br>	
+		<button id="schedulelist_open_btn" class="btn">내 일정 공유하기</button>
+		<!--mainMsg끝 -->
+		</div>
+		
+	<!--상단 끝 -->
+	</div>
+	
+    	<button id="hiddenlist_open_btn" class="btn" >공개/비공개 설정</button>
+
+		<!--게시판 리스트 출력 -->
+		<div class="boardContents">
+			<div class="gallery">
+				<c:forEach items="${list }" var="board">
+				<div class="card-contents">
+					<div class="card-Img">
+						<a href='/board/get?boardNo=<c:out value="${board.boardNo }"/>
+						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
+							<img src="/resources${board.boardImg}" >
+					</a>
+					</div>
+					<div class="card-desc">
+					<i class="fa fa-eye"></i>&nbsp<c:out value="${board.VCnt }"/>
+					<i class="fa fa-heart-o"></i>&nbsp<c:out value="${board.pickCnt }"/>
+					<div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${board.writer }"/></div>
+					<br>
+					<b><c:out value="${board.boardTitle }" /></b>
+					</div>
+			</div>
+			</c:forEach>
 			</div>
 		</div>
-		</div>
-	</div>
-	</c:forEach>			
-
+<!--contents끝 -->
 </div>
 		<form id='actionForm' action="/board/list" method='get'>
 			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 			<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 		</form>
-<ul class="w3-bar" style='text-align:center'>
+
+
+<!-- 페이징 -->
+<div class="paging">
+	<ul class="w3-bar" style='text-align:center'>
 	<c:if test="${pageMaker.prev }">
 		<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
 	</c:if>
@@ -55,6 +257,9 @@
 	</c:if>
 </ul>
 </div>
+
+
+
 
 <!-- Hiddenlist Modal -->
 <div id="hiddenlist_modal" class="modal-content">
@@ -92,6 +297,7 @@
 	<button class="modal_close_btn"> 확인 </button>
 
 </div>
+
 
 <!-- Schedulelist Modal -->
 	<div id="schedulelist_modal" class="modal-content">
@@ -260,3 +466,7 @@
 				modal('register_modal');
 			});
 </script>
+
+</body>
+
+</html>

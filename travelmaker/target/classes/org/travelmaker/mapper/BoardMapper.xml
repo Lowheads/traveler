@@ -32,7 +32,7 @@ select * from board where board_no>0
 	from board b, schedule s, member m
 	where b.sch_no=s.sch_no
 	and s.mem_no=m.mem_no
-	and m.mem_grade='관리자'
+	and m.mem_grade='MG002'
 ]]>
 </select>
 
@@ -53,6 +53,7 @@ select * from board where board_no>0
    select * from board where sch_no = #{schNo}
 </select>
 
+
 <select id="getListWithPaging" resultMap="BoardResult">
    <![CDATA[
   select *
@@ -65,7 +66,7 @@ select * from board where board_no>0
          schedule s, member m,board b
        where s.sch_status = 'BS001'
              and hidden='y'
-         and s.sch_no=b.sch_no and s.mem_no=m.mem_no and m.mem_grade='일반회원'
+         and s.sch_no=b.sch_no and s.mem_no=m.mem_no and m.mem_grade='MG001'
             order by
             board_no desc
             )a

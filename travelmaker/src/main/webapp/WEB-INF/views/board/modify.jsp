@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../includes/jeheader.jsp"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet" href="/resources/css/main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<div class="wrapper">
-	<div class="header_wrapper">
-		<div class="header">
-			<h3>게시글 수정</h3>
-		</div>
-	</div>
-	
-	<div class="contents">
-		<div class="ct_head">
-				<div class="ct_body">
-					<form role="form" id="modiremoveform" action="/board/modify" method="post" enctype="multipart/form-data">
+
+					<form role="form" id="modiremoveform" name="content_form" action="/board/modify" method="post" enctype="multipart/form-data">
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 						
@@ -23,11 +16,11 @@
 					
 						<div class="form-group">
 						<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' />
-							<label for="boardImg">대표 사진 수정</label>
+							<label for="boardImg">대표 사진 변경</label>
 								<input type="hidden" name="boardImg" value="${board.boardImg }">
- 								<div class="select_img">
+ 								<div class="select_img" > 
 									<img src="<c:out value="/resources${board.boardImg}"/>" id="modifyimage" data-image="${board.boardImg }" 
-									width="500px" height="300px" />
+									width="500px" height="300px"/>
 								</div> 
 						</div>
 						<script>
@@ -54,15 +47,25 @@
 							비공개 <input type="radio" name='hidden' value="n"><br>
 
                         <button id="Btn" type="submit" data-oper='modify' class="btn btn-default subbutton">수정</button>
-						<button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">삭제</button>
-						<button id="Btn" data-oper='list' class="btn btn-info subbutton" >취소</button>
+						<!-- <button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">삭제</button> -->
+						<!-- <button id="Btn" data-oper='list' class="btn" >취소</button> -->
 					</form>
-				</div>
-		</div>
-	</div>
-</div>
+
 
 <style>
+
+.orgImg {
+	width: 100px;
+	height: 100px;
+}
+
+.select_img{
+	text-align:center;
+}
+.select_img img {
+	margin: 20px 0;
+}
+
 #boardImg{
     width: 0.1px;
 	height: 0.1px;
@@ -70,8 +73,8 @@
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+	margin-left: 10px;
 }
-
 #boardImg + label {
     border: 1px solid #d9e1e8;
     background-color: #fff;
@@ -82,20 +85,31 @@
     font-size: 15px;
     box-shadow: 1px 2px 3px 0px #f2f2f2;
     outline: none;
+    text-align: center;
 }
-
 #boardImg:focus + label,
 #boardImg + label:hover {
     cursor: pointer;
 }
 
+.btn { 
+	font-size:15px;
+	color: black;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+}
+.btn:hover{
+   background-color: #203341;
+   color:white;
+}
+
 </style>
 
 <script type="text/javascript">
-
-
-
-
 $(document).ready(function(){
 	var formObj=$("#modiremoveform");
 	$('.subbutton').on("click",function(e){
@@ -105,15 +119,13 @@ $(document).ready(function(){
 		var operation = $(this).data("oper");
 		
 		if(operation==='modify'){
+			document.content_form.target="_parent";
 			formObj.attr("action","/board/modify");
 			
 		var fileCheck=$("#boardImg").val();
-
 		if(fileCheck==""){
 			$('.boardImg').prop("type","text");
-
 		}
-
 		}   
 		
 		else if(operation==='remove'){

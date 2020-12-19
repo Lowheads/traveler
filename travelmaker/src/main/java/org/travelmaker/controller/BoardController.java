@@ -150,10 +150,9 @@ public class BoardController {
 		board=boardservice.getbySchNo(board);
 		int schNo= board.getSchNo();
 		
-		//List<Schdt_PlaceVO> list=schdtservice.getplacetitle(schNo);
-
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
-			
+		
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		
 		model.addAttribute("board",board);
 		
@@ -207,7 +206,6 @@ public class BoardController {
 		}
 		
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
 		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
 		model.addAttribute("board",board);
 		
@@ -317,7 +315,8 @@ public class BoardController {
 		model.addAttribute("boarddt",boarddtservice.get(boardNo));
 		model.addAttribute("board",board);
 		
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		List<Map<String, Object>> fileList = boarddtservice.selectFileList(boardNo);
 		
 		model.addAttribute("file",fileList);

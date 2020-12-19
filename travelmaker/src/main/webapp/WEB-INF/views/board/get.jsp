@@ -1,11 +1,509 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../includes/jeheader.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link rel="stylesheet" href="/resources/css/main.css">
 
-<div class="modal_wrap" style="top: '50%'; left: '50%';">
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+
+<style>
+
+.contents{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+.ct_body{
+	padding: 30px;
+	/* background-image: url('/resources/imgUpload/2020/12/10/ff752342-efbc-4691-b3f5-7d6d5ef9c2fe_다운로드.jpg');  */
+	height: 270px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	background-position:center center;
+  	margin-bottom:10px;
+}
+
+.boardContents{
+	width: 100%;
+	height: auto;
+	background-color: white;
+	display:flex;
+}
+
+.gallery {
+	width: 100%;
+	height: 100%;
+	display : flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin: 0 auto;
+}
+
+.card-contents{
+	width: 250px;
+	height: 200px;
+	margin-bottom: 50px;
+}
+
+.card-img{
+	width: 100%;
+	height: 85%;
+	
+}
+
+  .card-img Img{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	
+} 
+
+.card-desc{
+	margin-top: 30px;
+	height: auto;
+	font-size: 15px;
+}
+
+.paging{
+	
+	bottom: 0;
+	width:100%;
+}
+
+.mainMsg{
+	margin-left: 5%;
+}
+
+.mainMsg a{
+	text-decoration:none;
+}
+
+.mainMsg b{
+	font-size:20px;
+	color:white;
+
+}
+
+.heart{
+	color:white;
+	float:right;
+}
+
+.left {
+     width: 50%;
+
+}
+
+.right {
+     width: 50%;
+
+}
+
+#modify_btn{
+	font-size:15px;
+	margin-bottom: 50px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+}
+
+#dtmodify_btn, #list_btn{
+	font-size:15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color:white;
+	border: 1px solid gray;
+	/* border-radius: 14px; */
+	padding: 5px 20px 5px 20px;
+	float: left;
+
+}
+
+#remove_btn{
+	font-size:15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color:white;
+	border: 1px solid gray;
+	/* border-radius: 14px; */
+	padding: 5px 20px 5px 20px;
+	float: right;
+
+}
+
+.modal-content{
+overflow-y: initial !important
+}
+
+.modal-body{
+height: 550px;
+overflow-y: auto;
+}
+
+
+/*모달 */
+#modify_modal{
+	display: none;
+	width: 600px;
+	height: 600px;
+	padding: 10px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align : center;
+}
+
+
+/*순규스타일 */
+
+.schedule_dt_content {
+   display: flex;
+   flex-wrap: nowrap;
+   width: 100%;
+   height: auto;
+   justify-content: space-between;
+}
+
+.schedule_dt_box {
+   width: 100%;
+}
+
+.schedule_dt{
+   width:100%;
+}
+.schdt_top{
+   height: 70px;
+   display: flex;
+}
+
+.dt_top_left{
+   width: 15%;
+   background-color: #203341;
+   color:white;
+    text-align: center;
+   line-height: 70px;    
+   border-right: 1px solid gray;
+}
+
+.dt_top_right{
+   border-top: 1px solid gray;
+   border-right: 1px solid gray;
+   padding-left: 10px;
+   width: 85%;
+   display: flex;
+   justify-content: space-between;
+}
+.daily_date{
+   margin-top: auto;
+   margin-bottom: auto;
+}
+.showMap{
+   margin-right: 15px;
+   border: 1px solid gray;
+   margin-top: auto;
+   margin-bottom: auto;
+   border-radius: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+.showMap:hover , #dtmodify_btn:hover, #list_btn:hover, #modify_btn:hover, #remove_btn:hover{
+   background-color: #203341;
+   color:white;
+}
+.schdt_bottom{
+   height: 100px;
+   display:flex;
+}
+.dt_bottom_left{
+   width: 15%;
+   text-align: center;
+   border-top: 1px solid gray;
+   border-left: 1px solid gray;
+   border-right: 1px solid gray;
+   padding-top: 40px;
+}
+
+.daily_count{
+   font-size:14px;   
+   margin-left:auto;
+   margin-right:auto;
+   color:white;
+   background-color:#203341;
+   border-radius: 50%;
+   width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.dt_bottom_right{
+   padding-left: 10px;
+   width: 85%;
+   line-height: 100px;  
+   border-right: 1px solid gray;
+   border-top: 1px solid gray;
+}
+.dt_bottom_right img{
+   width: 75px;
+   height: 75px;
+}   
+.dt_box_footer{
+   display:flex;
+   background-color: #e6e6e6;
+   border:1px solid gray;
+}
+.dt_footer_left{
+   width: 15%;
+   text-align: center;
+}
+
+.dt_footer_right{
+   width: 85%;
+}
+
+
+/*map*/
+/* modal */
+.modal_wrap {
+   display: none;
+   width: 70%;
+   position: fixed;
+   height: 500px;
+   top: 50%;
+   left: 15%;
+   margin: -250px 0 0 0;
+   background: #eee;
+   z-index: 2;
+}
+
+.modal_close {
+   width: 26px;
+   height: 26px;
+   position: absolute;
+   top: -30px;
+   right: 0;
+}
+
+.modal_close_btn{
+	width: 20%;
+	margin-right: 10%;
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	text-align : right;
+
+}
+.modal_close>a {
+   display: block;
+   width: 100%;
+   height: 100%;
+   background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+   text-indent: -9999px;
+}
+
+
+.black_bg {
+   display: none;
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgba(0, 0, 0, 0.5);
+   top: 0;
+   left: 0;
+   z-index: 1;
+}
+
+/* 지도관련 css */
+
+#map {
+   width: 100%;
+   height: 100%;
+}
+.map_wrap, .map_wrap * {
+   margin: 0;
+   padding: 0;
+   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+   font-size: 12px;
+}
+
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+   color: #000;
+   text-decoration: none;
+}
+
+.map_wrap {
+   position: relative;
+   width: 100%;
+   height: 500px;
+}
+
+#menu_wrap {
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   width: 250px;
+   margin: 10px 0 30px 10px;
+   padding: 5px;
+   overflow-y: auto;
+   background: rgba(255, 255, 255, 0.7);
+   z-index: 1;
+   font-size: 12px;
+   border-radius: 10px;
+}
+
+.bg_white {
+   background: #fff;
+}
+
+#menu_wrap hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 2px solid #5F5F5F;
+   margin: 3px 0;
+}
+
+#menu_wrap .option p {
+   margin: 10px 0;
+}
+
+#menu_wrap .option button {
+   margin-left: 5px;
+}
+
+#placesList {
+   padding-left: 0px;
+}
+
+#placesList li {
+   list-style: none;
+}
+
+#placesList .item {
+   position: relative;
+   border-bottom: 1px solid #888;
+   overflow: hidden;
+   cursor: pointer;
+   min-height: 65px;
+}
+
+#placesList .item span {
+   display: block;
+   margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+#placesList .item .info {
+   padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+   color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+   padding-left: 26px;
+}
+
+#placesList .info .tel {
+   color: #009900;
+}
+
+#placesList .item .markerbg {
+   float: left;
+   position: absolute;
+   width: 36px;
+   height: 37px;
+   margin: 10px 0 0 10px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+      no-repeat;
+}
+
+#placesList .item .marker_1 {
+   background-position: 0 -10px;
+}
+
+#placesList .item .marker_2 {
+   background-position: 0 -56px;
+}
+
+#placesList .item .marker_3 {
+   background-position: 0 -102px
+}
+
+#placesList .item .marker_4 {
+   background-position: 0 -148px;
+}
+
+#placesList .item .marker_5 {
+   background-position: 0 -194px;
+}
+
+#placesList .item .marker_6 {
+   background-position: 0 -240px;
+}
+
+#placesList .item .marker_7 {
+   background-position: 0 -286px;
+}
+
+#placesList .item .marker_8 {
+   background-position: 0 -332px;
+}
+
+#placesList .item .marker_9 {
+   background-position: 0 -378px;
+}
+
+#placesList .item .marker_10 {
+   background-position: 0 -424px;
+}
+
+#placesList .item .marker_11 {
+   background-position: 0 -470px;
+}
+
+#placesList .item .marker_12 {
+   background-position: 0 -516px;
+}
+
+#placesList .item .marker_13 {
+   background-position: 0 -562px;
+}
+
+#placesList .item .marker_14 {
+   background-position: 0 -608px;
+}
+
+#placesList .item .marker_15 {
+   background-position: 0 -654px;
+}
+</style>
+
+
+</head>
+   <!-- 모달 클릭시 뒷 배경 -->
+   <div class="black_bg"></div>
+<!--지도 모달-->
+ <div class="modal_wrap" style="top: '50%'; left: '50%';">
     <div class="modal_close"><a href="#">close</a></div>
-    <!-- Map -->
+    
     <div id="map" style="position:relative;overflow:hidden;"></div>
         <div id="menu_wrap" class="bg_white">
         <div class="option">
@@ -14,359 +512,170 @@
          <div id="pagination"></div>
     </div>
     </div>
-    
-</div>
+</div> 
 
-<div class="wrapper">
- 	
- <div class="header_wrapper">
- 	<div class="header">
-	<h3> ${board.boardTitle} </h3>
+<!--대표사진 수정 모달 -->
+	<div id="modify_modal" class="modal-content">
+		<div class="modal-body" style="overflow-x:hidden; overflow-y:hidden">
+		<iframe name="modify" title="modify" width=100% height=100% frameBorder="0" scrolling="no">
+		</iframe>
+		</div>
+		<button class="modal_close_btn"> 취소 </button>
 	</div>
-</div>
-	<div class="contents">
 
-		<div class="ct_body">
-		
-		<div class="heart" style="float:right;">
+
+
+<body>
+<div class="contents">
+
+
+<!--상단 -->
+<c:set var="coverimg" value="${fn:replace(board.boardImg, '\\\\', '/')}" />
+	<div class="ct_body" style="background-image: url(${coverimg});">
+		<div class="mainMsg">
+		<b>${board.boardTitle}</b>	
+		<br>
+		<br>
+		<c:choose>
+		  <c:when test="${memNo eq schedule.memNo}">
+		 <a href='/board/modify?boardNo=<c:out value="${board.boardNo}"/>&pageNum=<c:out value="${cri.pageNum}"/>&amount=<c:out value="${cri.amount}"/>' 
+		 id="modify_btn" target='modify' class='modify_open_btn'>대표사진 변경</a>
+		 </c:when>
+		 </c:choose>
+		 
+		<!--mainMsg끝 -->
+		</div>
+		<div class="heart">
 			<c:choose>
 				<c:when test="${pick eq 'picked' }"> 
-						찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i>
+						<b>찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
 				</c:when>
 
 				<c:when test="${pick eq 'unpicked'}">
-						찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i>
+						<b>찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
 				</c:when>
 			</c:choose>
 		</div>	
-		
-		<div class="form-group">
-		<table class="board">
-		<thead>
-			<tr>
-				<th>회원번호</th>
-				<th>지역</th>
-				<th>기간</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>${schedule.memNo }</td>
-				<td>${schedule.schRegion }</td>
-				<td>${schedule.fromDate }~ ${schedule.toDate }</td>
-			</tr>
-		</tbody>
-	</table>
+	
+	<!--상단 끝 -->
 	</div>
-	
-<%-- 	<div class="form-group">
-	<div>일정 : ${schedule.schTitle }</div>
-	<table class="board">
-		<thead>
-			<tr>
-				<th>날짜</th>
-				<th>출발지</th>
-				<th>도착지</th>
-				<th>거리</th>
-				<th>이동시간</th>
-				<th>이동수단</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${schdtplace}" var="schdtplace">
-				<tr>
-					<td><c:out value="${schdtplace.schDate }" /></td>
-					<td><c:out value="${schdtplace.plcTitle }" /></td>
-					<td><c:out value="${schdtplace.plcTitle1 }" /></td>
-					<td><c:out value="${schdtplace.distance }" /></td>
-					<td><c:out value="${schdtplace.duration }" /></td>
-					<td><c:out value="${schdtplace.transit}" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-
-	</table>
-	</div> --%>
-	
- 			<!-- 상세일정 출력 -->
- 			<div class="contentAll">
-				<c:set var="count" value="0"></c:set>
-			<c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
-				<c:if test="${Schdt[status.index].SCH_DATE ne Schdt[status.index-1].SCH_DATE  }">
-				<div class="dayDt">
-					<c:set var="count" value="${count+1 }"/>
-						<div class="leftDate">
-						<img alt="" src="/resources/img/pngwave.png" width="50px" height="50px;">
-						<br>
-						<h4>${ count}일차</h4>
-						<p><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></p>
-						<button class="viewMap" type="button" onclick="showMap(${count})">지도에서 보기</button>
-						</div>
-					<div class="dayDate">
-						<c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">
-									
-							<c:if test="${schdt.SCH_DATE eq dt.SCH_DATE }">
-								<div class="dailyscheduleDT">
-								<c:if test="${schdt.SCH_DATE eq dt.SCH_DATE}">
-									<%-- <c:out value="${dt.FROM_PLC }" /> --%>
-									<c:choose>
-									<c:when test="${vs.index % 2.0 != 1 }">
-									<a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="blank">
-									<img class="plcImg plcImg_${count}" alt="" src="${dt.FROMIMG }" height="100px;" width="100px;" data-plc_no="${dt.FROM_PLC}" data-plc_dt="${dt.FROMADT}" data-lat="${dt.FROMLAT}" data-lng="${dt.FROMLNG}" data-title="${dt.FROMTITLE}">
-									<div class="overlay">
-  									  <div class="text"><c:out value="${dt.FROMTITLE }"/></div>
- 									 </div>
-									</a>
-								<%-- 	data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" data-lng="${place.lng }" data-title="${place.plcTitle }" --%>
-								<div class="directionAll">
-								<c:choose>
-								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction"><div class="dango" style="width: 100%; height: 10%;">
-								<p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
-								</c:when>
-								<c:when test="${schdt.SCH_DATE ne Schdt[vs.index-1].SCH_DATE}"><div class="direction"></div>
-								</c:when>
-								</c:choose>
-								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%;">
-								<c:choose>
-								<c:when test="${dt.FROMCATE eq 'CT1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'PO3' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'AT4' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'AD5' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'FD6' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/272/272868.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'CE7' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/1205/1205743.svg" style="transform:rotate(-45deg);">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'HP8' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'ET1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
-								</c:when>
-								
-								</c:choose>								
-								</div></div>
-								<div class="direction"><div class="dango" style="width: 100%; height: 10%;"><p style="font-size: 12px;"><c:out value="${dt.DURATION }" />시간</p></div></div>
-								</div>
-								<div style="height: 100px; width: 100px"></div>
-									</c:when>
-									<c:when test="${vs.index % 2.0 == 1 }">
-									<div style="height: 100px; width: 100px"></div>
-								<div class="directionAll">
-									<c:choose>
-								<c:when test="${schdt.SCH_DATE eq Schdt[vs.index-1].SCH_DATE}"><div class="direction">
-								<div class="dango" style="width: 100%; height: 10%;">
-								<p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p>
-								</div></div>
-								</c:when>
-								<c:when test="${schdt.SCH_DATE ne Schdt[vs.index-1].SCH_DATE}"><div class="direction"></div>
-								</c:when>
-								</c:choose>
-								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%">
-								<c:choose>
-								<c:when test="${dt.FROMCATE eq 'CT1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'PO3' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'AT4' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'AD5' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'FD6' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/272/272868.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'CE7' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/2578/2578645.svg" style="transform:rotate(-45deg)">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'HP8' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
-								</c:when>
-								<c:when test="${dt.FROMCATE eq 'ET1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
-								</c:when>
-								
-								</c:choose>
-								</div></div>
-								<div class="direction"><div class="dango" style="width: 100%; height: 10%; "><p style="font-size: 12px;"><c:out value="${dt.DURATION }" />시간</p></div></div>
-								</div>
-								<a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="blank">
-									<img class="plcImg plcImg_${count}" alt="" src="${dt.FROMIMG }" height="100px;" width="100px;" data-plc_no="${dt.FROM_PLC}" data-plc_dt="${dt.FROMADT}" data-lat="${dt.FROMLAT}" data-lng="${dt.FROMLNG}" data-title="${dt.FROMTITLE}">
-									<div class="overlay">
-  									  <div class="text"><c:out value="${dt.FROMTITLE }"/></div>
- 									 </div>
-									</a>
-									</c:when>
-									</c:choose>
-									<%-- 나중에 쓸거 
-									<c:out value="${dt.DISTANCE }" />
-									<c:out value="${dt.DURATION }" />
-									<c:out value="${dt.TRANSIT }" /> --%>
-									</c:if>
-								</div>
-								
-								<c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-								<div class="dailyscheduleDT">
-								<c:choose>
-									<c:when test="${vs.index % 2.0 == 1 }">
-									<a href="http://place.map.kakao.com/${dt.TO_PLC }" target="blank">
-									<img class="plcImg plcImg_${count}" alt="" src="${dt.TOIMG }" height="100px;" width="100px;" data-plc_no="${dt.TO_PLC}" data-plc_dt="${dt.TOADT}" data-lat="${dt.TOLAT}" data-lng="${dt.TOLNG}" data-title="${dt.TOTITLE}">
-									<div class="overlay">
-  									  <div class="text"><c:out value="${dt.TOTITLE }"/></div>
- 									 </div>
-									</a>
-								<div class="directionAll">
-								<div class="direction"><div class="dango" style="width: 100%; height: 10%; "><p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
-								<div class="direction"><div class="dango" style="border-radius:50%; width: 100%; height: 100%">
-								<c:choose>
-								<c:when test="${dt.TOCATE eq 'CT1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'PO3' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'AT4' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'AD5' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'FD6' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/272/272868.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'CE7' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/2578/2578645.svg" style="transform:rotate(-45deg)">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'HP8' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'ET1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
-								</c:when>
-								</c:choose>
-								</div></div>
-								<div class="direction"></div>
-								</div>
-								<div style="height: 100px; width: 100px"></div>
-									</c:when>
-									<c:when test="${vs.index % 2.0 != 1 }">
-									<div style="height: 100px; width: 100px"></div>	
-								<div class="directionAll">
-								<div class="direction"><div class="dango" style="width: 100%; height: 10%;"><p style="font-size: 12px;"><c:out value="${dt.DISTANCE }" />km</p></div></div>
-								<div class="direction"><div class="dango" style="border-radius:50%;  width: 100%; height: 100%">
-									<c:choose>
-								<c:when test="${dt.TOCATE eq 'CT1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236981.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'PO3' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236956.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'AT4' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236986.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'AD5' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/236/236980.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'FD6' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/272/272868.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'CE7' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/2578/2578645.svg" style="transform:rotate(-45deg)">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'HP8' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/3209/3209074.svg">
-								</c:when>
-								<c:when test="${dt.TOCATE eq 'ET1' }">
-								<img alt="" src="https://www.flaticon.com/svg/static/icons/svg/237/237004.svg">
-								</c:when>
-								</c:choose>
-								</div></div>
-								<div class="direction"></div>
-								</div>		
-								<a href="http://place.map.kakao.com/${dt.TO_PLC }" target="blank">
-									<img class="plcImg plcImg_${count}" alt="" src="${dt.TOIMG }" height="100px;" width="100px;" data-plc_no="${dt.TO_PLC}" data-plc_dt="${dt.TOADT}" data-lat="${dt.TOLAT}" data-lng="${dt.TOLNG}" data-title="${dt.TOTITLE}">
-									<div class="overlay">
-  									  <div class="text"><c:out value="${dt.TOTITLE }"/></div>
- 									 </div>
-									</a>
-									</c:when>
-									</c:choose>
-									<%-- <c:out value="${dt.TO_PLC }" /> --%>
-									<%-- <c:out value="${dt.DURATION }" /> --%>
-									</div>
-									</c:if>
-							</c:if>
-						</c:forEach> 
-					</div>
-					<br>
-			</div>
-				</c:if>
-			</c:forEach>
-		</div>
-		<!-- 상세일정 끝 -->	
-	
-	<div>게시글</div>
-	<div class="form-group">
-	<table class="board">
-		<thead>
-			<tr>
-				<th>게시물번호</th>
-				<th>게시물내용</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${boarddt}" var="boarddt"> <!-- 리스트에서 boarddt 객체 하나로 변경하기 -->
-				<tr>
-					<td><c:out value="${boarddt.boardNo }" /></td>
-<%-- 					<td><img class="orgImg"
-						src="<c:out value='${boarddt.boarddtImg}'/>" /></td> --%>
-					<td><c:out value="${boarddt.boardCon }" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	</div>
-	
-	<div class="form-group">
-	<span>사진 목록</span>
-	
-	<div style="border: 1px solid #dbdbdb;">
-		
-		
-		
-		<div class="flex-container">
-		<c:forEach var="file" items="${file}">
-		<div>
-			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
-			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>" width="200" height="200"/><br>${file.FILE_CONTENT}<br>
-		</div>
-		</c:forEach>
-		</div>
-	</div>
-</div>
-
-	<c:choose>
+		<c:choose>
   <c:when test="${memNo eq schedule.memNo}">
-    <button id="Btn" data-oper='modify' class="btn btn-default">게시글수정</button>
-    <button id="Btn" data-oper='dtmodify' class="btn btn-default">사진목록수정</button>
+    <button id="dtmodify_btn" data-oper='dtmodify' class="btn btn-default">사진목록수정</button>
   </c:when>
 </c:choose>
 	
-	<button id="Btn" data-oper='list' class="btn btn-info">목록으로</button>
+	<button id="list_btn" data-oper='list' class="btn btn-info">목록으로</button>
+	
+	<form id='actionForm' action="/board/remove" method='post'>
+	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+	<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+	<input type="hidden" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
+	<button id="remove_btn" type="submit" class="btn btn-danger subbutton">삭제</button>
+	</form>
+		
+
+	<!--사진리스트 출력 -->
+	<div class="boardContents">
+		<!--좌측 사진갤러리 -->
+		<div class="left">
+	
+	 	<div class="gallery">
+		<c:forEach var="file" items="${file}">
+		<div class="card-contents">
+		<div class="card-img">
+			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
+		</div>
+		<div class="card-desc">
+			${file.FILE_CONTENT}
+		</div>
+		</div>
+		</c:forEach>
+	</div>
+	</div>
+	
+	<div class="right">
+
+	        <div class="schedule_dt_box">
+            <c:set var="count" value="0"></c:set>
+            <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
+            <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[status.index-1].SCH_DATE  }">
+            <c:set var="count" value="${count+1 }"/>
+            <div class="schedule_dt">
+               <div class="schdt_top">
+                  <div class=dt_top_left>DAY<c:out value="${count }"/></div>
+                  <div class=dt_top_right>
+                  <div class="daily_date"><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /></div>
+                   <div class="showMap" onclick="showMap(${count})">지도에서보기</div></div>
+               </div>
+                           <c:set var="dtCnt" value="0"/>
+               
+                  <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">
+                           <!-- 처음~막전 -->
+                           <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE }">
+                           
+                              <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE}">
+                              <c:set var="dtCnt" value="${dtCnt+1 }"/>
+                              <div class="schdt_bottom">
+                                 <div class="dt_bottom_left">
+                                    <div class="daily_count">${dtCnt }</div>
+                                 </div>
+                                 <div class="dt_bottom_right">
+                                 <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
+                                    <img class="plcImg plcImg_${count}" data-plc_no="${dt.FROM_PLC}" data-plc_dt="${dt.FROMADT}" data-lat="${dt.FROMLAT}" data-lng="${dt.FROMLNG}" data-title="${dt.FROMTITLE}" alt="place" src='<c:out value="${dt.FROMIMG }"/>'>
+                                    </a>
+                                    <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
+                                    <c:out value="${dt.FROMTITLE }"/>
+                                 </a>
+                                 <a href="http://place.map.kakao.com/${dt.TO_PLC }" style="float:right; margin-right: 30px;" target="_blank">
+                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                    </a>
+                                 </div>
+                              </div>
+
+                              <!-- distance -->
+                              <div class="dt_box_footer">
+                                 <div class="dt_footer_left"></div>
+                                 <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE } km</div>
+                              </div>
+                           </c:if>
+                           
+                           <!-- 마지막 -->
+                           <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
+                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                                 <div class="dt_bottom_left">
+                                    <div class="daily_count">${dtCnt+1}</div>
+                                 </div>
+                                 <div class="dt_bottom_right">
+                                 <a href="http://place.map.kakao.com/${dt.FROM_PLC }" target="_blank">
+                                    <img class="plcImg plcImg_${count}" data-plc_no="${dt.TO_PLC}" data-plc_dt="${dt.TOADT}" data-lat="${dt.TOLAT}" data-lng="${dt.TOLNG}" data-title="${dt.TOTITLE}" alt="place" src='<c:out value="${dt.TOIMG }"/>'>
+                                    </a>
+                                    <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="margin-left: 10px;"  target="_blank">
+                                    <c:out value="${dt.TOTITLE }"/>
+                                    </a>
+                                    <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="float:right; margin-right: 30px;" target="_blank">
+                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                    </a>
+                                 </div>
+                              </div>
+                           </c:if>
+                           </c:if>
+                        </c:forEach>
+               </div>
+               </c:if>
+            </c:forEach>
+         </div>
+	
+	</div>
+	<!--contents 끝 -->
+</div>
+
+<!--contents 끝 -->
+</div>
+
 
 	<form name='operForm' id='operForm' action="/board/modify" method="get">
 		<input type='hidden' id='boardNo' name='boardNo' value='<c:out value="${board.boardNo }"/>'> 
@@ -376,9 +685,7 @@
 	<form name='fileForm' action="/board/fileDown" method="get">
 		<input type='hidden' id="FILE_NO" name='FILE_NO' value="">
 	</form>
-</div>
-</div>
-</div>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -386,9 +693,9 @@ $(document).ready(function(){
 
 	var operForm = $("#operForm");
 	
-	$("button[data-oper='modify']").on("click",function(e){
+/* 	$("button[data-oper='modify']").on("click",function(e){
 		operForm.attr("action","/board/modify").submit();
-	});
+	}); */
 	
 	$("button[data-oper='dtmodify']").on("click",function(e){
 		operForm.attr("action","/board/dtmodify").submit();
@@ -450,6 +757,12 @@ function likeToggle(heart){
    } 
     
 }; 
+
+//modify모달 띄우기
+	$('.modify_open_btn').on("click", function() {
+				modal('modify_modal');
+			});
+
 
 
 function modal(id) {
@@ -632,4 +945,7 @@ $(".black_bg").on("click",function(){
 		
 	});
 </script>
+
+</body>
+</html>
 	

@@ -79,13 +79,20 @@
 #boardImg + label:hover {
     cursor: pointer;
 }
+
 .btn { 
-	width: 130px;
-	height: 35px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
+	font-size:15px;
+	color: black;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+}
+.btn:hover{
+   background-color: #203341;
+   color:white;
 }
 </style>
 <script type="text/javascript">

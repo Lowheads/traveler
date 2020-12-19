@@ -227,10 +227,144 @@ a{text-decoration: none}
 	font-size: 15px;
 }
 
+/* selectbox */
+
+
+/* ===== Select Box ===== */
+.sel {
+  font-size: 10px;
+  display: inline-block;
+  margin: 1em 1em;
+  width: 230px;
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+}
+
+.sel::before {
+  position: absolute;
+  content: '\f063';
+  font-family: 'FontAwesome';
+  font-size: 2em;
+  color: black;
+  right: 20px;
+  top: calc(50% - 0.5em);
+}
+
+.sel.active::before {
+  transform: rotateX(-180deg);
+}
+
+.sel__placeholder {
+  display: block;
+  font-family: 'Quicksand';
+  font-size: 20px;
+  color: #838e95;
+  padding: 0.2em 0.5em;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  visibility: visible;
+}
+
+.sel.active .sel__placeholder {
+  visibility: hidden;
+}
+
+.sel__placeholder::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2em 0.5em;
+  content: attr(data-placeholder);
+  visibility: hidden;
+}
+
+.sel.active .sel__placeholder::before {
+  visibility: visible;
+}
+
+.sel__box {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: -4px;
+  display: none;
+  list-style-type: none;
+  text-align: left;
+  font-size: 1em;
+  background-color: #FFF;
+  width: calc(100% + 8px);
+  box-sizing: border-box;
+}
+
+.sel.active .sel__box {
+  display: block;
+  animation: fadeInUp 500ms;
+}
+
+.sel__box__options {
+  display: list-item;
+  font-family: 'Quicksand';
+  font-size: 1.5em;
+  color: #838e95;
+  padding: 0.5em 1em;
+  user-select: none;
+}
+
+.sel__box__options::after {
+  content: '\f00c';
+  font-family: 'FontAwesome';
+  font-size: 0.5em;
+  margin-left: 5px;
+  display: none;
+}
+
+.sel__box__options.selected::after {
+  display: inline;
+}
+
+.sel__box__options:hover {
+  background-color: #ebedef;
+}
+
+/* ----- Select Box Black Panther ----- */
+.sel {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+}
+
+.sel--black-panther {
+  z-index: 3;
+}
+
+
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
 
 </style>
-
-
 
 
 <body>
@@ -239,19 +373,26 @@ a{text-decoration: none}
 		<!-- 상단 -->
 		<div class="ct_body">
 			<div id="mainNav">
-				<div class="navContent">
-					<select name="region" class="select-box">
-						<c:forEach items="${list }" var="region">
-							<option class="option-box"
-								data-region-no="<c:out value='${region.regionNo }' />">
-								<c:out value="${region.si }" />
-							</option>
-						</c:forEach>
-					</select>
+				<div class="navContent"  style="text-align: center;">
+
+					<div class="sel sel--black-panther">
+						<select name="region" id="region" >
+							<option data-region-no="1" value="" disabled>지역</option>
+							<option class="option-box" data-region-no="1">제주시</option>
+							<option class="option-box" data-region-no="2">서귀포시</option>
+							<option class="option-box" >속초시</option>
+							<option class="option-box">여수시</option>
+							<option class="option-box" >부산광역시</option>
+							<option class="option-box">광주광역시</option>
+						</select>
+					</div>
+
 				</div>
 				<div class="navContent">
-					<input type="text" name="daterange" class="data-range-picker" />
+					<input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; />
 				</div>
+				
+				
 				<div class="navContent" id="goNext">
 					<i class="material-icons w3-large">search</i>
 				</div>
@@ -304,9 +445,6 @@ a{text-decoration: none}
 								<div class="card-Title">
 									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
 									<c:out value="${adminlist.boardTitle }" /></a></b>
-									<%-- 			작성자 : <c:out value="${adminlist.writer }"/><br>
-			조회수 : <c:out value="${adminlist.VCnt }"/> 좋아요 수 : <c:out value="${adminlist.pickCnt }"/><br>
-			작성일  : <c:out value="${adminlist.WDate }"/> --%>
 								</div>
 						</div>
 					</c:forEach>
@@ -387,8 +525,7 @@ a{text-decoration: none}
 
 	}
 	
-	
-	<!--테스트 스크립트 -->
+
 	
     function modal(id) {
         
@@ -740,5 +877,53 @@ a{text-decoration: none}
      }
      
   }; 
+  
+  /* ===== Logic for creating fake Select Boxes ===== */
+  $('.sel').each(function() {
+    $(this).children('select').css('display', 'none');
+    
+    var $current = $(this);
+    
+    $(this).find('option').each(function(i) {
+      if (i == 0) {
+        $current.prepend($('<div>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__box')
+        }));
+        
+        var placeholder = $(this).text();
+        $current.prepend($('<span>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+          text: placeholder,
+          'data-placeholder': placeholder
+        }));
+        
+        return;
+      }
+      
+      $current.children('div').append($('<span>', {
+        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+        text: $(this).text()
+      }));
+    });
+  });
+
+  // Toggling the `.active` state on the `.sel`.
+  $('.sel').click(function() {
+    $(this).toggleClass('active');
+  });
+
+  // Toggling the `.selected` state on the options.
+  $('.sel__box__options').click(function() {
+    var txt = $(this).text();
+    var index = $(this).index();
+    
+    $(this).siblings('.sel__box__options').removeClass('selected');
+    $(this).addClass('selected');
+    
+    var $currentSel = $(this).closest('.sel');
+    $currentSel.children('.sel__placeholder').text(txt);
+    $currentSel.children('select').prop('selectedIndex', index + 1);
+  });
+
 
 </script>
