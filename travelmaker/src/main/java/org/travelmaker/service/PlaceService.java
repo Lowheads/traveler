@@ -33,4 +33,6 @@ public interface PlaceService {
 	public int getSearchResultTotalCnt(String title,int regionNo);
 	
 	public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
+	
+	public List<PlaceVO> getPlaceByWeather(int regionNo);
 }

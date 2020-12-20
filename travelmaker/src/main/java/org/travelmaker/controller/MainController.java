@@ -1,6 +1,7 @@
 package org.travelmaker.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
 import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.service.PlaceService;
@@ -49,13 +52,29 @@ public class MainController {
 
 		Map<Integer, List<PlaceDTO>> theme = new HashMap<Integer, List<PlaceDTO>>();
 		
-		for(int i =1; i<7;i++) {
+		for(int i =1; i<6;i++) {
 			
 			theme.put(i-1, placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
 		}
 		
 		model.addAttribute("themeList", theme);
 
+		List<PlaceVO> rainyDay=new ArrayList<PlaceVO>();
+		//만약 비가 온다면
+		if(false) {
+			rainyDay =  placeService.getPlaceByWeather(schDTO.getSchRegion());
+		}
+		System.out.println(rainyDay.toString());
+		
+		model.addAttribute("rainydayRec", rainyDay);
+	
+	}
+	
+	@GetMapping(value ="/getWeatherRec/{regionNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<PlaceVO>> getWeatherRec(@PathVariable("regionNo") int RegionNo){
+		
+		System.out.println("이야아이");
+		return new ResponseEntity<>(placeService.getPlaceByWeather(RegionNo), HttpStatus.OK);
 	}
 	
 	@GetMapping(value ="/getAttachment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

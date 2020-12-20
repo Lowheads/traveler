@@ -2,11 +2,16 @@ package org.travelmaker.mapper;
 
 import java.util.List;
 
+import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.StatisticVO;
 
 public interface MainMapper {
-
-	public List<StatisticVO> getDailyStatistic();
 	
-	public List<StatisticVO> getMonthlyStatistic();
+	public List<BoardVO> getPopularPostsByView();
+	
+	public List<BoardVO> getPopularPostsByPick();
+	
+	public List<StatisticVO> getDaily();
+	
+	public List<StatisticVO> getMonthly();
 }

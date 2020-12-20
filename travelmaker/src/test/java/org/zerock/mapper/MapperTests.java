@@ -7,14 +7,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.MemberVO;
 import org.travelmaker.domain.PlaceVO;
-import org.travelmaker.domain.ThemeVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
+import org.travelmaker.mapper.MainMapper;
+import org.travelmaker.mapper.PlaceMapper;
 import org.travelmaker.mapper.ThemeAttachMapper;
 import org.travelmaker.mapper.ThemeMapper;
-import java.util.Date;
-import java.util.HashMap;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -35,6 +37,13 @@ public class MapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private ThemeAttachMapper mapper4;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MainMapper mainMapper;
+
+	@Setter(onMethod_ = @Autowired)
+	private PlaceMapper placeMapper;
+	
 
 //	@Test
 	public void dateTest() {
@@ -269,7 +278,7 @@ public class MapperTests {
 //		
 		
 	}
-	@Test
+	//@Test
 	public void mappertest() {
 		
 		/*
@@ -286,6 +295,65 @@ public class MapperTests {
 		List<PlaceVO> list = mapper3.getPlaceList(keyword, pageNum);
 		
 		list.forEach(theme->log.info(theme.toString()));
+		
+	}
+	
+	//@Test
+	public void mainMapperTest() {
+		
+		/*
+		 * List<BoardVO> list = mainMapper.newestPost();
+		 * 
+		 * list.forEach(post->log.info(post.toString()));
+		 */
+		
+		
+		/*
+		 * List<StatisticVO> list = mainMapper.getDaily();
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+	}
+	
+	//@Test
+	public void placeMapperTest() {
+		
+		int regionNo = 1;
+	//	List<PlaceVO> list = placeMapper.getPlaceByWeather();
+		List<PlaceVO> list = placeMapper.getPlaceByWeather(regionNo);
+		
+		list.forEach(theme->log.info(theme.toString()));
+	}
+	
+	@Test
+	public void getMonthly() {
+		
+		/*
+		 * List<StatisticVO> list = mainMapper.getMonthly();
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		
+		
+		 List<BoardVO> list = mainMapper.getPopularPostsByPick();
+		  list.forEach(theme->log.info(theme.toString()));
+		  
+		  
+		 List<BoardVO> list2 = mainMapper.getPopularPostsByView();
+		 list2.forEach(theme->log.info(theme.toString()));
+		 
+	}
+	
+	//@Test
+	public void memberTest() {
+		
+		/*
+		 * Criteria cri = new Criteria(); cri.setType("닉네임"); cri.setKeyword("아침");
+		 * List<MemberVO> list= mapper.getUserList(null);
+		 * 
+		 * //List<MemberVO> list= mapper.getWithdrawUserList(cri);
+		 * 
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		
 		
 	}
 	

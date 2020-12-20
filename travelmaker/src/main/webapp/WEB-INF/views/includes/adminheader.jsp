@@ -6,31 +6,10 @@
 
 <style>
 
-/* .uploadResult{
-	width:100%;
-	background-color:gray;
+.table{
+	margin-top:10px;
+	font-size: small;
 }
- 
- 
-.uploadResult ul{
-	display:flex;
-	flex-flow:row;
-	justify-content:center;
-	align-items:center;
-}
-
-.uploadResult ul li{
-	list-style:none;
-	padding:10px;
-	align-content:center;
-	text-align:center;
-	
-}
-
-.uploadResult ul li span{
-	color:white;
-}
-*/
 .bigPictureWrapper{
 	position:absolute;
 	display:none;
@@ -38,27 +17,55 @@
 	align-items:center;
 	top:0%;
 	width:100%;
-	height:100%;
+	height:100vh;
 	background-color:gray;
 	z-index:100;
-	background:rgba(255,255,255,0.5);
+	background:rgba(255,255,255,0.5); 
 }
 
 .bigPicture{
-	
-	position:relative;
-	display:flex;
-	justify-content:center;
-	align-items:center;
+	width:100%;
+	height:100%;
+	position:absolute;
+	display:flex; 
+ 	justify-content:center;
+	align-items:center; 
 	
 }
 
-.bigPicture img{
-	
-	width:600px;	
+
+
+#pagination li{
+	 list-style:none;
+	 list-style-type:none;
+	     padding: 0 0 0 0;
+    border : 0;
+    float: left;
+}
+
+li{
+	 list-style-type:none;
+    border : 0;
 }
 
 
+.block{
+	background-color: white;
+	width:500px;
+	height:400px;
+	border: 1px solid RGB(234,234,234);
+	 border-radius: 10px;
+	 box-shadow:3px 3px 10px RGB(189,189,189);
+	 display:inline-block;
+	 margin-left:10px;
+	
+}
+
+.uploadResult ul{
+	display:inline;
+	padding : 0px;
+	padding-bottom:10px;
+} 
 
 
 </style>
@@ -96,7 +103,11 @@
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
+	
+		<div class='bigPictureWrapper not_scroll cont'>
+			<div class='bigPicture not_scroll cont'></div>
+		</div>
+		
 		<!-- Sidebar -->
 		<ul
 			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -104,12 +115,12 @@
 
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="/admin/main">
+				href="/main/index">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
 				<div class="sidebar-brand-text mx-3">
-					여정 admin
+					여행의 정석
 				</div>
 			</a>
 
@@ -212,3 +223,6 @@
 
 				</nav>
 				<!-- End of Topbar -->
+				<div class="container fluid">	
+<div class="card shadow mb-4 right">
+<div class="card-header py-3">

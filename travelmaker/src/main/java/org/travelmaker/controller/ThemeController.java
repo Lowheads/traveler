@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,56 +50,32 @@ public class ThemeController {
 	@GetMapping("/theme")
 	public String theme(Model model) {
 
-		//List<ThemeVO> list = service.getThemeList();
 		List<String> list = service.getThemeList();
 
 		model.addAttribute("list", list);
-
+		
 		return "theme";
 	}
 
-	@GetMapping("/themeInfo/{themeNo}")
-	//public String themeInfo(@PathVariable("themeNo") int themeNo, @ModelAttribute("theme") String theme, @ModelAttribute("region") String region,  Model model, HttpServletRequest rq) {
-	public String themeInfo(@PathVariable("themeNo") int themeNo, Model model, HttpServletRequest rq) {
+	@RequestMapping(value= {"/themeInfo/{themeNo}","/modifyTheme/{themeNo}"}, method=RequestMethod.GET)
+	public String themeInfo(@PathVariable("themeNo") int themeNo, Model model, HttpServletRequest req) {
 		
-		//System.out.println("test themeName "+theme+"regionName"+region);
-		
-		service.getAttachment(themeNo);
+		//service.getAttachment(themeNo);
 
-		List<PlaceVO> list = service.getThemeInfo(themeNo);
-
-		model.addAttribute("list", list);
-		/*
-		String url = "";
+		model.addAttribute("list", service.getThemeInfo(themeNo));
 		
-		if(s.contains("Info")) {
-			
-			url = "/admin/themeInfo";
-			
-		}else {
-			
-			url = "/admin/modifyTheme";
+		StringBuffer path = req.getRequestURL();
+		
+		String url = "modifyTheme";
+
+		if(path.indexOf("themeInfo")!=-1) {
+
+			url = "themeInfo";
 		}
 		
-		System.out.println(url);
-		*/
-		
-		String url = "/admin/themeInfo/"+themeNo;
-		
-		return "themeInfo";
-		
+		return url;
 	}
-	
-	
-	@GetMapping("/modifyTheme/{themeNo}")
-	public String modifyTheme(@PathVariable("themeNo") int themeNo, Model model) {
 
-		List<PlaceVO> list = service.getThemeInfo(themeNo);
-		model.addAttribute("list", list);
-
-		return "modifyTheme";
-
-	}
 
 	@PostMapping("/modifyTheme/{themeNo}")
 	public String modifyThemeAction(@PathVariable("themeNo") int themeNo, ThemeAttachVO attachment, String[] removedPlaces, String[] addedPlaces,RedirectAttributes rttr) {
@@ -110,20 +87,6 @@ public class ThemeController {
 		  if (result.get("deleteResult")== removedPlaces.length&&result.get("insertResult")== addedPlaces.length) {
 		  
 			  rttr.addFlashAttribute("message", "SUCCESS"); }
-		
-		/*
-		 * if(!(removedPlaces.length==0&&addedPlaces.length==0)) {
-		 * 
-		 * Map<String, Integer> result = service.updateTheme(removedPlaces, addedPlaces,
-		 * themeNo, attachment);
-		 * 
-		 * if (result.get("deleteResult")==
-		 * removedPlaces.length&&result.get("insertResult")== addedPlaces.length) {
-		 * 
-		 * rttr.addFlashAttribute("message", "SUCCESS"); }
-		 * 
-		 * }
-		 */
 		 
 		 return "redirect:/admin/themeInfo/"+themeNo;
 	}
@@ -170,7 +133,7 @@ public class ThemeController {
 				
 				
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadFolder, "s_" + uploadFileName));
-				Thumbnailator.createThumbnail(in, thumbnail, 100, 100);
+				Thumbnailator.createThumbnail(in, thumbnail, 140, 140);
 				
 				//Thumbnailator.createThumbnail(saveFile.getInputStream(), thumbnail, 100, 100);
 				thumbnail.close();
@@ -201,30 +164,14 @@ public class ThemeController {
 		
 		List<PlaceVO> placeList = service.getPlaceList(cri.getKeyword(),cri.getPageNum());
 		
-		for(int i =0;i<placeList.size(); i++) {
-			
-			System.out.println(placeList.get(i).toString());
-		}
-		
 		res.put("pageMaker", dto);
 		res.put("list", placeList);
 
 		return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 	}
-//	@GetMapping(value = "/getPlaceList/{cri}", produces = { MediaType.APPLICATION_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<List<PlaceVO>> getPlaceList(@PathVariable("cri") Criteria cri, Model model) {
-//
-//		System.out.println("place list");
-//		ResponseEntity<List<PlaceVO>> list = null;
-//		list = ResponseEntity.status(HttpStatus.OK).body(service.getPlaceList(cri));
-//
-//		return list;
-//	}
-
+	
 	private boolean checkImageType(File file) {
 
-		System.out.println("ck image type");
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			
@@ -287,6 +234,8 @@ public class ThemeController {
 				file.delete();
 
 			}
+			
+			
 
 		} catch (UnsupportedEncodingException e) {
 

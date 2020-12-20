@@ -1,15 +1,19 @@
 package org.travelmaker.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.service.MainService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -23,37 +27,59 @@ public class AdminMainController {
 	private MainService service;
 	
 	@GetMapping("/main")
-	public String showChart(Model model) {
+	public String showChart(Model model) throws JsonProcessingException {
 
-		List<StatisticVO> dailyStatistic = service.getDailyStatistic();
-		
-		String dailyLog = "";
+		/*
+		 * List<StatisticVO> daily = service.getDaily(); ObjectMapper mapper = new
+		 * ObjectMapper(); String jsonText =mapper.writeValueAsString(daily);
+		 */	
 
-		for (int i = 0; i < dailyStatistic.size(); i++) {
-
-			dailyLog += "['" + dailyStatistic.get(i).getTargetDate() + "'," + dailyStatistic.get(i).getCntMember() + "," 
-			+dailyStatistic.get(i).getCntWithdrawalMember()+","+ dailyStatistic.get(i).getCntPost() +"]";
-			if (i != dailyStatistic.size() - 1) {
-				dailyLog += ",";
-			}
-		}
+		/*
+		 * model.addAttribute("daily", jsonText);
+		 * 
+		 * model.addAttribute("daily2", service.getDaily());
+		 */
 		
 		
-		List<StatisticVO> monthlyStatistic = service.getMonthlyStatistic();
+		/*
+		 * List<String> date = new ArrayList<String>(); List<String> cntMember = new
+		 * ArrayList<String>(); List<String> cntPost = new ArrayList<String>();
+		 * List<String> cntWithdraw = new ArrayList<String>();
+		 * 
+		 * for(int i =0; i<daily.size();i++) {
+		 * 
+		 * date.add(i, daily.get(i).getTargetDate()); cntMember.add(i,
+		 * daily.get(i).getCntMember()); cntPost.add(i, daily.get(i).getCntPost());
+		 * cntWithdraw.add(i, daily.get(i).getCntWithdrawalMember());
+		 * 
+		 * }
+		 * 
+		 * model.addAttribute("date", date); model.addAttribute("cntMember", cntMember);
+		 * model.addAttribute("cntPost", cntPost); model.addAttribute("cntWithdraw",
+		 * cntWithdraw);
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		//model.addAttribute("newestPost", service.newestPost());
 		
-		String monthlyLog = "";
-		for (int i = 0; i < monthlyStatistic.size(); i++) {
-
-			monthlyLog += "['" + monthlyStatistic.get(i).getTargetDate() + "월'," + monthlyStatistic.get(i).getCntMember() +"," 
-			+monthlyStatistic.get(i).getCntWithdrawalMember()+","+ monthlyStatistic.get(i).getCntPost() +"]";
-			if (i != monthlyStatistic.size() - 1) {
-				monthlyLog += ",";
-			}
-		}
-
-		model.addAttribute("dailyLog", dailyLog);
-		model.addAttribute("monthlyLog", monthlyLog);
+		
 		return "main";
+	}
+	
+	
+	@GetMapping("/getChart/{type}")
+	public ResponseEntity<List<StatisticVO>> getChart(@PathVariable("type") String type){
+		
+		return new ResponseEntity<>(service.getChart(type), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getPostByPopularity/{type}")
+	public ResponseEntity<List<BoardVO>> getPostByPopularity(@PathVariable("type") String type){
+		
+		return new ResponseEntity<>(service.getPostByPopularity(type), HttpStatus.OK);
 	}
 
 }

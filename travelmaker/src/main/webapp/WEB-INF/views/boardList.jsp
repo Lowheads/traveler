@@ -6,12 +6,6 @@
 <%@ include file="includes/adminheader.jsp"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-	<!-- DataTales Example -->
-	<div class="card shadow mb-4">
-		<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">게시글 관리</h6>
 		</div>
 		<div class="card-body">
@@ -72,6 +66,7 @@
 
 					</tbody>
 				</table>
+				
 				<!-- Modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
@@ -97,16 +92,13 @@
 					<!-- /.modal-dialog -->
 				</div>
 				<!-- /.modal -->
+				
 			</div>
 		</div>
 
 	</div>
 
-</div>
-<!-- /.container-fluid -->
 
-</div>
-<!-- End of Main Content -->
 
 <script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>

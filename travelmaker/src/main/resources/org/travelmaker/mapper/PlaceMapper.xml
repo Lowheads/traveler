@@ -152,6 +152,19 @@ select count(*) from place p, pick_pl pl
    and tplc.plc_no = p.plc_no
    and concat(ctb.code_type_id,ctb.code) = #{themeCode}
 </select>
+<select id="getPlaceByWeather" resultMap="placeVO">
+<![CDATA[
+SELECT *
+FROM (SELECT *
+FROM PLACE
+WHERE P_CATE IN (SELECT CODE
+FROM WEATHER_REC
+WHERE REC_INDEX=1)
+AND REGION_NO =#{regionNo}
+ORDER BY DBMS_RANDOM.VALUE)
+WHERE ROWNUM<=10]]>
+</select>
+
 
 <!-- 리뷰 내용 11/25
 하드 코딩한 거 밖으로 옮기기,

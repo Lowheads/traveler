@@ -11,14 +11,9 @@
 	</resultMap>
 
 <insert id="update">
-	INSERT INTO THEME_ATTACH (UUID, UPLOADPATH, FILENAME, FILETYPE, THEME_NO)
-	VALUES(#{uuid},#{uploadPath},#{fileName},#{image},#{themeNo})
+	INSERT INTO THEME_ATTACH (UUID, UPLOADPATH, FILENAME, THEME_NO)
+	VALUES(#{uuid},#{uploadPath},#{fileName},#{themeNo})
 </insert>
-<!--  
-<update id="update" parameterType = "org.travelmaker.domain.ThemeAttachVO">
-        update theme_attach set uuid=#{uuid}, filename =#{fileName}, uploadPath=#{uploadPath}, filetype=#{image} where theme_no=#{themeNo}
-</update>
--->
 
 <delete id="delete">
 	DELETE FROM THEME_ATTACH WHERE THEME_NO = #{themeNo}

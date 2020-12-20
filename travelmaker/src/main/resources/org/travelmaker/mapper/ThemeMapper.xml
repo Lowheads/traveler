@@ -18,7 +18,7 @@
 		<result property="plcTitle" column="PLC_TITLE" />
 		<result property="lat" column="LAT" />
 		<result property="lng" column="LNG" />
-		<result property="addressDt" column="ADDRESSDT" />
+		<result property="addressDt" column="ADDRESS_DT" />
 		<result property="pCate" column="P_CATE" />
 		<result property="holiday" column="HOLIDAY" />
 		<result property="openingH" column="OPENING_suH" />
@@ -32,24 +32,24 @@
 		ORDER BY THEME_NO 
 	</select>
 
-		<select id="getThemeInfo" resultMap = "searchResult">
-SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESSDT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT 
-FROM THEME_PLC,
-(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESSDT,C.CODE_NAME, LIKECNT
-FROM CODE_TABLE C, PLACE P
-WHERE C.CODE = P.P_CATE) V
-WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}
+	<select id="getThemeInfo" resultMap = "searchResult">
+		SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESS_DT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT 
+		FROM THEME_PLC,
+		(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESS_DT,C.CODE_NAME, LIKECNT
+		FROM CODE_TABLE C, PLACE P
+		WHERE C.CODE = P.P_CATE) V
+		WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}
 	</select>
 
 	<delete id="deleteTheme" parameterType="int[]">
-		delete
-		from theme_plc
-		where plc_no in
+		DELETE
+		FROM THEME_PLC
+		WHERE PLC_NO IN
 		<foreach collection="list" item="place" open="(" close=")"
 			separator=",">
 			#{place}
 		</foreach>
-		and theme_no = #{themeNo}
+		AND THEME_NO = #{themeNo}
 	</delete>
 	
 	<update id="updateTheme">
@@ -67,8 +67,8 @@ WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}
  
   	<select id="getPlaceList" resultMap="searchResult" parameterType="map">
  	<![CDATA[
- 	SELECT PLC_NO, PLC_TITLE, P_CATE, REGION_NO, LAT,LNG, ADDRESSDT,HOLIDAY, OPENING_H,LIKECNT
- 	FROM (SELECT ROWNUM RN, PLC_NO, P_CATE, REGION_NO, PLC_TITLE, LAT,LNG, ADDRESSDT,HOLIDAY, OPENING_H,LIKECNT
+ 	SELECT PLC_NO, PLC_TITLE, P_CATE, REGION_NO, LAT,LNG, ADDRESS_DT,HOLIDAY, OPENING_H,LIKECNT
+ 	FROM (SELECT ROWNUM RN, PLC_NO, P_CATE, REGION_NO, PLC_TITLE, LAT,LNG, ADDRESS_DT,HOLIDAY, OPENING_H,LIKECNT
 		FROM PLACE
 		WHERE PLC_TITLE LIKE
 		'%'||#{keyword}||'%'

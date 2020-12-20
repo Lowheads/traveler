@@ -140,6 +140,11 @@ public class PlaceServiceImpl implements PlaceService {
         }
     }
 
+	@Override
+	public List<PlaceVO> getPlaceByWeather(int regionNo) {
+		return mapper.getPlaceByWeather(regionNo);
+	}
+
 		
 //		return schdtVO;
 //	}

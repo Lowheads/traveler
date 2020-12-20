@@ -11,23 +11,55 @@
 	<result property="cntWithdrawalMember" column="CNT_WITHDRAWAL_USER"/>
 </resultMap>
 
-<select id="getDailyStatistic" resultMap="VOResult">
+<resultMap type ="org.travelmaker.domain.BoardVO" id="post" >
+	<result property="boardNo" column="BOARD_NO"/>
+	<result property="boardTitle" column="BOARD_TITLE"/>
+	<result property="wDate" column="W_DATE"/>
+	<result property="pickCnt" column="PICK_CNT"/>	
+	<result property="modDate" column="MOD_DATE"/>
+	<result property="vCnt" column="V_CNT"/>
+	<result property="writer" column="WRITER"/>	
+</resultMap>
+
+<select id = "getDaily" resultMap="VOResult" >
  <![CDATA[
-	SELECT * FROM(
-		SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post , cnt_withdrawal_user
-		FROM STATISTIC 
-		ORDER BY daily_log DESC) 
-	WHERE ROWNUM<=7]]>
-		
+	SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post, cnt_withdrawal_user
+	FROM (SELECT *
+	FROM STATISTIC
+	ORDER BY DAILY_LOG DESC)
+	WHERE ROWNUM<8]]>
 </select>
 
 
-<select id="getMonthlyStatistic" resultMap="VOResult">
+<select id="getMonthly" resultMap="VOResult">
 	SELECT extract(month from daily_log) AS "targetDate", SUM(cnt_user) as "cnt_user", 
 	sum(cnt_post) as "cnt_post", sum(cnt_withdrawal_user) as "cnt_withdrawal_user"
 	FROM STATISTIC 
 	GROUP BY extract(month from daily_log) 
 	ORDER BY extract(month from daily_log)
 </select>
+
+
+<select id="getPopularPostsByView" resultMap="post">
+ <![CDATA[
+select * from(select * 
+from board
+where w_date between to_char(sysdate-7,'yyyy/mm/dd') and to_char(sysdate,'yyyy/mm/dd')
+order by v_cnt desc)
+where rownum<=10]]>
+</select>
+
+<select id="getPopularPostsByPick" resultMap="post">
+ <![CDATA[
+select * 
+from (select * 
+from board
+where w_date between to_char(sysdate-7,'yyyy/mm/dd') and to_char(sysdate,'yyyy/mm/dd')
+order by pick_cnt desc)
+where rownum<=10]]>
+</select>
+
+
+
 
 </mapper>

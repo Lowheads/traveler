@@ -69,13 +69,14 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 <style>
 
-<!-- -->
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
+* {box-sizing: border-box}
+
+
+<!-- theme페이지 이미지 슬라이드쇼-->
+.mySlides {
+  display: none;
 }
+
 
 /* Next & previous buttons */
 .prev, .next {
@@ -99,9 +100,14 @@
   border-radius: 3px 0 0 3px;
 }
 
-/* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
+}
+
+.dots{
+    position: absolute;
+    bottom: 8px;
+    left:40%
 }
 
 .dot {
@@ -109,21 +115,82 @@
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  background-color: #bbb;
+ background-color: rgb(255, 255, 255, 0.1);
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
+  border:solid 2px rgb(255, 255, 255,0.7);
 }
 
-.active, .dot:hover {
+.dot:hover {
+    background-color:rgba(255, 255, 255, 0.8);
+}
+
+.active {
   background-color: #717171;
 }
 
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* .w3-left, .w3-right{cursor:pointer} */
+       .slideshow-container{
+            position : relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+       }
+        .mySlides {
+     	    width:1000px;
+            height:700px;
+            margin: 0px;
+        }
+        
+        .themeImage{
+            width:1000px;
+            height:550px;
+            overflow:hidden;
+            position : absolute;
+          /*   border:solid 3px rgb(166, 255, 0); */
+            margin: 0px;
+        }
+
+
+        .themeImage img{
+
+            width:100%;
+            object-fit: cover;
+           /*  border:solid 3px hotpink; */
+        }
+
+        
+        .travel-theme{
+            position : absolute;
+            top:570px;
+            width:1000px;
+            height:30px;
+          /*   border:solid 3px rgb(62, 40, 192); */
+          padding-top : 0;
+          
+        }
+
+        .placeList{
+            position : absolute;
+            top:620px;
+            width:1000px;
+            height:80px;
+            /* border:solid 3px rgb(62, 40, 192); */
+        }
+
 <!-- -->
-
-
-
-
 
 
 /*datepicker에서 사용한 이미지 버튼 style적용*/

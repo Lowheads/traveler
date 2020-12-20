@@ -35,5 +35,7 @@ public interface PlaceMapper {
 	// 추천 장소 검색하려는 기능인데... 우리랑은 상관없는 기능 mainController를 위한 기능
 	public List<PlaceDTO> getListWithTheme(@Param("regionNo") int regionNo, @Param("themeCode") String themeCode);
 	
+	public List<PlaceVO> getPlaceByWeather(int regionNo);
+	
 	
 }

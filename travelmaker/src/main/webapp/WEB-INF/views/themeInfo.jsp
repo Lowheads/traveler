@@ -5,31 +5,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<div class="container fluid">	
-<div class="card shadow mb-4">
-<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">상세 조회하기 </h6>
 		</div>
 <div class="card-body">
-<div class="form-group row justify-content-center">
+
 
 
 <button id="searchBtn" class="btn btn-primary float-right" 
-onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><br>	
+onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><br>
 
-<div class="uploadResult col-sm-12 col-md-6 float-right">
-	<ul>
-	</ul>
+<div class="uploadResult col-sm-12">
 </div>
-<div class='bigPictureWrapper'>
-	<div class='bigPicture'></div>
-</div>
-<br>
-
 
 <div class="table-responsive">
 	
-<table  class="table table-hover" style="width:70%">
+<table  class="table table-hover" style="width:100%">
 <thead>
 <tr>
 	<th>장소번호</th>
@@ -79,9 +69,8 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><
 					</div>
 					</div>
 					</div>
-					</div>
-					</div>
 
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -94,6 +83,7 @@ $(document).ready(function() {
 	
 	var themeNo = ${themeNo};
 	
+	//이미지 썸네일로 보여주기 
 	(function(){
 		
 		$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(result){
@@ -102,83 +92,71 @@ $(document).ready(function() {
 			
 			var fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
 			
-			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
+/* 			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
 			"' data-type = '"+result.fileType+"'><div>";
-			
 			str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
 			str+="</div>";
-			str+="</li>";
+			str+="</li>"; */
 			
-			$(".uploadResult ul").html(str);
-			
-			const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
-			showImage(path.replace(new RegExp(/\\/g),"/"));
-			
-			
-			$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
-		
+
+			str+= "<ul data-uuid="+result.uuid+" data-filename="+result.fileName+"><span s>첨부파일</span><span>"+result.fileName+"</span></ul><br>"
+			$(".uploadResult").html(str);
+
 		})
 			
 	})();
-	
-	
 
 	function checkModal(message) {
 
 		if (message === '' || history.state) {
-			
 			return;
-			
 		}else{
-			
 			showModal("수정을 완료하였습니다");
 		}
 	}
 	
-$("tr[name=row]").click(function(){
-	
-	const plcNum = $(this).attr("id");
-
-	let URL = "https://place.map.kakao.com/"+plcNum;
-	
-	window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
-	
-})
-
-$(".uploadResult").on("click","img", function(e){
-	
-	let liObj = $(this);
-	
-	const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
-	showImage(path.replace(new RegExp(/\\/g),"/"));
-
-	
-});
-
-$(".bigPictureWrapper").on("click",function(e){
-	$(".bigPicture").animate({width:'0px', height:'0px'});
-	setTimeout(() => {
-		$(this).hide();
+	$("tr[name=row]").click(function(){
 		
-	},300);
+		const plcNum = $(this).attr("id");
 	
-});
+		let URL = "https://place.map.kakao.com/"+plcNum;
+		
+		window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+		
+	})
+	
+/* 	$(".uploadResult").on("click","img", function(e){
+		
+		let liObj = $(this).parent().parent();
+		
+		const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+		
+		theme.showImage(path.replace(new RegExp(/\\/g),"/"));
+		
+	}); */
+	
+	$(".uploadResult").on("click","span", function(e){
+		
+		let liObj = $(this).parent();
+		
+		const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+		
+		theme.showImage(path.replace(new RegExp(/\\/g),"/"));
+		
+	}); 
 
-function showModal(msg){
-	
-	$(".modal-body").html(msg);
-	$("#myModal").modal("show");
-};
+	$(".bigPictureWrapper").on("click",function(e){
+		$(".bigPicture").animate({width:'0px', height:'0px'});
+		setTimeout(() => {
+			$(this).hide();
+		},300);
+		$('body').css("overflow", "scroll");
+	});
 
-
-function showImage(fileCallPath){
-	
-	$(".bigPictureWrapper").css("display","flex").show();
-	
-	$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
-	.animate({width:'100%',height:'100%'},1000);
-	
-}
+	function showModal(msg){
+		$(".modal-body").html(msg);
+		$("#myModal").modal("show");
+	};
 
 })
 
