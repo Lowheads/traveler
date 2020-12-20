@@ -208,13 +208,13 @@ label {
 }
 
 .left {
-     width: 45%;
-     margin-right : 5%;
+     width: 48%;
+     margin-right : 4%;
 
 }
 
 .right {
-     width: 50%;
+     width: 48%;
 
 }
 
@@ -229,10 +229,52 @@ label {
 	float: right;
 }
 
-.btn:hover{
+.btn:hover, .cancel_btn:hover, .update_btn:hover{
    background-color: #203341;
    color:white;
 }
+
+.cancel_btn, .update_btn{
+	font-size:15px;
+	margin-bottom: 10px;
+	background-color:white;
+	border: 1px solid gray;
+	/* border-radius: 14px; */
+	padding: 5px 20px 5px 20px;
+	float: right;
+}
+
+
+.flex-container{
+	margin-top: 10px;
+	border-radius : 5px;
+	background-color: white;
+	padding: 40px;
+
+}
+
+/* 파일  */
+
+.orgfilecontent{
+ 	text-align: center;
+}
+
+.orgfilecontent input{
+	margin-top:10px;
+	width: 80%;
+	height:30px;
+}
+.filecontent{
+
+	text-align: center;
+}
+
+.imgcontent input{
+	margin-top:10px;
+	width: 92%;
+	height:30px;
+}
+
 </style>
 
 <div class="contents">
@@ -257,7 +299,7 @@ label {
 					<label>게시글 제목</label>
 					</div>
 					<div class="col-75">
-					 <input class="form-control" name='boardTitle' value='${board.boardTitle }' readonly="readonly">
+					 <input class="form-control"  value='${board.boardTitle }' readonly="readonly">
 					</div>
 					</div>
 		
@@ -268,7 +310,6 @@ label {
 						</div>
 						<div class="col-75">
 						<input class="form-control" value='${schedule.schTitle }' readonly="readonly">
-						<input type="hidden" class="form-control" name='boardNo' value='${boarddt.boardNo }' readonly="readonly">
 					</div>
 					</div>
 			
@@ -282,32 +323,32 @@ label {
 					</div>
 					</div>	
 					
-						<div class="row">
+						<br>
+						사진목록
 						<div class="flex-container">
 						<c:forEach var="file" items="${file}" varStatus="var">
-							<div style="width:180px">
 							<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}" value="${file.FILE_NO }">
 							<input type="hidden" name="fileNo" value="${file.FILE_NO }">
 							<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
-							
-							<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-							<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');">삭제</button><br>
-							<img src="<c:url value="/img/${file.STORED_FILE_NAME} "/>"" width="200px" height="200px"/>
-							<input type='text' id='content' name='fileContent' value='<c:out value="${file.FILE_CONTENT }"/>'>
+							<div class="orgfilecontent">
+								<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+								<img src="<c:url value="/img/${file.STORED_FILE_NAME} "/>" width="300px" height="200px"/>
+								<input type='text' id='content' name='fileContent' value='<c:out value="${file.FILE_CONTENT }"/>'>
+								<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');">삭제</button><br>
+							</div>
 							<br>
-						</div>
 						</c:forEach>
-						</div>
-					</div>
+
 					
 					<div class="form-group">
+						<button type="button" class="fileAdd_btn btn">사진추가</button>
 						<span id="fileIndex"></span>
 					</div>	
+						</div>
 
-					<div>
-						<button type="button" class="update_btn btn">저장</button>
-						<button type="button" class="cancel_btn btn">취소</button>
-						<button type="button" class="fileAdd_btn btn">파일추가</button>
+					<div><br>
+						<button type="button" class="cancel_btn">취소</button>
+						<button type="button" class="update_btn">수정완료</button>
 					</div>
 				</form:form>
 			</div>
@@ -408,10 +449,10 @@ label {
 			var fileIndex = 1;
 			var i=0;
 			$(".fileAdd_btn").on("click", function(){
-				$("#fileIndex").append("<div><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"
+				$("#fileIndex").append("<div class='filecontent'><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"
 				+"<div class='select_img'><img src=''/></div>"	
-				+"<br><input type='text' name='newContent'/>"
-				+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
+				+"<div class='imgcontent'><input type='text' name='newContent'/>"
+				+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 			});
 			
 	 		$(document).on("change","#boarddtImg",function(){
@@ -422,7 +463,8 @@ label {
 					var reader = new FileReader;
 						reader.onload = function(data) {
 					tmp.next().children().attr("src", data.target.result)
-						.width(500);
+						.width(300)
+						.height(200);
 					}
 					reader.readAsDataURL(this.files[0]);
 					}

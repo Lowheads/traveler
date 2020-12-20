@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="../includes/headerN.html"%> 
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +29,7 @@ overflow-y: auto;
 }
 #hiddenlist_modal, #schedulelist_modal{
 	display: none;
-	width: 450px;
+	width: 500px;
 	height: 90%;
 	padding: 10px;
 	background-color: #fefefe;
@@ -110,6 +109,7 @@ input:checked+.slider:before {
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
 	float: right;
+	text-decoration: none;
 }
 
 #schedulelist_open_btn{
@@ -119,6 +119,7 @@ input:checked+.slider:before {
 	border: 1px solid gray;
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
+	text-decoration: none;
 
 }
 
@@ -231,14 +232,14 @@ input:checked+.slider:before {
 		<div class="mainMsg">
 		<b>일정 게시판</b>	
 		<br><br>	
-		<button id="schedulelist_open_btn" class="btn">내 일정 공유하기</button>
+		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn" class="btn">내 일정 목록</a>
 		<!--mainMsg끝 -->
 		</div>
 		
 	<!--상단 끝 -->
 	</div>
 	
-    	<button id="hiddenlist_open_btn" class="btn" >공개/비공개 설정</button>
+    	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn" class="btn" >공개/비공개 설정</a>
 
 		<!--게시판 리스트 출력 -->
 		<div class="boardContents">
@@ -307,31 +308,8 @@ input:checked+.slider:before {
 		<h3>공개/비공개 설정</h3><br>
 	</div>
 	<div class="modal-body">
-		<table class="table table-striped table-sm">
-			<thead>
-				<tr>
-					<th>일정번호</th>
-					<th>일정명</th>
-					<th>게시글이름</th>
-					<th>공개여부</th>
-
-				</tr>
-			</thead>
-
-			<c:forEach items="${hiddenlist}" var="hiddenlist">
-				<tr>
-					<td><c:out value="${hiddenlist.SCHNO }"/></td>
-					<td><c:out value="${hiddenlist.SCHTITLE}" /></td>
-					<td><c:out value="${hiddenlist.BOARDTITLE}" /></td>
-					<td>
-					<label class="switch"> 
-					<input type="checkbox" ${hiddenlist.HIDDEN eq 'y'? "checked":"" }> <span class="slider round" data-hidden="${hiddenlist.HIDDEN }" data-schno="${hiddenlist.SCHNO }"></span>
-					</label></td>
-					
-					
-				</tr>
-			</c:forEach>
-		</table>
+		<iframe name="hiddenlist" title="hiddenlist" width=100% height=100% frameBorder="0">
+		</iframe>
 	</div>
 	<button class="modal_close_btn"> 확인 </button>
 
@@ -342,49 +320,8 @@ input:checked+.slider:before {
 	<div id="schedulelist_modal" class="modal-content">
 	<h3>내일정 공유 </h3><br>
 	<div class="modal-body">
-		<table class="table table-striped table-sm">
-			<thead>
-				<tr>
-					<th>일정번호</th>
-					<th>일정명</th>
-					<th>작성여부</th>
-
-				</tr>
-			</thead>
-
-			<c:forEach items="${schedulelist}" var="schedule">
-				<tr class="schedulenum">
-				<td>
-					<c:choose>
-					<c:when test="${schedule.schStatus eq 'BS003' }"> 
-					<a href='/board/register?schNo=<c:out value="${schedule.schNo}"/>' target='register' class='register_open_btn'><c:out value="${schedule.schNo}" /></a>
-
-					</c:when>
-					
-					<c:when test="${schedule.schStatus eq 'BS001'}">
-					<c:out value="${schedule.schNo}" />
-					</c:when>
-					
-					<c:when test="${schedule.schStatus eq 'BS002'}">
-					<a href='/board/dtregister?schNo=<c:out value="${schedule.schNo}"/>'><c:out value="${schedule.schNo}" /></a>
-					</c:when>
-					
-					</c:choose>
-					</td>
-					
-					<td><c:out value="${schedule.schTitle}" /></td>
-		<!--  		<td><c:out value="${schedule.schStatus }"/></td>  -->
-					<td>
-					<c:choose>
-					<c:when test="${schedule.schStatus eq 'BS001' }"> 작성 </c:when>
-					<c:when test="${schedule.schStatus eq 'BS002' }"> 작성중 </c:when>
-					<c:when test="${schedule.schStatus eq 'BS003' }"> 미작성 </c:when>
-					</c:choose>
-					</td>
-					
-				</tr>
-			</c:forEach>
-		</table>	
+		<iframe name="schedulelist" title="schedulelist" width=100% height=100% frameBorder="0">
+		</iframe>
 	</div>
 	<button class="modal_close_btn"> 취소 </button>
 </div>
@@ -403,7 +340,7 @@ input:checked+.slider:before {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		
 
 		var actionForm = $("#actionForm");
 		$(".w3-button a").on("click", function(e) {

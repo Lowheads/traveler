@@ -85,7 +85,7 @@
     font-size: 15px;
     box-shadow: 1px 2px 3px 0px #f2f2f2;
     outline: none;
-    text-align: center;
+    display: inline-block;
 }
 #boardImg:focus + label,
 #boardImg + label:hover {
@@ -101,6 +101,7 @@
 	border: 1px solid gray;
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
+	float: right;
 }
 .btn:hover{
    background-color: #203341;

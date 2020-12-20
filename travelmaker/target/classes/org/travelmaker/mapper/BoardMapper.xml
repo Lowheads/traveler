@@ -99,7 +99,10 @@ select * from board where board_no>0
 
 
 <select id="getTotalCount" resultType="int">
-   select count(*) from board where hidden='y'
+   select count(*) 
+   from schedule s, member m,board b
+   where s.sch_status = 'BS001' and hidden='y'
+   and s.sch_no=b.sch_no and s.mem_no=m.mem_no and m.mem_grade='MG001'
 </select>
 
 <!-- pickCnt -->

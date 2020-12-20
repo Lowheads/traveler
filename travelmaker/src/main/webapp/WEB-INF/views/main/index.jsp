@@ -27,81 +27,101 @@
 <style>
 /* test style */
         /* 모달창 */
-        #modal {
+ #modal {
+   display: none;
+   width: 500px;
+   height: 700px;
+   /* background-image: url("/resources/img/test_bg.png");
+            background-size:cover; */
+   border: 1px solid #888;
+   border-radius: 15px;
+   background-color: rgb(244, 246, 250);
+}
 
-            display: none;
-            width: 700px;
-            height: 600px;
-            padding: 10px;
-            background-color: rgb(253, 206, 49);
-            border: 1px solid #888;
-            border-radius: 15px;
-        }
+/* 닫는버튼 */
+#modal .modal_close_btn {
+   float: right;
+   border: none;
+   border-radius: 15px;
+   background-color: rgb(244, 246, 250);
+}
 
-        /* 닫는버튼 */
-        #modal .modal_close_btn {
-            float: right;
-            background-color: white;
-            color: black;
-            border: none;
-            border-radius: 10px;
-        }
+#test {
+   width: 100%;
+   height: 100%;
+   padding: 20px;
+   border-radius: 15px;
+}
 
-        #test {
-            width: auto;
-            padding: 20px;
-        }
+.progbarbg {
+   background: #f0f0f0;
+   height: 10px;
+   width: 100%;
+   border-radius: 10px;
+   margin-top: 40px;
+   margin-bottom: 40px;
+}
 
-        #question {
-            margin-top: 10%;
-            height: 100px;
-            text-align: center;
-            font-size: 30px;
-        }
-        #result{
-            text-align: center;
-            display: none;
-        }
-        #answers {  
-            margin-top: 10%;
-            display: flex;
-            
-        }
+.progbar {
+   background: #00F260; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to left, #0575E6, #00F260);
+   /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to left, red,orange);
+   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   height: 10px;
+   width: 0%;
+   border-radius: 10px;
+   transition: width 400ms;
+}
 
-        .answer {
-            width: 30%;
-            height: 100px;
-            margin: auto;
-            border: 3px groove gray;
-            border-radius: 8px;
-            background-color: white;
-            padding: 10px;
-        }
-        
-        .yourList{
-           width: 100%;
-           text-align: left;
-           background-color: white;
-           border-radius: 8px;
-           padding: 2%;
-        }
-        .resultplacedt{
-           display:flex;
-        }
-        
-        .resultplacedt h4{
-           margin-top:auto;
-           margin-bottom:auto;
-           margin-left: 15px;
-        }
-        
-       
-        /* 좋아요버튼  */
-        .heart{
-         width:auto;
-         margin: auto 5% auto auto; 
-           text-align: right;
-        }
+#question {
+   text-align: center;
+   font-size: 25px;
+   font-weight: bold;
+}
+
+#result {
+   text-align: center;
+   display: none;
+}
+
+.answer {
+   text-align: center;
+   width: 100%;
+   height: 100px;
+   background-color: #e8ecf1;
+   padding: 10px;
+   border-radius: 40px;
+   margin-top: 30px;
+   font-weight: bold;
+   padding: 40px 0;
+}
+
+.yourList {
+   width: 100%;
+   text-align: left;
+   background-color: white;
+   border-radius: 8px;
+   padding: 2%;
+}
+
+.resultplacedt {
+   display: flex;
+}
+
+.resultplacedt h4 {
+   margin-top: auto;
+   margin-bottom: auto;
+   margin-left: 15px;
+}
+
+/* 좋아요버튼  */
+.heart {
+   width: auto;
+   margin: auto 5% auto auto;
+   text-align: right;
+}
+
 /* test 스타일 끝 */
 
 body{
@@ -424,16 +444,16 @@ a{text-decoration: none}
 			<br><br>
 			<button id="popup_open_btn">여행성향검사</button>
 			
-	<!--  test 모달창 -->
+<!--  test 모달창 -->
     <div id="modal">
-        <!-- 닫는버튼 -->
-        <button class="modal_close_btn">X</button>
 
         <div id="test">
+        <!-- 닫는버튼 -->
+        <button class="modal_close_btn">X</button>
             <div id="result">
-                <div class="placeList"><a href="'https://place.map.kakao.com/'+'장소번호'"><img src="" class='placeImg'></a></div>
 
             </div>
+            <div id="progbar"></div>
             <div id="question"></div>
             <div id="answers">
                 <div class="answer"></div>
@@ -621,9 +641,12 @@ a{text-decoration: none}
         pT = 0;
         pS = 0;
         pN = 0;
+        prog = 0;
+        $('.progbar').width('0%')
         $('#result').hide().empty();
         $('#answers').show()
-        $("#question").text("Q1." + question[0]).show()
+        $("#question").text("1." + question[0]).show()
+        $('#progbar').show()
         answer[0].innerText = answers[0][0];
         answer[0].removeEventListener("click",atest);
         answer[1].innerText = answers[0][1];
@@ -678,13 +701,14 @@ a{text-decoration: none}
     ]
 
     $(document).ready(function () {
-        $("#question").text("Q1." + question[0])
+       $("#progbar").html("<div class='progbarbg'><div class='progbar' style='width:0%; text-align:center;'></div></div></div>")
+        $("#question").html("1." + question[0])
         let answer = document.getElementsByClassName("answer");
         answer[0].innerText = answers[0][0];
         answer[1].innerText = answers[0][1];
     });
     
-    let aCnt = 0;
+    let aCnt = 0;   
     let qCnt = 0;
     let pI = 0;
     let pE = 0;
@@ -693,9 +717,11 @@ a{text-decoration: none}
     let pS = 0;
     let pN = 0;
     let answer = document.getElementsByClassName("answer");
+   let prog = 0;
 
     $('.answer').on("click", function () {
-
+       prog+=6.7;
+       progMove(prog);
         let result = this.innerText;
 
         if (0 <= qCnt && qCnt <= 4) {
@@ -712,11 +738,11 @@ a{text-decoration: none}
         }
 
         if(qCnt<=13){
-        $("#question").text("Q" + (qCnt + 2) + "." + question[qCnt + 1])
+        $("#question").text(qCnt + 2+ "." + question[qCnt + 1])
         // console.log(count)
 
-        answer[0].innerText = answers[aCnt + 1][0];
-        answer[1].innerText = answers[aCnt + 1][1];
+        answer[0].innerHTML = answers[aCnt + 1][0];
+        answer[1].innerHTML = answers[aCnt + 1][1];
 
         qCnt += 1;
         aCnt += 1;
@@ -789,7 +815,7 @@ a{text-decoration: none}
         $('#result').show()
         $('#question').hide()
         $('#answers').hide()
-       
+          $('#progbar').hide()
         
         let sendData = {
            'type' : yourType
@@ -905,6 +931,16 @@ a{text-decoration: none}
      }
      
   }; 
+  
+  
+  function progMove(prog){
+   
+      if(prog>=100){
+      return;
+         }
+      $('.progbar').width(prog + '%');
+  }
+  
   
   /* ===== Logic for creating fake Select Boxes ===== */
   $('.sel').each(function() {

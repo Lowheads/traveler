@@ -55,7 +55,6 @@
 	height: 200px;
 	margin-bottom: 50px;
 	position: relative;
- 	z-index: 1;
   	display: block;
   	box-shadow: 2px 2px 2px 2px #D4D4D4;
   	border-radius: 10px;
@@ -106,7 +105,7 @@
 }
 
 .mainMsg b{
-	font-size:20px;
+	font-size:22px;
 	color:white;
 
 }
@@ -143,6 +142,8 @@
 .heart{
 	color:white;
 	float:right;
+	margin-top:10%;
+	font-size: 17px;
 }
 
 .left {
@@ -550,6 +551,95 @@ overflow-y: auto;
 #placesList .item .marker_15 {
    background-position: 0 -654px;
 }
+
+/* 이미지모달 스타일 */
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal01 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.img-modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #eee;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.img-modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .img-modal-content {
+    width: 100%;
+  }
+}
+
 </style>
 
 
@@ -579,6 +669,13 @@ overflow-y: auto;
 		<button class="modal_close_btn"> 취소 </button>
 	</div>
 
+
+<!-- 파일확대 모달   -->
+<div id="modal01" class="modal01">
+  <span class="close">&times;</span>
+  <img class="img-modal-content" id="img01">
+  <div id="caption"></div>
+</div>
 
 
 <body>
@@ -629,7 +726,13 @@ overflow-y: auto;
 	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 	<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 	<input type="hidden" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
-	<button id="remove_btn" type="submit" class="btn btn-danger subbutton">삭제</button>
+
+	<c:choose>
+  		<c:when test="${memNo eq schedule.memNo}">
+    	<button id="remove_btn" type="submit" class="btn btn-danger subbutton">삭제</button>
+  		</c:when>
+	</c:choose>
+
 	</form>
 		
 
@@ -651,7 +754,7 @@ overflow-y: auto;
 		<c:forEach var="file" items="${file}">
 		<div class="card-contents">
 		<div class="card-img">
-			<img src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
+			<img id="myImg" alt="${file.FILE_CONTENT}" onclick="onClick(this)" src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
 		</div>
 		<div class="card-desc">
 			${file.FILE_CONTENT}
@@ -1021,6 +1124,36 @@ $(".black_bg").on("click",function(){
 		document.querySelector('.black_bg').style.display = 'none';
 		
 	});
+	
+//Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+//Get the modal
+var modal = document.getElementById("modal01");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+	
 </script>
 
 </body>

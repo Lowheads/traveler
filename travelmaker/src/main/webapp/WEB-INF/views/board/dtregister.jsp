@@ -259,6 +259,29 @@ label {
    background-color: #203341;
    color:white;
 }
+.flex-container{
+	margin-top: 10px;
+	border-radius : 5px;
+	background-color: white;
+	padding: 40px;
+
+}
+
+.select_img{
+	text-align:center;
+}
+
+.filecontent{
+
+	text-align: center;
+}
+
+.imgcontent input{
+	margin-top:10px;
+	width: 92%;
+	height:30px;
+}
+
 </style>
 
   
@@ -285,7 +308,7 @@ label {
 			
 				<div class="row">
 				<div class="col-25">
-				<label>일정번호</label>
+				<label>일정명</label>
 				</div>
 				<div class="col-75">
 				<input class="form-control" name='schNo' value='${schedule.schTitle }' readonly="readonly">
@@ -301,16 +324,16 @@ label {
 					<textarea id="boardCon" name="boardCon" style="height:200px"></textarea>
 				</div>
 				</div>			
-				
-				
+				<br>
+				사진등록
 				<div class="flex-container">
+				<button type="button" class="fileAdd_btn btn" >사진추가</button>
 						<span id="fileIndex"></span>
 			</div>
 			
 			<br>
-				<button type="button" class="fileAdd_btn btn" >사진추가</button>
-				<button id="btn" type="submit" class="btn btn-default" >게시글 등록</button>
 				<button id="btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>	
+				<button id="btn" type="submit" class="btn btn-default" >게시글 등록</button>
 
 				</form>
 				</div>
@@ -377,10 +400,10 @@ $(document).ready(function(){
 		var fileIndex = 1;
 		var contentIndex= 1;
 		$(".fileAdd_btn").on("click", function(){
-			$("#fileIndex").append("<div><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
+			$("#fileIndex").append("<div class='filecontent'><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
 			+"<div class='select_img'><img src=''/></div>"		
-			+"<br><input type='text' name='newContent'/>"
-			+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
+			+"<div class='imgcontent'><input type='text' name='newContent'/></div>"
+			+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 		});
 
 	
@@ -392,7 +415,8 @@ $(document).ready(function(){
 				var reader = new FileReader;
 					reader.onload = function(data) {
 				tmp.next().children().attr("src", data.target.result)
-					.width(500);
+					.width(300)
+					.height(200);
 				}
 				reader.readAsDataURL(this.files[0]);
 				}

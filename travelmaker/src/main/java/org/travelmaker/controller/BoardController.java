@@ -75,20 +75,27 @@ public class BoardController {
 
 		cri.setAmount(8);
 		model.addAttribute("list",boardservice.getList(cri));
-
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		
-		List<Map<String,Object>> hiddenList = scheduleservice.getHiddenList(memNo);
-		
-		//공개,비공개 리스트
-		model.addAttribute("hiddenlist",hiddenList);
-		
-		//일정 리스트
-		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
-		
+	
 		int total= boardservice.getTotal(cri);
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
+	}
+	
+	//schedulelist
+	@GetMapping("/schedulelist")
+	public void schedulelist(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+
+		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
+	}
+	
+	//hiddenlist
+	@GetMapping("/hiddenlist")
+	public void hiddencheck(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		List<Map<String,Object>> hiddenList = scheduleservice.getHiddenList(memNo);
+		model.addAttribute("hiddenlist",hiddenList);
 	}
 	
 	
