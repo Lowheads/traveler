@@ -73,7 +73,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model,  HttpServletRequest request) {
 
-		cri.setAmount(8);
+		cri.setAmount(12);
 		model.addAttribute("list",boardservice.getList(cri));
 	
 		int total= boardservice.getTotal(cri);

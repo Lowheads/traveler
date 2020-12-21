@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -102,7 +103,7 @@ input:checked+.slider:before {
 
 #hiddenlist_open_btn{
 	font-size:15px;
-	margin-right:8%;
+	margin-right:3%;
 	margin-bottom: 50px;
 	background-color:white;
 	border: 1px solid gray;
@@ -146,24 +147,25 @@ input:checked+.slider:before {
 }
 
 .gallery {
-	width: 85%;
+	width: 100%;
 	height: 100%;
 	display : flex;
-	justify-content: space-around;
+	justify-content: center;
 	flex-wrap: wrap;
 	margin: 0 auto;
 }
 
 .card-contents{
-	width: 23%;
-	height: 300px;
+	width: 15%;
+	height: 450px;
+	margin-right:10px;
 	position: relative;
  	z-index: 1;
   	display: block;
- 
-  	margin-bottom: 10px;
-  	border-radius: 10px;
-  	box-shadow: 2px 2px 2px 2px #D4D4D4;
+	border-radius: 10px;
+  	margin-bottom: 30px;
+
+/*   	box-shadow: 2px 2px 2px 2px #D4D4D4; */
   
 }
 
@@ -172,6 +174,10 @@ input:checked+.slider:before {
 	background-size: cover;
 	width: 100%;
 	height: 70%;
+	border-radius: 10px;
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover;
 	
 }
 /* .img-cover{
@@ -181,12 +187,12 @@ input:checked+.slider:before {
      z-index:1;
 } */
 
-.card-Img img{
+/* .card-Img img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	
-}
+} */
 
 .card-Img .heart{
      position: absolute;
@@ -206,7 +212,6 @@ input:checked+.slider:before {
 }
 
 .desc_bottom{
-	 margin: 30px 0 0;
 	 font-size : 12px;
 }
 
@@ -218,6 +223,50 @@ input:checked+.slider:before {
 	font-size:30px;
 	color:white;
 
+}
+
+/* 페이징 */
+
+
+
+.pagination_bar{
+   font-size: 8pt;
+  font-weight: 400;
+  font-family: 'Open Sans', 'Source Sans Pro', Roboto, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Myriad Pro', 'Segoe UI', Myriad, Helvetica, 'Lucida Grande', 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  margin: 1em auto;
+  text-align: center;
+  transition: font-size .2s ease-in-out;
+}
+.pagination_bar{
+ list-style-type: none;
+  display: inline;
+  font-size: 100%;
+  margin: 0;
+  padding: .5em;
+  }
+  
+.pagination_btn{
+   display: inline-block;
+  font-size: 100%;
+  width: auto;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination_btn a{
+   color: #777;
+    font-size: 140%;
+    padding: .5em;
+    text-decoration : none;
+}
+
+.pagination_btn a:hover{
+   color: #f60;
+}
+
+.active a{
+   color: #f60;
 }
 
 </style>
@@ -239,6 +288,30 @@ input:checked+.slider:before {
 	<!--상단 끝 -->
 	</div>
 	
+		<!-- 페이징 -->
+
+    <div class="pagination" style="text-align: center;">
+         <ul class="pagination_bar">
+            <c:if test="${pageMaker.prev }">
+               <li class="pagination_btn" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+            </c:if>
+
+            <c:forEach var="num" begin="${pageMaker.startPage}"
+               end="${pageMaker.endPage}">
+               <li class="pagination_btn ${pageMaker.cri.pageNum == num ? 'active':'' }" >
+                  <a href="${num}"> ${num }</a>
+               </li>
+            </c:forEach>
+
+            <c:if test="${pageMaker.next }">
+               <li class="pagination_btn" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
+            </c:if>
+         </ul>
+      </div>
+	
+	
+	
+	
     	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn" class="btn" >공개/비공개 설정</a>
 
 		<!--게시판 리스트 출력 -->
@@ -246,16 +319,17 @@ input:checked+.slider:before {
 			<div class="gallery">
 				<c:forEach items="${list }" var="board">
 				<div class="card-contents">
-					<div class="card-Img">
+				<c:set var="coverimg" value="${fn:replace(board.boardImg, '\\\\', '/')}" />
 						<a href='/board/get?boardNo=<c:out value="${board.boardNo }"/>
 						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
-							<img src="/resources${board.boardImg}" >
-					</a>
+					<div class="card-Img" style="background-image: url(/resources${coverimg});">
+							<%-- <img src="/resources${board.boardImg}" > --%>
 								<div class="heart">
 								<i class="fa fa-heart" data-sch_no="${board.schNo}" style="font-size:24px;color:red;" onclick="likeToggle(this)"></i>
 								</div>
 								<div class="img-cover"></div>
 					</div>
+					</a>
 					<div class="card-desc">
 					<b><c:out value="${board.boardTitle }" /></b>
 					<div class="desc_bottom">
@@ -275,27 +349,6 @@ input:checked+.slider:before {
 			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 			<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 		</form>
-
-
-<!-- 페이징 -->
-
-<ul class="w3-bar" style='text-align:center'>
-	<c:if test="${pageMaker.prev }">
-		<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
-	</c:if>
-
-	<c:forEach var="num" begin="${pageMaker.startPage}"
-		end="${pageMaker.endPage}">
-		<li class="w3-button"
-			"${pageMaker.cri.pageNum==num? "'active' style='background-color:gray; color:white;'":"" }" >
-			<a href="${num }">${num }</a>
-		</li>
-	</c:forEach>
-
-	<c:if test="${pageMaker.next }">
-		<li class="w3-button" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
-	</c:if>
-</ul>
 
 
 
@@ -343,7 +396,7 @@ input:checked+.slider:before {
 		
 
 		var actionForm = $("#actionForm");
-		$(".w3-button a").on("click", function(e) {
+		$(".pagination_btn a").on("click", function(e) {
 			e.preventDefault();
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			actionForm.submit();
