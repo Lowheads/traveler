@@ -90,20 +90,22 @@
 </update>
 <select id="getListWithPaging" resultType="hashMap">
 <![CDATA[
-		select
-			*
-			from
-			(
-			select
-				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt
-			from
-			schedule s, pick_sch pl, board b
-			where b.sch_no = s.sch_no
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and rownum <= #{pageNum} * #{amount}
-			)
-			where rn > (#{pageNum} -1) * #{amount}  
+	 select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,
+        (select nickname from member where s.mem_no = member.mem_no)as NICKNAME
+       from
+         schedule s, pick_sch pl, board b
+       where s.sch_no = b.sch_no
+             and s.sch_no = pl.sch_no 
+         and pl.mem_no = #{memNo}
+            )a
+            where rownum <= #{pageNum} * #{amount}
+            )
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
@@ -146,9 +148,10 @@
 		<select id="getTotalCount" resultType="int">
 		
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+		schedule s, pick_sch pl,board b
+			 where s.sch_no = b.sch_no
+             and s.sch_no = pl.sch_no 
+         and pl.mem_no = #{memNo}
 		
 		</select>
 		
@@ -179,13 +182,13 @@
     select rownum no,a.*
     from
 (select 
-        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,m.nickname
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,
+        (select nickname from member where s.mem_no = member.mem_no)as NICKNAME
        from
-         schedule s, pick_sch pl, board b,member m
+         schedule s, pick_sch pl, board b
        where s.sch_no = b.sch_no
              and s.sch_no = pl.sch_no 
          and pl.mem_no = #{memNo}
-         and pl.mem_no = m.mem_no
             order by case when #{selected}='old' then pl.ps_date end asc,
             case when #{selected}='new' then pl.ps_date end desc,
             case when #{selected}='like' then b.pick_cnt end desc,

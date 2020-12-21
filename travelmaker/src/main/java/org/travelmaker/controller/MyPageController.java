@@ -59,6 +59,7 @@ public class MyPageController {
       int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
       cri.setMemNo(memNo);
       cri.setAmount(6);
+      System.out.println(SchService.getList(cri));
       model.addAttribute("list",SchService.getList(cri));
       model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
    }
