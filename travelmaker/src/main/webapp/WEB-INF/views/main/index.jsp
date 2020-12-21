@@ -27,81 +27,101 @@
 <style>
 /* test style */
         /* 모달창 */
-        #modal {
+ #modal {
+   display: none;
+   width: 500px;
+   height: 700px;
+   /* background-image: url("/resources/img/test_bg.png");
+            background-size:cover; */
+   border: 1px solid #888;
+   border-radius: 15px;
+   background-color: rgb(244, 246, 250);
+}
 
-            display: none;
-            width: 700px;
-            height: 600px;
-            padding: 10px;
-            background-color: rgb(253, 206, 49);
-            border: 1px solid #888;
-            border-radius: 15px;
-        }
+/* 닫는버튼 */
+#modal .modal_close_btn {
+   float: right;
+   border: none;
+   border-radius: 15px;
+   background-color: rgb(244, 246, 250);
+}
 
-        /* 닫는버튼 */
-        #modal .modal_close_btn {
-            float: right;
-            background-color: white;
-            color: black;
-            border: none;
-            border-radius: 10px;
-        }
+#test {
+   width: 100%;
+   height: 100%;
+   padding: 20px;
+   border-radius: 15px;
+}
 
-        #test {
-            width: auto;
-            padding: 20px;
-        }
+.progbarbg {
+   background: #f0f0f0;
+   height: 10px;
+   width: 100%;
+   border-radius: 10px;
+   margin-top: 40px;
+   margin-bottom: 40px;
+}
 
-        #question {
-            margin-top: 10%;
-            height: 100px;
-            text-align: center;
-            font-size: 30px;
-        }
-        #result{
-            text-align: center;
-            display: none;
-        }
-        #answers {  
-            margin-top: 10%;
-            display: flex;
-            
-        }
+.progbar {
+   background: #00F260; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to left, #0575E6, #00F260);
+   /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to left, red,orange);
+   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   height: 10px;
+   width: 0%;
+   border-radius: 10px;
+   transition: width 400ms;
+}
 
-        .answer {
-            width: 30%;
-            height: 100px;
-            margin: auto;
-            border: 3px groove gray;
-            border-radius: 8px;
-            background-color: white;
-            padding: 10px;
-        }
-        
-        .yourList{
-           width: 100%;
-           text-align: left;
-           background-color: white;
-           border-radius: 8px;
-           padding: 2%;
-        }
-        .resultplacedt{
-           display:flex;
-        }
-        
-        .resultplacedt h4{
-           margin-top:auto;
-           margin-bottom:auto;
-           margin-left: 15px;
-        }
-        
-       
-        /* 좋아요버튼  */
-        .heart{
-         width:auto;
-         margin: auto 5% auto auto; 
-           text-align: right;
-        }
+#question {
+   text-align: center;
+   font-size: 25px;
+   font-weight: bold;
+}
+
+#result {
+   text-align: center;
+   display: none;
+}
+
+.answer {
+   text-align: center;
+   width: 100%;
+   height: 100px;
+   background-color: #e8ecf1;
+   padding: 10px;
+   border-radius: 40px;
+   margin-top: 30px;
+   font-weight: bold;
+   padding: 40px 0;
+}
+
+.yourList {
+   width: 100%;
+   text-align: left;
+   background-color: white;
+   border-radius: 8px;
+   padding: 2%;
+}
+
+.resultplacedt {
+   display: flex;
+}
+
+.resultplacedt h4 {
+   margin-top: auto;
+   margin-bottom: auto;
+   margin-left: 15px;
+}
+
+/* 좋아요버튼  */
+.heart {
+   width: auto;
+   margin: auto 5% auto auto;
+   text-align: right;
+}
+
 /* test 스타일 끝 */
 
 body{
@@ -191,46 +211,200 @@ a{text-decoration: none}
 
 .boardContents{
 	width: 100%;
-	height: 600px;
+	height: auto;
 	background-color: white;
+	display:inline-block;
 }
 
 .gallery {
-	width: 100%;
+	width: 90%;
 	height: 100%;
 	display : flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
+	margin : 0 auto;
 }
 
 .card-contents{
 	width: 23%;
-	height: 50%;
+	height: 300px;
+	position: relative;
+ 	z-index: 1;
+  	display: block;
+ 
+  	margin-bottom: 10px;
+  	border-radius: 10px;
+  	box-shadow: 2px 2px 2px 2px #D4D4D4;
 }
 
 .card-Img{
+	position : relative;
+	background-size: cover;
 	width: 100%;
-	height: 80%;
-	
+	height: 70%;
 }
 
 .card-Img Img{
 	width: 100%;
 	height: 100%;
-	border-radius: 5%;
+	border-radius: 10px;
 	
 }
 
-.card-Title{
-	margin-top: 10px;
+.card-desc{
+	margin: 10px;
 	height: auto;
 	font-size: 15px;
 }
 
+.desc_bottom{
+	 margin: 30px 0 0;
+	 font-size : 12px;
+}
+/* .card-Title{
+	margin-top: 10px;
+	height: auto;
+	font-size: 15px;
+} */
+
+/* selectbox */
+
+
+/* ===== Select Box ===== */
+.sel {
+  font-size: 10px;
+  display: inline-block;
+  margin: 1em 1em;
+  width: 230px;
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+}
+
+.sel::before {
+  position: absolute;
+  content: '\f063';
+  font-family: 'FontAwesome';
+  font-size: 2em;
+  color: black;
+  right: 20px;
+  top: calc(50% - 0.5em);
+}
+
+.sel.active::before {
+  transform: rotateX(-180deg);
+}
+
+.sel__placeholder {
+  display: block;
+  font-family: 'Quicksand';
+  font-size: 20px;
+  color: #838e95;
+  padding: 0.2em 0.5em;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  visibility: visible;
+}
+
+.sel.active .sel__placeholder {
+  visibility: hidden;
+}
+
+.sel__placeholder::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2em 0.5em;
+  content: attr(data-placeholder);
+  visibility: hidden;
+}
+
+.sel.active .sel__placeholder::before {
+  visibility: visible;
+}
+
+.sel__box {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: -4px;
+  display: none;
+  list-style-type: none;
+  text-align: left;
+  font-size: 1em;
+  background-color: #FFF;
+  width: calc(100% + 8px);
+  box-sizing: border-box;
+}
+
+.sel.active .sel__box {
+  display: block;
+  animation: fadeInUp 500ms;
+}
+
+.sel__box__options {
+  display: list-item;
+  font-family: 'Quicksand';
+  font-size: 1.5em;
+  color: #838e95;
+  padding: 0.5em 1em;
+  user-select: none;
+}
+
+.sel__box__options::after {
+  content: '\f00c';
+  font-family: 'FontAwesome';
+  font-size: 0.5em;
+  margin-left: 5px;
+  display: none;
+}
+
+.sel__box__options.selected::after {
+  display: inline;
+}
+
+.sel__box__options:hover {
+  background-color: #ebedef;
+}
+
+/* ----- Select Box Black Panther ----- */
+.sel {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+}
+
+.sel--black-panther {
+  z-index: 3;
+}
+
+
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
 
 </style>
-
-
 
 
 <body>
@@ -239,19 +413,26 @@ a{text-decoration: none}
 		<!-- 상단 -->
 		<div class="ct_body">
 			<div id="mainNav">
-				<div class="navContent">
-					<select name="region" class="select-box">
-						<c:forEach items="${list }" var="region">
-							<option class="option-box"
-								data-region-no="<c:out value='${region.regionNo }' />">
-								<c:out value="${region.si }" />
-							</option>
-						</c:forEach>
-					</select>
+				<div class="navContent"  style="text-align: center;">
+
+					<div class="sel sel--black-panther">
+						<select name="region" id="region" >
+							<option data-region-no="1" value="" disabled>지역</option>
+							<option class="option-box" data-region-no="1">제주시</option>
+							<option class="option-box" data-region-no="2">서귀포시</option>
+							<option class="option-box" >속초시</option>
+							<option class="option-box">여수시</option>
+							<option class="option-box" >부산광역시</option>
+							<option class="option-box">광주광역시</option>
+						</select>
+					</div>
+
 				</div>
 				<div class="navContent">
-					<input type="text" name="daterange" class="data-range-picker" />
+					<input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; />
 				</div>
+				
+				
 				<div class="navContent" id="goNext">
 					<i class="material-icons w3-large">search</i>
 				</div>
@@ -263,16 +444,16 @@ a{text-decoration: none}
 			<br><br>
 			<button id="popup_open_btn">여행성향검사</button>
 			
-	<!--  test 모달창 -->
+<!--  test 모달창 -->
     <div id="modal">
-        <!-- 닫는버튼 -->
-        <button class="modal_close_btn">X</button>
 
         <div id="test">
+        <!-- 닫는버튼 -->
+        <button class="modal_close_btn">X</button>
             <div id="result">
-                <div class="placeList"><a href="'https://place.map.kakao.com/'+'장소번호'"><img src="" class='placeImg'></a></div>
 
             </div>
+            <div id="progbar"></div>
             <div id="question"></div>
             <div id="answers">
                 <div class="answer"></div>
@@ -289,8 +470,9 @@ a{text-decoration: none}
 
 
 		<!-- 관리자 게시판리스트 출력 -->
-			<button id="goList" onclick="location.href='/board/list'" style="float: right;">더보기</button>
-
+	
+			<button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
+	
 			<div class="boardContents">
 				<div class="gallery">
 					<c:forEach items="${adminlist }" var="adminlist">
@@ -301,12 +483,16 @@ a{text-decoration: none}
 									<img src="/resources${adminlist.boardImg}">
 								</a>
 							</div>
-								<div class="card-Title">
+								<div class="card-desc">
 									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
 									<c:out value="${adminlist.boardTitle }" /></a></b>
-									<%-- 			작성자 : <c:out value="${adminlist.writer }"/><br>
-			조회수 : <c:out value="${adminlist.VCnt }"/> 좋아요 수 : <c:out value="${adminlist.pickCnt }"/><br>
-			작성일  : <c:out value="${adminlist.WDate }"/> --%>
+									<div class="desc_bottom">
+										<i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
+										<i class="fa fa-heart-o"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
+										<div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
+									
+									</div>
+									
 								</div>
 						</div>
 					</c:forEach>
@@ -387,8 +573,7 @@ a{text-decoration: none}
 
 	}
 	
-	
-	<!--테스트 스크립트 -->
+
 	
     function modal(id) {
         
@@ -456,9 +641,12 @@ a{text-decoration: none}
         pT = 0;
         pS = 0;
         pN = 0;
+        prog = 0;
+        $('.progbar').width('0%')
         $('#result').hide().empty();
         $('#answers').show()
-        $("#question").text("Q1." + question[0]).show()
+        $("#question").text("1." + question[0]).show()
+        $('#progbar').show()
         answer[0].innerText = answers[0][0];
         answer[0].removeEventListener("click",atest);
         answer[1].innerText = answers[0][1];
@@ -513,13 +701,14 @@ a{text-decoration: none}
     ]
 
     $(document).ready(function () {
-        $("#question").text("Q1." + question[0])
+       $("#progbar").html("<div class='progbarbg'><div class='progbar' style='width:0%; text-align:center;'></div></div></div>")
+        $("#question").html("1." + question[0])
         let answer = document.getElementsByClassName("answer");
         answer[0].innerText = answers[0][0];
         answer[1].innerText = answers[0][1];
     });
     
-    let aCnt = 0;
+    let aCnt = 0;   
     let qCnt = 0;
     let pI = 0;
     let pE = 0;
@@ -528,9 +717,11 @@ a{text-decoration: none}
     let pS = 0;
     let pN = 0;
     let answer = document.getElementsByClassName("answer");
+   let prog = 0;
 
     $('.answer').on("click", function () {
-
+       prog+=6.7;
+       progMove(prog);
         let result = this.innerText;
 
         if (0 <= qCnt && qCnt <= 4) {
@@ -547,11 +738,11 @@ a{text-decoration: none}
         }
 
         if(qCnt<=13){
-        $("#question").text("Q" + (qCnt + 2) + "." + question[qCnt + 1])
+        $("#question").text(qCnt + 2+ "." + question[qCnt + 1])
         // console.log(count)
 
-        answer[0].innerText = answers[aCnt + 1][0];
-        answer[1].innerText = answers[aCnt + 1][1];
+        answer[0].innerHTML = answers[aCnt + 1][0];
+        answer[1].innerHTML = answers[aCnt + 1][1];
 
         qCnt += 1;
         aCnt += 1;
@@ -624,7 +815,7 @@ a{text-decoration: none}
         $('#result').show()
         $('#question').hide()
         $('#answers').hide()
-       
+          $('#progbar').hide()
         
         let sendData = {
            'type' : yourType
@@ -740,5 +931,63 @@ a{text-decoration: none}
      }
      
   }; 
+  
+  
+  function progMove(prog){
+   
+      if(prog>=100){
+      return;
+         }
+      $('.progbar').width(prog + '%');
+  }
+  
+  
+  /* ===== Logic for creating fake Select Boxes ===== */
+  $('.sel').each(function() {
+    $(this).children('select').css('display', 'none');
+    
+    var $current = $(this);
+    
+    $(this).find('option').each(function(i) {
+      if (i == 0) {
+        $current.prepend($('<div>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__box')
+        }));
+        
+        var placeholder = $(this).text();
+        $current.prepend($('<span>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+          text: placeholder,
+          'data-placeholder': placeholder
+        }));
+        
+        return;
+      }
+      
+      $current.children('div').append($('<span>', {
+        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+        text: $(this).text()
+      }));
+    });
+  });
+
+  // Toggling the `.active` state on the `.sel`.
+  $('.sel').click(function() {
+    $(this).toggleClass('active');
+  });
+
+  // Toggling the `.selected` state on the options.
+  $('.sel__box__options').click(function() {
+    var txt = $(this).text();
+    var index = $(this).index();
+    
+    $(this).siblings('.sel__box__options').removeClass('selected');
+    $(this).addClass('selected');
+    
+    var $currentSel = $(this).closest('.sel');
+    $currentSel.children('.sel__placeholder').text(txt);
+    $currentSel.children('select').prop('selectedIndex', index + 1);
+  });
+
 
 </script>

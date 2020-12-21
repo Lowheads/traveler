@@ -157,7 +157,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public List<Map<String, Object>> getSchedt(int schNo) {
-		log.info(mapper.getSchedule(schNo));
+
 		return mapper.getSchedule(schNo);
 	}
 

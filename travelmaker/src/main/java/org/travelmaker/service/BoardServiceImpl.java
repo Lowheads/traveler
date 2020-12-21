@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.BoardVO;
@@ -28,8 +29,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO get(int boardNo) {
 		log.info("get......"+boardNo);
+		mapper.viewCnt(boardNo);
 		return mapper.read(boardNo);
 	}
+	
 	
 	@Override
 	public BoardVO getbySchNo(BoardVO board) {
@@ -87,6 +90,5 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardVO> getAdminList() {
 		return mapper.getAdminList();
 	}
-	
-	
+
 }

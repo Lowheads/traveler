@@ -1,127 +1,397 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../includes/jeheader.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<link rel="stylesheet" href="/resources/css/main.css">
-
+<!-- <link rel="stylesheet" href="/resources/css/main.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-.left-box {
-  background: white;
-  float: left;
-  width: 50%;
-}
-.right-box {
-  background: white;
-  float: right;
-  width: 50%;
-}
+
 .transit, .distance{
  font-size: 13px;
 }
-.schdt{
-  background-color: white; /* Green */
-  border: none;
-  border-radius: 8px;
-  padding: 13px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
- 
+
+.contents{
+	width: 70%;
+	margin-top: 50px;
+	margin-bottom: 100px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+.ct_body{
+	padding: 30px;
+	/* background-image: url('/resources/imgUpload/2020/12/10/ff752342-efbc-4691-b3f5-7d6d5ef9c2fe_다운로드.jpg');  */
+	height: 270px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	background-position:center center;
+  	margin-bottom:10px;
 }
 
-.place{
- boarder: solid;
- background-color:#FFEFD5;
- text-align: center;
- padding: 10px;
- border-radius: 8px;
- display: inline-block;
- font-size : 14px;
- width: 85px;
+/* .form-group input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 7px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
+.form-group textarea {
+    width: 100%;
+    height: 500px;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+#form {
+    width: 650px;
+    margin: 0 auto;
+}
+.form-group label {
+    font-weight: bold;
+    font-size: 15px;
+} */
+
+.col-25{
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+
+}
+
+.col-75{
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+
+
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.container{
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 30px;
+
+}
+@media screen and (max-width: 600px) {
+  .col-25, .col-75 {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+
+.form-control, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.boardContents{
+	width: 100%;
+	height: auto;
+	background-color: white;
+	display:flex;
+}
+
+.mainMsg{
+	margin-left: 5%;
+}
+
+.mainMsg b{
+	font-size:30px;
+	color:white;
+
+}
+
+
+/*스케쥴 */
+.schedule_dt_box {
+   width: 63%;
+}
+
+.schdt_top{
+   height: 70px;
+   display: flex;
+}
+
+.dt_top_left{
+   width: 15%;
+   background-color: #203341;
+   color:white;
+    text-align: center;
+   line-height: 70px;    
+   border-right: 1px solid gray;
+}
+
+.dt_top_right{
+   border-top: 1px solid gray;
+   border-right: 1px solid gray;
+   padding-left: 10px;
+   width: 85%;
+   display: flex;
+   justify-content: space-between;
+}
+.daily_date{
+   margin-top: auto;
+   margin-bottom: auto;
+}
+
+.schdt_bottom{
+   height: 100px;
+   display:flex;
+}
+.dt_bottom_left{
+   width: 15%;
+   text-align: center;
+   border-top: 1px solid gray;
+   border-left: 1px solid gray;
+   border-right: 1px solid gray;
+   padding-top: 40px;
+}
+
+.daily_count{
+   font-size:14px;   
+   margin-left:auto;
+   margin-right:auto;
+   color:white;
+   background-color:#203341;
+   border-radius: 50%;
+   width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.dt_bottom_right{
+   padding-left: 10px;
+   width: 85%;
+   line-height: 100px;  
+   border-right: 1px solid gray;
+   border-top: 1px solid gray;
+}
+.dt_bottom_right img{
+   width: 75px;
+   height: 75px;
+}   
+.dt_box_footer{
+   display:flex;
+   background-color: #e6e6e6;
+   border:1px solid gray;
+}
+.dt_footer_left{
+   width: 15%;
+   text-align: center;
+}
+
+.dt_footer_right{
+   width: 85%;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout:fixed;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #203341;
+  color: white;
+}
+#tabletitle{
+
+   text-align:center;
+}
+
+.left {
+     width: 45%;
+     margin-right : 5%;
+
+}
+
+.right {
+     width: 50%;
+
+}
+
+.btn { 
+	font-size:15px;
+	color: black;
+
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+	float: right;
+}
+
+.btn:hover{
+   background-color: #203341;
+   color:white;
+}
+.flex-container{
+	margin-top: 10px;
+	border-radius : 5px;
+	background-color: white;
+	padding: 40px;
+
+}
+
+.select_img{
+	text-align:center;
+}
+
+.filecontent{
+
+	text-align: center;
+}
+
+.imgcontent input{
+	margin-top:10px;
+	width: 92%;
+	height:30px;
+}
+
 </style>
 
+  
 
-
-<div class="wrapper">    
-	<div class="header_wrapper">
-	<div class="header">
-		<h3>사진 추가</h3>
-	</div>
-</div>
 <div class="contents">
-<div class='left-box'>
-		<div class="ct_body">	
-			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<label>게시물번호</label>
-				<input class="form-control" name='boardNo' value='${board.boardNo }' readonly="readonly">
-			</div>
-			
-			<div class="form-group">
-				<label>게시물 이름</label> <input class="form-control" name='boardTitle' value='${board.boardTitle }' readonly="readonly">
-			</div>
-			
-	
+<!--상단 -->
 
-			<div class="form-group">
-					<label>게시글 설명</label>
-					<input class="form-control" name='boardCon' >
-			</div>
-			<div class="form-group">
-			<div style="border: 1px solid #dbdbdb;">
-				<div class="flex-container">
-						<span id="fileIndex"></span>
+	<div class="boardContents">
+	<!-- 좌측 register -->
+		<div class="left">
+		
+		<div class="container">
+			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
+			
+				<div class="row">
+				<div class="col-25">
+				<label>게시글 제목</label> 
 				</div>
+				<div class="col-75">
+				<input class="form-control" name='boardTitle' value='${board.boardTitle}' readonly="readonly">
 			</div>
 			</div>
+
+			
+				<div class="row">
+				<div class="col-25">
+				<label>일정명</label>
+				</div>
+				<div class="col-75">
+				<input class="form-control" name='schNo' value='${schedule.schTitle }' readonly="readonly">
+				<input type="hidden" name='boardNo' value='${board.boardNo }'>
+			</div>
+				</div>
+
+				<div class="row">
+				<div class="col-25">
+					<label>게시글 내용</label>
+					</div>
+					<div class="col-75">
+					<textarea id="boardCon" name="boardCon" style="height:200px"></textarea>
+				</div>
+				</div>			
+				<br>
+				사진등록
+				<div class="flex-container">
+				<button type="button" class="fileAdd_btn btn" >사진추가</button>
+						<span id="fileIndex"></span>
+			</div>
+			
 			<br>
-						<button id="Btn" type="submit" class="btn btn-default" >게시글 등록</button>
-						<button id="Btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>	
-						<button type="button" class="fileAdd_btn btn" >사진추가</button>
-	
+				<button id="btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>	
+				<button id="btn" type="submit" class="btn btn-default" >게시글 등록</button>
+
 				</form>
 				</div>
+				</div>
 			
+				
+				
+	<div class='right'>
+		<div class="content_wrap">
+
+
+<table id="customers">
+   <tr id="tabletitle">
+      <th><i class="fa fa-calendar"></i>날짜</th>
+      <th><i class="fa fa-globe"></i>&nbsp도시</th>
+      <th><i class="fa fa-thumb-tack"></i>&nbsp일정</th>
+      <th><i class="fa fa-car"></i>&nbsp교통</th>
+      <!-- <th><i class="fa fa-bed"></i>&nbsp숙소</th> -->
+   </tr>
+   
+   <c:set var="count" value="0"></c:set>
+   <c:forEach items="${Schdt}" begin="0" end="${Schdt.size() }" var="schdt" varStatus="status">
+       <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[status.index-1].SCH_DATE  }">
+       
+          <c:set var="count" value="${count+1 }"/>
+          
+      <tr>
+         <td style="text-align:center;"><fmt:formatDate value="${schdt.SCH_DATE}" type="date" dateStyle="full" /><br>
+         DAY<c:out value="${count}"/></td>
+         <td><i class="fa fa-map-marker"></i>제주도<br>jeju</td>
+         <td>
+         <c:set var="dtCnt" value="0"/>
+         <c:forEach items="${Schdt }" begin="0" end="${Schdt.size() }" var="dt" varStatus="vs">   
+            <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE }">
+                      <c:if test="${schdt.SCH_DATE eq dt.SCH_DATE}">
+                      <c:set var="dtCnt" value="${dtCnt+1 }"/>
+                     <c:out value="${dtCnt }"/>.<c:out value="${dt.FROMTITLE }"/><br>
+               </c:if>
+               
+               <!-- 마지막  -->
+            <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
+            <c:out value="${dtCnt+1}"/>.<c:out value="${dt.TOTITLE }"/>
+            
+            </c:if>
+            </c:if>
+         </c:forEach>
+         </td>
+      <td><c:out value="${schdt.TRANSIT }"/></td>
+      <!-- <td></td> -->
+      </tr>
+   
+   </c:if>
+   </c:forEach>
+</table>
+</div>
+</div>
 	</div>
-<div class='right-box'>
-<div class="ct_body">
-
-	<div style="display:flex; margin:auto; text-align:center">
-	<c:forEach items="${schdtplace}" begin="0" end="${schdtplace.size() }" var="schdt1" varStatus="schdtstatus1">
-		<c:if test="${schdtplace[schdtstatus1.index].schDate ne schdtplace[schdtstatus1.index-1].schDate}">
-		<div class="schdt">
-		<c:set var = "count" value="${count+1 }"/>
-		<c:out value="${count}"/>일차<br><br>
-			<c:forEach items="${schdtplace}" begin="0" end="${schdtplace.size() }" var="schdt2" varStatus="schdtstatus2">
-				<c:if test="${schdtplace[schdtstatus1.index].schDate eq schdt2.schDate }">
-				<c:choose>
-					<c:when test="${schdtplace[schdtstatus2.index-1].schDate ne schdt2.schDate}">
-					<%-- <c:out value="${schdt2.schDate }"/><br> --%>
-					<span class="place"><c:out value="${schdt2.plcTitle }"/></span><br>
-					<span class="transit"><c:out value="${schdt2.transit }"/></span>
-					<span class="distance"><c:out value="${schdt2.distance }"/>km</span><br>
-					<span class="place"><c:out value="${schdt2.plcTitle1 }"/></span><br>
-					</c:when>
-					
-					<c:when test="${schdtplace[schdtstatus2.index-1].schDate eq schdt2.schDate}">
-					<span class="transit"><c:out value="${schdt2.transit }"/></span>
-					<span class="distance"><c:out value="${schdt2.distance }"/>km</span><br>
-					<span class="place"><c:out value="${schdt2.plcTitle1 }"/></span><br>
-					</c:when>
-					</c:choose>
-				</c:if>	
-			</c:forEach>
-		</div>
-		</c:if>
-	</c:forEach>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-
+	</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -130,10 +400,10 @@ $(document).ready(function(){
 		var fileIndex = 1;
 		var contentIndex= 1;
 		$(".fileAdd_btn").on("click", function(){
-			$("#fileIndex").append("<div><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
+			$("#fileIndex").append("<div class='filecontent'><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
 			+"<div class='select_img'><img src=''/></div>"		
-			+"<br><input type='text' name='newContent'/>"
-			+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
+			+"<div class='imgcontent'><input type='text' name='newContent'/></div>"
+			+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 		});
 
 	
@@ -145,7 +415,8 @@ $(document).ready(function(){
 				var reader = new FileReader;
 					reader.onload = function(data) {
 				tmp.next().children().attr("src", data.target.result)
-					.width(500);
+					.width(300)
+					.height(200);
 				}
 				reader.readAsDataURL(this.files[0]);
 				}

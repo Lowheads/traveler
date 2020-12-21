@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-
+ 
  <!-- 쿠키 -->
  <%
  
@@ -30,15 +28,20 @@
    }
    // 로그인 되었다면, 로그아웃, 정보수정, 회원탈퇴 버튼이 보인다.
    if(session.getAttribute("email") != null){
-      sessionBtn = "<a href='/member/logout'>로그아웃</a>";
-      modifyBtn = "<a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a>";
-   	  mypage = "<a href='/mypage/pickPL'>마이페이지</a>";
+      sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
+      modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
+   	  mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
    }
    else{
-	  sessionBtn = "<a href='#' id='login_modal_btn'>로그인 </a>";
-	  registerBtn = "<a href='#' id='register_modal_btn'>회원가입</a>";
+	  sessionBtn = "<li><a href='#' id='login_modal_btn'>로그인 </a></li>";
+	  registerBtn = "<li><a href='#' id='register_modal_btn'>회원가입</a></li>";
    }
 %>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <meta charset="utf-8">
@@ -50,13 +53,9 @@
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="utf-8">
-<!-- Bootstrap cdn 설정 -->
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -69,14 +68,213 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+
 <style>
-/*datepicker에서 사용한 이미지 버튼 style적용*/
-img.ui-datepicker-trigger {
-	margin-left: 5px;
-	vertical-align: middle;
-	cursor: pointer;
+/*헤더 스타일 */
+
+
+:root {
+    --grey-med: #ddd;
+    --grey-light: #f7f7f7;
+    --grey-text-light: #717171;
+    --grey-text-dark: #222;
+    --pink: #ff385c;
 }
-.modal_wrap{
+
+
+.header {
+    height: 80px;
+    padding: 0 90px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
+    justify-content: space-between;
+    white-space: nowrap;
+    z-index:1;
+}
+
+.header__logo, .header__nav {
+    flex: 1 0 140px;
+}
+
+.header__search {
+    display: inline-flex;
+    border-radius: 24px;
+    overflow: hidden;
+    align-items: center;
+    border: 1px solid var(--grey-med);
+    transition: box-shadow 0.2s ease;
+}
+
+.header__search:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.header__search button {
+    background: transparent;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-family: 'AirbnbCereal-Medium';
+    cursor: pointer;
+}
+
+.header__search button:first-of-type {
+    padding-left: 24px;
+}
+
+.header__search button:last-of-type {
+    padding-right: 24px;
+}
+
+.header__search span {
+    width: 1px;
+    height: 24px;
+    background: var(--grey-med);
+}
+
+.header__searchIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgb(255, 194, 34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+}
+
+.header__searchIcon img {
+    width: 12px;
+    height: 12px;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.header__nav__button {
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 22px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    height: 40px;
+
+}
+
+.header__nav__button-greyHover:hover {
+    background: var(--grey-light);
+}
+
+ .header__nav__button-account {
+    border: 1px solid var(--grey-med);
+    height: 42px;
+    border-radius: 22px;
+    padding: 5px 5px 5px 12px;
+    transition: box-shadow 0.2s ease;
+} 
+
+.header__nav__button-account:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.header__nav__button-account img:first-child {
+    height: 16px;
+    width: 16px;
+}
+
+.header__nav__button-account img:last-child {
+    width: 30px;
+    height: 30px;
+    margin-left: 12px;
+}
+
+.header__nav__button-language img:first-child {
+    width: 16px;
+    height: 16px;
+}
+
+.header__nav__button-language img:last-child {
+    width: 9px;
+    height: 6px;
+    margin-left: 6px;
+}
+
+.header__nav ul {
+    position: absolute;
+    background: rgb(255, 255, 255);
+    margin-top: 50px;
+    padding: 0;
+    width: 200px;
+    height: 150px;
+    display: flex;
+    /*justify-content: space-around;*/
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    border-radius: 10px;
+    opacity: 0;
+    /* pointer-events: none; */
+    transform: translateY(-5px);
+    transition: all 0.4s ease;
+    box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+}
+
+.header__nav a {
+    padding-top: 6.5px;
+    width: 100%;
+    font-family: AirbnbCereal-Light;
+    color: black;
+    text-decoration: none;
+    height: 30px;
+    margin-left: 14px;
+}
+
+.header__nav li {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    /*justify-content: center;*/
+    justify-items: center;
+    /*align-items: center;*/
+}
+
+.header__nav li:hover {
+    background-color: rgb(248, 248, 248);
+    cursor: pointer;
+}
+
+.header__nav button:focus + ul {
+    opacity: 1;
+/*     pointer-events: all; */
+    transform: translateY(0px);
+}
+
+.header__nav li:first-of-type {
+    margin-top: 8px;
+}
+
+.header__nav li:last-of-type {
+    margin-bottom: 18px;
+}
+
+.header__nav li:last-child {
+    margin-bottom: 100px;
+}
+
+/*성현 style */
+/* .modal_wrap{
         display: none;
         width: 70%;
         position:fixed;
@@ -99,7 +297,7 @@ img.ui-datepicker-trigger {
         height: 100%;
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
-    }
+    } */
 .login_modal {
    display: none;
    width: 40%;
@@ -232,41 +430,6 @@ img.ui-datepicker-trigger {
     color: white;
     border: 1px solid #4e266d;
 }
-#map {
-   width: 100%;
-   height: 100%;
-}
-.card-img-top {
-   width: 100%;
-   height: 60%;
-}
-.card-title {
-   display: block;
-}
-.card-text {
-   display: flex;
-}
-.h-100 {
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 10px;
-   margin-bottom: 7px;
-}
-.map_wrap, .map_wrap * {
-   margin: 0;
-   padding: 0;
-   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-   font-size: 12px;
-}
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
-   color: #000;
-   text-decoration: none;
-}
-.map_wrap {
-   position: relative;
-   width: 100%;
-   height: 500px;
-}
 #menu_wrap {
    position: absolute;
    top: 0;
@@ -281,9 +444,7 @@ img.ui-datepicker-trigger {
    font-size: 12px;
    border-radius: 10px;
 }
-.bg_white {
-   background: #fff;
-}
+
 #menu_wrap hr {
    display: block;
    height: 1px;
@@ -297,95 +458,7 @@ img.ui-datepicker-trigger {
 #menu_wrap .option button {
    margin-left: 5px;
 }
-#placesList {
-   padding-left: 0px;
-}
-#placesList li {
-   list-style: none;
-}
-#placesList .item {
-   position: relative;
-   border-bottom: 1px solid #888;
-   overflow: hidden;
-   cursor: pointer;
-   min-height: 65px;
-}
-#placesList .item span {
-   display: block;
-   margin-top: 4px;
-}
-#placesList .item h5, #placesList .item .info {
-   text-overflow: ellipsis;
-   overflow: hidden;
-   white-space: nowrap;
-}
-#placesList .item .info {
-   padding: 10px 0 10px 55px;
-}
-#placesList .info .gray {
-   color: #8a8a8a;
-}
-#placesList .info .jibun {
-   padding-left: 26px;
-}
-#placesList .info .tel {
-   color: #009900;
-}
-#placesList .item .markerbg {
-   float: left;
-   position: absolute;
-   width: 36px;
-   height: 37px;
-   margin: 10px 0 0 10px;
-   background:
-      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-      no-repeat;
-}
-#placesList .item .marker_1 {
-   background-position: 0 -10px;
-}
-#placesList .item .marker_2 {
-   background-position: 0 -56px;
-}
-#placesList .item .marker_3 {
-   background-position: 0 -102px
-}
-#placesList .item .marker_4 {
-   background-position: 0 -148px;
-}
-#placesList .item .marker_5 {
-   background-position: 0 -194px;
-}
-#placesList .item .marker_6 {
-   background-position: 0 -240px;
-}
-#placesList .item .marker_7 {
-   background-position: 0 -286px;
-}
-#placesList .item .marker_8 {
-   background-position: 0 -332px;
-}
-#placesList .item .marker_9 {
-   background-position: 0 -378px;
-}
-#placesList .item .marker_10 {
-   background-position: 0 -424px;
-}
-#placesList .item .marker_11 {
-   background-position: 0 -470px;
-}
-#placesList .item .marker_12 {
-   background-position: 0 -516px;
-}
-#placesList .item .marker_13 {
-   background-position: 0 -562px;
-}
-#placesList .item .marker_14 {
-   background-position: 0 -608px;
-}
-#placesList .item .marker_15 {
-   background-position: 0 -654px;
-}
+
 #pagination {
    margin: 10px auto;
    text-align: center;
@@ -413,13 +486,7 @@ body {
    color: white;
    padding: 5px;
 }
-.orgImg {
-   width: 100px;
-   height: 100px;
-}
-.select_img img {
-   margin: 20px 0;
-}
+
 #button { /*로그인 버튼*/
    width: 260px;
    height: 50px;
@@ -498,65 +565,52 @@ text-align: center;
 	font-weight: bold;
 	font-size: 17px;
 	padding-left: 10px;
-}
+	}
+
+
+
 </style>
+
 
 </head>
 
 <body>
 
-   <!-- 네비게이션(nav) 컨트롤에 사요하는 드롭다운. -->
-   <div style="margin: 20px;">
-      <nav id="navbar-example" class="navbar navbar-default navbar-static">
-         <div class="container-fluid">
-            <!-- 네비게이션(nav)의 기본 설정으로 모바일일 때, 메뉴 버튼이 나온다. -->
-            <div class="navbar-header">
-               <button class="navbar-toggle collapsed" type="button"
-                  data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span> <span
-                     class="icon-bar"></span> <span class="icon-bar"></span> <span
-                     class="icon-bar"></span>
-               </button>
-               <!-- 타이틀임. -->
-               <a class="navbar-brand" href="/main/index">여정</a>
-               
-            </div>
-            <!-- 메뉴 설정 -->
-            <div class="collapse navbar-collapse">
-               <!-- 메뉴는 왼쪽으로 두개 설정 -->
-               <ul class="nav navbar-nav">
-                  <!-- 메뉴 이름은 Hello로 서브 옵션은 Test1과 Test2가 있다. -->
+<header class="header">
 
-                  <!-- 메뉴 이름은 World로 서브 옵션은 Test3과 Test4가 있다. -->
+    <div class="header__logo">
+        <a href="/main/index">
+            <img src="/resources/icons/tmlogo.png" width="100px" alt="">
+        </a>
+    </div>
 
-               </ul>
-                <!-- 메뉴를 오른쪽 정렬로 설정 가능 -->
-          <ul class="nav navbar-nav navbar-right">
-            <!-- 메뉴 이름은 Right!로 서브 옵션은 Test5와 Test6가 있다. -->
-            <li>
-            <a class="navbar-brand" href="/admin/boardList">관리자</a>
-            <a class="navbar-brand" href="/board/list">게시판</a>
-            <a class="navbar-brand" href="/qnaboard/list">Q&A 게시판</a>
-            
-            <div class="dropdown">
-  <div class="dropbtn"></div>
-  <div class="dropbtn"></div>
-  <div class="dropbtn"></div>
-  <div class="dropdown-content">
-  <%= sessionBtn %>
-  <%= modifyBtn %>
-  <%= mypage %>
-  <%= registerBtn %>
-  
-  </div>
-</div>
-            
-            </li>
-          </ul> 
-        </div>
-      </div>
-    </nav>
-  </div>
+   		<div class="header__nav">
+        <button type="button" onclick="location.href='/board/list'" class="header__nav__button
+        header__nav__button-greyHover"> 게시판
+        </button>
+
+        <button onclick="location.href='/buddt/get'" class="header__nav__button
+            header__nav__button-language
+            header__nav__button-greyHover" style="margin-right: 7px;">
+            <img src="/resources/icons/internet.png" alt="Globe"/>
+            <img src="/resources/icons/chevron.png" alt="Globe"/>
+        </button>
+
+        <button class="header__nav__button
+        header__nav__button-account">
+            <img src="/resources/icons/hamburger.svg" alt="Hamburger"/>
+            <img src="/resources/icons/user-1.png" alt="Account"/>
+        </button>
+        <ul>
+            <%= sessionBtn %>
+ 			<%= modifyBtn %>
+  			<%= mypage %>
+  			<%= registerBtn %>
+  			<li><a href='/qnaboard/list'>Q&A 게시판</a></li>
+        </ul>
+    </div>
+</header>
+
 <div class="container">
 
             <!-- 모달 클릭시 뒷 배경 -->

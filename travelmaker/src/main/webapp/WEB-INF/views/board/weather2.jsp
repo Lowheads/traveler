@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
 
@@ -46,7 +47,6 @@
   <div class='weather'>
     <div class='City' style="font-size: 20px;"></div>
   </div>
-
   <!-- jQuery -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -145,5 +145,4 @@
   </script>
 
 </body>
-
 </html>
