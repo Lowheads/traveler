@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- <%@ include file="../includes/jeheader.jsp" %> --%>
 
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
@@ -217,24 +218,24 @@ a{text-decoration: none}
 }
 
 .gallery {
-	width: 90%;
+	width: 100%;
 	height: 100%;
 	display : flex;
-	justify-content: space-around;
+	justify-content: center;
 	flex-wrap: wrap;
 	margin : 0 auto;
 }
 
 .card-contents{
-	width: 23%;
-	height: 300px;
+	width: 15%;
+	height: 450px;
 	position: relative;
  	z-index: 1;
   	display: block;
- 
+ 	margin-right: 15px;
   	margin-bottom: 10px;
   	border-radius: 10px;
-  	box-shadow: 2px 2px 2px 2px #D4D4D4;
+
 }
 
 .card-Img{
@@ -242,14 +243,18 @@ a{text-decoration: none}
 	background-size: cover;
 	width: 100%;
 	height: 70%;
+	border-radius: 10px;
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover;
 }
 
-.card-Img Img{
+/* .card-Img Img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	
-}
+} */
 
 .card-desc{
 	margin: 10px;
@@ -258,7 +263,6 @@ a{text-decoration: none}
 }
 
 .desc_bottom{
-	 margin: 30px 0 0;
 	 font-size : 12px;
 }
 /* .card-Title{
@@ -478,11 +482,12 @@ a{text-decoration: none}
 					<c:forEach items="${adminlist }" var="adminlist">
 						<div class="card-contents">
 
-							<div class="card-Img">
-								<a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
-									<img src="/resources${adminlist.boardImg}">
-								</a>
+							<c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
+							<a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+							<div class="card-Img" style="background-image: url(/resources${coverimg});" >
+<%-- 									<img src="/resources${adminlist.boardImg}"> --%>
 							</div>
+								</a>
 								<div class="card-desc">
 									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
 									<c:out value="${adminlist.boardTitle }" /></a></b>
