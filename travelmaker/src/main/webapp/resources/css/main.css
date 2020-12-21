@@ -5,7 +5,7 @@
     border-bottom: 1px  solid #f0f0f0;
 }
 .header {
-    width: 960px;
+    width: 100%;
     height: 64px;
     margin: 0 auto;
     position: relative;
@@ -19,11 +19,17 @@
 .header div {
     float: left;
 }
-.logo>a {
-    font-size: 40px;
-    color: orange;
-    font-weight: bold;
+
+
+.btn { 
+	font-size:15px;
+	margin-bottom: 30px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
 }
+
 
 .hd_search button:hover {
     color: #4279ff;
@@ -108,14 +114,5 @@
 .form-group label {
     font-weight: bold;
     font-size: 15px;
-}
-
-.btn { 
-	width: 130px;
-	height: 35px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
 }
 
