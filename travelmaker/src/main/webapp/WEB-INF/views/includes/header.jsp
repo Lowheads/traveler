@@ -218,13 +218,12 @@
     padding: 0;
     width: 200px;
     height: 150px;
-    display: flex;
+    display: none;
     /*justify-content: space-around;*/
     align-items: center;
     flex-direction: column;
     list-style: none;
     border-radius: 10px;
-    opacity: 0;
     /* pointer-events: none; */
     transform: translateY(-5px);
     transition: all 0.4s ease;
@@ -256,9 +255,9 @@
 }
 
 .header__nav button:focus + ul {
-    opacity: 1;
+    display:flex;
 /*     pointer-events: all; */
-    transform: translateY(0px);
+    transform: translateY(0px);	
 }
 
 .header__nav li:first-of-type {
