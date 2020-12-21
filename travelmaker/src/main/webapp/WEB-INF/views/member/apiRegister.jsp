@@ -8,7 +8,9 @@
 <head>
 <meta charset="UTF-8">
 
-<title>네이버유저 회원가입</title>
+<link rel="stylesheet" href="/resources/css/member/memberInfo.css">
+
+<title>소셜 회원가입</title>
 
 <style type="text/css">
 
@@ -19,41 +21,138 @@ img.ui-datepicker-trigger {
 	cursor: pointer;
 }
 
-.reg-font{
-	font-weight: bold;
-	font-size: 15px;
-	padding-left: 10px;
+.apiContainer-info{
+	background-color: white;
+    display: flex;
+    justify-content: center;
+    margin-top: 7%;
 }
 
-.div-reg{
-   padding: 8px;
-   padding-top: 2px;
+.apiReg-input-wrap{
+    width: 60%;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    justify-content: center;
+    border: 1px solid black;
+    box-shadow: 2px 5px 5px 5px grey;
 }
 
-.btn{
-   width: 130px;
-   height: 35px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+.api_reg_head{
+	ackground-color: white;
+    height: 10%;
+    border-bottom: 1px solid black;
+    color: black;
+    font-size: 25px;
+    padding-top: 1%;
+    padding-left: 3%;
 }
 
-#button { /*로그인 버튼*/
-   width: 260px;
-   height: 50px;
-   text-align: center;
-   background-color: orange;
-   color: white;
-   border: 1px solid #4e266d;
+.reg-input-wrap{
+	width: 80%;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    justify-content: center;
+    border: 1px solid black;
+    box-shadow: 2px 5px 5px 5px grey;
 }
 
-.apiLogin-wrap{
-	margin-left: 30%;
-	margin-top: 10%;
+.tag-wrap{
+	display: flex;
+	margin-bottom: 1%;
 }
 
+.text-div{
+	margin-left: 12%;
+}
+
+.span-div{
+	padding: 5px;
+    padding-top: 2px;
+    padding-left: 13%;
+}
+
+.apiSpanNickname{
+	margin-left: 12%;
+}
 </style>
+
+
+
+</head>
+<body>
+
+
+	<!-- 전체 div -->
+<div class="apiContainer-info">
+	<!-- 정보 div -->
+	<div class="apiReg-input-wrap">	
+		<!-- 내정보 div -->
+		<div class="api_reg_head">간편 회원가입</div>
+	
+	<!-- 정보 출력 div  -->
+	<div class="api-main-wrap" style="margin-left: 10%">
+
+			
+			<form id="apiRegForm" action="/member/joinMember" method="post">
+			
+					<!-- 이메일 -->
+				<div class="tag-wrap">
+                  <div class="reg-font">이메일</div>
+                  	<div class="div-reg"><input type="email" name="email" id="apiEmail" readonly="readonly">
+                  </div>
+                </div>
+                  
+                  <!-- 비밀번호(히든으로 넘어감..) -->
+                  <input type="hidden" name="pwd" id="apiPwd" value=" ">
+                  
+                  <!-- 닉네임 -->
+               	<div class="tag-wrap">
+                  <div class="reg-font">닉네임</div>
+                  <div class="div-reg"><input type="text" name="nickname" id="apiNickname">	</div>
+                     <button class="btn" type="button" id="apiNicknameCheck">중복 체크</button>
+                  </div>
+                     <div class="text-div">닉네임은 2~8내로 입력해주세요</div>
+                  <div class="span-div">
+                  	<span id="apiSpanNickname"></span>
+                  </div>
+               
+                  
+                  <!-- 생년월일 -->
+                <div class="tag-wrap">
+                  <div class="reg-font">생일&nbsp;&nbsp;</div>
+                  <div class="div-reg">
+                  	<input type="text" name="birth" id="apiBirth" placeholder="내 생년월일! Click me!">
+                  </div>
+                </div>
+                  
+                  <!-- 성별 -->
+                <div class="tag-wrap">
+                  <div class="reg-font">성별&nbsp;&nbsp;</div>
+                  <div class="div-reg">
+                     <input type="radio" name="gender" id="api_man_gender" value="M" readonly="readonly">남 
+                     <input type="radio" name="gender" id="api_woman_gender" value="F" readonly="readonly">여
+                  </div>
+                </div>
+                  
+                  <!-- 상태(정상, 휴면 등...) -->
+                  <input type="hidden" name="status" id="status" value="MS001">
+                  
+                  <!-- 등급 : 네이버회원..) -->
+                  <input type="hidden" name="memGrade" id="mem_grade" value="MG003">
+         	
+            
+            </form>
+            
+            </div>
+               <div style="height: auto; border-top: 1px solid black; padding: 2%; text-align: center;">
+               	<button style="font-size: 20px; text-align: center;"
+               	type="submit" id="button" onclick="return snsValidCheck();">가입하기</button>
+           
+           </div>
+          </div>
+        </div>
+            
+</body>
 
 <script type="text/javascript">
 
@@ -115,7 +214,7 @@ img.ui-datepicker-trigger {
 	    }
 	    
 	    // 필수입력 완료했으니까 회원가입 성공!
-	        return true;
+	    $("#apiRegForm").submit();
 	    
 	 } // end snsValidCheck()
 	 
@@ -132,29 +231,29 @@ img.ui-datepicker-trigger {
 	             document.getElementById("apiSpanNickname").innerHTML = "닉네임을 입력해주세요";
 	             apiSpanNickname.style.color='red';
 	          	return;
-	       }else{
-	          document.getElementById("apiSpanNickname").innerHTML = "";
-	       }
+		       }else{
+		          document.getElementById("apiSpanNickname").innerHTML = "";
+		       }
 	       
-	       // 닉네임은 2~8자리
-	       if(!(2 < myNickname.length && myNickname.length <= 8)){
-	    	   document.getElementById("apiSpanNickname").innerHTML = "닉네임은 2~8자로 입력해주세요";
-	    	   apiSpanNickname.style.color = 'red';
-	    	   return;
-	       }else{
-	    	   document.getElementById("apiSpanNickname").innerHTML = "";
-	       }
-	       
-	        
-	        // 닉네임 정규식
-	         if(false === jNname.test(myNickname)) {     
-	            document.getElementById("apiSpanNickname").innerHTML = "닉네임은 한글/영문/숫자로 2~8자리 부탁드립니다";
-	            apiSpanNickname.style.color='red';
-	             return;  
-	         }else{
-	             document.getElementById("apiSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
-	          }       
-	        
+		       // 닉네임은 2~8자리
+		       if(!(2 < myNickname.length && myNickname.length <= 8)){
+		    	   document.getElementById("apiSpanNickname").innerHTML = "닉네임은 2~8자로 입력해주세요";
+		    	   apiSpanNickname.style.color = 'red';
+		    	   return;
+		       }else{
+		    	   document.getElementById("apiSpanNickname").innerHTML = "";
+		       }
+		       
+		        
+		        // 닉네임 정규식
+		         if(false === jNname.test(myNickname)) {     
+		            document.getElementById("apiSpanNickname").innerHTML = "닉네임은 한글/영문/숫자로 2~8자리 부탁드립니다";
+		            apiSpanNickname.style.color='red';
+		             return;  
+		         }else{
+		             document.getElementById("apiSpanNickname").innerHTML = "사용할 수 있는 닉네임입니다.";
+		          }       
+		        
 	        
 	       let nickname = $("#apiNickname").val();
 	       let sendDate = {'nickname' : nickname}
@@ -216,50 +315,4 @@ img.ui-datepicker-trigger {
 	 
 </script>
 
-</head>
-<body>
-
-			<h1 style="text-align: center; font-size: 30px"> 간편 회원가입</h1>
-			<div class="apiLogin-wrap"> <!-- 가운데 정렬 -->
-			
-			<form action="/member/joinMember" method="post">
-			
-					<!-- 이메일 -->
-                  <div class="reg-font">이메일</div>
-                  <div class="div-reg"><input type="email" name="email" id="apiEmail" readonly="readonly">
-                  <span id="spanEmail"></span></div>
-                  
-                  <!-- 비밀번호(히든으로 넘어감..) -->
-                  <input type="hidden" name="pwd" id="apiPwd" value=" ">
-                  
-                  <!-- 닉네임 -->
-                  <div class="reg-font">닉네임</div>
-                  <div class="div-reg"><input type="text" name="nickname" id="apiNickname">
-                     <button class="btn" type="button" id="apiNicknameCheck">중복 체크</button>
-                     닉네임은 2~8내로 입력해주세요
-                  <div class="div-reg"><span id="apiSpanNickname"></span></div></div>
-                  
-                  <!-- 생년월일 -->
-                  <div class="reg-font">생일</div>
-                  <div class="div-reg"><input type="text" name="birth" id="apiBirth" placeholder="내 생년월일! Click me!"></div>
-                  
-                  <!-- 성별 -->
-                  <div class="reg-font">성별</div>
-                     <input type="radio" name="gender" id="api_man_gender" value="M" readonly="readonly">남 
-                     <input type="radio" name="gender" id="api_woman_gender" value="F" readonly="readonly">여
-                   <p><span id="spanGender"></span></p>
-                  
-                  <!-- 상태(정상, 휴면 등...) -->
-                  <p><input type="hidden" name="status" id="status" value="정상"></p>
-                  
-                  <!-- 등급 : 네이버회원..) -->
-                  <p><input type="hidden" name="memGrade" id="mem_grade" value="SNS회원"><p>
-                  
-         			</div>
-         			
-             <div class="wrap-Addition">
-               <button style="font-size: 20px" type="submit" id="button" onclick="return snsValidCheck();">가입하기</button></div>
-            </form>
-            
-</body>
 </html>

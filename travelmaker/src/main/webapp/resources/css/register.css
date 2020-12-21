@@ -1,0 +1,57 @@
+
+.title-head{ /* 타이틀 div */
+	margin-left: 10%;
+    margin-top: 10%;
+}
+
+.ct_body { /* 글쓰기 박스 */
+    width: 100%;
+    /* border: 1px solid #000; */
+    border-radius: 3px;
+    padding: 30px 20px;
+    margin-top: 70px;
+    box-sizing: border-box;
+}
+.form-group input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 7px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.form-group textarea {
+    width: 100%;
+    height: 500px;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+.reg-btn{ /* 등록 버튼 */
+	color: white;
+	background-color: black;
+	width: 60px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.cancel-btn{ /* 취소 버튼 */
+	color: black;
+	background-color: white;
+    width: 60px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.btn-wrap{ /* 등록/ 삭제 버튼 div */
+	text-align: right;	
+	padding-top: 20px;
+    padding-bottom: 20%;
+}
+

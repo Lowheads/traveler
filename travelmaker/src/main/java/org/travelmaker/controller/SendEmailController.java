@@ -40,7 +40,10 @@ public class SendEmailController {
 	        
 	        // Travel 회원의 이메일이 아니라면..
 	        if(service.isNotTravelMember(email, rttr)) {
-	        	mav=new ModelAndView("redirect:/search/searchPwd");
+	        	return mav;
+	        }
+	        // api 회원이면 비밀번호 찾을 필요 없이 로그인 해주세요
+	        if(service.isApiMember(email,rttr)) {
 	        	return mav;
 	        }
 	        
@@ -57,7 +60,7 @@ public class SendEmailController {
 	    public String sendEmail(@RequestParam("email") String email, @RequestParam("certNum") String certNum) throws Exception {
 		   Email emailObj = new Email();
 
-		   // 스크립트에서 생성한 임시번호를 이메일에 넣어 보낸다.
+		   // 자바 스크립트에서 생성한 임시번호를 이메일에 넣어 보낸다.
 		   emailSender.SendEmail(service.certEmail(email, certNum, emailObj));
 		   
 		   return "1";

@@ -16,7 +16,7 @@ public class MemberVO {
 	private String gender; // 성별(남,여)
 	private Date regDate; // 가입일
 	private Date lastDate; // 최종로그인
-	private String status; // 상태
-	private String memGrade; // 회원유형
+	private String status; // 상태 (일반:MS001 / 탈퇴:MS002 / 휴면:MS003)
+	private String memGrade; // 회원유형 (멤버:MG001 / 관리자:MG002 / SNS회원:MG003)
 	
 }

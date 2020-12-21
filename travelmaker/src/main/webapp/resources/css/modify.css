@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.mod-btn{
+	background-color: black;
+	color: white;
+	width: 60px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.del-btn{
+	background-color: gray;
+	color:white;
+	width: 73px;
+    height: 30px;
+    font-size: 13px;
+    float: left;
+}
+
+.list-btn{
+	background-color: white;
+	width: 60px;
+    height: 30px;
+    font-size: 13px;
+}

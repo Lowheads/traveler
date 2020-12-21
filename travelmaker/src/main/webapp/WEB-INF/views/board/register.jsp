@@ -3,9 +3,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-
-		<h3>내 일정 공유</h3>
-
 			<form role="form" id="registerform" action="/board/register" method="post" target="_parent" enctype="multipart/form-data">
 	
 				<div class="form-group">
@@ -15,7 +12,7 @@
 				<div class="form-control" style="text-align:center">
 					<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' />
 					
-					<label for = 'boardImg'><i class="far fa-file-image"></i>대표사진 선택</label>
+					<label for = 'boardImg' style="display:inline-block"><i class="far fa-file-image"></i>대표사진 선택</label>
 				</div>
 							
 				<br>
@@ -29,7 +26,7 @@
 							var reader = new FileReader;
 								reader.onload = function(data) {
 							$(".select_img img").attr("src", data.target.result)
-								.width(500)
+								.width(420)
 								.height(300);
 							}
 							reader.readAsDataURL(this.files[0]);
@@ -79,13 +76,20 @@
 #boardImg + label:hover {
     cursor: pointer;
 }
+
 .btn { 
-	width: 130px;
-	height: 35px;
-	text-align: center;
-	background-color: orange;
-	color: white;
-	border: 1px solid #4e266d;
+	font-size:15px;
+	color: black;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+}
+.btn:hover{
+   background-color: #203341;
+   color:white;
 }
 </style>
 <script type="text/javascript">

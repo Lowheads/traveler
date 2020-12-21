@@ -1,0 +1,265 @@
+@font-face {
+    font-family: 'AirbnbCereal-Black';
+    src: url("fonts/AirbnbCereal-Black.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Bold';
+    src: url("fonts/AirbnbCereal-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Book';
+    src: url("fonts/AirbnbCereal-Book.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-ExtraBold';
+    src: url("fonts/AirbnbCereal-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Light';
+    src: url("fonts/AirbnbCereal-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Medium';
+    src: url("fonts/AirbnbCereal-Medium.ttf") format("truetype");
+}
+
+:root {
+    --grey-med: #ddd;
+    --grey-light: #f7f7f7;
+    --grey-text-light: #717171;
+    --grey-text-dark: #222;
+    --pink: #ff385c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: #222;
+    font-family: 'AirbnbCereal-Medium';
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: normal;
+    line-height: 18px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.header {
+    height: 80px;
+    padding: 0 90px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
+    justify-content: space-between;
+    white-space: nowrap;
+    z-index:1;
+}
+
+.header__logo, .header__nav {
+    flex: 1 0 140px;
+}
+
+.header__search {
+    display: inline-flex;
+    border-radius: 24px;
+    overflow: hidden;
+    align-items: center;
+    border: 1px solid var(--grey-med);
+    transition: box-shadow 0.2s ease;
+}
+
+.header__search:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.header__search button {
+    background: transparent;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-family: 'AirbnbCereal-Medium';
+    cursor: pointer;
+}
+
+.header__search button:first-of-type {
+    padding-left: 24px;
+}
+
+.header__search button:last-of-type {
+    padding-right: 24px;
+}
+
+.header__search span {
+    width: 1px;
+    height: 24px;
+    background: var(--grey-med);
+}
+
+.header__searchIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgb(255, 194, 34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+}
+
+.header__searchIcon img {
+    width: 12px;
+    height: 12px;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.header__nav__button {
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 22px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    height: 40px;
+
+}
+
+.header__nav__button-greyHover:hover {
+    background: var(--grey-light);
+}
+
+.header__nav__button-account {
+    border: 1px solid var(--grey-med);
+    height: 42px;
+    border-radius: 22px;
+    padding: 5px 5px 5px 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.header__nav__button-account:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.header__nav__button-account img:first-child {
+    height: 16px;
+    width: 16px;
+}
+
+.header__nav__button-account img:last-child {
+    width: 30px;
+    height: 30px;
+    margin-left: 12px;
+}
+
+.header__nav__button-language img:first-child {
+    width: 16px;
+    height: 16px;
+}
+
+.header__nav__button-language img:last-child {
+    width: 9px;
+    height: 6px;
+    margin-left: 6px;
+}
+
+header__nav__button-account {
+    padding: 9px 25px;
+    background-color: rgba(245, 229, 107, 1.0);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.header__nav ul {
+    position: absolute;
+    background: rgb(255, 255, 255);
+    margin-top: 50px;
+    padding: 0;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    /*justify-content: space-around;*/
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    border-radius: 10px;
+    opacity: 0;
+    /* pointer-events: none; */
+    transform: translateY(-5px);
+    transition: all 0.4s ease;
+    box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+}
+
+.header__nav a {
+    padding-top: 6.5px;
+    width: 100%;
+    font-family: AirbnbCereal-Light;
+    color: black;
+    text-decoration: none;
+    height: 30px;
+    margin-left: 14px;
+}
+
+.header__nav li {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /*justify-content: center;*/
+    justify-items: center;
+    /*align-items: center;*/
+}
+
+.header__nav li:hover {
+    background-color: rgb(248, 248, 248);
+    cursor: pointer;
+}
+
+.header__nav button:focus + ul {
+    opacity: 1;
+/*     pointer-events: all; */
+    transform: translateY(0px);
+}
+
+.header__nav li:first-of-type {
+    margin-top: 8px;
+}
+
+.header__nav li:last-of-type {
+    margin-bottom: 18px;
+}
+
+.header__nav li:last-child {
+    margin-bottom: 100px;
+}
+
+/*.dropdown li:hover {*/
+/*    background-color: rgb(233, 233, 233);*/
+/*}*/
+
+/*.dropdown button {*/
+/*    background: none;*/
+/*    border: none;*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*    font-size: 18px;*/
+/*    cursor: pointer;*/
+/*}*/
+

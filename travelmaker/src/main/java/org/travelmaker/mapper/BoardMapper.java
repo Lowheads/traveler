@@ -1,6 +1,7 @@
 package org.travelmaker.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
@@ -38,4 +39,7 @@ public interface BoardMapper {
 	public void downCnt(int boardNo);
 	
 	public void viewCnt(int boardNo);
+
+	public List<BoardVO> getAdminList();
+
 }

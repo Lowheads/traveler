@@ -1,6 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,82 +24,82 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
-	@Setter(onMethod_ = @Autowired)
-	private PlaceMapper mapper;
-	
-	@Override
-	public void register(PlaceVO place) {
-		mapper.insert(place);
-	}
+   @Setter(onMethod_ = @Autowired)
+   private PlaceMapper mapper;
+   
+   @Override
+   public void register(PlaceVO place) {
+      mapper.insert(place);
+   }
 
-	@Override
-	public List<PlaceVO> get(String[] plcNoArr) {
-		return mapper.read(plcNoArr);
-	}
-	
-	@Override
-	public boolean removePlace(long plcNo) {
-		
-		return mapper.delete(plcNo)==1;
-	}
+   @Override
+   public List<PlaceVO> get(String[] plcNoArr) {
+      return mapper.read(plcNoArr);
+   }
+   
+   @Override
+   public boolean removePlace(long plcNo) {
+      
+      return mapper.delete(plcNo)==1;
+   }
 
-	@Override
-	public boolean modify(PlaceVO place) {
+   @Override
+   public boolean modify(PlaceVO place) {
 
-		return mapper.update(place) ==1;
-	}
+      return mapper.update(place) ==1;
+   }
 
-	@Override
-	public List<PlaceVO> getListWithPaging(Criteria cri) {
+   @Override
+   public List<PlaceVO> getListWithPaging(Criteria cri) {
 
-		if(cri.getSelected()==null) {
-			return mapper.getListWithPaging(cri);
-		}
-		return mapper.getSortList(cri);
-	}
+      if(cri.getSelected()==null) {
+         return mapper.getListWithPaging(cri);
+      }
+      return mapper.getSortList(cri);
+   }
 
-	@Override
-	public void updateLikeCnt(PlaceVO vo) {
-		mapper.update(vo);
-	}
+   @Override
+   public void updateLikeCnt(PlaceVO vo) {
+      mapper.update(vo);
+   }
 
-	@Override
-	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
-		return mapper.getTotal(cri);
-	}
-	
-	//종운 메서드
-	@Override
-	public List<PlaceVO> getList(String title,int regionNo,Criteria cri) {
-		log.info("get place List of a map" + title);
-		return mapper.getListWithTitle(title,regionNo,cri.getPageNum(),cri.getAmount());
-	}
+   @Override
+   public int getTotal(Criteria cri) {
+      // TODO Auto-generated method stub
+      return mapper.getTotal(cri);
+   }
+   
+   //종운 메서드
+   @Override
+   public List<PlaceVO> getList(String title,int regionNo,Criteria cri) {
+      log.info("get place List of a map" + title);
+      return mapper.getListWithTitle(title,regionNo,cri.getPageNum(),cri.getAmount());
+   }
 
-	@Override
-	public List<PlaceDTO> getListWithTheme(int regionNo, String themeCode) {
-		log.info("get place List with Theme" + regionNo + " " + themeCode);
-		return mapper.getListWithTheme(regionNo, themeCode);
-	}
-	
-	@Override
-	public int getSearchResultTotalCnt(String title,int regionNo) {
-		return mapper.getSearchResultTotalCnt(title,regionNo);
-	}	
+   @Override
+   public List<PlaceDTO> getListWithTheme(int regionNo, String themeCode) {
+      log.info("get place List with Theme" + regionNo + " " + themeCode);
+      return mapper.getListWithTheme(regionNo, themeCode);
+   }
+   
+   @Override
+   public int getSearchResultTotalCnt(String title,int regionNo) {
+      return mapper.getSearchResultTotalCnt(title,regionNo);
+   }   
 
-	@Override
-	public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs) {
-		for (ScheduleDtVO[] scheduleDtVOs : schdtVOs) {
-			for (ScheduleDtVO scheduleDtVOs2 : scheduleDtVOs) {
-//				System.out.println(scheduleDtVOs2.toString());
-				setInitSchWithDistAndDu(scheduleDtVOs2);
-			}
-		}
-		return null;
-	}
-	
-	public void setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
-		// WebDriver 경로 설정
+   @Override
+   public ScheduleDtVO[][] getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs) {
+      for (ScheduleDtVO[] scheduleDtVOs : schdtVOs) {
+         for (ScheduleDtVO scheduleDtVOs2 : scheduleDtVOs) {
+//            System.out.println(scheduleDtVOs2.toString());
+            setInitSchWithDistAndDu(scheduleDtVOs2);
+         }
+      }
+      return null;
+   }
+   
+   public void setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
+      // WebDriver 경로 설정
         System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\bin\\chromedriver.exe");
         // WebDriver 옵션 설정 
         ChromeOptions options = new ChromeOptions();
@@ -112,8 +113,8 @@ public class PlaceServiceImpl implements PlaceService {
         ChromeDriver driver = new ChromeDriver(options);
         String fromTitle = schdtVO.getFromPlcTitle();
         double fromLat = schdtVO.getFromPlcLat();
-  		double fromLng = schdtVO.getFromPlcLng();
-  		String toTitle = schdtVO.getToPlcTitle();
+        double fromLng = schdtVO.getFromPlcLng();
+        String toTitle = schdtVO.getToPlcTitle();
         double toLat = schdtVO.getToPlcLat();
         double toLng = schdtVO.getToPlcLng();
         //웹페이지에서 글제목 말고 query랑 그 document전체를 가져올 수 있는지 보자.
@@ -140,6 +141,7 @@ public class PlaceServiceImpl implements PlaceService {
         }
     }
 
+<<<<<<< HEAD
 	@Override
 	public List<PlaceVO> getPlaceByWeather(int regionNo) {
 		return mapper.getPlaceByWeather(regionNo);
@@ -149,7 +151,19 @@ public class PlaceServiceImpl implements PlaceService {
 //		return schdtVO;
 //	}
 //	
+=======
+   @Override
+   public List<Map<String,Object>> getYourList(String type,int memNo) {
+      // TODO Auto-generated method stub
+      return mapper.getYourList(type,memNo);
+   }
+>>>>>>> 30f201c238f55f0e8965982630bde75539f03fe6
 
-	
+      
+//      return schdtVO;
+//   }
+//   
+
+   
 
 }

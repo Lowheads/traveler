@@ -73,22 +73,29 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model,  HttpServletRequest request) {
 
-		cri.setAmount(12);
+		cri.setAmount(8);
 		model.addAttribute("list",boardservice.getList(cri));
-
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		
-		List<Map<String,Object>> hiddenList = scheduleservice.getHiddenList(memNo);
-		
-		//공개,비공개 리스트
-		model.addAttribute("hiddenlist",hiddenList);
-		
-		//일정 리스트
-		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
-		
+	
 		int total= boardservice.getTotal(cri);
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
+	}
+	
+	//schedulelist
+	@GetMapping("/schedulelist")
+	public void schedulelist(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+
+		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
+	}
+	
+	//hiddenlist
+	@GetMapping("/hiddenlist")
+	public void hiddencheck(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		List<Map<String,Object>> hiddenList = scheduleservice.getHiddenList(memNo);
+		model.addAttribute("hiddenlist",hiddenList);
 	}
 	
 	
@@ -150,10 +157,9 @@ public class BoardController {
 		board=boardservice.getbySchNo(board);
 		int schNo= board.getSchNo();
 		
-		//List<Schdt_PlaceVO> list=schdtservice.getplacetitle(schNo);
-
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
-			
+		
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		
 		model.addAttribute("board",board);
 		
@@ -193,7 +199,6 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 
-		log.info("/get");
 		BoardVO board=boardservice.get(boardNo);
 		int schNo=board.getSchNo();
 		ScheduleVO schedule = scheduleservice.getSchedule(schNo);
@@ -207,10 +212,8 @@ public class BoardController {
 			model.addAttribute("pick","unpicked");
 		}
 		
-		System.out.println(schdtservice.getplacetitle(schNo));
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
-		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
+		model.addAttribute("boarddt",boarddtservice.get(boardNo));
 		model.addAttribute("board",board);
 		
 		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
@@ -219,6 +222,7 @@ public class BoardController {
 		
 		model.addAttribute("memNo",memNo);
 	
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 	}
 	
 	@PostMapping("/modify")
@@ -318,7 +322,8 @@ public class BoardController {
 		model.addAttribute("boarddt",boarddtservice.get(boardNo));
 		model.addAttribute("board",board);
 		
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		List<Map<String, Object>> fileList = boarddtservice.selectFileList(boardNo);
 		
 		model.addAttribute("file",fileList);

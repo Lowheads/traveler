@@ -44,15 +44,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 		String status=schedule.getSchStatus();
 		System.out.println(status);
 		//작성일때 -> 미작성으로
-		if(status.equals("작성")) {
+		if(status.equals("BS001")) {
 			mapper.statusunWritten(schNo);
 		}
 		//작성중일때-> 작성으로
-		else if(status.equals("작성중")) {
+		else if(status.equals("BS002")) {
 			mapper.statusWritten(schNo);
 		}
 		//미작성일때 -> 작성중으로
-		else if(status.equals("미작성")) {
+		else if(status.equals("BS003")) {
 			mapper.statusWritting(schNo);
 		}
 
@@ -157,7 +157,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public List<Map<String, Object>> getSchedt(int schNo) {
-		log.info(mapper.getSchedule(schNo));
+
 		return mapper.getSchedule(schNo);
 	}
 
