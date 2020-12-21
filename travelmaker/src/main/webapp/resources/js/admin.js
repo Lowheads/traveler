@@ -16,92 +16,8 @@ var user=(function(){
 					error();
 				}
 			});
-		
-		/*$.ajax({
-			url : "/admin/getDetail/"+boardNo+".json",
-			method :'get',
-			success:function(result,status,xhr){
-				if(callback){
-					callback(result);
-				}
-			},
-			error:function(xhr, status, er){
-				if(error){
-					error(er)
-				}
-			}
-		})
-		*/
-	}
-	
-	/*function place(keyword, callback, error){
-		
-		$.getJSON("/admin/getPlaceList/"+keyword+".json"
-		,function(data){
-			if(callback){
-				callback(data)}}
-				).fail(
-			function(xhr, status,err){
-				if(error){
-					error();
-				}
-			});		
-	}
-
-	function list(callback,error){
-			$.ajax({
-				url : '/admin/refresh.json',
-				datatype:'json',
-				success:function(result,status,xhr){
-					if(callback){
-						callback(result);
-					}
-				},
-				error:function(xhr, status, er){
-					if(error){
-						error(er)
-					}
-				}
-			})
-		}
-	
-	function search(param, callback, error) {
-
-		var type = param.type;
-		var keyword = param.keyword;
-		
-		$.getJSON("/admin/searchUser?type="+type+"&keyword="+keyword
-		,function(data){
-			if(callback){
-				callback(data)}}
-				).fail(
-			function(xhr, status,err){
-				if(error){
-					error();
-				}
-			});
-	}
-	
-		function remove(memNo, callback, error){
-		
-		$.ajax({
-			type:'delete',
-			url:'/admin/deleteUser/'+memNo,
-			success:function(deleteResult, status, xhr){
-				
-				if(callback){
-					callback(deleteResult);
-				}
-			},
-			error:function(xhr, satus, er){
-				if(error){
-					error(er);
-				}
-			}
-		});
-	}*/
-	
-	return {detail:detail};
+		}	
+			return {detail:detail};
 })();
 
 var theme = (function(){
@@ -191,7 +107,7 @@ var theme = (function(){
 					
 	}
 	
-	function paginate(keyword, pageNum){
+/*	function paginate(keyword, pageNum){
 		
 		$.getJSON("/admin/getPlaceList/"+keyword+"/"+pageNum, function(list) {
 							
@@ -363,9 +279,9 @@ var theme = (function(){
 								});
 		
 		
-	}
+	}*/
 	
-	function added(){
+	/*function added(){
 
 					let num = $(this).attr("name")+"";
 					
@@ -392,7 +308,6 @@ var theme = (function(){
 						obj.addEventListener('click', added);
 									
 						
-						
 						$("tbody").append(str);
 						
 						console.log(str);
@@ -406,7 +321,7 @@ var theme = (function(){
 					}
 				 
 	}
-
+*/
 	
 	
 	return {showImage:showImage,

@@ -9,6 +9,7 @@
 	<result property="cntMember" column="CNT_USER"/>
 	<result property="cntPost" column="CNT_POST"/>
 	<result property="cntWithdrawalMember" column="CNT_WITHDRAWAL_USER"/>
+	<result property="cntTraffic" column="CNT_TRAFFIC"/>
 </resultMap>
 
 <resultMap type ="org.travelmaker.domain.BoardVO" id="post" >
@@ -23,7 +24,7 @@
 
 <select id = "getDaily" resultMap="VOResult" >
  <![CDATA[
-	SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post, cnt_withdrawal_user
+	SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post, cnt_withdrawal_user, cnt_traffic
 	FROM (SELECT *
 	FROM STATISTIC
 	ORDER BY DAILY_LOG DESC)
@@ -33,7 +34,7 @@
 
 <select id="getMonthly" resultMap="VOResult">
 	SELECT extract(month from daily_log) AS "targetDate", SUM(cnt_user) as "cnt_user", 
-	sum(cnt_post) as "cnt_post", sum(cnt_withdrawal_user) as "cnt_withdrawal_user"
+	sum(cnt_post) as "cnt_post", sum(cnt_withdrawal_user) as "cnt_withdrawal_user", sum(cnt_traffic) as "cnt_traffic"
 	FROM STATISTIC 
 	GROUP BY extract(month from daily_log) 
 	ORDER BY extract(month from daily_log)

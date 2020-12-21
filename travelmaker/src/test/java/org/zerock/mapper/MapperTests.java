@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.travelmaker.domain.BoardVO;
-import org.travelmaker.domain.Criteria;
-import org.travelmaker.domain.MemberVO;
 import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
 import org.travelmaker.mapper.MainMapper;
@@ -298,7 +297,7 @@ public class MapperTests {
 		
 	}
 	
-	//@Test
+	@Test
 	public void mainMapperTest() {
 		
 		/*
@@ -308,10 +307,11 @@ public class MapperTests {
 		 */
 		
 		
-		/*
-		 * List<StatisticVO> list = mainMapper.getDaily();
-		 * list.forEach(theme->log.info(theme.toString()));
-		 */
+		
+//		/* List<StatisticVO> list = mainMapper.getDaily(); */
+		 List<StatisticVO> list = mainMapper.getMonthly();
+		 list.forEach(theme->log.info(theme.toString()));
+		 
 	}
 	
 	//@Test

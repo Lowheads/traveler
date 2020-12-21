@@ -9,9 +9,33 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <!-- 			<h6 class="m-0 font-weight-bold text-primary">dash board</h6>
 		</div> -->
-<div class="container-fluid">
-<div class="row">
+					<!-- Main Content -->
 
+				<!-- Topbar -->
+ 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+				<li class="nav-item alarm dropdown no-arrow mx-1 status='show'">
+						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<i class="fas fa-bell fa-fw"></i>
+							<!-- Counter - Alerts -->
+							<span class="badge badge-danger badge-counter"></span>
+						</a>
+						<!-- Dropdown - Alerts -->
+						<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+							<h6 class="dropdown-header">
+								Alerts Center
+							</h6>
+							<div class="dropdown-item d-flex align-items-center" href="#">
+								<div class="small text-gray-500">December 12, 2019</div>
+								<span class="font-weight-bold">A new monthly report is ready to download!</span>
+							</div>	
+							<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+						</div>
+					</li>
+				</nav> 
+					
+				<!-- End of Topbar -->
+<div class="row">
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
@@ -19,7 +43,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">신규 가입자</div>
-                      <span>5</span>
+                      <span>${today.cntMember}</span>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
@@ -36,7 +60,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">탈퇴 회원</div>
-                      <span>5</span>
+                      <span>${today.cntWithdrawalMember}</span>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
@@ -53,7 +77,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">새 글</div>
-                      <span>5</span>
+                      <span>${today.cntPost}</span>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
@@ -70,7 +94,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">접속자 수 </div>
-                      <span>5</span>
+                      <span>${today.cntTraffic}</span>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
@@ -214,6 +238,7 @@
 				var cntMember = [];
 				var cntPost = [];
 				var cntWithdrawUser = [];
+				var cntTraffic = [];
 
 							for(var i =0; i<Object.keys(data).length; i++){
 								
@@ -221,6 +246,7 @@
 								cntMember.push(data[i].cntMember);
 								cntPost.push(data[i].cntPost);
 								cntWithdrawUser.push(data[i].cntWithdrawalMember);
+								cntTraffic.push(data[i].cntTraffic);
 							}
 							
 
@@ -261,8 +287,18 @@
 												'rgba(255, 228, 0, 0.2)'
 											],
 											borderWidth: 1
-							            }
-							            ],
+							            },
+							            {
+											label: '일일 접속자수', //범례
+											data:cntTraffic,
+										 	backgroundColor: [
+												'rgba(71, 200, 62, 0.2)'
+											],
+											borderColor: [
+												'rgba(71, 200, 62, 0.2)'
+											],
+											borderWidth: 1
+							            }],
 							            
 									},
 									options: {  
@@ -298,7 +334,7 @@
 					data[i].modDate = date.getMonth()+"-"+date.getDate()
 				}
 				
-				var str = '<tr><th>제목</th><th>찜한갯수</th><th>조회수</th><th>등록일</th></tr>';
+				var str = '<tr><th>제목</th><th>조회수</th><th>찜한갯수</th><th>등록일</th></tr>';
 				
 				
 							for(var i =0; i<Object.keys(data).length; i++){

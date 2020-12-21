@@ -27,7 +27,7 @@ public class AdminMainController {
 	private MainService service;
 	
 	@GetMapping("/main")
-	public String showChart(Model model) throws JsonProcessingException {
+	public String showChart(Model model){
 
 		/*
 		 * List<StatisticVO> daily = service.getDaily(); ObjectMapper mapper = new
@@ -65,6 +65,10 @@ public class AdminMainController {
 		 */
 		//model.addAttribute("newestPost", service.newestPost());
 		
+		List<StatisticVO> list = service.getChart("daily");
+		
+		model.addAttribute("today", list.get(0));
+		
 		
 		return "main";
 	}
@@ -72,6 +76,8 @@ public class AdminMainController {
 	
 	@GetMapping("/getChart/{type}")
 	public ResponseEntity<List<StatisticVO>> getChart(@PathVariable("type") String type){
+		
+		
 		
 		return new ResponseEntity<>(service.getChart(type), HttpStatus.OK);
 	}
