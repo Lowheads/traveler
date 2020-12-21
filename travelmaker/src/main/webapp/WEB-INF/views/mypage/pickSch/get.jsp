@@ -283,6 +283,29 @@ a{text-decoration: none;}
    border: 1px solid gray;
    border-radius: 5px;
 }
+
+#gotoTop {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99999;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 0px 10px 0px 10px;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+
+
+#gotoTop:hover {
+   background-color: black;
+   color:white;
+}
+
 </style>
 </head>
 
@@ -307,7 +330,7 @@ a{text-decoration: none;}
          </div>
          <div class="plan_mnu_btn">
              <div id="gotoList" data-oper='list'>목록으로</div>
-            <div id="sch_remove_btn">일정삭제</div>
+            <div id="sch_remove_btn">찜 취소하기</div>
          </div>
       </div>
 <div class="content_wrap">
@@ -346,8 +369,9 @@ a{text-decoration: none;}
                                     <c:out value="${dt.FROMTITLE }"/>
                                  </a>
                                  <a href="http://place.map.kakao.com/${dt.TO_PLC }" style="float:right; margin-right: 30px;" target="_blank">
-                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>
                                     </a>
+                                 <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.FROMADT }"/></b>
                                  </div>
                               </div>
 
@@ -372,8 +396,9 @@ a{text-decoration: none;}
                                     <c:out value="${dt.TOTITLE }"/>
                                     </a>
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="float:right; margin-right: 30px;" target="_blank">
-                                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>
                                     </a>
+                                    <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.TOADT }"/></b>
                                  </div>
                               </div>
                            </c:if>
@@ -445,10 +470,11 @@ a{text-decoration: none;}
 </table>
 
 </div>
-
+   
+   <!-- gotop -->
+   <a href="#" id="gotoTop">▲</a>
 
    </div>
-
 
 
    <div id="remove_modal">
@@ -456,8 +482,11 @@ a{text-decoration: none;}
       <br>
 
       <button class="modal_close_btn">취소</button>
-      <button class="remove_btn">삭제</button>
+      <button class="remove_btn">찜 취소하기</button>
    </div>
+   
+   <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.pageNum}"/>'> 
+   <input type='hidden' id='sch_no' name='sch_no' value='<c:out value="${schedule[0].SCH_NO}"/>'> 
 </body>
 <!-- /.col-lg-9 -->
 <script type="text/javascript"
@@ -501,8 +530,6 @@ function myFunction() {
       let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
    });
 
-   let operForm = $("#operForm");
-
    $("#gotoList").on("click", function(e) {
       window.history.back();
    });
@@ -511,25 +538,21 @@ function myFunction() {
          "click",
          function() {
 
-            let schNo = {
+            let sendData = {
                "schNo" : $('input[name=sch_no]').val()
             };
 
             $.ajax({
                type : 'post',
-               url : '/mypage/deleteSchedule',
-               data : schNo,
+               url : '/mypage/deletePick',
+               data : sendData,
                success : function(data) {
-
-                  alert("목록에서 삭제되었습니다.");
-                  location.href = "/mypage/past?pageNum="
-                        + $('input[name=pageNum]').val();
+                  alert("찜 목록에서 정상적으로 삭제되었습니다.")
+                  location.href = '/mypage/pickSch';
                },
-               error : function(xhr) {
-
-                  alert("삭제실패");
+               error : function(error){
+                  alert("에러발생!! 다시시도해주세요"+error);
                }
-
             });
          });
 
@@ -627,7 +650,7 @@ function myFunction() {
          
       for (i = 0; i < markerlatlng.length; i++) {
          
-         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#203341; color:white;'>"+(i+1)+"</div>"+markerlatlng[i].dataset["title"] + "<br>";
+         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#203341; color:white;'>"+(i+1)+"</div>"+"<a href=https://place.map.kakao.com/"+markerlatlng[i].dataset['plc_no']+" target='_blank'>"+markerlatlng[i].dataset["title"] + "</a><br>";
          
          $("#places").append(pTag)
          

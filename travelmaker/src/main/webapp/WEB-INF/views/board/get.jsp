@@ -879,8 +879,8 @@ $(document).ready(function(){
 		
 		var referrer = document.referrer;
 		if (referrer=="http://127.0.0.1:8080/main/index"){
-			operForm.attr("action","/main/index")
-			operForm.submit();
+			
+			location.href="/main/index";
 		}
 		else{
  		operForm.find("#boardNo").remove();

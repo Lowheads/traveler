@@ -1,98 +1,239 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+   pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
+<html lang="en">
 
-<%@ include file="../includes/mypageheader.jsp" %>
+<head>
+<script
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- HeartEmoji -->
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 
+<style>
+a {
+   text-decoration: none;
+}
 
-  <!-- Page Content -->
-    <div class="row">
+body {
+   margin: 0;
+}
 
-       <div class="leftNav">
+.pick_plan_content {
+   width: 100%;
+}
 
-        <div class="list-group">	
-        <ul>
-  <li><a href="/mypage/pickPL" class="list-group-item">찜한장소</a></li>
-  <li><a href="/mypage/pickSch" class="list-group-item">찜한일정</a></li>
-  <li><a href="/mypage/past" class="list-group-item">지나간여행</a></li>
-  <li><a href="/mypage/upcomming" class="list-group-item">다가올여행</a></li>
-</ul>
-        </div>
-        </div>
-      <!-- /.col-lg-3 -->
- <div class="content-mypage" style=" padding-top: 20px;">
-        <div class="row">
-<c:forEach items="${list }" var="sch">
-            <div class="card h-100" id="resultcard">
-            <a class='move' href='<c:out value="${sch.schNo }"/>'>
-           <img class="card-img-top" src="http://placehold.it/700x400" alt="">
-           </a>
-              <div class="card-body">
-                <h4 class="card-title">
-                   <a class='move' href='<c:out value="${sch.schNo }"/>'>
-                   다가올 <c:out value="${sch.schTitle }"></c:out>
-                   </a>
-                   
-                </h4>
-             
-             <!-- Like  -->
-              </div>
+.coverBanner {
+   width: 100%;
+   height: 20%;
+   background-image:
+      url("https://free4kwallpapers.com/uploads/originals/2019/10/15/ocean-sunset-wallpaper.jpg");
+   background-size: cover;
+   text-align: center;
+   color: white;
+   padding-top: 100px;
+   padding-bottom: 100px;
+   font-size: 50px;
+}
+
+.pickNav_bar {
+   width: 100%;
+   height: 50px;
+   background-color: white;
+   box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
+}
+
+.pickNav_mnu {
+   width: 70%;
+   height: 100%;
+   margin-left: 15%;
+   margin-right: 15%;
+   display: flex;
+   background-color: white;
+}
+
+.mnu_box {
+   padding: 10px 20px 0 20px;
+   text-align: center;
+   cursor: pointer;
+}
+
+.mnu_box.active {
+   padding: 10px 20px 0 20px;
+   text-align: center;
+   color: #0b1322;
+   background-color: rgb(255, 194, 34);
+}
+.mnu_box:hover {
+   background-color: rgb(255, 194, 34);
+}
+.content_wrap {
+   width: 70%;
+   margin-left: 15%;
+   margin-right: 15%;
+}
+
+.content_tap {
+   width: 100%;
+   height: 100px;
+   display: flex;
+   font-size: 12px;
+}
+
+.sch_tap {
+   padding-right: 15px;
+   margin-right: 15px;
+   margin-top: auto;
+   margin-bottom: auto;
+   border-right: 1px solid gray;
+}
+
+.contents {
+   padding: 20px;
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+}
+
+.card_sch {
+   width: 330px;
+   height: 200px;
+   margin-bottom: 20px;
+   border: 1px solid gray;
+}
+
+.sch_Img {
+   width: 100%;
+   height: 100%;
+   background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/32af3884212619.5d555e5c76cda.jpg');
+   background-size: cover;
+   text-shadow: 2px 2px 2px gray;
+}
+
+.sch_Img_content {
+   color: white;
+   padding-left: 15px;
+   padding-top: 130px;
+}
+
+.sch_Img_content b {
+   font-size: 20px;
+}
+
+.sch_content {
+   width: 100%;
+   height: 30%;
+   background-color: white;
+}
+
+.sch_title {
+   margin-left: 15px;
+   margin-top: auto;
+   margin-bottom: auto;
+}
+</style>
+</head>
+
+<body>
+   <div class="pick_plan_content">
+      <div class="coverBanner">
+         <b>여행일정</b>
+      </div>
+      <div class="pickNav_bar">
+         <div class="pickNav_mnu">
+         <div class="mnu_box" onclick="location.href='/mypage/pickPL'">
+               <b>찜한장소</b>
             </div>
-</c:forEach>
 
-<form id='actionForm' action="/mypage/upcomming" method='get'>
-	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
-</form>
-        </div>
-        <!-- /.row -->
-   <div style="text-align: center;" class="w3-center">
-<ul class="w3-bar">
-<c:if test="${pageMaker.prev }">
-<li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
-</c:if>
+            <div class="mnu_box active" onclick="location.href='/mypage/pickSch'">
+               <b>여행일정</b>
+            </div>
+         </div>
+      </div>
+      <div class="content_wrap">
+         <div class="content_tap">
+            <div class="sch_tap" style="margin-left: 20px">
+               <a href="/mypage/pickSch" style="color: black;">찜한 일정</a>
+            </div>
+            <div class="sch_tap">
+               <a href="/mypage/upcoming" style="color: #3099dd"><b>계획중인
+                     일정</b></a>
+            </div>
+            <div class="sch_tap">
+               <a href="/mypage/past" style="color: black;">지나간 일정</a>
+            </div>
+         </div>
+         <div class="contents">
+            <!-- 카드게시물 -->
+            <c:forEach items="${list }" var="sch">
+               <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.schNo }">
+                  <div class="card_sch">
+                     <div class="sch_Img">
+                        <div class="sch_Img_content">
+                           <!-- SCH_REG_DATE -->
+                           <c:out value="${sch.fromDate }" />
+                           <!-- SCH_TITLE -->
+                           <br> <b><c:out value="${sch.schTitle }" /></b>
+                        </div>
+                     </div>
+                     <!-- <div class="sch_content">
+                        USER_NICKNAME
+                        <br>
+                        <div class="sch_title">
+                           <i class="fa fa-user-o" aria-hidden="true"
+                              style="color: black;"></i>
+                        </div>
+                     </div> -->
+                  </div>
+               </a>
+            </c:forEach>
+         </div>
+         
+         
+            <div style="text-align: center;" class="w3-center">
+         <ul class="w3-bar">
+            <c:if test="${pageMaker.prev }">
+               <li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+            </c:if>
 
-<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-<li class="w3-button" "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
-<a> ${num }</a></li>
-</c:forEach>
+            <c:forEach var="num" begin="${pageMaker.startPage}"
+               end="${pageMaker.endPage}">
+               <li class="w3-button"
+                  "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
+                  <a> ${num }</a>
+               </li>
+            </c:forEach>
 
-<c:if test="${pageMaker.next }">
-<li class="w3-button" num="${pageMaker.endPage +1 }">
-<a>&raquo;</a></li>
-</c:if>
-</ul>
-      </div> 
-      <!-- /.col-lg-9 -->
+            <c:if test="${pageMaker.next }">
+               <li class="w3-button" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
+            </c:if>
+         </ul>
+      </div>
+      </div>
+   </div>
 
-
+   <form id='actionForm' action="/mypage/upcoming" method='get'>
+   <input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
+   </form>
+</body>
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-		var actionForm = $("#actionForm");
-		
-		$(".w3-button").on("click",function(e){
-			
-			e.preventDefault();
-			
-			console.log('click');
-			
-			actionForm.find("input[name='pageNum']").val($(this).attr("num"));
-			actionForm.submit();
-		});
-		
-		$(".move").on("click",function(e){
-			
-			e.preventDefault();
-		actionForm.append("<input type='hidden' name='sch_no' value='"+
-				$(this).attr("href")+"'>");
-			actionForm.attr("action","/mypage/upcomming/get");
-			actionForm.submit();
-			
-		})
-		
-	});
-	
 
-</script> 
-<%@include file="../includes/footer.jsp" %>
+   let actionForm = $("#actionForm");
+
+   $(".w3-button").on("click", function(e) {
+
+      e.preventDefault();
+
+      actionForm.find("input[name='pageNum']").val($(this).attr("num"));
+      actionForm.submit();
+   });
+
+</script>
+</html>
