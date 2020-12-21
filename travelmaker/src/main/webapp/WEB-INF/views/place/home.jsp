@@ -115,7 +115,7 @@ ul {
 	display: flex;
 	flex-direction:column;
 	overflow:auto;
-	width:70%;
+	flex: 0 0 75%;
 }
 .daily-place-dt {
 	width:100%;
@@ -430,7 +430,7 @@ body > div.mainContainer > div.right.menu {
 .place-perday-list {
 	display:flex;
 }
-#all-schedule > ul.place-dt-list > div > button {
+#all-schedule > outplcdt-wrap-div > ul > div > button {
 	width:100%;
 	height:1.5em;
 	background-color:#90a4ae;
@@ -1066,6 +1066,7 @@ body > div.mainContainer > div.right.menu {
          for (let i = 0; i < geoArr.length; i++) {
 			let locaData = currList.children[i];
 			pAll.then(result => {
+				let owdiv = document.createElement("outplcdt-wrap-div");
 				 resultset.push({x:result[i][0].x,y:result[i][0].y,title:locaData.dataset["title"]});
 		         let dailyplace = locaData.cloneNode();
 		         dailyplace.setAttribute("class", "place-dt-perday");
@@ -1100,7 +1101,9 @@ body > div.mainContainer > div.right.menu {
 		        	 wdiv.append(button);
 		         	 tmpList.appendChild(wdiv)
 		         } // if end // resolve end
-			         listAll.appendChild(tmpList);
+		         	 owdiv.appendChild(title);
+		         	 owdiv.appendChild(tmpList);
+			         listAll.appendChild(owdiv);
 	   				}, status => {console.log(status)}					         
 			); // end then
 			         resultset = []; // resultset을 다시금 초기화 해주는 작업;	   
