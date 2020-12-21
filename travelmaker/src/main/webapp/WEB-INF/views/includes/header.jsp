@@ -44,14 +44,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+    <meta charset="utf-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
 <head>
-   
-   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -64,6 +68,7 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+
 <style>
 /*헤더 스타일 */
 
@@ -74,10 +79,6 @@
     --grey-text-light: #717171;
     --grey-text-dark: #222;
     --pink: #ff385c;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 
@@ -176,13 +177,13 @@
     background: var(--grey-light);
 }
 
-.header__nav__button-account {
+ .header__nav__button-account {
     border: 1px solid var(--grey-med);
     height: 42px;
     border-radius: 22px;
     padding: 5px 5px 5px 12px;
     transition: box-shadow 0.2s ease;
-}
+} 
 
 .header__nav__button-account:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
@@ -208,15 +209,6 @@
     width: 9px;
     height: 6px;
     margin-left: 6px;
-}
-
-header__nav__button-account {
-    padding: 9px 25px;
-    background-color: rgba(245, 229, 107, 1.0);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
 }
 
 .header__nav ul {
@@ -282,7 +274,7 @@ header__nav__button-account {
 }
 
 /*성현 style */
-.modal_wrap{
+/* .modal_wrap{
         display: none;
         width: 70%;
         position:fixed;
@@ -305,7 +297,7 @@ header__nav__button-account {
         height: 100%;
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
-    }
+    } */
 .login_modal {
    display: none;
    width: 40%;
@@ -452,9 +444,7 @@ header__nav__button-account {
    font-size: 12px;
    border-radius: 10px;
 }
-.bg_white {
-   background: #fff;
-}
+
 #menu_wrap hr {
    display: block;
    height: 1px;
@@ -496,13 +486,7 @@ body {
    color: white;
    padding: 5px;
 }
-.orgImg {
-   width: 100px;
-   height: 100px;
-}
-.select_img img {
-   margin: 20px 0;
-}
+
 #button { /*로그인 버튼*/
    width: 260px;
    height: 50px;
