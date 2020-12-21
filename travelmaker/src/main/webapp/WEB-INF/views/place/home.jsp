@@ -26,9 +26,8 @@ img {
 }
 .daily-place-list {
    list-style-type: none;
-   margin: 0;
-   padding: 0;
-   width: 60%;
+   margin: 10px;
+   width: 80%;
 }
 
 .daily-place-list li {
@@ -45,7 +44,7 @@ img {
 
 .mainContainer {
    display: flex;
-   flex: 0 0 400px;
+   height:100%;
 }
 
 .menu {
@@ -66,7 +65,6 @@ img {
 .left-date {
    background-color:#203341;
    flex: 0 0 25%;
-   height:100%;
    
 }
 
@@ -75,13 +73,11 @@ img {
 }
 
 .left-place-list {
-   padding: 0 5px 0 5px;
-   width:250px;
+	flex: 0 0 75%;
 }
 
 .container {
-   flex: 0 0 70%;
-   width:50%;
+   flex: 0 0 64%;
 }
 
 .daily-place-all {
@@ -111,8 +107,9 @@ ul {
 
 #all-date {
 	display: flex;
-	flex-direction:column;
-	width:25%;
+    flex-direction: column;
+    flex: 0 0 25%;
+    background-color: #203341;
 }
 #all-schedule {
 	display: flex;
@@ -122,6 +119,8 @@ ul {
 }
 .daily-place-dt {
 	width:100%;
+    padding: 10px 0 0;
+    text-align: center;
 }
 #left-container {
 	display:flex;
@@ -138,7 +137,6 @@ ul {
    overflow:auto;
    width: 90%;
    height: 90%;
-   padding: 20px 30px;
    background-color: #fefefe;
    border: 1px solid #888;
    border-radius: 3px;
@@ -161,18 +159,22 @@ ul {
 
 #searchForm {
 	display:flex;
+    border-bottom: solid #a7a7a7 1px;
 }
 #searchForm > {
 	display:inline;
 }
-.searchbutton
-html {
-	font-size: 62.5%; 
+.search-button:hover {
+	 background-color:#1a7ad9;
 }
+
 button {
 	border:0;
 	width: 40px;
 	height: 40px;
+}
+button:hover {
+	background-color:#939393;
 }
 div.hoverable-place > img {
     grid-area:img;
@@ -180,12 +182,11 @@ div.hoverable-place > img {
     height:10rem;
 }
 div.hoverable-place > span {
-	text-align:left;
-	line-height:1.3rem;
-	width:10rem;
-	font-size:1rem;
-    grid-area:text;
-	overflow:auto;
+	text-align: left;
+    line-height: 1.2em;
+    width: 200px;
+    grid-area: text;
+    overflow: auto;
 }
 div.hoverable-place > button.add-button {
     grid-area:btn1;
@@ -194,15 +195,17 @@ div.hoverable-place > button.detail-button {
     grid-area:btn2;
 }
 .hoverable-place {
-	width:100%;
+	width:95%;
 	height:6rem;
 	display: grid;
 	grid-gap:0.1rem;
   	grid-template-areas:
-    '. img text text text'
-    '. img text text text'
-    '. img . btn1 btn2';
+    'img text text text'
+    'img . btn1 btn2';
 	align-items:center;
+	padding: 2.5%;
+    border-bottom: solid #a7a7a7 1px;
+    background: #fff;
 }
 
 .hoverable-place:hover {
@@ -213,9 +216,27 @@ div.hoverable-place > button.detail-button {
 .pageNoWrap {
 	display:flex;
 }
+.pageNoWrap > div ~ div {
+	padding: 0 1px;
+}
 .right-paging-bar {
+	justify-content: center;
 	display:grid;
-	justify-content:space-around;
+	grid-template-areas: 'btn1 num btn2';
+	align-items: center;
+}
+.right-paging-bar > button.prev-btn {
+	width:15px;
+	height:15px;
+	grid-area:btn1;
+}
+.right-paging-bar > div {
+	grid-area:num;
+}
+.right-paging-bar > button.next-btn {
+	width:15px;
+	height:15px;
+	grid-area:btn2;
 }
 .left-date-list>button {
 	border:1px #263846 solid;
@@ -231,10 +252,16 @@ div.hoverable-place > button.detail-button {
 
 .selected-place {
 	display:flex;
-	width:10rem;
+	width:100%;
+	padding: 10px 0px;
+	cursor:move;
+	border-bottom:solid #a7a7a7 1px;
+	align-items:center;
+	justify-content:space-between;
 }
 .selected-place > span {
-	width:7rem;
+	flex: 0 0 40%;
+	padding:0 10px;
 }
 #left-date-list > button.daily-place-btn.active{
 	background-color:#1a7ad9;
@@ -244,12 +271,25 @@ div.hoverable-place > button.detail-button {
 	overflow:auto;
 	background-color:#203341;
 	color:white;
-	z-index: 1000;
+	z-index: 10;
 	display:none;
 	position:absolute;
-	top:80px;
-	left:20px;
+	top: 70px;
+    left: 50px;
+    flex-direction:column;
+    height:50%;
 }
+.rec-place {
+	display: flex;
+	padding:10px 10px 0;
+    justify-content: space-between;
+    align-items: center;
+}
+.rec-place:last-child {
+	padding:10px 10px 10px;
+}
+
+
 #map>.btn-rec-place {
 	z-index:10;
 	position:absolute;
@@ -313,28 +353,93 @@ div.hoverable-place > button.detail-button {
 
 body > div.mainContainer > div.right.menu {
 	overflow:auto;
-	width:400px;
+	flex:0 0 18%;
+	flex-direction:column;
+	height:100%;
+	display:flex;
 }
 .data-range-picker {
+	text-align: center;
 	border:0;
+	padding:10px 10px;
+	font-size:16px;
+}
+#show > button {
+	background-color: #373737;
+    color: #d3d3d3;
+    font-weight: 400;
+    font-size: 30px;
 }
 #hide {
+	background-color: #373737;
+    color: #d3d3d3;
+    font-weight: 400;
+    font-size: 30px;
     top: 200px;
     right: -40px;
     position:absolute;
-    z-index: 100;
+    z-index: 2;
     width: 40px;
     height: 40px;
 }
 #show {
+	display:none;
     z-index: 1000;
     top: 200px;
     position: absolute;
-    display: block;
     width: 40px;
     height: 40px;
     left: 0px;
 }
+
+.date-wrapper {
+	text-align:center;
+	size:20px;
+}
+#left-place-list > div > div {
+	background-color:#707070;
+	padding: 10px 20px;
+}
+
+
+#left-place-list > div > div > span:nth-child(1) {
+	color:white;
+	padding-right:10px;
+}
+
+#left-place-list > div > div > span:nth-child(2) {
+	color:#999999;
+	padding-right:10px;
+}
+#left-place-list > div > div > span:nth-child(3) {
+	color:white;
+}
+.search-button {
+	flex:0 0 13%;
+ 	background-color:#1a7ad9;
+}
+#search-value {
+	flex:0 0 87%;
+}
+#left-place-list > div > ul > div > button {
+	flex:0 0 20%;
+}
+#left-date-list > button.showAllBtn.active{
+	background-color:#1a7ad9;
+}
+.place-perday-list {
+	display:flex;
+}
+#all-schedule > ul.place-dt-list > div > button {
+	width:100%;
+	height:1.5em;
+	background-color:#90a4ae;
+	color:white;
+}
+#all-schedule > ul.place-dt-list > div > button:hover {
+	background-color:#2196f3;
+}
+
 
 </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -361,7 +466,7 @@ body > div.mainContainer > div.right.menu {
 			  	<div id="in-map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
 			  </div>
 		  </div> 
-		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">닫기</button></div>
+		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button></div>
       	<button class="submit-btn" style="position: absolute;top:60px;right:30px;z-index:110;">저장</button>
       </div>    
       
@@ -381,7 +486,7 @@ body > div.mainContainer > div.right.menu {
 
       <div class="left-menu">
       
-      	<button id="hide"> << </button>
+      	<button id="hide"> < </button>
       
       <div class="left-date">
       
@@ -393,9 +498,7 @@ body > div.mainContainer > div.right.menu {
       
       <div class="left-place-list">
       <div class="date-wrapper">
-         <p>
             <input type="text" name="daterange" class="data-range-picker" data-region-no='<c:out value="${schDto.schRegion}" />' data-init-todate='<c:out value="${schDto.toDate}" />' data-init-fromdate='<c:out value="${schDto.fromDate}" />' />
-         </p>
       </div>
       
       <div class="left-place-list" id="left-place-list">
@@ -408,7 +511,6 @@ body > div.mainContainer > div.right.menu {
 <div class="container">
      <div id="mapWrapper">
         <div id="map" style="width:100%;height:100% position:relative;">
-	        <div class="left-place-rec-list">
 	         <div class="left clearfix" id="rec-place">
 	         <c:forEach items="${places}" var="list">
 	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
@@ -420,13 +522,12 @@ body > div.mainContainer > div.right.menu {
 	            </div>
 	            </c:forEach>
 	         </div>
-	      </div>
         <button class="btn-rec-place">추천 장소</button>
         <button type='button' class="transit-btn-car">차</button>
 		<button type='button' class="transit-btn-transit">대중교통</button>
 		<!-- <button class="insert-button" onclick="insertSchedule()">일정 넣기</button> -->
 		<button class="make-button" onclick="initSch()">일정 만들기</button>
-		<div id="show"><button>>></button></div>
+		<div id="show"><button>></button></div>
         
         </div> <!-- 지도를 표시할 div 입니다 -->
     </div>
@@ -436,7 +537,7 @@ body > div.mainContainer > div.right.menu {
       <!-- 검색 창의 시작  -->
       <form name="searchForm" id="searchForm" style="width:100%;">
             <input type="text" style="border:0;margin-left:2px" placeholder="검색어를 입력해주세요" id="search-value"/><br>
-            <button class="search-button" type="button" style="background-color:#1a7ad9;">
+            <button class="search-button" type="button">
             <i class="fas fa-search" style="color:#ffffff"></i>
          </button>
       </form>
@@ -478,13 +579,13 @@ body > div.mainContainer > div.right.menu {
       function hide() {
     	  dnd(".left-menu").hide("slide", { direction: "left" }, 100);
           document.querySelector('#show').style.display = 'block';
-          document.querySelector('.container').style.flex = '0 0 88%';
+         /*  document.querySelector('.container').style.flex = '0 0 88%'; */
           map.relayout();
       }              
       function show() {
                 	   dnd(".left-menu").show("slide", { direction: "left" }, 100);
                        document.querySelector('#show').style.display = 'none';
-                       document.querySelector('.container').style.flex = '0 0 70%';
+                      /*  document.querySelector('.container').style.flex = '0 0 70%'; */
                        map.relayout();   
       }
                  //전체보기
@@ -591,9 +692,11 @@ body > div.mainContainer > div.right.menu {
        //모달보는 버튼에 이벤트 추가
          document.querySelector('.transit-btn-car').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","car");     
+        	 alert("차로 변경되었습니다.")
          });
          document.querySelector('.transit-btn-transit').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","traffic"); 
+        	 alert("대중교통으로 변경되었습니다.")
          }); 
          document.querySelector('.submit-btn').addEventListener('click', ()=>{
              let btn = document.querySelector('#submit-btn'); 
@@ -603,9 +706,9 @@ body > div.mainContainer > div.right.menu {
          document.querySelector('.btn-rec-place').addEventListener('click', ()=>{ // 추천장소 버튼을 누르면 장소들 등장, button을 추가할지 말진 모르겠다.
                  let recPlace = document.querySelector('#rec-place')
                     if(recPlace.style.display=='' || recPlace.style.display==='none' ){
-                       recPlace.style.display='block';
+                       recPlace.style.display='flex';
                         }
-                    else if(recPlace.style.display==='block'){
+                    else if(recPlace.style.display==='flex'){
                         recPlace.style.display='none';
                      }
          });
@@ -621,7 +724,8 @@ body > div.mainContainer > div.right.menu {
                 let leftPlaceList = document.getElementsByClassName("daily-place-list");
                 let activePlaceList = leftPlaceList[index];
                 let compPlaceList = activePlaceList.children
-                if(compPlaceList.length>6) { //span wrap div
+                if(compPlaceList.length>5) { //span wrap div
+                	alert("하루에 장소는 6개까지만 가능합니다.")
                	 return;
                 }
                 let currTarget = event.currentTarget.parentElement;
@@ -680,7 +784,7 @@ body > div.mainContainer > div.right.menu {
 	             objs.addEventListener('click',  (event) => {
                  let currTarget = event.currentTarget;
                  let btnList = document.getElementsByClassName("daily-place-btn")
-                 let dailyPlaceList = document.querySelectorAll('.daily-place-list')
+                 let dailyPlaceList = document.querySelectorAll('.daily-wrap-div')
                  let arr = [...btnList];
                  let psuedoidx = arr.indexOf(currTarget);
                  // 토글 버튼 인덱스 추가 삭제 총괄
@@ -692,26 +796,33 @@ body > div.mainContainer > div.right.menu {
 	             btnList[psuedoidx].classList.add("active");
               });
 	             totalDate.appendChild(objs);
-	             let liobjs = document.createElement('ul');
-	             liobjs.setAttribute('class', 'daily-place-list');
-	             liobjs.setAttribute('style','display:none');
 	             let currDate = addDays(fromDate,idx);
+	             let wdiv = document.createElement('div');
+	             wdiv.setAttribute("class","daily-wrap-div");
+	             wdiv.setAttribute('style','display:none');
+	             
 	             let div = document.createElement('div');
 	             div.setAttribute("class","span-wrap-div");
 				 let span1 = document.createElement('span');
-	             span1.innerText = `DAY\${idx+1}`;
 	             let span2 = document.createElement('span');
-	             span2.innerText = "|";
 	             let span3 = document.createElement('span');
+	             span1.innerText = `DAY\${idx+1}`;
+	             span2.innerText = "|";
 	             span3.innerText = `\${transDate(currDate)}(\${week[currDate.getDay()]}요일)`;
+	             
+	             let liobjs = document.createElement('ul');
+	             liobjs.setAttribute('class', 'daily-place-list');
+	            
+	             
 	             div.appendChild(span1);
 	             div.appendChild(span2);
 	             div.appendChild(span3);
-	             liobjs.appendChild(div);
-	             totalPlace.appendChild(liobjs);
+	             wdiv.appendChild(div);
+	             wdiv.appendChild(liobjs);
+	             totalPlace.appendChild(wdiv);
          }
          totalDate.children[1].classList.add("active");
-         document.querySelector('.daily-place-list').style.display='block';
+         document.querySelector('.daily-wrap-div').style.display='block';
        }
        
        function addDays(date, days) { // 일을 증가시키는 메소드
@@ -790,7 +901,7 @@ body > div.mainContainer > div.right.menu {
                 contentType: "application/json; charset=utf-8;",
                 dataType: "text",
                 success:function(data){
-                	/* location.href = data; */
+                	location.href = data;
                 },
                 error: function(data){
                 	alert("error : "+data);
@@ -822,9 +933,22 @@ body > div.mainContainer > div.right.menu {
            let dateList = document.querySelector("#left-date-list").cloneNode(true);
            let dailyBtn = dateList.children;
            let len = dailyBtn.length;
-			for (let i = 1; i < len; i++) {
+			for (let i = 0; i < len; i++) {
+				if(i>0){
 				dailyBtn[i].addEventListener("click",drawLine);
+				}
+				dailyBtn[i].addEventListener("click", (event) =>{
+					let currTarget = event.currentTarget;
+					let arr = [...dailyBtn];
+			        let psuedoidx = arr.indexOf(currTarget);
+			        for (let j = 0; j < len; j++) {
+			        	dailyBtn[j].classList.remove("active");
+					}
+			        dailyBtn[psuedoidx].classList.add("active");
+				})
+             	dailyBtn[i].classList.remove("active");
 			}
+           dailyBtn[0].classList.add("active");
            // 일정 추출할 친구
            // 일정 생성 완료
            let dateLeng = dateList.children.length-1;
@@ -852,9 +976,9 @@ body > div.mainContainer > div.right.menu {
               listAll.appendChild(objs);
 			  // 일차 리스트에 이어 붙여주기          
 			  
-              let len = dpList[i].children.length-1; //span wrap div -1 
+              let len = dpList[i].children.length; //span wrap div -1 
               for (let j = 0; j < len; j++) {
-              let dailyplace = dpList[i].children[j+1].cloneNode(true); //span wrap div +1
+              let dailyplace = dpList[i].children[j].cloneNode(true); //span wrap div +1
               dailyplace.setAttribute('class','place-perday-list');
               dailyplace.lastElementChild.addEventListener('click',deleteInLeft);
               objs.appendChild(dailyplace);
@@ -908,6 +1032,8 @@ body > div.mainContainer > div.right.menu {
   			 let currList = document.getElementsByClassName("daily-place-dt")[idx]; 
   			 let leng = currList.children.length;
   			 let tmpList = document.createElement("ul");
+  			 let title = document.createElement("span");
+  			 title.innerText = (idx+1)+"일차";
   			 tmpList.setAttribute("class","place-dt-list");
   			 let transit = sessionStorage.getItem("transit");
   			 let geocoder = new kakao.maps.services.Geocoder();
@@ -936,6 +1062,7 @@ body > div.mainContainer > div.right.menu {
          } // for currList end 
          let pAll = Promise.all(geoArr);
          
+		 let curClone = currList.cloneNode(true);
          for (let i = 0; i < geoArr.length; i++) {
 			let locaData = currList.children[i];
 			pAll.then(result => {
@@ -945,12 +1072,34 @@ body > div.mainContainer > div.right.menu {
 		         dailyplace.innerText = dailyplace.dataset["title"];
 		         let rsid = resultset.length||0;
 		         if(rsid>1){
-			         let anchor = document.createElement("a");
-			         anchor.setAttribute("href", `https://map.kakao.com/?map_type=TYPE_MAP&target=\${transit}&rt=\${resultset[rsid-2]["x"]},\${resultset[rsid-2]["y"]},\${resultset[rsid-1]["x"]},\${resultset[rsid-1]["y"]}&rt1=\${resultset[rsid-2]["title"]}&rt2=\${resultset[rsid-1]["title"]}&rtIds=%2C&rtTypes=%2C`);
-			         anchor.innerText="상세보기";
-			         dailyplace.append(anchor);
+		        	 let URL = `https://map.kakao.com/?map_type=TYPE_MAP&target=\${transit}&rt=\${resultset[rsid-2]["x"]},\${resultset[rsid-2]["y"]},\${resultset[rsid-1]["x"]},\${resultset[rsid-1]["y"]}&rt1=\${resultset[rsid-2]["title"]}&rt2=\${resultset[rsid-1]["title"]}&rtIds=%2C&rtTypes=%2C`;
+		        	 let button = document.createElement("button");
+			         button.setAttribute("type", "button");
+			         button.addEventListener("click",() => {
+                         window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
+			         })
+			         button.innerText="상세보기 "
+			         let icon2 = document.createElement("i");
+			         icon2.setAttribute("class", "fas fa-sort-down");
+			         button.appendChild(icon2);
+		        	 let span = document.createElement("span");
+		        	 span.innerText = "STEP"+i;
+		        	 
+		        	 let icon1 = document.createElement("i");
+		        	 icon1.setAttribute("class", "fas fa-long-arrow-alt-down");
+		        	 
+		        	 let dailypair = currList.children[i-1].cloneNode();
+			         dailypair.setAttribute("class", "place-dt-perday");
+			         dailypair.innerText = dailypair.dataset["title"];
+		        	 let wdiv = document.createElement("div");
+		        	 wdiv.setAttribute("class", "plcdt-wrap-div");
+		        	 wdiv.appendChild(span);
+		        	 wdiv.appendChild(dailypair);
+		        	 wdiv.appendChild(icon1);
+		        	 wdiv.appendChild(dailyplace);
+		        	 wdiv.append(button);
+		         	 tmpList.appendChild(wdiv)
 		         } // if end // resolve end
-			         tmpList.appendChild(dailyplace);
 			         listAll.appendChild(tmpList);
 	   				}, status => {console.log(status)}					         
 			); // end then
@@ -1005,7 +1154,7 @@ body > div.mainContainer > div.right.menu {
     		    strokeOpacity: 0.8,
     		    strokeStyle: 'solid'
     		})
-    		/* console.log((polyline.getLength()/1000).toFixed("2")+"km"); //거리 구하는식*/
+    		console.log((polyline.getLength()/1000).toFixed("2")+"km"); 
     	   }
        }
        
@@ -1021,7 +1170,7 @@ body > div.mainContainer > div.right.menu {
          
          let leftPlace = document.getElementsByClassName("selected-place");
          let index = getActiveDay();
-         let leftPlaceList = document.getElementsByClassName("daily-place-list");
+         let leftPlaceList = document.getElementsByClassName("daily-wrap-div");
          let activePlaceList = leftPlaceList[index].children;
          placeList.empty();
          let tmplist = [];
@@ -1055,8 +1204,9 @@ body > div.mainContainer > div.right.menu {
                     if(pageMaker.prev) {
                        let btnObj = document.createElement("button");
                        btnObj.setAttribute("type", "button");
+                       btnObj.setAttribute("class", "prev-btn");
                        btnObj.setAttribute("data-num", startPage-1);
-                       btnObj.innerText ="이전";
+                       btnObj.innerText ="<";
                        btnObj.addEventListener('click',searchAction);
                        pagingBar.appendChild(btnObj);
                     }
@@ -1072,9 +1222,10 @@ body > div.mainContainer > div.right.menu {
                     if(pageMaker.next) {
                        let btnObj = document.createElement("button");
                        btnObj.setAttribute("type", "button");
+                       btnObj.setAttribute("class", "next-btn");
                        btnObj.setAttribute("data-num", endPage+1);
                        btnObj.addEventListener('click',searchAction);
-                       btnObj.innerText ="다음";
+                       btnObj.innerText =">";
                        pagingBar.appendChild(btnObj);
                     }
                  }
@@ -1115,8 +1266,8 @@ body > div.mainContainer > div.right.menu {
                          let idx = getActiveDay(); // idx 를 얻었다.
                          let currentList = dailyPlaceList[idx];
                          let currentPlaceList = currentList.children;
-                         if(currentPlaceList.length>8){
-                        	 alert("6개까지만 가능합니다.")
+                         if(currentPlaceList.length>=6){
+                        	 alert("하루에 장소는 6개까지만 가능합니다.")
                         	 return;
                          }
                          for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
@@ -1184,7 +1335,7 @@ body > div.mainContainer > div.right.menu {
       }
       
       function getActiveDay(){
-         let dateList = document.getElementsByClassName("daily-place-list");
+         let dateList = document.getElementsByClassName("daily-wrap-div");
          let idx;
          for (let i = 0; i < dateList.length; i++) {
             
