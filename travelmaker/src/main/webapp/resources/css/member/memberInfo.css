@@ -108,7 +108,7 @@
         position: absolute;
         top:50%;
         left: 27%;
-        margin: 30px 0 30px 100px; /* 모달 위치조절 */
+        margin: -170px 100px 30px 100px;
         background:#eee;
         background-color:white;
         z-index: 2;

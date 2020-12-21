@@ -105,7 +105,7 @@
 			<![CDATA[
 				select bno, title, content, nickname, reg_date, updateDate, viewCnt, secret, replyCnt
 				from
-				(select /*+INDEX_DESC(qna_board pk_bno) */
+				(select /*+INDEX_DESC(qna_board pk_board) */
 					rownum rn, bno, title, content, nickname, reg_date, updateDate, viewCnt, secret, replyCnt
 				from 
 					qna_board
