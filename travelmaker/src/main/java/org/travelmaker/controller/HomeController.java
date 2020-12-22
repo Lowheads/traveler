@@ -16,11 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.travelmaker.service.BoardService;
+import org.travelmaker.service.PlaceService;
+import org.travelmaker.service.RegionService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@AllArgsConstructor
+@Log4j
 public class HomeController {
 	
 	@GetMapping(path="/placeDB") //loginform이라는 요청이 들어오면
@@ -52,7 +60,7 @@ public class HomeController {
        
        @GetMapping("/")
        public String home() {
-    	   return "/main/index";
+    	   return "redirect:/main/index";
     	   
        }
 }

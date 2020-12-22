@@ -1,0 +1,45 @@
+diff a/travelmaker/src/main/webapp/WEB-INF/views/place/home.jsp b/travelmaker/src/main/webapp/WEB-INF/views/place/home.jsp	(rejected hunks)
+@@ -478,6 +478,43 @@
+ 	margin-top:10px;
+ }
+ 
++.dotOverlay {
++	position:relative;
++	bottom:10px;
++	text-align:center;
++	border-radius:6px;
++	border: 1px solid #ccc;
++	border-bottom:2px solid #ddd;
++	font-size:12px;
++	padding:5px;
++	background:#fff;
++}
++.dotOverlay:nth-of-type(n) {
++	border:0; box-shadow:0px 1px 2px #888;
++}    
++.number {
++	font-weight:bold;color:#ee6152;
++}
++.dotOverlay:after {
++		content:'';
++		position:absolute;
++		margin-left:-6px;
++		left:50%;
++		bottom:-8px;
++		width:11px;
++		height:8px;
++		background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png');
++	}
++.placeInfo {
++	position:relative;top:5px;left:5px;list-style:none;margin:0;
++}
++.placeInfo .label {
++	margin-top:2px;display:inline-block;width:100%;
++}
++.placeInfo:after {
++	content:none;
++}
++
+ 
+ </style>
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

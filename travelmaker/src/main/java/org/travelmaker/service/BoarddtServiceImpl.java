@@ -1,5 +1,7 @@
 package org.travelmaker.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,9 +9,11 @@ import javax.annotation.Resource;
 
 import org.travelmaker.utils.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.BoarddtVO;
+import org.travelmaker.domain.MpFileVO;
 import org.travelmaker.mapper.BoarddtMapper;
 
 import lombok.AllArgsConstructor;
@@ -53,16 +57,24 @@ public class BoarddtServiceImpl implements BoarddtService {
 
 	//boarddt 등록 (첨부파일 등록 메소드 호출)
 	@Override
-	public void write(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest) throws Exception {
+	public void write(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest, List<String> newContent) throws Exception {
 		mapper.register(boarddt);
 		
 		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(boarddt, mpRequest);
+		
 		int size=list.size();
 		for(int i=0;i<size;i++) {
-			insertFile(list.get(i));
+			
+			insertFileTest(list.get(i),newContent.get(i));
 		}
 	}	
 	//첨부파일 등록
+	@Override
+	public void insertFileTest(Map<String, Object> map, String content) throws Exception {
+		map.put("FILE_CONTENT",content);
+		mapper.insertFile(map);		
+	}
+	
 	@Override
 	public void insertFile(Map<String, Object> map) throws Exception {
 		mapper.insertFile(map);		
@@ -80,26 +92,36 @@ public class BoarddtServiceImpl implements BoarddtService {
 		return mapper.selectFileInfo(map);
 	}
 
-	//boarddt 수정 
+	@Transactional
 	@Override
-	public void update(BoarddtVO boarddt, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)
-			throws Exception {
+	public void update(BoarddtVO boarddt, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest,
+			List<String> newContent) throws Exception {
 		mapper.update(boarddt);
-		
+
 		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(boarddt, files, fileNames, mpRequest);
 		Map<String, Object> tempMap = null;
+
 		int size = list.size();
-		for(int i = 0; i<size; i++) {
+
+		for (int i = 0; i < size; i++) {
 			tempMap = list.get(i);
-			if(tempMap.get("IS_NEW").equals("Y")) {
+			if (tempMap.get("IS_NEW").equals("Y")) {
+				tempMap.put("FILE_CONTENT", newContent.get(i));
 				mapper.insertFile(tempMap);
-			}else {
+			} else {
 				mapper.updateFile(tempMap);
 			}
 		}
-		
 	}
 	
-	
-	
+	@Transactional
+	@Override
+	public void updateContent(List<Integer> fileNo, List<String> fileContent) {
+		for(int i=0;i<fileNo.size();i++) {
+			mapper.updateContent(fileNo.get(i),fileContent.get(i));
+		}
+		
+	}
 }
+
+

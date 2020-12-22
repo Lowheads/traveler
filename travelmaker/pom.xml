@@ -11,8 +11,8 @@
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.aspectj-version>1.9.0</org.aspectj-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -158,6 +158,57 @@
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
+	      <groupId>org.seleniumhq.selenium</groupId>
+	      <artifactId>selenium-java</artifactId>
+	      <version>3.141.59</version>
+	    </dependency>
+
+      <dependency>
+         <groupId>com.sun.mail</groupId>
+         <artifactId>javax.mail</artifactId>
+         <version>1.5.6</version>
+      </dependency>
+      
+         <!-- naver -->
+      <dependency>
+         <groupId>com.github.scribejava</groupId>
+         <artifactId>scribejava-core</artifactId>
+         <version>2.8.1</version>
+      </dependency>
+      
+      <!-- 제이슨 파싱 -->
+      <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+      </dependency>
+      
+      <!-- httpcore(카카오) -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.6</version>
+        </dependency>
+ 
+        <!-- httpclient(카카오) -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+      
+	<dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-context-support</artifactId>
+         <version>${org.springframework-version}</version>
+      </dependency>
+      
+	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+	<dependency>
+		<groupId>net.coobird</groupId>
+		<artifactId>thumbnailator</artifactId>
+		<version>0.4.13</version>
+	</dependency>
 		
 		<dependency>
     		<groupId>com.googlecode.json-simple</groupId>

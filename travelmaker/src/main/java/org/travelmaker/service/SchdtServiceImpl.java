@@ -3,6 +3,7 @@ package org.travelmaker.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.Map;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -170,5 +171,16 @@ public class SchdtServiceImpl implements SchdtService {
 //		}
 //		return new PositionDTO(px,py);
 //	}
+
+	@Override
+	public List<Map<String, Object>> getSchdtList(int schNo) {
+		return mapper.getSchdtList(schNo);
+	}
+
+	@Override
+	public int deleteSchdt(int schNo) {
+		// TODO Auto-generated method stub
+		return mapper.deleteSchdt(schNo);
+	}
 
 }

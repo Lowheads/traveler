@@ -10,5 +10,7 @@ public class ThemeVO {
 	private Date modDate;
 	private Date regDate;
 	private String img;
+	
+	private ThemeAttachVO attachment;
 
 }

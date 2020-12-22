@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.travelmaker.domain.ScheduleDTO;
+import org.travelmaker.service.BoardService;
 import org.travelmaker.service.PlaceService;
 import org.travelmaker.service.RegionService;
 
@@ -27,6 +28,7 @@ public class MainController {
 	
 	private RegionService service;
 	private PlaceService placeService;
+	private BoardService boardservice;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -44,5 +46,7 @@ public class MainController {
 	public void main(Model model){
 		log.info(service.getList());
 		model.addAttribute("list", service.getList());
+		
+		model.addAttribute("adminlist",boardservice.getAdminList());
 	}
 }

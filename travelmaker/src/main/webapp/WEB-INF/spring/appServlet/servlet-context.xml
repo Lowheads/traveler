@@ -43,6 +43,19 @@
 		id="multipartResolver">
 		<beans:property name="maxUploadSize" value="10485760" />
 	</beans:bean>
+	
+	<!-- 인터셉터 객체 생성 -->
+    <beans:bean id="authenticationInterceptor" class="org.travelmaker.interceptor.LoginHandle">
+    </beans:bean>
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+        <!-- /qnaboard/list는 로그인 후 이용가능 -->
+            <mapping path="/qnaboard/*"/>
+            <!-- <exclude-mapping path="/qnaboard/list"/> -->
+            <beans:ref bean="authenticationInterceptor"/>
+        </interceptor>
+    </interceptors>
 
 <!-- 네이버 로그인 -->
    <beans:bean id="naverLoginBO" class="org.travelmaker.loginapi.NaverLoginBO" />

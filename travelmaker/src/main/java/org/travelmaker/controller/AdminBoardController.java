@@ -54,12 +54,10 @@ private AdminBoardService service;
 	@GetMapping("/removeContent/{boardNo}")
 	public String removePost(@PathVariable("boardNo") ArrayList<Integer> boardNo, RedirectAttributes rttr) {
 
-		int result = service.removePost(boardNo);
-		
-		rttr.addFlashAttribute("message", "FAIL");
-		
-		if(result !=0) {
+		if(boardNo.size() == service.removePost(boardNo)) {
 			rttr.addFlashAttribute("message", "SUCCESS");
+		}else {
+			rttr.addFlashAttribute("message", "FAIL");
 		}
 		
 		return "redirect:/admin/boardList";

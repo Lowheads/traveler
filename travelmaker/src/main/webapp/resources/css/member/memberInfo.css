@@ -1,0 +1,279 @@
+@charset "UTF-8";
+
+.container-info{ /* 내 정보 보기 전체 div */
+	background-color: white;
+	display: flex;
+	justify-content: center;
+}
+	
+.info-wrap{ /* 전체 div */
+    width: 80%;
+    margin-top: 5%;
+  	padding-bottom: 1.8%;
+    margin-bottom: 10%;
+    justify-content: center;
+    border: 1px solid black;
+    box-shadow: 2px 5px 5px 5px grey;
+}
+
+.info-head{ /* 내 정보 div */
+	background-color: white;
+	height: 10%;
+	border-bottom: 1px solid black;
+	color: black;
+    font-size: 25px;
+    padding-top: 2.5%;
+    padding-left: 3%;
+}
+
+.info-foot{ /* 내정보 푸터 div */
+	height: auto;
+	border-top: 1px solid black;
+	display: flex;
+	justify-content: space-between;
+	padding: 3%;
+}
+
+.main-wrap{ /* 내용 div(일반 회원 페이지) */
+	padding: 7%;
+	padding-left : 3%;
+    height: 700px;
+    background-color: white;
+}
+
+.api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
+	padding : 7%;
+}
+
+.info-title{ /* title div */
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding-bottom: 15%;
+}
+
+.info-content{ /* content 감싸는 div */
+	text-align: center;
+	display: flex;
+    justify-content: end;
+    margin-bottom: 6%;
+    margin-left: 20%;
+}
+
+.content-name{ /* 컨텐츠 제목 */
+	font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    width: 40%;
+}
+
+.content-proper{ /* 컨텐츠 내용 */
+	font-size: 16px;
+}
+
+	
+.dupl-btn{ /* 닉네임 중복체크 버튼 */
+	background-color: black;
+	color: white;
+}
+
+.pwd-modiBtn{ /* 비밀번호 변경 버튼 */
+	background-color: black;
+    color: white;
+    width: 125px;
+    height: 30px;
+}
+
+.save-btn{ /* 저장하기 버튼 */
+	background-color: black;
+	color: white;
+	font-size: 16px;
+/* 	width: 75px;
+    height: 30px;
+    font-size: 13px; */
+}
+
+.delete-btn{ /* 탈퇴하기 버튼 */
+	background-color: white;
+	border: none;
+	font-size: 16px;
+	color: black;
+}
+
+/*	=========비번 바꾸기 모달 창============*/
+.pwdModify_modal{ /* 비번 바꾸기 창*/
+        display: none;
+        width: 550px;
+        height: 550px;
+        position: absolute;
+        top:50%;
+        left: 27%;
+        margin: 30px 0 30px 100px; /* 모달 위치조절 */
+        background:#eee;
+        background-color:white;
+        z-index: 2;
+        border: 3px solid black;
+        text-align: center;
+    }
+    
+.black_bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 133%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+}
+.pwModal_close{
+        float: right;
+}
+    
+.pwdModi-cancelBtn{ /* 모달 닫기 버튼 */
+	color: black;
+	width: 26px;
+}
+
+.pwdModi-aTag{ /* pwd변경 닫기 버튼 */
+	color: black;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.pwd-change-wrap{ /* 비번 변경 입력 div */
+	display: flex;
+	margin-left: 20%;
+}
+
+.pwd-change-confirm-btn{
+	text-align: center;
+    padding: 4px;
+    margin-top: 10%;
+}
+
+.pwd-pwd{ /* 비번 변경하기 버튼 */
+	background: black;
+    color: white;
+    height: 30px;
+    width: 240px;
+    height: 60px;
+}
+
+pwd-change{ /* 비번 변경 input 창 */
+	width: 210px;
+}
+
+/*========탈퇴 모달================*/
+.member_delete_modal{ /* 탈퇴 창*/
+        display: none;
+        width: 550px;
+        height: 550px;
+        position: absolute;
+        top:50%;
+        left: 27%;
+        margin: -170px 100px 30px 100px; /* 모달 위치조절 */
+        background:#eee;
+        background-color:white;
+        z-index: 2;
+        border: 3px solid black;
+        text-align: center;
+    }
+    
+.black_bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 133%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+}
+.mdModal_close{
+        float: right;
+}
+    
+.pwdModi-cancelBtn{ /* 모달 닫기 버튼 */
+	color: black;
+	width: 26px;
+}
+
+.delete_announce{ /* 탈퇴 안내 */
+	font-weight: bold;
+    color: deeppink;
+}
+
+.delete-wrap{ /* 탈퇴 입력 감싸기 */
+	display: flex;
+	margin-left : 25%;
+	margin-bottom: 3%;
+	font-size: 17px;
+}
+
+.del-div{
+	padding-top: 1%;
+	font-weight: bold;
+}
+
+.delete_confirm_btn{
+	text-align: center;
+    padding: 4px;
+    margin-top: 10%;
+}
+
+#delete_confirm{ /* 회원탈퇴 버튼(최종) */
+	background: black;
+    color: white;
+    height: 30px;
+    width: 240px;
+    height: 60px;
+}
+
+/*======== api 탈퇴 모달================*/
+.apiMember_delete_modal{ /* api 탈퇴 창*/
+        display: none;
+        width: 550px;
+        height: 550px;
+        position: absolute;
+        top:50%;
+        left: 27%;
+        margin: -200px 100px 30px 100px; /* 모달 위치조절 */
+        background:#eee;
+        background-color:white;
+        z-index: 2;
+        border: 3px solid black;
+        text-align: center;
+    }
+    
+.black_bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 133%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+}
+.amdModal_close{
+        float: right;
+}
+
+.delete-wrap-api{ /* api(email)탈퇴 입력 감싸기 */
+	display: flex;
+	margin-left : 16%;
+	margin-bottom: 3%;
+	font-size: 17px;
+}
+
+#sendEmailBtn{
+	background-color: black;
+    color: white;
+    margin-left: -20px;
+    font-size: 14px;
+}

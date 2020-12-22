@@ -15,8 +15,8 @@ public class PlaceVO {
 	private double lng;
 	private String addressDt;
 	private String pCate;
-	private String holiday = "무휴";
-	private String openingH = "무휴";
+	private String holiday;
+	private String openingH;
 	private int likeCnt;
 	private String plcImg;
 	

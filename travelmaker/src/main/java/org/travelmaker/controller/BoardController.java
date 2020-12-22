@@ -28,10 +28,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.BoarddtVO;
 import org.travelmaker.domain.Criteria;
+import org.travelmaker.domain.MpFileVO;
 import org.travelmaker.domain.PageDTO;
+import org.travelmaker.domain.PickVO;
+import org.travelmaker.domain.Schdt_PlaceVO;
 import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.service.BoardService;
 import org.travelmaker.service.BoarddtService;
+import org.travelmaker.service.PickService;
 import org.travelmaker.service.SchdtService;
 import org.travelmaker.service.ScheduleService;
 import org.travelmaker.utils.UploadFileUtils;
@@ -56,7 +60,27 @@ public class BoardController {
 	private SchdtService schdtservice;
 	
 	private BoarddtService boarddtservice;
+	
+	private PickService pickService;
 
+	//날씨 페이지 확인
+	@GetMapping("/weather2")
+	public void weather() {
+		
+	}
+	
+
+	@GetMapping("/list")
+	public void list(Criteria cri, Model model,  HttpServletRequest request) {
+
+		cri.setAmount(12);
+		model.addAttribute("list",boardservice.getList(cri));
+	
+		int total= boardservice.getTotal(cri);
+		model.addAttribute("pageMaker",new PageDTO(cri, total));
+	}
+	
+	//schedulelist
 	@GetMapping("/schedulelist")
 	public void schedulelist(Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -65,24 +89,13 @@ public class BoardController {
 		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
 	}
 	
-	
+	//hiddenlist
 	@GetMapping("/hiddenlist")
 	public void hiddencheck(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		
-		model.addAttribute("hiddenlist",scheduleservice.getHiddenList(memNo));
-	}
-	
-	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
-
-		model.addAttribute("list",boardservice.getList(cri));
-
-		int total= boardservice.getTotal(cri);
-
-
-		model.addAttribute("pageMaker",new PageDTO(cri, total));
+		List<Map<String,Object>> hiddenList = scheduleservice.getHiddenList(memNo);
+		model.addAttribute("hiddenlist",hiddenList);
 	}
 	
 	
@@ -141,21 +154,25 @@ public class BoardController {
 	@GetMapping("/dtregister")
 	public void dtregister(BoardVO board,Model model) throws UnsupportedEncodingException {
 		
-
 		board=boardservice.getbySchNo(board);
+		int schNo= board.getSchNo();
+		
+		
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		
 		model.addAttribute("board",board);
 		
 	}
 	
 	@PostMapping("/dtregister")
-	public String dtregister(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest) throws Exception{
+	public String dtregister(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest, @RequestParam(value="newContent", required=false) List<String> newContent) throws Exception{
 		log.info("dtregister: "+boarddt);	
 		
 		BoardVO board= new BoardVO();
 		board=boardservice.get(boarddt.getBoardNo());
 		
-		boarddtservice.write(boarddt, mpRequest);
+		boarddtservice.write(boarddt, mpRequest,newContent);
 		
 		//작성중에서 작성으로
 		scheduleservice.statusupdate(board.getSchNo());
@@ -182,19 +199,30 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 
-		log.info("/get");
 		BoardVO board=boardservice.get(boardNo);
 		int schNo=board.getSchNo();
+		ScheduleVO schedule = scheduleservice.getSchedule(schNo);
+		schedule.setMemNo(memNo);
+		
+		//pickSCH 테이블에 일정번호 있는지 체크
+		if(scheduleservice.checkPick(schedule)) {
+			model.addAttribute("pick","picked");
+		}
+		else {
+			model.addAttribute("pick","unpicked");
+		}
+		
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
-		model.addAttribute("schdtplace", schdtservice.getplacetitle(schNo));
-		model.addAttribute("boarddt",boarddtservice.getList(boardNo));
-		model.addAttribute("board",boardservice.get(boardNo));
+		model.addAttribute("boarddt",boarddtservice.get(boardNo));
+		model.addAttribute("board",board);
 		
 		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
+		
 		model.addAttribute("file",fileList);
 		
 		model.addAttribute("memNo",memNo);
 	
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 	}
 	
 	@PostMapping("/modify")
@@ -207,11 +235,12 @@ public class BoardController {
 		
 		if (file != null) {
 			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+			board.setBoardImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		} else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+			fileName = board.getBoardImg();
+			board.setBoardImg(fileName);
 		}
 
-		board.setBoardImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		board.setThumbImg(
 				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		System.out.println(board.getBoardImg()+","+board.getThumbImg());
@@ -227,22 +256,31 @@ public class BoardController {
 	
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, HttpSession session) {
 		log.info("remove..."+boardNo);
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
 		ScheduleVO schedule=scheduleservice.getSchedule(schNo);
 		
+		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		PickVO pick= new PickVO();
+		pick.setMemNo(memNo);
+		pick.setSchNo(schNo);
+
+	    
 		//게시물 상세부터 remove
 		boarddtservice.remove(boardNo);
 		if(boardservice.remove(boardNo)) {
 
 			
 			//게시물 상태 '작성' -> '미작성' 으로 변경
-			schedule.setSchStatus("작성");
+			schedule.setSchStatus("BS001");
 			scheduleservice.statusupdate(schNo);
-
+			
+			//게시글 삭제할 때, 해당 게시글 좋아요 취소
+			pickService.remove(pick);
+			System.out.println("delete"+pick);
 			
 			rttr.addFlashAttribute("result","success");
 		}
@@ -275,30 +313,63 @@ public class BoardController {
 	
 	//dtmodify 폼
 	@GetMapping(value="/dtmodify")
-	public void dtmodify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+	public void dtmodify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model, RedirectAttributes rttr) throws Exception {
 		log.info("dtmodify");
 
+		BoardVO board = boardservice.get(boardNo);
+		int schNo= board.getSchNo();
 		
 		model.addAttribute("boarddt",boarddtservice.get(boardNo));
+		model.addAttribute("board",board);
 		
+		model.addAttribute("schedule",scheduleservice.getSchedule(schNo));
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 		List<Map<String, Object>> fileList = boarddtservice.selectFileList(boardNo);
+		
 		model.addAttribute("file",fileList);
+
 
 	}
 	
 	
 	
-	//dt register 수정
+	//dt modify
 	@PostMapping(value="/dtmodify")
 	public String update(BoarddtVO boarddt,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr,
-			@RequestParam(value="fileNoDel[]") String[] files, @RequestParam(value="fileNameDel[]") String[] fileNames,
-			MultipartHttpServletRequest mpRequest) throws Exception{
+			@RequestParam(required = false, value="fileNoDel[]") String[] files, @RequestParam(required = false, value="fileNameDel[]") String[] fileNames, @RequestParam(required = false, value="newContent") List<String> newContent
+			,@RequestParam(required = false, value="fileContent") List<String> fileContent, @RequestParam(required = false, value="fileNo") List<Integer> fileNo, MultipartHttpServletRequest mpRequest) throws Exception{
 		log.info("update dtmodify");
-		boarddtservice.update(boarddt, files, fileNames, mpRequest);
+
+		//내용만 수정된 메소드 만들기
+		boarddtservice.updateContent(fileNo,fileContent);
+
+		//새로운 콘텐츠가 있을 때만 실행
+		boarddtservice.update(boarddt, files, fileNames, mpRequest, newContent);
 		
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		
-		return "redirect:/board/list";
+		return "redirect:/board/get?boardNo="+boarddt.getBoardNo();
 	}
+	
+		//좋아요 취소
+	   @ResponseBody
+	   @RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
+	   public void deletePickPlace(HttpSession session,PickVO pick) throws Exception {
+	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+	      pick.setMemNo(memNo);
+	      System.out.println("delete"+pick);
+	      pickService.remove(pick);
+	   }
+	   
+	   //좋아요 추가
+	   @ResponseBody
+	   @RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
+	   public void insertPickPlace(HttpSession session,PickVO pick) throws Exception {
+	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+	      pick.setMemNo(memNo);
+	      System.out.println("insert"+pick);
+	      pickService.register(pick);
+	   }
+	
 }
