@@ -121,7 +121,6 @@ input:checked+.slider:before {
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
 	text-decoration: none;
-
 }
 
 #schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
@@ -293,7 +292,7 @@ input:checked+.slider:before {
     <div class="pagination" style="text-align: center;">
          <ul class="pagination_bar">
             <c:if test="${pageMaker.prev }">
-               <li class="pagination_btn" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+               <li class="pagination_btn previous"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>
             </c:if>
 
             <c:forEach var="num" begin="${pageMaker.startPage}"
@@ -304,7 +303,7 @@ input:checked+.slider:before {
             </c:forEach>
 
             <c:if test="${pageMaker.next }">
-               <li class="pagination_btn" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
+               <li class="pagination_btn next"><a href="${pageMaker.endPage +1 }">&raquo;</a></li>
             </c:if>
          </ul>
       </div>
@@ -324,9 +323,6 @@ input:checked+.slider:before {
 						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
 					<div class="card-Img" style="background-image: url(/resources${coverimg});">
 							<%-- <img src="/resources${board.boardImg}" > --%>
-								<div class="heart">
-								<i class="fa fa-heart" data-sch_no="${board.schNo}" style="font-size:24px;color:red;" onclick="likeToggle(this)"></i>
-								</div>
 								<div class="img-cover"></div>
 					</div>
 					</a>
@@ -399,6 +395,7 @@ input:checked+.slider:before {
 		$(".pagination_btn a").on("click", function(e) {
 			e.preventDefault();
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			//alert(actionForm.find("input[name='pageNum']").val($(this).attr("href")))
 			actionForm.submit();
 		});
 
@@ -495,47 +492,6 @@ input:checked+.slider:before {
 				modal('register_modal');
 			});
 	
-	//좋아요
-    function likeToggle(heart){
-       if(heart.className == "fa fa-heart"){
-           let sendData = {
-                'schNo' : heart.dataset['sch_no'],
-             }
-             //ajax 기능 추가 
-             $.ajax({
-                type : 'post',
-                url : '/board/deletePick',
-                data : sendData,
-                success : function(data) {
-                   heart.classList.toggle("fa-heart-o");
-                  
-                 },
-                error : function(error){
-                   alert("에러발생!! 다시시도해주세요"+error);
-                }
-             });
-       }
-       
-      if(heart.className == "fa fa-heart fa-heart-o"){
-          let sendData = {
-                'schNo' : heart.dataset['sch_no'],
-             }
-             //ajax 기능 추가 
-             $.ajax({
-                type : 'post',
-                url : '/board/insertPick',
-                data : sendData,
-                success : function(data) {
-                   heart.classList.toggle("fa-heart-o");
-                  
-                },
-                error : function(error){
-                   alert("에러발생!! 다시시도해주세요"+error);
-                }
-             });
-       } 
-        
-    }; 	
 	
 </script>
 
