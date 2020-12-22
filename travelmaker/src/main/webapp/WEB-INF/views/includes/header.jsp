@@ -211,6 +211,10 @@
     margin-left: 6px;
 }
 
+.header__nav .active{
+	display:flex;
+}
+
 .header__nav ul {
     position: absolute;
     background: rgb(255, 255, 255);
@@ -228,6 +232,7 @@
     transform: translateY(-5px);
     transition: all 0.4s ease;
     box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    
 }
 
 .header__nav a {
@@ -253,12 +258,11 @@
     background-color: rgb(248, 248, 248);
     cursor: pointer;
 }
-
+/* 
 .header__nav button:focus + ul {
-    display:flex;
-/*     pointer-events: all; */
+    pointer-events: all;
     transform: translateY(0px);	
-}
+} */
 
 .header__nav li:first-of-type {
     margin-top: 8px;
@@ -584,8 +588,7 @@ text-align: center;
     </div>
 
    		<div class="header__nav">
-        <button type="button" onclick="location.href='/board/list'" class="header__nav__button
-        header__nav__button-greyHover"> 게시판
+        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 게시판
         </button>
 
         <button onclick="location.href='/buddt/get'" class="header__nav__button
@@ -595,12 +598,11 @@ text-align: center;
             <img src="/resources/icons/chevron.png" alt="Globe"/>
         </button>
 
-        <button class="header__nav__button
-        header__nav__button-account">
+        <button class="header__nav__button header__nav__button-account" onclick="dropMenu()"> 
             <img src="/resources/icons/hamburger.svg" alt="Hamburger"/>
             <img src="/resources/icons/user-1.png" alt="Account"/>
         </button>
-        <ul>
+        <ul class="header__drop__menu">
             <%= sessionBtn %>
  			<%= modifyBtn %>
   			<%= mypage %>
@@ -1157,4 +1159,23 @@ text-align: center;
       	}
       		
       });  
+       
+       
+       function dropMenu(){
+    	   
+    	   document.getElementsByClassName('header__drop__menu')[0].classList.toggle('active');
+       }
+       
+       window.onclick = function(event) {
+    	   if (!event.target.matches('.header__nav__button-account')) {
+    	     var dropdowns = document.getElementsByClassName("header__drop__menu");
+    	     var i;
+    	     for (i = 0; i < dropdowns.length; i++) {
+    	       var openDropdown = dropdowns[i];
+    	       if (openDropdown.classList.contains('show')) {
+    	         openDropdown.classList.remove('show');
+    	       }
+    	     }
+    	   }
+    	 }
 </script>
