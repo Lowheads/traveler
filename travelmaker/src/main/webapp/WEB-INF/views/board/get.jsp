@@ -6,10 +6,11 @@
 
 <!DOCTYPE html>
 <html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <head>
 
 <style>
@@ -142,8 +143,7 @@
 .heart{
 	color:white;
 	float:right;
-	margin-top:10%;
-	font-size: 17px;
+	font-size: 19px;
 }
 
 .left {
@@ -685,19 +685,6 @@ overflow-y: auto;
 <!--상단 -->
 <c:set var="coverimg" value="${fn:replace(board.boardImg, '\\\\', '/')}" />
 	<div class="ct_body" style="background-image: url(${coverimg});">
-		<div class="mainMsg">
-		<b>${board.boardTitle}</b>	
-		<br>
-		<br>
-		<c:choose>
-		  <c:when test="${memNo eq schedule.memNo}">
-		 <a href='/board/modify?boardNo=<c:out value="${board.boardNo}"/>&pageNum=<c:out value="${cri.pageNum}"/>&amount=<c:out value="${cri.amount}"/>' 
-		 id="modify_btn" target='modify' class='modify_open_btn'>대표사진 변경</a>
-		 </c:when>
-		 </c:choose>
-		 
-		<!--mainMsg끝 -->
-		</div>
 		<div class="heart">
 			<c:choose>
 				<c:when test="${pick eq 'picked' }"> 
@@ -711,6 +698,19 @@ overflow-y: auto;
 				</c:when>
 			</c:choose>
 		</div>	
+		<div class="mainMsg">
+		<b>${board.boardTitle}</b>	
+		<br>
+		<br>
+		<c:choose>
+		  <c:when test="${memNo eq schedule.memNo}">
+		 <a href='/board/modify?boardNo=<c:out value="${board.boardNo}"/>&pageNum=<c:out value="${cri.pageNum}"/>&amount=<c:out value="${cri.amount}"/>' 
+		 id="modify_btn" target='modify' class='modify_open_btn'>대표사진 변경</a>
+		 </c:when>
+		 </c:choose>
+		 
+		<!--mainMsg끝 -->
+		</div>
 	
 	<!--상단 끝 -->
 	</div>
@@ -860,7 +860,6 @@ overflow-y: auto;
 		<input type='hidden' id="FILE_NO" name='FILE_NO' value="">
 	</form>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -938,12 +937,6 @@ function likeToggle(heart){
     
 }; 
 
-//modify모달 띄우기
-	$('.modify_open_btn').on("click", function() {
-				modal('modify_modal');
-			});
-
-
 
 function modal(id) {
     var zIndex = 9999;
@@ -992,6 +985,11 @@ Element.prototype.setStyle = function(styles) {
     for (var k in styles) this.style[k] = styles[k];
     return this;
 };
+
+//modify모달 띄우기
+$('.modify_open_btn').on("click", function() {
+			modal('modify_modal');
+		});
 
  
 let markers = [];
@@ -1134,14 +1132,14 @@ function onClick(element) {
 }
 
 //Get the modal
-var modal = document.getElementById("modal01");
+var modal1 = document.getElementById("modal01");
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
 var img = document.getElementById("myImg");
 var modalImg = document.getElementById("img01");
 var captionText = document.getElementById("caption");
 img.onclick = function(){
-  modal.style.display = "block";
+  modal1.style.display = "block";
   modalImg.src = this.src;
   captionText.innerHTML = this.alt;
 }
@@ -1151,7 +1149,7 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() { 
-  modal.style.display = "none";
+  modal1.style.display = "none";
 }
 	
 </script>
