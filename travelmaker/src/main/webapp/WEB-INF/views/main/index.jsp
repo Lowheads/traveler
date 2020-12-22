@@ -517,23 +517,12 @@ a{text-decoration: none}
 	$(function() {
 
 		$('input[name="daterange"]').daterangepicker({
-<<<<<<< HEAD
 			startDate: moment(),
 			endDate: moment(),
 			minDate: moment(),
 			maxSpan: {
 		        "days": 9 // 9일이어야 1일차부터 10일차까지 가능 <= <=이니까
 		    },
-			locale: {
-				format: 'YYYY-MM-DD'
-=======
-			startDate : moment(),
-			endDate : moment(),
-			minDate : moment(),
-			locale : {
-				format : 'YYYY-MM-DD'
->>>>>>> 0b6b42616adf1d413d73bbab1d6654dfcd18826a
-			},
 		}, function(start, end, label) {
 			/* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
 			startDate = start.format('YYYY-MM-DD');

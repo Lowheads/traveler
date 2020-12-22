@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.travelmaker.mapper.PlaceMapper">
 		
-		<resultMap type="org.travelmaker.domain.PlaceVO" id="placeVO">
-      
       <resultMap type="org.travelmaker.domain.PlaceVO" id="placeVO">
          <result property="plcNo" column="PLC_NO"/>
          <result property="regionNo" column="REGION_NO"/>
@@ -18,10 +16,6 @@
          <result property="plcImg" column="PLC_IMG"/>
       </resultMap>
 	
-	
-	<resultMap type="org.travelmaker.domain.PlaceDTO" id="placeDTO">
-   
-   
    <resultMap type="org.travelmaker.domain.PlaceDTO" id="placeDTO">
       <result property="plcNo" column="PLC_NO" />
       <result property="themeName" column="CODE_NAME" />

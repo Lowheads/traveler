@@ -20,7 +20,7 @@ public interface SchdtService {
 	
 //	public List<CompletableFuture<Void>> getInitSchWithDistAndDu(ScheduleDtVO[][] schdtVOs);
 
-	List<Schdt_PlaceVO> getplacetitle(int schNo);
+//	List<Schdt_PlaceVO> getplacetitle(int schNo);
 	
 	public List<Map<String,Object>> getSchdtList(int schNo);
 	

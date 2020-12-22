@@ -12,7 +12,6 @@ public interface SchdtMapper {
 	public List<Schdt_PlaceVO> getplacetitle(int SchNo);
 	
 	public int insert(SchdtVO[] schdtVOs);
-	}
 	//스케줄 dt + 사진까지
 	public List<Map<String,Object>> getSchdtList(int schNo);
 	
