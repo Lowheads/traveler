@@ -328,10 +328,10 @@ var theme = (function(){
 			checkExtension:checkExtension,
 			showUploadedFile:showUploadedFile,
 			uploadFile:uploadFile,
-			deleteFile:deleteFile,
+			deleteFile:deleteFile/*,
 			paginate:paginate,
 			list:list,
-			newlist:newlist};
+			newlist:newlist*/};
 })();
 
 

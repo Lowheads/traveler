@@ -1,9 +1,13 @@
 package org.travelmaker.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.QnABoardVO;
 import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.mapper.MainMapper;
 
@@ -36,6 +40,17 @@ public class MainServiceImpl implements MainService{
 		}
 		
 		return mapper.getPopularPostsByPick();
+	}
+
+	@Override
+	public Map<Integer, List<QnABoardVO>> getQnaInfo() {
+		
+		
+		Map<Integer, List<QnABoardVO>> result = new HashMap<Integer, List<QnABoardVO>>();
+		
+		result.put(mapper.cntQnaPost(), mapper.getQnaPost());
+		
+		return result;
 	}
 
 }

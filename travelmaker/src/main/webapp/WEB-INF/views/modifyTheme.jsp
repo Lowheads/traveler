@@ -10,7 +10,7 @@
 	<div class="card-body">
 		<div class="btn-group float-right">
 			<span class="input-group-btn">
-				<button id="addBtn" class="btn btn-sm- btn-primary float-right">
+				<button id="appendNewPlaces" class="btn btn-sm- btn-primary float-right">
 					<i class="fas fa-plus"></i>
 				</button>
 			</span>
@@ -28,20 +28,22 @@
 
 	<table class="table table-hover" id="dataTable" style="width: 100%">
 		<tr>
-			<th>장소번호</th>
 			<th>장소명</th>
 			<th>상세주소</th>
 			<th>카테고리</th>
+			<th>휴일</th>	
+			<th>영업시간</th>
 			<th>좋아요 수</th>
 			<th> </th>
 		</tr>
 	
 		<c:forEach items="${list}" var="list">
 			<tr name=row id='<c:out value="${list.plcNo}" />'>
-				<td><c:out value="${list.plcNo}" /></td>
 				<td><c:out value="${list.plcTitle}" /></td>
 				<td><c:out value="${list.addressDt}" /></td>
 				<td><c:out value="${list.PCate}" /></td>
+				<td><c:out value="${list.holiday}" /></td>
+				<td><c:out value="${list.openingH}" /></td>
 				<td><c:out value="${list.likeCnt}" /></td>
 				<td><button class="btn btn-default" id="deleteBtn"
 						value='<c:out value="${list.plcNo}" />'>
@@ -51,11 +53,6 @@
 		</c:forEach>
 	</table>
 </div>
-
-<!-- <div class="w300" style="padding-right: 10px">
-	 <input type="text" class="form-control form-control-sm" name="keyword"
-		id="keyword">
-</div> -->
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -104,18 +101,15 @@
 	$(document).ready(
 			function() {
 				
-/* 				if($(".uploadResult img").length!=0){
-					$(".uploadDiv").hide()}*/
- 				
 				let removedPlaces = [];
 				let addedPlaces = [];
 
 				let list = [];
 
 				for (let i = 0; i < $("#dataTable tr").length - 1; i++) {
-					list[i] = $("#dataTable td")[6* i].innerText;
+					list[i] = $("#dataTable td")[7* i].innerText;
 				}
-
+				
 				let newlist = []
 
 				Object.assign(newlist, list)
@@ -125,17 +119,17 @@
 				//db에 저장된 사진 보여주기 
 				(function(){
 					
-					$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(result){
+					$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(thumbnail){
 						
 						let str="";
 						
-						const fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
+						const fileCallPath = encodeURIComponent("/s_"+thumbnail.uuid+"_"+thumbnail.fileName);
 						
-						str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
-						"' data-type = '"+result.fileType+"'></div>";
+						str+= "<li data-path='"+thumbnail.uploadPath+"'data-uuid='"+thumbnail.uuid+"'data-fileName='"+thumbnail.fileName+
+						"' data-type = '"+thumbnail.fileType+"'></div>";
 						str+="<div>";
 						str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
-						str += "<span> "+result.fileName+"</span>";
+						str += "<span> "+thumbnail.fileName+"</span>";
 						str += "<button type = 'button' data-file =\ '"+fileCallPath+"\'";
 						str += "data-type ='image' class='btn btn-warning btn-circle btn-sm'><i class = 'fas fa-times'></i></button>";
 						str+="</div>";
@@ -151,14 +145,11 @@
 					let liObj = $(this).parent().parent();
 					
 					const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
-					console.log(path.replace(new RegExp(/\\/g),"/"));
 					theme.showImage(path.replace(new RegExp(/\\/g),"/"));
 				});
 				
 				
 				let cloneObj= $(".uploadDiv").clone();
-				
-			//	let uploadResult = $(".uploadResult ul")
 				
 				
 				$(".bigPictureWrapper").on("click",function(e){
@@ -200,9 +191,6 @@
 					
 					formData.append("uploadFile",file);
 					
-					console.log(file);
-					console.log("1");
-					
 					theme.uploadFile(${themeNo},formData);
 
 				})
@@ -210,7 +198,6 @@
 				$("button[id=deleteBtn]").click(function() {
 
 					let num = $(this).attr("value")
-					//let idx = list.indexOf(num);
 					let idx = list.indexOf(num);
 					
 					newlist[idx] = ""
@@ -219,8 +206,9 @@
 			
 				})
 
-				$("button[id=addBtn]").click(
+				$("button[id=appendNewPlaces]").click(
 			        function() {
+			        	$("input[id='keyword']")[0].value=""
 			        	$("div[id=resultPage] *").remove()
 			        	$("#pagination").empty()
 			        	$("#myModal").modal("show")
@@ -245,14 +233,12 @@
 			        var pageNum = 1;
 			        
 			        paginate(keyword,pageNum);
-			        
 			       
-							})
+					})
 							
 				$("#modalInBtn").click(function(e){
 					
 					e.preventDefault();
-					
 					
 				})
 				
@@ -260,16 +246,16 @@
 					
 					e.preventDefault();
 					
-					let str = "";
+					let img = "";
 					
 					if($(".uploadResult ul li").length>0){
 						
 						const image = $(".uploadResult ul li")[0].dataset;
 						
-						str += "<input type='hidden' name = 'fileName' value='"+image.filename+"'>";
-						str += "<input type='hidden' name = 'uuid' value='"+image.uuid+"'>";
-						str += "<input type='hidden' name = 'uploadPath' value='"+image.path+"'>";
-						str += "<input type='hidden' name = 'image' value='"+image.type+"'>";
+						img += "<input type='hidden' name = 'fileName' value='"+image.filename+"'>";
+						img += "<input type='hidden' name = 'uuid' value='"+image.uuid+"'>";
+						img += "<input type='hidden' name = 'uploadPath' value='"+image.path+"'>";
+						img += "<input type='hidden' name = 'image' value='"+image.type+"'>";
 						
 					}
 					
@@ -290,7 +276,7 @@
 
 					$("#sendData").append(addedPlaceList);
 					$("#sendData").append(removedPlaceList);
-					$("#sendData").append(str);
+					$("#sendData").append(img);
 					
 					$("#sendData").submit();
 				})
@@ -304,10 +290,6 @@
 					                    
 										var pageDto = list.pageMaker;
 										var placeList = list.list;
-					                    
-										//console.log(pageDto)
-										
-												$("div[id=resultPage]").append(pageDto.cri.pageNum);
 												
 										//검색결과 보여주기
 							 				for (let i = 0; i < placeList.length; i++) {
@@ -333,68 +315,62 @@
 												
 												ob = document.createElement('li');
 												ob.setAttribute('id', placeList[i].plcNo);
-												ob.setAttribute('title', placeList[i].plcTitle+","+placeList[i].addressDt+","+placeList[i].pcate+","+placeList[i].likeCnt);
+												ob.setAttribute('title', placeList[i].plcTitle+","+placeList[i].addressDt+","+placeList[i].pcate+","+placeList[i].holiday+","+placeList[i].openingH+","+placeList[i].likeCnt);
 												
 												 ob.append(title,address,obj);
 												 
 												$("div[id=resultPage]").append(ob);
 											}//end of repeat 
 										
-											
+										//가장 첫 페이지로 가는 버튼
 										 if(pageDto.cri.pageNum != 1){
+									        	$("#pagination").append("<li class='goFirstPage'><a><i class='fas fa-angle-double-left'></i></a></li>");      
+									     }else{
+									        	$("#pagination").append("<li style='visibility:hidden'><a><<</a></li>");  
+									    }
+
+										//이전 페이지 블록으로 가기 
+								        if(pageDto.prev==true){
+								        	$("#pagination").append("<li class='goBackPage'><a><i class='fas fa-angle-left'></i></a></li>");
 				
-									        	$("#pagination").append("<li class='goFirstPage'><a><i class='fas fa-angle-double-left'></i></a></li>");        //첫페이지로가는버튼 활성화
+								        }else{
 				
-									        }else{
-									        	
-									        	$("#pagination").append("<li style='visibility:hidden'><a><<</a></li>");        //첫페이지로가는버튼 비활성화
+								        	$("#pagination").append("<li style='visibility:hidden'><a><</a></li>"); 
 				
-									        }
-
-						
-				        if(pageDto.prev==true){            //첫번째 블럭이 아니면
-				        	$("#pagination").append("<li class='goBackPage'><a><i class='fas fa-angle-left'></i></a></li>");        //뒤로가기버튼 활성화
-
-				        }else{
-
-				        	$("#pagination").append("<li style='visibility:hidden'><a><</a></li>");        //뒤로가기버튼 비활성화
-
-				        }
-
-										 for(var i = pageDto.startPage ; i <= pageDto.endPage ; i++){        //시작페이지부터 종료페이지까지 반복문
+								        }
+										
+										//현재페이지 버튼 비활성화하기 
+										 for(var i = pageDto.startPage ; i <= pageDto.endPage ; i++){        
 				
-										   if(pageDto.cri.pageNum == i){                            //현재페이지가 반복중인 페이지와 같다면
+											   if(pageDto.cri.pageNum == i){                      
+					                           
+											       $("#pagination").append("<li class=\"disabled active\"><a>"+i+"</a></li>");    
+					                           
+											   }else{$("#pagination").append("<li class='goPage' data-page=\""+i+"\"><a>"+i+"</a></li>");}
 				                           
-										                 	$("#pagination").append("<li class=\"disabled active\"><a>"+i+"</a></li>");    //버튼 비활성화
-				                           
-										         	}else{
-				                           
-										         		$("#pagination").append("<li class='goPage' data-page=\""+i+"\"><a>"+i+"</a></li>"); //버튼 활성화
-				                           
-										         	}
-				                           
-										         }
+										  }
+										//다음 페이지 블록으로 가기 
+										if(pageDto.next==true){  
 
-										        if(pageDto.next==true){            //전체페이지블럭수가 현재블럭수보다 작을때
+				        					$("#pagination").append("<li class='goNextPage'><a><i class='fas fa-angle-right'></i></a></li>");     
 
-				        	$("#pagination").append("<li class='goNextPage'><a><i class='fas fa-angle-right'></i></a></li>");         //다음페이지버튼 활성화
+				       					 }else{
 
-				        }else{
+									        	$("#pagination").append("<li style='visibility:hidden'><a>></a></li>");     
+					
+									     }
 
-				        	$("#pagination").append("<li style='visibility:hidden'><a>></a></li>");        //다음페이지버튼 비활성화
-
-				        }
-
-										 	 
-										 	    if(pageDto.cri.pageNum < Math.ceil(pageDto.total/10)){                //현재페이지가 전체페이지보다 작을때
+										
+										//가장 끝페이지로 가기
+										if(pageDto.cri.pageNum < Math.ceil(pageDto.total/10)){                
 				                           
-										     		$("#pagination").append("<li class='goLastPage'><a><i class='fas fa-angle-double-right'></i></a></li>");    //마지막페이지로 가기 버튼 활성화
+										     $("#pagination").append("<li class='goLastPage'><a><i class='fas fa-angle-double-right'></i></a></li>");    
 				                           
-										     	}else{
+										  }else{
 				                           
-										     		$("#pagination").append("<li style='visibility:hidden'><a>>></a></li>");        //마지막페이지로 가기 버튼 비활성화
+										     $("#pagination").append("<li style='visibility:hidden'><a>>></a></li>");       
 				                           
-										     	}
+										  }
 				                           
 										     	$(".goFirstPage").click(function(){
 				                           
@@ -411,8 +387,6 @@
 				                           
 										 	      	page = pageDto.startPage - 1;
 					
-													console.log(page);
-				                           
 										 	       	pageFlag = 1;
 				                           
 										 	       	paginate(keyword,page)
@@ -429,7 +403,7 @@
 										 			
 										 			paginate(keyword,page)
 				                           
-										 		       	pageFlag = 0;
+										 		    pageFlag = 0;
 				                           
 										 		});
 				                           
@@ -438,26 +412,25 @@
 										 			//page = Number(pageDto.endPage) + 1;
 				                           			page = pageDto.endPage + 1;
 
-													console.log(page)
-				                           
 										 			pageFlag = 1;
 				                           
 										 			paginate(keyword,page)
 				                           
-										 		       	pageFlag = 0;
+										 		    pageFlag = 0;
 				                           
 										 	        });
-				        $(".goLastPage").click(function(){
-
-				        	page = Math.ceil(pageDto.total/10);
-
-				        	pageFlag = 1;
-
-					       	paginate(keyword,page)
-
-					      	pageFlag = 0;
-
-				        });
+										 		
+										        $(".goLastPage").click(function(){
+						
+										        	page = Math.ceil(pageDto.total/10);
+						
+										        	pageFlag = 1;
+						
+											       	paginate(keyword,page)
+						
+											      	pageFlag = 0;
+						
+										        });
 
 
 
@@ -485,20 +458,23 @@
 						
 						var info = data.title.split(",");
 						
+ 						for(var i = 0; i<info.length;i++){
+							
+							if(info[i]=="null"){
+								info[i]="";
+							}
+						} 
+						
 						var str = '<tr name="row" id='+num+'>'
-						str+='<td>'+data.id+'</td>'
 						str+='<td>'+info[0]+'</td>'
 						str+='<td>'+info[1]+'</td>'
 						str+='<td>'+info[2]+'</td>'
 						str+='<td>'+info[3]+'</td>'
+						str+='<td>'+info[4]+'</td>'
+						str+='<td>'+info[5]+'</td>'
 						str+='<td><button class="btn btn-default" id="deleteBtn" value='+data.id+'><i class="fas fa-times"></i></button></td>'
 						
-						/* obj.addEventListener('click', added);
-									 */
-						
 						$("tbody").append(str);
-						
-						console.log(str);
 						
 						$("li[id=" + num + "]").remove();
 
@@ -508,8 +484,8 @@
 						return;
 					}
 				 
-	}
-
+				}
+	
 			})
 </script>
 

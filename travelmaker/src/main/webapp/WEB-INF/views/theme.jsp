@@ -51,7 +51,9 @@ $(document).ready(function() {
 		
 		let key = $(this).attr("id");
 		
-		console.log(key)
+		if(key==undefined){
+			return
+		}
 		
 		location.href= "/admin/themeInfo/"+key
 		

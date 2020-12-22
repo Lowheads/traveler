@@ -23,10 +23,10 @@
 	</div> --%>
 
 	<!-- image slide -->
-	<!-- <div class="w3-content w3-display-container">		 -->
+	<div clas="wrapper">
  	<div class="slideshow-container">
- 	<!-- 비오는날 보이는 테마 -->
-	<div class="mySlides" id="rainydayRec" >
+	 	<!-- 비오는날 보이는 테마 -->
+		<div class="mySlides" id="rainydayRec" >
 				<div class='themeImage'>
 					<div class="dots">
 						<span class="dot" onclick="currentSlide(1)"></span> 
@@ -65,32 +65,65 @@
 	    	<c:forEach items="${themeList.value}" var="place" varStatus="status">
   				<c:if test="${status.first}" >
 	  				<div class="travel-theme"><span class="placeVO-title"><c:out value='${place.themeName}' /></span></div>
-	  				  							    	<div class="placeList">
-  				<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'></div>
+	  				<div class="placeList">
+  				<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'>
   				</c:if>
   				<input class="place-box" type="checkbox"
 					data-plc-no="<c:out value='${place.plcNo}' />">
 				<span class="placeVO-title"><c:out
 						value='${place.plcTitle }' /></span>
   			</c:forEach>
+			</div>
 			</div><!-- end of placelist -->
-
-		<button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-		<button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
-  				</div>
+		</div>
 		</c:forEach>
   
 </div><!--end of slide container  -->			
 
 	<button class="button-btn-submit">다 골랐어요</button>
+</div>
+<script type="text/javascript">
+var slideIndex = 1;
 
-	<script type="text/javascript">
-		$(document).ready(function() {
+
+	function currentSlide(n) {
+		showDivs(slideIndex = n);
+	}
+	
+	function plusDivs(n) {
+	  showDivs(slideIndex += n);
+	}
+
+	function currentSlide(n) {
+		showDivs(slideIndex = n);
+	}
+
+	function showDivs(n) {
+
+		const x = document.getElementsByClassName("mySlides");
+	  const placeList = document.getElementsByClassName("placeList");	
+	  
+	  if (n > x.length) {slideIndex = 1}
+	  if (n < 1) {slideIndex = x.length}
+	  
+	  for (let i = 0; i < x.length; i++) {
+	    x[i].style.display = "none";  
+	    placeList[i].style.display = "none";  
+	  }
+	  
+		x[slideIndex-1].style.display = "block";  
+		placeList[slideIndex-1].style.display = "block";
+		  
+	}
+	
+		$(document).ready(function(){
+			
+			showDivs(slideIndex);
+			
 			init();
 					
-			var list=[];
+			let list=[];
 					
-			
 			//테마이미지 가져와서 띄워주기
 			for(let i =1;i<6;i++){(function() {
 							
@@ -99,17 +132,18 @@
 							function(image) {
 								
 								let str = "";
+								
 								if(image==null){
 									str = "<img src='/resources/img/default.jpg'>";
 								}else{
-									let fileCallPath = encodeURIComponent(image.uuid+ "_" + image.fileName);
+									const fileCallPath = encodeURIComponent(image.uuid+ "_" + image.fileName);
 									str += "<img src='/admin/display?fileName="
 											+ fileCallPath + "'>";
 								}
 								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 								
 							}).fail(function(result){
-								let str = "<img src='/resources/img/default.jpg'>";
+								const str = "<img src='/resources/img/default.jpg'>";
 								//$("#theme_place_list" + i + " ul").html(str);
 								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 							})
@@ -120,7 +154,7 @@
 				
 				//ajax로 보내서 rainyday rec 장소들을 json으로 가져온다 
 				
-				var themeNo="";
+				let themeNo="";
 				
 				if(${schDto.schRegion}==1){
 					themeNo = 6				
@@ -128,12 +162,11 @@
 					themeNo = 12
 					}
 				
-				$.getJSON("/main/getWeatherRec/"+${schDto.schRegion},
-						function(data){
+				$.getJSON("/main/getWeatherRec/"+${schDto.schRegion}, function(data){
+					
+						let tag="";
 						
-						var tag="";
-						
-						for(var i =0; i<Object.keys(data).length; i++){
+						for(let i =0; i<Object.keys(data).length; i++){
 							
 							tag+='<input class="place-box" type="checkbox" data-plc-no='+data[i].plcNo+'>'
 							tag+='<span class="placeVO-title">'+data[i].plcTitle+'</span>'
@@ -141,29 +174,25 @@
 						
 						$("#rainydayRec .placeList").append(tag);
 						
-					$.getJSON("/admin/getAttachment", {
-						themeNo :themeNo}, 
-						function(data){
+				$.getJSON("/admin/getAttachment", {themeNo :themeNo},  function(data){
 							
-							console.log(data);
-							
-							if(data==null){
-								let str = "<img src='/resources/img/default.jpg'>";
-								$("#rainydayRec .themeImage").append(str);
-								return;
-							}
-							let str = "";
-							let fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
-							str += "<img src='/admin/display?fileName="
-									+ fileCallPath + "'>";
-							$("#rainydayRec .themeImage").append(str);
-							}).fail(function(result){
-								console.log("fail TT");
-							console.log(result);
+						if(data==null){
 							let str = "<img src='/resources/img/default.jpg'>";
-							
 							$("#rainydayRec .themeImage").append(str);
-						})
+							return;
+						}
+						
+						let str = "";
+						const fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
+						str += "<img src='/admin/display?fileName="
+								+ fileCallPath + "'>";
+						$("#rainydayRec .themeImage").append(str);
+						
+					}).fail(function(result){
+
+						const str = "<img src='/resources/img/default.jpg'>";
+						$("#rainydayRec .themeImage").append(str);
+					})
 						
 					
 				}).fail(function(result){
@@ -174,137 +203,64 @@
 			}
 			
 
-			
-/* 			if($("#rainydayRec").length==1){
-				
-				var themeNo="";
-				
-				if(${schDto.schRegion}==1){
-					themeNo = 9					
-				}else{
-					themeNo = 12
-					}
-				
-				console.log("여기까지 ok")
-				
-				$.getJSON("/admin/getAttachment", {
-					themeNo :themeNo}, 
-					function(result) {
-						console.log("ajax")
-						if(result==null){
-							let str = "<img src='/resources/img/default.jpg' width='800' height='400'>";
-							$("#theme_place_list" + i).prepend(str);
-							return;
-						}
-						
-						let str = "";
-						let fileCallPath = encodeURIComponent(result.uuid + "_" + result.fileName);
-						str += "<img src='/admin/display?fileName="
-								+ fileCallPath + "' width='800' height='400'>";
-
-						//$("#theme_place_list" + i + " ul").html(str);
-						//$("#rainydayRec").prepend(str);
-					}).fail(function(result){
-						
-						console.log(result);
-						let str = "<img src='/resources/img/default.jpg' width='800' height='400'>";
-						//$("#theme_place_list" + i + " ul").html(str);
-						// ("#rainydayRec").prepend(str);
-					})
-				} */
-				
-
-		})
-//
-
-
-var slideIndex = 1;
-showDivs(slideIndex);
-
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
-
-function currentSlide(n) {
-	showDivs(slideIndex = n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var placeList = document.getElementsByClassName("placeList");	
-  
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  
-  
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-    placeList[i].style.display = "none";  
-  }
-  x[slideIndex-1].style.display = "block";  
-  placeList[slideIndex-1].style.display = "block";
-  
-}
-		
-		//
-		
 			function init() {
-			let submitBtn = document
-					.getElementsByClassName("button-btn-submit");
-			submitBtn[0].addEventListener("click", submitPlace);
-		}
-
-		function submitPlace() {
-			let placeBox = document.getElementsByClassName("place-box");
-			let schDto = document.getElementsByClassName("scheduledto")[0];
-
-			let list = [];
-			let str = "";
-			let i;
-			for (i = 0; i < placeBox.length; i++) {
-				if (placeBox[i].checked) {
-					list.push(placeBox[i].dataset["plcNo"]);
-				}
+				let submitBtn = document.getElementsByClassName("button-btn-submit");
+				submitBtn[0].addEventListener("click", submitPlace);
 			}
 
-			let objs1;
-			let form = document.createElement('form');
-			objs1 = document.createElement('input');
-			objs1.setAttribute('type', 'hidden');
-			objs1.setAttribute('name', 'places'); // 받을 네이밍
-			objs1.setAttribute('value', list); // 넘길 파라메터
-			form.appendChild(objs1);
-
-			let objs2;
-			objs2 = document.createElement('input');
-			objs2.setAttribute('type', 'hidden');
-			objs2.setAttribute('name', 'schRegion'); // 받을 네이밍
-			objs2.setAttribute('value', schDto.dataset["schRegion"]);
-			form.appendChild(objs2);
-
-			let objs3;
-			objs3 = document.createElement('input');
-			objs3.setAttribute('type', 'hidden');
-			objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
-			objs3.setAttribute('value', schDto.dataset["fromDate"]);
-			form.appendChild(objs3);
-
-			let objs4;
-			objs4 = document.createElement('input');
-			objs4.setAttribute('type', 'hidden');
-			objs4.setAttribute('name', 'toDate'); // 받을 네이밍
-			objs4.setAttribute('value', schDto.dataset["toDate"]);
-			form.appendChild(objs4);
-
-			form.setAttribute('method', 'post');
-			form.setAttribute('action', "/place/"); // URL
-
-			document.body.appendChild(form);
-
-			form.submit();
+			function submitPlace() {
+				let placeBox = document.getElementsByClassName("place-box");
+				let schDto = document.getElementsByClassName("scheduledto")[0];
+	
+				let list = [];
+				let str = "";
+				let i;
+				for (i = 0; i < placeBox.length; i++) {
+					if (placeBox[i].checked) {
+						list.push(placeBox[i].dataset["plcNo"]);
+					}
+				}
+	
+				let objs1;
+				let form = document.createElement('form');
+				objs1 = document.createElement('input');
+				objs1.setAttribute('type', 'hidden');
+				objs1.setAttribute('name', 'places'); // 받을 네이밍
+				objs1.setAttribute('value', list); // 넘길 파라메터
+				form.appendChild(objs1);
+	
+				let objs2;
+				objs2 = document.createElement('input');
+				objs2.setAttribute('type', 'hidden');
+				objs2.setAttribute('name', 'schRegion'); // 받을 네이밍
+				objs2.setAttribute('value', schDto.dataset["schRegion"]);
+				form.appendChild(objs2);
+	
+				let objs3;
+				objs3 = document.createElement('input');
+				objs3.setAttribute('type', 'hidden');
+				objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
+				objs3.setAttribute('value', schDto.dataset["fromDate"]);
+				form.appendChild(objs3);
+	
+				let objs4;
+				objs4 = document.createElement('input');
+				objs4.setAttribute('type', 'hidden');
+				objs4.setAttribute('name', 'toDate'); // 받을 네이밍
+				objs4.setAttribute('value', schDto.dataset["toDate"]);
+				form.appendChild(objs4);
+	
+				form.setAttribute('method', 'post');
+				form.setAttribute('action', "/place/"); // URL
+	
+				document.body.appendChild(form);
+	
+				form.submit();
 		}
+		
+		});
 	</script>
-
 </body>
+
+	
 </html>

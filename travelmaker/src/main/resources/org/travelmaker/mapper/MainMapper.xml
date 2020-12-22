@@ -22,6 +22,19 @@
 	<result property="writer" column="WRITER"/>	
 </resultMap>
 
+<resultMap type ="org.travelmaker.domain.QnABoardVO" id="qna" >
+	<result property="bno" column="BNO"/>
+	<result property="title" column="TITLE"/>
+	<result property="content" column="CONTENT"/>
+	<result property="nickname" column="NICKNAME"/>	
+	<result property="regDate" column="REG_DATE"/>
+	<result property="updateDate" column="UPDATEDATE"/>
+	<result property="viewCnt" column="VIEWCNT"/>	
+	<result property="memNo" column="MEM_NO"/>	
+	<result property="secret" column="SECRET"/>	
+	<result property="replyCnt" column="REPLYCNT"/>	
+</resultMap>
+
 <select id = "getDaily" resultMap="VOResult" >
  <![CDATA[
 	SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post, cnt_withdrawal_user, cnt_traffic
@@ -60,6 +73,22 @@ order by pick_cnt desc)
 where rownum<=10]]>
 </select>
 
+<select id="cntQnaPost" resultType="Integer">
+select count(*)
+from qna_board
+where replycnt=0
+</select>
+
+<select id="getQnaPost" resultMap="qna">
+ <![CDATA[
+select b.bno, b.title, b.reg_date
+from (select b.bno, b.title, b.content, b.nickname, b.reg_date
+from qna_board b left outer join qna_reply r
+on b.bno = r.bno
+where r.rno is null and to_char(b.reg_date,'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')
+order by b.bno desc) b
+where rownum<=5]]>
+</select>
 
 
 

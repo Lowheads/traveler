@@ -11,6 +11,8 @@
 		</div> -->
 					<!-- Main Content -->
 
+
+
 				<!-- Topbar -->
  				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -18,17 +20,23 @@
 						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							<i class="fas fa-bell fa-fw"></i>
 							<!-- Counter - Alerts -->
-							<span class="badge badge-danger badge-counter"></span>
+							<c:forEach items="${qna}" var="qna">
+								<span class="badge badge-danger badge-counter">${qna.key}</span>
+							</c:forEach>
 						</a>
 						<!-- Dropdown - Alerts -->
-						<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+ 						<div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="alertsDropdown">
 							<h6 class="dropdown-header">
-								Alerts Center
+								새로 등록된 Q&A
 							</h6>
-							<div class="dropdown-item d-flex align-items-center" href="#">
-								<div class="small text-gray-500">December 12, 2019</div>
-								<span class="font-weight-bold">A new monthly report is ready to download!</span>
-							</div>	
+							<c:forEach items="${qna}" var="qna">
+								<c:forEach items="${qna.value}" var="post">
+									<div class="dropdown-item d-flex align-items-center" href="#">
+										<div class="small text-gray-500"><fmt:formatDate value = '${post.regDate}' pattern='MM/dd'/>&nbsp</div>
+										<span class="font-weight-bold">${post.title}</span><br>
+									</div>	
+								</c:forEach>
+							</c:forEach>
 							<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
 						</div>
 					</li>
@@ -180,37 +188,29 @@
 		 getPost("view");
 	 
 		$(".chartType span").on("click",function(){ 
-			var type = $(this).attr("id")
+			const type = $(this).attr("id")
 				makeChart(type);
 		})
-		
-		$(".postOrder span").on("click",function(){ 
-			var type = $(this).attr("id")
-			getPost(type);
-	})
-	
-		$("tr").click(function(){
 			
-			console.log(",,,")
+		$(".postOrder span").on("click",function(){ 
+			const type = $(this).attr("id")
+			getPost(type);
 		})
 		
-		var date = [];	
-		
-		function test(){
+		function postDetail(){
 			
-			var boardNo = $(this).attr("id")
+			const boardNo = $(this).attr("id")
 			
 			user.detail(boardNo,function(list){
 			
-			let str = boardNo+"번 게시글 상세정보 <br>";
-			for (let i = 0; i < list.length; i++) {
-				
+				let str = boardNo+"번 게시글 상세정보 <br>";
+				for (let i = 0; i < list.length; i++) {
 				str+="내용	:	"+list[i].boardCon	+"<br>";
+
 			}
 			
-			console.log(str);
 			showModal(str);
-		})
+			})
 			
 		}
 		
@@ -231,95 +231,95 @@
 				obj.setAttribute("id","myChart")
 				obj.setAttribute("style","width:500px, height:340px")
 
-				var chartCanvas = $(".chart");
+				const chartCanvas = $(".chart");
 				chartCanvas.append(obj);
 				
-				var targetDate = [];
-				var cntMember = [];
-				var cntPost = [];
-				var cntWithdrawUser = [];
-				var cntTraffic = [];
+				let targetDate = [];
+				let cntMember = [];
+				let cntPost = [];
+				let cntWithdrawUser = [];
+				let cntTraffic = [];
 
-							for(var i =0; i<Object.keys(data).length; i++){
-								
-								targetDate.push(data[i].targetDate);
-								cntMember.push(data[i].cntMember);
-								cntPost.push(data[i].cntPost);
-								cntWithdrawUser.push(data[i].cntWithdrawalMember);
-								cntTraffic.push(data[i].cntTraffic);
-							}
-							
+				for(let i =0; i<Object.keys(data).length; i++){
+					
+					targetDate.push(data[i].targetDate);
+					cntMember.push(data[i].cntMember);
+					cntPost.push(data[i].cntPost);
+					cntWithdrawUser.push(data[i].cntWithdrawalMember);
+					cntTraffic.push(data[i].cntTraffic);
+				}
+				
 
-							var ctx = document.getElementById('myChart');
-							
-								var myChart = new Chart(ctx, {
-									type: 'line',
-									data: {
-										labels: targetDate,
-										datasets: [{
-											label: '신규 회원', //범례
-											data:cntMember,
-										 	backgroundColor: [
-												'rgba(255, 99, 132, 0.2)'
-											],
-											borderColor: [
-							                  'rgba(255, 99, 132, 0.2)'
-											],
-											borderWidth: 1
-							            },
-							            {
-											label: '탈퇴 회원', //범례
-											data:cntWithdrawUser,
-										 	backgroundColor: [
-												'rgba(30, 150, 255, 0.2)'
-											],
-											borderColor: [
-												'rgba(30, 150, 255, 0.2)'
-											],
-											borderWidth: 1
-							            },{
-											label: '게시글 수 ', //범례
-											data:cntPost,
-										 	backgroundColor: [
-												'rgba(255, 228, 0, 0.2)'
-											],
-											borderColor: [
-												'rgba(255, 228, 0, 0.2)'
-											],
-											borderWidth: 1
-							            },
-							            {
-											label: '일일 접속자수', //범례
-											data:cntTraffic,
-										 	backgroundColor: [
-												'rgba(71, 200, 62, 0.2)'
-											],
-											borderColor: [
-												'rgba(71, 200, 62, 0.2)'
-											],
-											borderWidth: 1
-							            }],
-							            
-									},
-									options: {  
-										responsive: true,
-										scales: {
-											yAxes: [{
-												ticks: {
-													beginAtZero: true
-												}
-											}]
-										},
+				const ctx = document.getElementById('myChart');
+				
+					const myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: targetDate,
+							datasets: [{
+								label: '신규 회원',
+								data:cntMember,
+							 	backgroundColor: [
+									'rgba(255, 99, 132, 0.2)'
+								],
+								borderColor: [
+				                  'rgba(255, 99, 132, 0.2)'
+								],
+								borderWidth: 1
+				            },
+				            {
+								label: '탈퇴 회원',
+								data:cntWithdrawUser,
+							 	backgroundColor: [
+									'rgba(30, 150, 255, 0.2)'
+								],
+								borderColor: [
+									'rgba(30, 150, 255, 0.2)'
+								],
+								borderWidth: 1
+				            },{
+								label: '게시글 수 ',
+								data:cntPost,
+							 	backgroundColor: [
+									'rgba(255, 228, 0, 0.2)'
+								],
+								borderColor: [
+									'rgba(255, 228, 0, 0.2)'
+								],
+								borderWidth: 1
+				            },
+				            {
+								label: '일일 접속자수',
+								data:cntTraffic,
+							 	backgroundColor: [
+									'rgba(71, 200, 62, 0.2)'
+								],
+								borderColor: [
+									'rgba(71, 200, 62, 0.2)'
+								],
+								borderWidth: 1
+				            }],
+				            
+						},
+						options: {  
+							responsive: true,
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
 									}
-								});
+								}]
+							},
 						}
-							).fail(
-						function(xhr, status,err){
-							if(error){
-								error();
-							}
-						});
-		}
+					});
+			}
+				).fail(
+			function(xhr, status,err){
+				if(error){
+					error();
+				}
+			});
+			}
 		
 		function getPost(type){
 			
@@ -328,28 +328,27 @@
 				
  				$("tbody").empty()
  				
-				for(var i =0; i<Object.keys(data).length; i++){
+				for(let i =0; i<Object.keys(data).length; i++){
 					
-					var date = new Date(data[i].modDate)
+					const date = new Date(data[i].modDate)
 					data[i].modDate = date.getMonth()+"-"+date.getDate()
 				}
 				
-				var str = '<tr><th>제목</th><th>조회수</th><th>찜한갯수</th><th>등록일</th></tr>';
+				let str = '<tr><th>제목</th><th>조회수</th><th>찜한갯수</th><th>등록일</th></tr>';
 				
 				
-							for(var i =0; i<Object.keys(data).length; i++){
+							for(let i =0; i<Object.keys(data).length; i++){
 								str+='<tr id= '+data[i].boardNo+'><td>'+data[i].boardTitle+'</td>'
 								str+='<td>'+data[i].vcnt+'</td>'
 								str+='<td>'+data[i].pickCnt+'</td>'
 								str+='<td>'+data[i].modDate+'</td></tr>'
 							}
-							/* $("tr").append(str) */
 							 $("tbody").append(str) 
 							 
-							 var t = $("tr");
-							 for(var i = 0; i<t.length; i++) {
-								 t[i].addEventListener("click",test);
-								 }
+							 const tr = $("tr");
+							 for(let i = 0; i<tr.length; i++) {
+								 tr[i].addEventListener("click",postDetail);
+							}
 				
 			}).fail(
 							function(xhr, status,err){
