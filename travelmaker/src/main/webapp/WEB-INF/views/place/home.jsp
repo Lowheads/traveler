@@ -478,6 +478,43 @@ body > div.mainContainer > div.right.menu {
 	margin-top:10px;
 }
 
+.dotOverlay {
+	position:relative;
+	bottom:10px;
+	text-align:center;
+	border-radius:6px;
+	border: 1px solid #ccc;
+	border-bottom:2px solid #ddd;
+	font-size:12px;
+	padding:5px;
+	background:#fff;
+}
+.dotOverlay:nth-of-type(n) {
+	border:0; box-shadow:0px 1px 2px #888;
+}    
+.number {
+	font-weight:bold;color:#ee6152;
+}
+.dotOverlay:after {
+		content:'';
+		position:absolute;
+		margin-left:-6px;
+		left:50%;
+		bottom:-8px;
+		width:11px;
+		height:8px;
+		background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png');
+	}
+.placeInfo {
+	position:relative;top:5px;left:5px;list-style:none;margin:0;
+}
+.placeInfo .label {
+	margin-top:2px;display:inline-block;width:100%;
+}
+.placeInfo:after {
+	content:none;
+}
+
 
 </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -563,7 +600,6 @@ body > div.mainContainer > div.right.menu {
         <button class="btn-rec-place">추천 장소</button>
         <button type='button' class="transit-btn-car">차</button>
 		<button type='button' class="transit-btn-transit">대중교통</button>
-		<!-- <button class="insert-button" onclick="insertSchedule()">일정 넣기</button> -->
 		<button class="make-button" onclick="initSch()">일정 만들기</button>
 		<div id="show"><button>></button></div>
         
@@ -599,6 +635,7 @@ body > div.mainContainer > div.right.menu {
    
       var markers =[];
       var marker;
+      var overlay;
       var markArr = [];
       var polyArr = [];
       var resultset = [];
@@ -1268,10 +1305,17 @@ body > div.mainContainer > div.right.menu {
     	   for (let i = 0; i < leng; i++) {
     		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
     		posArr.push(pos);
-    		let mark = new kakao.maps.Marker({
+    		let mark = new kakao.maps.CustomOverlay({
+                content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
+                position: pos,
+                clickable: true
+            });
+    		
+    		
+    		/* let mark = new kakao.maps.Marker({
                 position : pos, // 마커의 위치
                 clickable: true
-             });
+             }); */
  			mark.setMap(inmap);
  			markCon.push(mark);
  			markArr.push(markCon);
@@ -1285,23 +1329,59 @@ body > div.mainContainer > div.right.menu {
 		   for (let i = 0; i < plen; i++) {
 			   let polyline = new kakao.maps.Polyline({
 	    		    map: inmap,
-	    		    path: [
-	    		        posArr[i],
-	    		        posArr[i+1]
-	    		    ],
+	    		    path:posArr,
 	    		    endArrow: true,
-	    		    strokeWeight: 4,
+	    		    strokeWeight: 3,
 	    		    strokeColor: colors[idx],
 	    		    strokeOpacity: 1,
 	    		    strokeStyle: 'solid'
+	    		    
 	    		})
 			   polyCon.push(polyline);
 			   polyArr.push(polyCon);
-			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km");  */
+			   console.log((polyline.getLength()/1000).toFixed("2")+"km");
 			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
 			}
     	   
        }
+       
+       /* function getTimeHTML(distance) {
+
+    	    // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
+    	    var walkkTime = distance / 67 | 0;
+    	    var walkHour = '', walkMin = '';
+
+    	    // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
+    	    if (walkkTime > 60) {
+    	        walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
+    	    }
+    	    walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
+
+    	    // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
+    	    var bycicleTime = distance / 227 | 0;
+    	    var bycicleHour = '', bycicleMin = '';
+
+    	    // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
+    	    if (bycicleTime > 60) {
+    	        bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
+    	    }
+    	    bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
+
+    	    // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
+    	    var content = '<ul class="dotOverlay distanceInfo">';
+    	    content += '    <li>';
+    	    content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+    	    content += '    </li>';
+    	    content += '    <li>';
+    	    content += '        <span class="label">도보</span>' + walkHour + walkMin;
+    	    content += '    </li>';
+    	    content += '    <li>';
+    	    content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+    	    content += '    </li>';
+    	    content += '</ul>'
+
+    	    return content;
+    	} */
        
        function searchAction(event) {
          let placeValue = $("#search-value").val();
@@ -1393,6 +1473,12 @@ body > div.mainContainer > div.right.menu {
                      let span = document.createElement("span");
                      span.innerText=list[i].plcTitle + " ";
                      objs1.addEventListener('mouseover',placeOver);
+                     
+                     
+                     let imgwrap = document.createElement("div");
+                     imgwrap.setAttribute('class', 'img-wrap-div');
+                     imgwrap.setAttribute('style', 'border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);grid-area:img;');
+                     
                      let objs1img = document.createElement('img');
                      objs1img.setAttribute('src',list[i].plcImg);
                      objs1img.setAttribute('style','width:5rem;height:5rem;');
@@ -1406,7 +1492,7 @@ body > div.mainContainer > div.right.menu {
                      btnobj1.addEventListener('click', (event) => {
                          let currTarget = event.currentTarget.parentElement;
                          let index = document.getElementsByClassName("left-place-list")
-                         let parentI = (currTarget.children)[0].cloneNode();
+                         let parentI = (currTarget.children)[0].cloneNode(true);
                          let dailyPlaceList = document.getElementsByClassName("daily-place-list");
                          let idx = getActiveDay(); // idx 를 얻었다.
                          let currentList = dailyPlaceList[idx];
@@ -1462,8 +1548,8 @@ body > div.mainContainer > div.right.menu {
                          window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
                       });
                      btnobj2.appendChild(iconobj2);
-                     
-                     objs1.prepend(objs1img);
+                     imgwrap.appendChild(objs1img);
+                     objs1.prepend(imgwrap);
                      objs1.appendChild(span);
                      objs1.appendChild(btnobj1);
                      objs1.appendChild(btnobj2);
@@ -1498,13 +1584,44 @@ body > div.mainContainer > div.right.menu {
              // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
              var bounds = new kakao.maps.LatLngBounds();
              
-             const addMaker = (position) => {
-                 marker = new kakao.maps.Marker({
+              
+             
+             
+             const addMarker = (position) => {
+                 /* marker = new kakao.maps.Marker({
                     position : position, // 마커의 위치
+                 }); */
+                 /* console.log(currTarget.innerHTML); 
+                 let arr = currTarget.innerHTML.split("<span>");
+                 console.log(arr[0]); */
+                 let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
+				                     <ul class="dotOverlay placeInfo">
+				                     <li>
+				                         <span class="number">\${currTarget.dataset["title"]}</span>
+				                     </li>
+				                     <li>
+				                         <span class="label">\${currTarget.dataset["holiday"]}</span>
+				                     </li>
+				                     <li>
+										 <span class="label">\${currTarget.dataset["openingH"]}</span>
+				                     </li>
+				                 </ul>
+				             	</div>`;
+                 overlay = new kakao.maps.CustomOverlay({
+                     content: content,
+                     position: position,
+                     zIndex: 1
                  });
-                 markers.push(marker);
+                 marker = new kakao.maps.CustomOverlay({
+                     content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
+                     position: position,
+                     zIndex: 1
+                 });
+                 let markObj = {"marker":marker,"overlay":overlay};
+                 markers.push(markObj);
                  marker.setMap(map); // 지도 위에 마커를 표출합니다
-                 return marker;
+                 overlay.setMap(map);
+                 return markObj;
               } 
                  
 	          const panTo = (marker) => {
@@ -1515,17 +1632,15 @@ body > div.mainContainer > div.right.menu {
 	               map.setProportion;
 	               map.panTo(moveLatLon);            
 	          }
-             /*  for (var i = 0; i < markers.length||0; i++) {
-               //  굳이 marker배열을   쓸 필요가 없으면 필요없을거 같기도 하다.
-            } */
 	                var placePosition = new kakao.maps.LatLng(
 	                      (currTarget.dataset["lat"]),
 	                      (currTarget.dataset["lng"])),
-	                marker = addMaker(placePosition);
-	                panTo(marker);
+	                marker = addMarker(placePosition);
+	                panTo(marker["marker"]);
 	                
 	                currTarget.addEventListener("mouseout",() => {
-	                   marker.setMap(null);
+	                   marker["marker"].setMap(null);
+	                   marker["overlay"].setMap(null);
 	                   markers.pop();
 	                }) 
       		  }
