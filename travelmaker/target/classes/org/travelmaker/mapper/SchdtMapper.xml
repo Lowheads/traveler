@@ -8,8 +8,8 @@
 		<result property="fromPlc" column="from_plc"/>
 		<result property="toPlc" column="to_plc"/>
 		<result property="distance" column="distance"/>
-		<result property="duration" column="duration"/>
 		<result property="transit" column="transit"/>
+		<result property="duration" column="duration"/>
 </resultMap>
 
 
@@ -28,7 +28,7 @@
 <!-- schNo를 얻어와야하므로 스케쥴 VO-->
 
 <update id="insert" parameterType="org.travelmaker.domain.SchdtVO"> <foreach collection="array" item="schdt" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
- INTO sch_dt VALUES (#{schdt.schDate},#{schdt.schNo},#{schdt.fromPlc},#{schdt.toPlc},#{schdt.distance},#{schdt.transit},#{schdt.duration},#{schdt.num}) 
+ INTO sch_dt VALUES (#{schdt.schDate},#{schdt.schNo},#{schdt.fromPlc},#{schdt.toPlc},#{schdt.distance},#{schdt.duration},#{schdt.transit},#{schdt.num}) 
 </foreach> 
 </update>
 

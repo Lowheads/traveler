@@ -77,7 +77,7 @@ img {
 }
 
 .container {
-   flex: 0 0 64%;
+   flex: 64 64 64%;
 }
 
 .daily-place-all {
@@ -108,14 +108,15 @@ ul {
 #all-date {
 	display: flex;
     flex-direction: column;
-    flex: 0 0 25%;
+    flex: 0 0 30%;
     background-color: #203341;
 }
 #all-schedule {
 	display: flex;
 	flex-direction:column;
 	overflow:auto;
-	flex: 0 0 75%;
+	flex: 0 0 70%;
+	justify-content: space-between;
 }
 .daily-place-dt {
 	width:100%;
@@ -124,7 +125,7 @@ ul {
 }
 #left-container {
 	display:flex;
-	width:20%;
+	flex:30 30 30%;
 }
 
 .daily-place-all {
@@ -135,16 +136,14 @@ ul {
 #show-schedule {
    display: none;
    overflow:auto;
-   width: 90%;
-   height: 90%;
+   width: 96%;
+   height: 96%;
    background-color: #fefefe;
-   border: 1px solid #888;
    border-radius: 3px;
 }
 
 .in-container {
-	width: 80%;
-   height: 100%;
+	flex:70 70 70%
 }
 
 #registerForm {
@@ -277,7 +276,9 @@ div.hoverable-place > button.detail-button {
 	top: 70px;
     left: 50px;
     flex-direction:column;
-    height:50%;
+    height: max-content;
+    max-height: 50%;
+    border-radius:5px;
 }
 .rec-place {
 	display: flex;
@@ -353,7 +354,7 @@ div.hoverable-place > button.detail-button {
 
 body > div.mainContainer > div.right.menu {
 	overflow:auto;
-	flex:0 0 18%;
+	flex:18 18 18%;
 	flex-direction:column;
 	height:100%;
 	display:flex;
@@ -428,16 +429,53 @@ body > div.mainContainer > div.right.menu {
 	background-color:#1a7ad9;
 }
 .place-perday-list {
-	display:flex;
+	display: flex;
+	position:relative;
+	/* display:grid;
+    grid-template-areas: 'img text btn'
+    					 'memo memo memo'; */
+    justify-content:space-between;
+	align-items:center;
+	position:relative;
+	padding:10px 10px 0;
 }
-#all-schedule > outplcdt-wrap-div > ul > div > button {
+#all-schedule > div > ul > div > button {
 	width:100%;
 	height:1.5em;
 	background-color:#90a4ae;
 	color:white;
+	grid-area:btn;
 }
-#all-schedule > ul.place-dt-list > div > button:hover {
+
+#all-schedule > ul > div > img {
+	grid-area:img;
+}
+#all-schedule > ul > div > span {
+	grid-area:text;
+}
+/* #all-schedule > ul > div > button:hover {
+} */
+#all-schedule > div > ul > div > button:hover {
 	background-color:#2196f3;
+}
+.outplcdt-wrap-div {
+    text-align: center;
+}
+
+#all-schedule > div > ul > div {
+	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+}
+
+.plcdt-wrap-div > span {
+	color: #ff9100;
+}
+{
+	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+#all-schedule > div > span {
+	margin-top:10px;
 }
 
 
@@ -467,18 +505,18 @@ body > div.mainContainer > div.right.menu {
 			  </div>
 		  </div> 
 		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button></div>
-      	<button class="submit-btn" style="position: absolute;top:60px;right:30px;z-index:110;">저장</button>
+      	<button class="submit-btn" style="position: absolute;right:80px;z-index:110;">저장</button>
       </div>    
-      
       
       <div id="registerForm">
 				<p> 
-					<input type="text" class="title-box" placeholder ="plz write down title" />
+					<input type="text" class="title-box" placeholder ="plz write down title" required />
 				</p>
 				<p>
-					<input type="text" class="content-box" placeholder="plz write down content" />
+					<input type="text" class="content-box" placeholder="plz write down content" required />
       			</p>
       			<button type="button" onclick="insertSchedule()">저장</button>
+      			<button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button>
       	</div>
         
       <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
@@ -486,7 +524,7 @@ body > div.mainContainer > div.right.menu {
 
       <div class="left-menu">
       
-      	<button id="hide"> < </button>
+      	<button id="hide"><</button>
       
       <div class="left-date">
       
@@ -515,7 +553,7 @@ body > div.mainContainer > div.right.menu {
 	         <c:forEach items="${places}" var="list">
 	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
 	                  <img src='<c:out value="${list.plcImg}"></c:out>'>
-	                  <c:out value="${list.plcTitle}"></c:out>
+	                  <span><c:out value="${list.plcTitle}"></c:out></span>
 	                  <button class="rec-add-button" type="button">
 	                  <i class="fas fa-plus"></i>
 	                  </button>
@@ -561,8 +599,10 @@ body > div.mainContainer > div.right.menu {
    
       var markers =[];
       var marker;
+      var markArr = [];
+      var polyArr = [];
       var resultset = [];
-
+	  var distArr = [];
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
           mapOption = {
              center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
@@ -698,18 +738,16 @@ body > div.mainContainer > div.right.menu {
         	 sessionStorage.setItem("transit","traffic"); 
         	 alert("대중교통으로 변경되었습니다.")
          }); 
-         document.querySelector('.submit-btn').addEventListener('click', ()=>{
-             let btn = document.querySelector('#submit-btn'); 
-         }); 
+         document.querySelector('.submit-btn').addEventListener('click', register); 
          
          document.querySelector('.search-button').addEventListener('click', searchAction);
          document.querySelector('.btn-rec-place').addEventListener('click', ()=>{ // 추천장소 버튼을 누르면 장소들 등장, button을 추가할지 말진 모르겠다.
                  let recPlace = document.querySelector('#rec-place')
                     if(recPlace.style.display=='' || recPlace.style.display==='none' ){
-                       recPlace.style.display='flex';
+                        dnd('#rec-place').slideDown("fast");
                         }
-                    else if(recPlace.style.display==='flex'){
-                        recPlace.style.display='none';
+                    else {
+                    	dnd('#rec-place').slideUp("fast");
                      }
          });
          
@@ -739,7 +777,7 @@ body > div.mainContainer > div.right.menu {
                       }               
                    }
                 let child = curClone.children;
-                child[1].remove()
+                child[2].remove()
                 let btnobj1 = document.createElement("button");
                 btnobj1.setAttribute('class', 'delete-button');
                 let iconobj1 = document.createElement("i");
@@ -769,7 +807,7 @@ body > div.mainContainer > div.right.menu {
           
           let objs = document.createElement('button');
           objs.setAttribute('class', 'showAllBtn');
-          objs.innerText="전체보기";
+          objs.innerText="전체 일정 보기";
           //전체보기 이벤트생성
           objs.addEventListener('click', showAll);
           
@@ -782,8 +820,8 @@ body > div.mainContainer > div.right.menu {
 	             objs.setAttribute('class', 'daily-place-btn');
 	             objs.innerText="DAY"+(idx+1);
 	             objs.addEventListener('click',  (event) => {
-                 let currTarget = event.currentTarget;
                  let btnList = document.getElementsByClassName("daily-place-btn")
+                 let currTarget = event.currentTarget;
                  let dailyPlaceList = document.querySelectorAll('.daily-wrap-div')
                  let arr = [...btnList];
                  let psuedoidx = arr.indexOf(currTarget);
@@ -831,6 +869,50 @@ body > div.mainContainer > div.right.menu {
   		    return new Date(rdate); 
 		}
        
+       function register() {
+    	   let zIndex = 999;
+           let modal = document.getElementById('registerForm');
+           console.log(modal)
+           let bg = document.createElement('div');
+           
+           bg.setStyle({
+               position: 'fixed',
+               zIndex: zIndex,
+               left: '0px',
+               top: '0px',
+               width: '100%',
+               height: '100%',
+               overflow: 'auto',
+               // 레이어 색깔은 여기서 바꾸면 됨
+               backgroundColor: 'rgba(0,0,0,0.4)'
+           });
+           document.body.append(bg);
+
+           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+           modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+               bg.remove();
+                   modal.style.display = 'none';
+                   //자식 노드 초기화
+           });
+		
+           modal.setStyle({
+               position: 'fixed',
+               display: 'block',
+               boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+               // 시꺼먼 레이어 보다 한칸 위에 보이기
+               zIndex: zIndex + 1,
+
+               // div center 정렬
+               top: '50%',
+               left: '50%',
+               transform: 'translate(-50%, -50%)',
+               msTransform: 'translate(-50%, -50%)',
+               webkitTransform: 'translate(-50%, -50%)'
+           });
+    	   
+       }
+       
        function insertSchedule() {
     	     /*  // 유빈 누나 코드
               const formData = new FormData();
@@ -844,29 +926,30 @@ body > div.mainContainer > div.right.menu {
               }
               formData.append("uploadFile",file);
 			  // 유빈누나 코드 end */
-              
            let datePicker = document.getElementsByClassName("data-range-picker")[0];
            let dateList = datePicker.value.split(' - ');
            let fromDate = new Date(dateList[0]);
            let toDate = new Date(dateList[1]);
+           let title = document.getElementsByClassName("title-box").value||"테스트"
+           let memo = document.getElementsByClassName("content-box").value||"테스트";
            
            let transit = sessionStorage.getItem("transit") || "car";
            let tmpAllList =[];
            let tmpList;
-           let placeList = document.getElementsByClassName("daily-place-list");
+           let placeList = document.getElementsByClassName("daily-place-dt");
            let len = placeList.length;
            let memNo = <%= session.getAttribute("memNo") %> || 0;
            let schRegion = ${schDto.schRegion};
            let scheduleVO = {
         		   memNo:memNo,
-        		   schTitle:"테스트 제목",
+        		   schTitle:title,
         		   fromDate:fromDate,
         		   toDate:toDate,
-        		   // 이미지 추가 멀티파일 부분
+        		   /* // 이미지 추가 멀티파일 부분
         		   img:formData,
-        		   // 이미지 추가 멀티파일 부분
-        		   schStatus:"작성중",
-        		   memo:"테스트 메모",	   
+        		   // 이미지 추가 멀티파일 부분 */
+        		   schStatus:"BS001",
+        		   memo:memo,	   
         		   schRegion:schRegion
            }
            for (let i = 0; i < len; i++) {
@@ -910,6 +993,21 @@ body > div.mainContainer > div.right.menu {
            
         };
         
+		function setArrNull() {
+			const setConNull = (pmarkCon) => {
+				for (let e of pmarkCon) {
+					e.setMap(null);
+					}
+			}
+			for (let eArr of polyArr) {
+				setConNull(eArr);
+			}
+			for (let eArr of markArr) {
+				setConNull(eArr);
+			}
+		}
+        
+        
        function initSch(){
     	   let zIndex = 99;
     	   let modal = document.getElementById('show-schedule');
@@ -934,20 +1032,32 @@ body > div.mainContainer > div.right.menu {
            let dailyBtn = dateList.children;
            let len = dailyBtn.length;
 			for (let i = 0; i < len; i++) {
-				if(i>0){
-				dailyBtn[i].addEventListener("click",drawLine);
-				}
 				dailyBtn[i].addEventListener("click", (event) =>{
+					$(".outplcdt-wrap-div").remove();
+					if(i==0) {
+						$(".daily-place-dt").show();
+					}else {
+				        $(".daily-place-dt").hide();
+					}
 					let currTarget = event.currentTarget;
 					let arr = [...dailyBtn];
-			        let psuedoidx = arr.indexOf(currTarget);
-			        for (let j = 0; j < len; j++) {
-			        	dailyBtn[j].classList.remove("active");
+				    let psuedoidx = arr.indexOf(currTarget);
+					    for (let j = 0; j < len; j++) {
+					    	dailyBtn[j].classList.remove("active");
 					}
-			        dailyBtn[psuedoidx].classList.add("active");
+				        dailyBtn[psuedoidx].classList.add("active");
 				})
+				
+				if(i==0) {
+					dailyBtn[i].addEventListener("click", setArrNull);
+					dailyBtn[i].addEventListener("click", drawLineAll)
+				}
+				else {
+					dailyBtn[i].addEventListener("click", setArrNull);
+					dailyBtn[i].addEventListener("click", drawLine);
+			    }
              	dailyBtn[i].classList.remove("active");
-			}
+			  }
            dailyBtn[0].classList.add("active");
            // 일정 추출할 친구
            // 일정 생성 완료
@@ -966,6 +1076,10 @@ body > div.mainContainer > div.right.menu {
              		var startPos = ui.item.data('pos-idx');
              		var endPos = ui.item.index();
              		console.log(startPos+ " : " + endPos); // 시작점 : 끝나는점 
+             	},
+             	update:function(event,ui) {
+             		setArrNull();
+             		drawLineAll();
              	}
              });
              dnd(objs).disableSelection();
@@ -980,11 +1094,17 @@ body > div.mainContainer > div.right.menu {
               for (let j = 0; j < len; j++) {
               let dailyplace = dpList[i].children[j].cloneNode(true); //span wrap div +1
               dailyplace.setAttribute('class','place-perday-list');
-              dailyplace.lastElementChild.addEventListener('click',deleteInLeft);
+              dailyplace.lastElementChild.addEventListener('click',() => {
+            	  deleteInLeft(event);
+            	  setArrNull();
+            	  drawLineAll();
+              });
+              
               objs.appendChild(dailyplace);
           }
         }
            dateAll.appendChild(dateList);  
+           
            // 모달 div 뒤에 희끄무레한 레이어
            let bg = document.createElement('div');
            bg.setAttribute("class", "modal-background");
@@ -1025,15 +1145,20 @@ body > div.mainContainer > div.right.menu {
        
            const showCurrList = function (event){
          	 let idx = $(this).index()-1;
+         	 
         	 let plcdtList = document.getElementsByClassName("place-dt-list");
         	   if(!(plcdtList[idx]==undefined)){
         		   return;
         	   }
   			 let currList = document.getElementsByClassName("daily-place-dt")[idx]; 
   			 let leng = currList.children.length;
+  			 let owdiv = document.createElement("div");
+  			 owdiv.setAttribute("class","outplcdt-wrap-div");
+  			 owdiv.setAttribute("data-dno", idx+1);
   			 let tmpList = document.createElement("ul");
   			 let title = document.createElement("span");
-  			 title.innerText = (idx+1)+"일차";
+  			 title.innerText = `\${idx+1}일차`;
+  			 owdiv.appendChild(title);
   			 tmpList.setAttribute("class","place-dt-list");
   			 let transit = sessionStorage.getItem("transit");
   			 let geocoder = new kakao.maps.services.Geocoder();
@@ -1061,12 +1186,10 @@ body > div.mainContainer > div.right.menu {
   				   geoArr.push(promise);
          } // for currList end 
          let pAll = Promise.all(geoArr);
-         
-		 let curClone = currList.cloneNode(true);
          for (let i = 0; i < geoArr.length; i++) {
 			let locaData = currList.children[i];
 			pAll.then(result => {
-				let owdiv = document.createElement("outplcdt-wrap-div");
+				
 				 resultset.push({x:result[i][0].x,y:result[i][0].y,title:locaData.dataset["title"]});
 		         let dailyplace = locaData.cloneNode();
 		         dailyplace.setAttribute("class", "place-dt-perday");
@@ -1101,7 +1224,7 @@ body > div.mainContainer > div.right.menu {
 		        	 wdiv.append(button);
 		         	 tmpList.appendChild(wdiv)
 		         } // if end // resolve end
-		         	 owdiv.appendChild(title);
+		         	 
 		         	 owdiv.appendChild(tmpList);
 			         listAll.appendChild(owdiv);
 	   				}, status => {console.log(status)}					         
@@ -1116,49 +1239,68 @@ body > div.mainContainer > div.right.menu {
          inmap = new kakao.maps.Map(mapContainer,
                  mapOption); // 지도를 생성합니다
                  mapContainer.style.width = '100%';
-                mapContainer.style.height = '100%';
-                
+                 mapContainer.style.height = '100%';
                  inmap.relayout();
+         drawLineAll(); // 선언이 뒤에 있어서 부득이하게 라인이 일로 와버림..       
          };   
+         
+       function drawLineAll(event) {
+    	   let latlngList = document.getElementsByClassName("daily-place-dt");
+    	   let len = latlngList.length;
+    	   for (let i = 0; i < len; i++) {
+    		   draw(i);
+    		   }
+       }
        
-       function drawLine(ele) {
-    	   colors = ["#b61aae","#f07b3f","#ea5455","#2d4059","#fdb827","#21209c","#583d72","#3ec1d3","#3490de","#086972"];
-    	   let leftList = document.querySelector("#left-place-list");
+       function drawLine(event) {
     	   let idx = $(this).index()-1;
-    	   let latlngList = leftList.children[idx].children;
-    	   let leng = latlngList.length-1;
+    	   draw(idx);
+       }
+       
+       function draw(idx) {
+    	   let colors = ["#b61aae","#f07b3f","#ea5455","#2d4059","#fdb827","#21209c","#583d72","#3ec1d3","#3490de","#086972"];
+		   let posArr = [];
+		   let markCon = [];
+		   let polyCon = [];
+    	   let latlngList = document.getElementsByClassName("daily-place-dt");
+		   let latlngData = latlngList[idx].children
+		   let leng = latlngData.length||0;
     	   for (let i = 0; i < leng; i++) {
-    		let pos1 = new kakao.maps.LatLng(latlngList[i].dataset["lat"],latlngList[i].dataset["lng"])
-    		let pos2 = new kakao.maps.LatLng(latlngList[i+1].dataset["lat"],latlngList[i+1].dataset["lng"])
-    		let markerPosition  = new kakao.maps.LatLng(latlngList[i].dataset["lat"],latlngList[i].dataset["lng"]); 
-    		// 이미지 지도에 표시할 마커
-    		// 이미지 지도에 표시할 마커는 Object
-    		let mark1 = new kakao.maps.Marker({
-                   position : pos1, // 마커의 위치
-                   clickable: true
-                });
-    		mark1.setMap(inmap);
-    		
-    		kakao.maps.event.addListener(mark1, 'click', () => {
-    		      let placeNo = latlngList[i].dataset["plcNo"]
-    		      let URL = "https://place.map.kakao.com/"+placeNo;
-                  window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-    		});
-    		
-    	   let polyline = new kakao.maps.Polyline({
-    		    map: inmap,
-    		    path: [
-    		        pos1,
-    		        pos2
-    		    ],
-    		    endArrow: true,
-    		    strokeWeight: 4,
-    		    strokeColor: colors[idx],
-    		    strokeOpacity: 0.8,
-    		    strokeStyle: 'solid'
-    		})
-    		console.log((polyline.getLength()/1000).toFixed("2")+"km"); 
+    		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
+    		posArr.push(pos);
+    		let mark = new kakao.maps.Marker({
+                position : pos, // 마커의 위치
+                clickable: true
+             });
+ 			mark.setMap(inmap);
+ 			markCon.push(mark);
+ 			markArr.push(markCon);
+ 			kakao.maps.event.addListener(mark, 'click', () => {
+  		      let placeNo = latlngData[i].dataset["plcNo"]
+  		      let URL = "https://place.map.kakao.com/"+placeNo;
+                window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+  			});
     	   }
+    	   let plen = posArr.length-1;
+		   for (let i = 0; i < plen; i++) {
+			   let polyline = new kakao.maps.Polyline({
+	    		    map: inmap,
+	    		    path: [
+	    		        posArr[i],
+	    		        posArr[i+1]
+	    		    ],
+	    		    endArrow: true,
+	    		    strokeWeight: 4,
+	    		    strokeColor: colors[idx],
+	    		    strokeOpacity: 1,
+	    		    strokeStyle: 'solid'
+	    		})
+			   polyCon.push(polyline);
+			   polyArr.push(polyCon);
+			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km");  */
+			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
+			}
+    	   
        }
        
        function searchAction(event) {

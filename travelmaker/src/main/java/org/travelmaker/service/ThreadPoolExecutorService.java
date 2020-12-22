@@ -26,7 +26,6 @@ import lombok.Data;
 @Deprecated
 public class ThreadPoolExecutorService {
 	
-	
 	public CompletableFuture<Void> setInitSchWithDistAndDu(ScheduleDtVO schdtVO) {
 		// WebDriver 경로 설정
 		ChromeDriver driver = getDriver();
