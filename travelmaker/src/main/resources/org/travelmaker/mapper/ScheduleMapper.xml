@@ -21,7 +21,7 @@
 <select id="getList" resultMap="ScheduleResult">
 <![CDATA[
 	select * from schedule where mem_no = #{memNo}
-	order by sch_no asc
+	order by sch_status desc
 ]]>
 </select>
 
@@ -48,11 +48,11 @@
 </insert>
 <!-- insert 할때 img 넣을지 말지 생각해보자 두개의 차이는 memno 일단 없는걸로 실험-->
 <insert id="insertSelectKey">
-	<selectKey keyProperty="schNo" order="BEFORE" resultType="Integer">
+	<selectKey keyProperty="schNo" order="BEFORE" resultType="int">
 		select sch_seq.nextval from dual
 	</selectKey>
 	insert into schedule (sch_no, mem_no, sch_title, from_date, to_date, sch_status, memo, sch_region)
-	values (sch_seq.nextval, #{memNo}, #{schTitle}, #{fromDate}, #{toDate}, #{schStatus}, #{memo}, #{schRegion})
+	values (#{schNo}, #{memNo}, #{schTitle}, #{fromDate}, #{toDate}, #{schStatus}, #{memo}, #{schRegion})
 </insert>
 
 <select id="read" resultMap="ScheduleResult">
@@ -90,20 +90,22 @@
 </update>
 <select id="getListWithPaging" resultType="hashMap">
 <![CDATA[
-		select
-			*
-			from
-			(
-			select
-				rownum rn,s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt
-			from
-			schedule s, pick_sch pl, board b
-			where b.sch_no = s.sch_no
-			and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-			and rownum <= #{pageNum} * #{amount}
-			)
-			where rn > (#{pageNum} -1) * #{amount}  
+	 select *
+    from (
+    select rownum no,a.*
+    from
+(select 
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,
+        (select nickname from member where s.mem_no = member.mem_no)as NICKNAME
+       from
+         schedule s, pick_sch pl, board b
+       where s.sch_no = b.sch_no
+             and s.sch_no = pl.sch_no 
+         and pl.mem_no = #{memNo}
+            )a
+            where rownum <= #{pageNum} * #{amount}
+            )
+            where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
 
@@ -146,9 +148,10 @@
 		<select id="getTotalCount" resultType="int">
 		
 		select count(*) from
-		schedule s, pick_sch pl
-			where s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
+		schedule s, pick_sch pl,board b
+			 where s.sch_no = b.sch_no
+             and s.sch_no = pl.sch_no 
+         and pl.mem_no = #{memNo}
 		
 		</select>
 		
@@ -179,14 +182,15 @@
     select rownum no,a.*
     from
 (select 
-        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,
+        (select nickname from member where s.mem_no = member.mem_no)as NICKNAME
        from
-			schedule s, pick_sch pl, board b
+         schedule s, pick_sch pl, board b
        where s.sch_no = b.sch_no
-       		and s.sch_no = pl.sch_no 
-			and pl.mem_no = #{memNo}
-            order by case when #{selected}='old' then pl.ps_date end desc,
-            case when #{selected}='new' then pl.ps_date end asc,
+             and s.sch_no = pl.sch_no 
+         and pl.mem_no = #{memNo}
+            order by case when #{selected}='old' then pl.ps_date end asc,
+            case when #{selected}='new' then pl.ps_date end desc,
             case when #{selected}='like' then b.pick_cnt end desc,
             s.sch_no desc
             )a
@@ -195,7 +199,6 @@
             where no >= (#{pageNum} -1) *#{amount}+1 
 ]]>
 </select>
-
 <select id="checkPicked" resultType="int">
    select count(*) from pick_sch where sch_no=#{schNo} and mem_no=#{memNo}
 </select>

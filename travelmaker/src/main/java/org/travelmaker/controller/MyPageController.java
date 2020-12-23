@@ -29,100 +29,104 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class MyPageController {
 
-	private PlaceService placeService;
-	private ScheduleService SchService;
-	private PickService pickService;
-	private SchdtService schdtService;
-	private MemberService memberService;
+   private PlaceService placeService;
+   private ScheduleService SchService;
+   private PickService pickService;
+   private SchdtService schdtService;
+   private MemberService memberService;
 
-	@GetMapping("/pickPL")
-	public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		cri.setMemNo(memNo);
-		int total = placeService.getTotal(cri);
-		cri.setAmount(8);
-		model.addAttribute("list",placeService.getListWithPaging(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
-	}
+   @GetMapping("/pickPL")
+   public void getPlaceList(Criteria cri,Model model,HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+      cri.setMemNo(memNo);
+      int total = placeService.getTotal(cri);
+      cri.setAmount(6);
+      model.addAttribute("list",placeService.getListWithPaging(cri));
+      model.addAttribute("pageMaker",new PlacePageDTO(cri,total));
+   }
 
-	@RequestMapping(value = "/deleteSchedule", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public void deleteSchedule(@RequestParam("schNo")int schNo) {
-		SchService.removeSchdule(schNo);
-		schdtService.deleteSchdt(schNo);
-	}
+   @RequestMapping(value = "/deleteSchedule", method = RequestMethod.POST, produces = "application/json")
+   @ResponseBody
+   public void deleteSchedule(@RequestParam("schNo")String schNo) {
+      SchService.removeSchdule(Integer.parseInt(schNo));
+      schdtService.deleteSchdt(Integer.parseInt(schNo));
+   }
 
-	@GetMapping("/pickSch")
-	public void getScheduleList(Criteria cri,Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		cri.setMemNo(memNo);
-		cri.setAmount(8);
-		model.addAttribute("list",SchService.getList(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
-	}
+   @GetMapping("/pickSch")
+   public void getScheduleList(Criteria cri,Model model,HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+      cri.setMemNo(memNo);
+      cri.setAmount(6);
+      System.out.println(SchService.getList(cri));
+      model.addAttribute("list",SchService.getList(cri));
+      model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getTotal(cri)));
+   }
 
-	@GetMapping({"/past/get","/pickSch/get","/upcomming/get"})
-	public void getSchedule(@RequestParam("sch_no")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
-		model.addAttribute("board",SchService.getSchedt(schNo));
-		model.addAttribute("Schdt",schdtService.getSchdtList(schNo));
-	}
+   @GetMapping({"/past/get","/pickSch/get","/upcoming/get"})
+   public void getSchedule(@RequestParam("schNo")int schNo,@ModelAttribute("cri") Criteria cri,Model model) {
+      System.out.println(schNo);
+      model.addAttribute("schedule",SchService.getSchedt(schNo));
+      model.addAttribute("Schdt",schdtService.getSchdtList(schNo));
+   }
 
-	@GetMapping("/past")
-	public void getPastSchedule(Criteria cri,Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		cri.setMemNo(memNo);
-		cri.setAmount(8);
-		model.addAttribute("list",SchService.getPastList(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getPastScheduleTotal(cri)));
-	}
+   @GetMapping("/past")
+   public void getPastSchedule(Criteria cri,Model model,HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+      cri.setMemNo(memNo);
+      cri.setAmount(6);
+      model.addAttribute("list",SchService.getPastList(cri));
+      model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getPastScheduleTotal(cri)));
+   }
 
-	@GetMapping("/upcomming")
-	public void getUpcomingSchedule(Criteria cri,Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		cri.setMemNo(memNo);
-		cri.setAmount(8);
-		model.addAttribute("list",SchService.getUpComingList(cri));
-		model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getComingScheduleTotal(cri)));
-	}
+   @GetMapping("/upcoming")
+   public void getUpcomingSchedule(Criteria cri,Model model,HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+      cri.setMemNo(memNo);
+      cri.setAmount(6);
+      model.addAttribute("list",SchService.getUpComingList(cri));
+      model.addAttribute("pageMaker",new PlacePageDTO(cri,SchService.getComingScheduleTotal(cri)));
+   }
 
-	   @ResponseBody
-	   @RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
-	   public int deletePickPlace(HttpSession session,PickVO vo) throws Exception {
-	      if(session.getAttribute("memNo")==null) {
-	         return 0;
-	      }
-	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-	      vo.setMemNo(memNo);
-	      return pickService.remove(vo);
-	   }
+      @ResponseBody
+      @RequestMapping(value = "/deletePick", method = RequestMethod.POST, produces = "application/json")
+      public int deletePickPlace(HttpSession session,PickVO vo) throws Exception {
+         if(session.getAttribute("memNo")==null) {
+            return 0;
+         }
+         int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+         vo.setMemNo(memNo);
+         
+         System.out.println(vo);
+         return pickService.remove(vo);
+      }
 
-	   @ResponseBody
-	   @RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
-	   public int insertPickPlace(HttpSession session,PickVO vo) throws Exception {
-	      
-	      if(session.getAttribute("memNo")==null) {
-	         return 0;
-	      }
-	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-	      vo.setMemNo(memNo);
-	      return pickService.register(vo);
-	   }
+      @ResponseBody
+      @RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
+      public int insertPickPlace(HttpSession session,PickVO vo) throws Exception {
+         if(session.getAttribute("memNo")==null) {
+            return 0;
+         }
+         int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+         vo.setMemNo(memNo);
+        
+         return pickService.register(vo);
+      }
 
-	   @ResponseBody
-	   @RequestMapping(value = "/testResult", method = RequestMethod.POST, produces = "application/json")
-	   public List<Map<String,Object>> resultType(String type,HttpSession session){
+      @ResponseBody
+      @RequestMapping(value = "/testResult", method = RequestMethod.POST, produces = "application/json")
+      public List<Map<String,Object>> resultType(String type,HttpSession session){
 
-	      if(session.getAttribute("memNo") == null) {
-	         return placeService.getYourList(type, 0);
-	      }
-	      
-	      int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+         if(session.getAttribute("memNo") == null) {
+            return placeService.getYourList(type, 0);
+         }
+         
+         int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 
-	      memberService.updateTT(type,memNo);
-	      return placeService.getYourList(type,memNo);
-	   }
+         memberService.updateTT(type,memNo);
+         return placeService.getYourList(type,memNo);
+      }
 }

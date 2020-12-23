@@ -48,7 +48,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-
 .overlay {
   position: absolute;
   top: -40px;
@@ -83,7 +82,6 @@
    border-radius: 5px;
    padding: 20px;
 }
-
 .dayDt {
    padding: 7px;
    justify-content: flex-start;
@@ -91,33 +89,27 @@
    margin-bottom: 75px;
    border-bottom: 1px solid gray;
 }
-
 .dailyscheduleDT a{
    position: relative;
 }
-
 .dailyscheduleDT{
    width: auto;
 }
-
 .plcImg {
    border: 4px solid #ffffff; /* Gray border */
    border-radius: 4px; /* Rounded border */
    width: 150px; /* Set a small width */
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 .marker {
    margin-top: 20px;
    margin-bottom: 20px;
 }
-
 .dayDate {
    height: 300px;
    margin-bottom: 40px;
    display: flex;
 }
-
 .dango{
    background-color: white;
 }
@@ -125,8 +117,6 @@
    width: 50px;
    height: 50px;
 }
-
-
 .directionAll {
    margin-top: 20px;
    margin-bottom: 20px;
@@ -134,7 +124,6 @@
    align-items: center;
    justify-content: center;
 }
-
 .direction {
    width: 50px;
    height: 50px;
@@ -148,14 +137,12 @@
 .drirection p{
    margin: auto;
 }
-
 /* Right column */
 .content-mypage {
    float: right;
    width: 65%;
    margin-right: 10%;
 }
-
 .modal_wrap {
    display: none;
    width: 70%;
@@ -167,7 +154,6 @@
    background: #eee;
    z-index: 2;
 }
-
 .modal_close {
    width: 26px;
    height: 26px;
@@ -175,7 +161,6 @@
    top: -30px;
    right: 0;
 }
-
 .modal_close>a {
    display: block;
    width: 100%;
@@ -183,7 +168,6 @@
    background: url(https://img.icons8.com/metro/26/000000/close-window.png);
    text-indent: -9999px;
 }
-
 .black_bg {
    display: none;
    position: fixed;
@@ -195,31 +179,25 @@
    left: 0;
    z-index: 1;
 }
-
 #map {
    width: 100%;
    height: 100%;
 }
-
-
 .map_wrap, .map_wrap * {
    margin: 0;
    padding: 0;
    font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
    font-size: 12px;
 }
-
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active {
    color: #000;
    text-decoration: none;
 }
-
 .map_wrap {
    position: relative;
    width: 100%;
    height: 500px;
 }
-
 #menu_wrap {
    position: absolute;
    top: 0;
@@ -234,12 +212,9 @@
    font-size: 12px;
    border-radius: 10px;
 }
-
 .bg_white {
    background: #fff;
 }
-
-
 #menu_wrap hr {
    display: block;
    height: 1px;
@@ -247,23 +222,18 @@
    border-top: 2px solid #5F5F5F;
    margin: 3px 0;
 }
-
 #menu_wrap .option p {
    margin: 10px 0;
 }
-
 #menu_wrap .option button {
    margin-left: 5px;
 }
-
 #placesList {
    padding-left: 0px;
 }
-
 #placesList li {
    list-style: none;
 }
-
 #placesList .item {
    position: relative;
    border-bottom: 1px solid #888;
@@ -271,34 +241,27 @@
    cursor: pointer;
    min-height: 65px;
 }
-
 #placesList .item span {
    display: block;
    margin-top: 4px;
 }
-
 #placesList .item h5, #placesList .item .info {
    text-overflow: ellipsis;
    overflow: hidden;
    white-space: nowrap;
 }
-
 #placesList .item .info {
    padding: 10px 0 10px 55px;
 }
-
 #placesList .info .gray {
    color: #8a8a8a;
 }
-
 #placesList .info .jibun {
    padding-left: 26px;
 }
-
 #placesList .info .tel {
    color: #009900;
 }
-
 #placesList .item .markerbg {
    float: left;
    position: absolute;
@@ -309,70 +272,52 @@
       url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
       no-repeat;
 }
-
 #placesList .item .marker_1 {
    background-position: 0 -10px;
 }
-
 #placesList .item .marker_2 {
    background-position: 0 -56px;
 }
-
 #placesList .item .marker_3 {
    background-position: 0 -102px
 }
-
 #placesList .item .marker_4 {
    background-position: 0 -148px;
 }
-
 #placesList .item .marker_5 {
    background-position: 0 -194px;
 }
-
 #placesList .item .marker_6 {
    background-position: 0 -240px;
 }
-
 #placesList .item .marker_7 {
    background-position: 0 -286px;
 }
-
 #placesList .item .marker_8 {
    background-position: 0 -332px;
 }
-
 #placesList .item .marker_9 {
    background-position: 0 -378px;
 }
-
 #placesList .item .marker_10 {
    background-position: 0 -424px;
 }
-
 #placesList .item .marker_11 {
    background-position: 0 -470px;
 }
-
 #placesList .item .marker_12 {
    background-position: 0 -516px;
 }
-
 #placesList .item .marker_13 {
    background-position: 0 -562px;
 }
-
 #placesList .item .marker_14 {
    background-position: 0 -608px;
 }
-
 #placesList .item .marker_15 {
    background-position: 0 -654px;
 }
-
 /* 지은 스타일 */
-
-
 /* 모달창 */
 /* Important part */
 .modal-content{
@@ -382,7 +327,6 @@ overflow-y: initial !important
 height: 550px;
 overflow-y: auto;
 }
-
 #register_modal{
 	display: none;
 	width: 600px;
@@ -392,12 +336,7 @@ overflow-y: auto;
 	border: 1px solid #888;
 	border-radius: 3px;
 	text-align : center;
-
-
-
 }
-
-
 #hiddenlist_modal, #schedulelist_modal{
 	display: none;
 	width: 450px;
@@ -408,8 +347,6 @@ overflow-y: auto;
 	border-radius: 3px;
 	text-align : center;
 }
-
-
 /* 닫는버튼 */
 #hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
 	width: 20%;
@@ -420,7 +357,6 @@ overflow-y: auto;
 	border-radius: 5px;
 	text-align : right;
 }
-
 /* 이미지 갤러리 */
 div.gallery {
 	flex-basis: 20%;
@@ -433,17 +369,14 @@ div.gallery {
 	padding: 10px;
 	margin-bottom: 7px;
 }
-
 div.gallery:hover {
 	border: 1px solid #777;
 }
-
 div.gallery img {
 	width: 100%;
 	height: 150px;
 	object-fit: cover;
 }
-
 div.cardgallery img{
 	width: 100%;
 	height: 150px;
@@ -454,36 +387,30 @@ div.desc {
 	object-fit: cover;
 	font-size: 15px;
 }
-
 * {
 	box-sizing: border-box;
 }
-
 .responsive {
 	padding: 10px 10px;
 	float: left;
 	width: 24.99999%;
 }
-
 @media only screen and (max-width: 700px) {
 	.responsive {
 		width: 49.99999%;
 		margin: 6px 0;
 	}
 }
-
 @media only screen and (max-width: 500px) {
 	.responsive {
 		width: 100%;
 	}
 }
-
 .clearfix:after {
 	content: "";
 	display: table;
 	clear: both;
 }
-
 a:link, a:visited {
 	color: black;
 	padding: 5px 5px;
@@ -491,12 +418,10 @@ a:link, a:visited {
 	text-decoration: none;
 	display: inline-block;
 }
-
 a:hover, a:active {
 	background-color: skyblue;
 	color: white;
 }
-
 /* toggle */
 .switch {
 	position: relative;
@@ -504,13 +429,11 @@ a:hover, a:active {
 	width: 60px;
 	height: 34px;
 }
-
 .switch input {
 	opacity: 0;
 	width: 0;
 	height: 0;
 }
-
 .slider {
 	position: absolute;
 	cursor: pointer;
@@ -522,7 +445,6 @@ a:hover, a:active {
 	-webkit-transition: .4s;
 	transition: .4s;
 }
-
 .slider:before {
 	position: absolute;
 	content: "";
@@ -534,30 +456,24 @@ a:hover, a:active {
 	-webkit-transition: .4s;
 	transition: .4s;
 }
-
 input:checked+.slider {
 	background-color: #2196F3;
 }
-
 input:focus+.slider {
 	box-shadow: 0 0 1px #2196F3;
 }
-
 input:checked+.slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
 }
-
 /* Rounded sliders */
 .slider.round {
 	border-radius: 34px;
 }
-
 .slider.round:before {
 	border-radius: 50%;
 }
-
 /* .container {
 	padding-right: 100px;
 	padding-left: 100px;
@@ -569,11 +485,9 @@ input:checked+.slider:before {
 	text-decoration: none;
 	color: #f9cf74 bold;
 }
-
 table a:hover {
 	color: salmon;
 }
-
 .board {
 	border-collapse: collapse;
 	margin: 25px 0;
@@ -586,41 +500,33 @@ table a:hover {
 	margin: auto;
 	text-align: center;
 }
-
 .board thead tr {
 	background-color: #f9cf74;
 	color: #ffffff;
 	text-align: left;
 	font-weight: bold;
 }
-
 .board th, .board td {
 	padding: 12px 15px;
 }
-
 .board tbody tr {
 	border-bottom: 1px solid #dddddd;
 }
-
 .board tbody tr:nth-of-type(even) {
 	background-color: #f5f5f5;
 }
-
 .board tbody tr:last-of-type {
 	border-bottom: 2px #f9cf74 solid;
 }
-
 .board tbody tr.active-row {
 	font-weight: bold;
 	color: #f9cf74;
 }
-
 body {
 	padding: 0px;
 	margin: 0px;
 	font-family: san-serif;
 } */
-
 /* #Btn, #regBtn, #hiddenBtn {
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
@@ -635,20 +541,16 @@ body {
 	width: 100px;
 	height: 100px;
 }
-
 .select_img img {
 	margin: 20px 0;
 }
-
 /* 여기까지 지은 스타일 */
-
 /*datepicker에서 사용한 이미지 버튼 style적용*/
 img.ui-datepicker-trigger {
 	margin-left: 5px;
 	vertical-align: middle;
 	cursor: pointer;
 }
-
 .modal_wrap {
 	display: none;
 	width: 70%;
@@ -659,7 +561,6 @@ img.ui-datepicker-trigger {
 	background: #eee;
 	z-index: 2;
 }
-
 .modal_close {
 	width: 26px;
 	height: 26px;
@@ -667,7 +568,6 @@ img.ui-datepicker-trigger {
 	top: -30px;
 	right: 0;
 }
-
 .modal_close>a {
 	display: block;
 	width: 100%;
@@ -675,7 +575,6 @@ img.ui-datepicker-trigger {
 	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
 	text-indent: -9999px;
 }
-
 .login_modal {
 	display: none;
 	width: 70%;
@@ -687,7 +586,6 @@ img.ui-datepicker-trigger {
 	background: #eee;
 	z-index: 1;
 }
-
 .register_modal {
 	display: none;
 	width: 70%;
@@ -699,7 +597,6 @@ img.ui-datepicker-trigger {
 	background: #eee;
 	z-index: 1;
 }
-
 .black_bg {
 	display: none;
 	position: absolute;
@@ -710,7 +607,6 @@ img.ui-datepicker-trigger {
 	left: 0;
 	z-index: 1;
 }
-
 .lModal_close {
 	width: 26px;
 	height: 26px;
@@ -718,7 +614,6 @@ img.ui-datepicker-trigger {
 	top: -30px;
 	right: 0;
 }
-
 .lModal_close>a {
 	display: block;
 	width: 100%;
@@ -726,7 +621,6 @@ img.ui-datepicker-trigger {
 	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
 	text-indent: -9999px;
 }
-
 .rModal_close {
 	width: 26px;
 	height: 26px;
@@ -734,7 +628,6 @@ img.ui-datepicker-trigger {
 	top: -30px;
 	right: 0;
 }
-
 .rModal_close>a {
 	display: block;
 	width: 100%;
@@ -742,50 +635,41 @@ img.ui-datepicker-trigger {
 	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
 	text-indent: -9999px;
 }
-
 #map {
 	width: 100%;
 	height: 100%;
 }
-
 .card-img-top {
 	width: 100%;
 	height: 60%;
 }
-
 .card-title {
 	display: block;
 }
-
 .card-text {
 	display: flex;
 }
-
 .h-100 {
 	border: 1px solid gray;
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 7px;
 }
-
 .map_wrap, .map_wrap * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 }
-
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active {
 	color: #000;
 	text-decoration: none;
 }
-
 .map_wrap {
 	position: relative;
 	width: 100%;
 	height: 500px;
 }
-
 #menu_wrap {
 	position: absolute;
 	top: 0;
@@ -800,11 +684,9 @@ img.ui-datepicker-trigger {
 	font-size: 12px;
 	border-radius: 10px;
 }
-
 .bg_white {
 	background: #fff;
 }
-
 #menu_wrap hr {
 	display: block;
 	height: 1px;
@@ -812,23 +694,18 @@ img.ui-datepicker-trigger {
 	border-top: 2px solid #5F5F5F;
 	margin: 3px 0;
 }
-
 #menu_wrap .option p {
 	margin: 10px 0;
 }
-
 #menu_wrap .option button {
 	margin-left: 5px;
 }
-
 #placesList {
 	padding-left: 0px;
 }
-
 #placesList li {
 	list-style: none;
 }
-
 #placesList .item {
 	position: relative;
 	border-bottom: 1px solid #888;
@@ -836,34 +713,27 @@ img.ui-datepicker-trigger {
 	cursor: pointer;
 	min-height: 65px;
 }
-
 #placesList .item span {
 	display: block;
 	margin-top: 4px;
 }
-
 #placesList .item h5, #placesList .item .info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
-
 #placesList .item .info {
 	padding: 10px 0 10px 55px;
 }
-
 #placesList .info .gray {
 	color: #8a8a8a;
 }
-
 #placesList .info .jibun {
 	padding-left: 26px;
 }
-
 #placesList .info .tel {
 	color: #009900;
 }
-
 #placesList .item .markerbg {
 	float: left;
 	position: absolute;
@@ -874,82 +744,63 @@ img.ui-datepicker-trigger {
 		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
 		no-repeat;
 }
-
 #placesList .item .marker_1 {
 	background-position: 0 -10px;
 }
-
 #placesList .item .marker_2 {
 	background-position: 0 -56px;
 }
-
 #placesList .item .marker_3 {
 	background-position: 0 -102px
 }
-
 #placesList .item .marker_4 {
 	background-position: 0 -148px;
 }
-
 #placesList .item .marker_5 {
 	background-position: 0 -194px;
 }
-
 #placesList .item .marker_6 {
 	background-position: 0 -240px;
 }
-
 #placesList .item .marker_7 {
 	background-position: 0 -286px;
 }
-
 #placesList .item .marker_8 {
 	background-position: 0 -332px;
 }
-
 #placesList .item .marker_9 {
 	background-position: 0 -378px;
 }
-
 #placesList .item .marker_10 {
 	background-position: 0 -424px;
 }
-
 #placesList .item .marker_11 {
 	background-position: 0 -470px;
 }
-
 #placesList .item .marker_12 {
 	background-position: 0 -516px;
 }
-
 #placesList .item .marker_13 {
 	background-position: 0 -562px;
 }
-
 #placesList .item .marker_14 {
 	background-position: 0 -608px;
 }
-
 #placesList .item .marker_15 {
 	background-position: 0 -654px;
 }
-
 body {
 	padding: 0px;
 	margin: 0px;
 	font-family: san-serif;
 }
-
 .orgImg {
 	width: 100px;
 	height: 100px;
 }
-
 .select_img img {
 	margin: 20px 0;
 }
-
 #button { /*로그인 버튼*/
 	width: 260px;
 	height: 50px;
@@ -958,29 +809,23 @@ body {
 	color: white;
 	border: 1px solid #4e266d;
 }
-
 .wrap-main {
 	padding: 10px;
 }
-
 .center {
 	text-align: center;
 	padding: 4px;
 }
-
 .wrap-Addition { /* email기억하기 & 로그인 */
 	text-align: center;
 	padding: 5px;
 }
-
 .findInfo { /* 비밀번호 찾기 */
 	text-align: center;
 }
-
 .div-reg {
 	padding: 8px;
 }
-
 .btn { /* 닉네임 중복체크 버튼 */
 	width: 140px;
 	height: 35px;
@@ -989,7 +834,6 @@ body {
 	color: white;
 	border: 1px solid #4e266d;
 }
-
 /* dropdown  */
 .dropbtn {
 	width: 30px;
@@ -999,7 +843,6 @@ body {
 	font-size: 16px;
 	border: none;
 }
-
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
 	margin-top: 10px;
@@ -1007,7 +850,6 @@ body {
 	display: inline-block;
 	float: right;
 }
-
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
 	display: none;
@@ -1017,19 +859,16 @@ body {
 	min-width: 160px;
 	z-index: 1;
 }
-
 /* Links inside the dropdown */
 .dropdown-content a {
 	color: black;
 	padding: 12px 16px;
 	display: block;
 }
-
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
 	background-color: #f1f1f1
 }
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
 	display: block;
@@ -1195,7 +1034,6 @@ body {
     document.querySelector('.lModal_close').addEventListener('click', lModalClose);
     document.getElementById('register_modal_btn').addEventListener('click', rModalShow);
     document.querySelector('.rModal_close').addEventListener('click', rModalClose);
-
     
     //모달 보여지는 메서드
     function lModalShow() {
@@ -1233,7 +1071,6 @@ body {
         
        let myEmail = $("#email").val();    // 이메일
        let jEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일정규식
-
          // 이메일 입력
           if(myEmail.length == 0){
              document.getElementById("spanEmail").innerHTML = "이메일을 입력해주세요";
@@ -1255,7 +1092,6 @@ body {
         
        let email = $("#email").val();
        let sendDate = {'email' : email}
-
        $.ajax({
           /* async : true, */
           type : 'POST',
@@ -1279,7 +1115,6 @@ body {
         
        let myNickname = $("#nickname").val();    // 닉네임
        let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
-
          // 닉네임 입력
           if(myNickname.length == 0){
              document.getElementById("spanNickname").innerHTML = "닉네임을 입력해주세요";
@@ -1301,7 +1136,6 @@ body {
         
        let nickname = $("#nickname").val();
        let sendDate = {'nickname' : nickname}
-
        $.ajax({
           /* async : true, */
           type : 'POST',
@@ -1319,8 +1153,6 @@ body {
        });
        
  });
-
-
     // 회원가입 유효성체크
  function registerValidCheck() {
     
@@ -1329,7 +1161,6 @@ body {
 	 let jEmail = /^[0-9a-zA-Z][0-9a-zA-Z\_\-\.\+]+[0-9a-zA-Z]@[0-9a-zA-Z][0-9a-zA-Z\_\-]*[0-9a-zA-Z](\.[a-zA-Z]{2,6}){1,2}$/;
      let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
      let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
-
     // 스크립트 태그 변수
     let myEmail = $("#email").val();    // 이메일
     let myPwd = $("#pwd").val();       // 비밀번호
@@ -1376,7 +1207,6 @@ body {
           alert("비밀번호는 공백 없이 입력해주세요.");
           return false;
      }
-
     // 닉네임 입력
     if(myNickname.length == 0){
        alert("닉네임을 입력해주세요");
@@ -1404,7 +1234,6 @@ body {
        $("#birth").focus();
        return false;
     }
-
      // 성별 선택
     if($("input[name=gender]:radio:checked").length < 1){
        alert("성별을 선택해주세요.");
@@ -1416,10 +1245,8 @@ body {
         return true;
     
  } // end registerValidCheck()
-
  //   비밀번호 커서 처리(blur)
  function pwdCheck() {
-
     let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
     
     let myPwd = $("#pwd").val();       // 비밀번호
@@ -1466,8 +1293,6 @@ body {
 	          monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
 	                '7월', '8월', '9월', '10월', '11월', '12월' ]
 	       });
-
-
  //======================회원가입 끝============================================ 
  
 	/* 로그인 */
@@ -1495,7 +1320,6 @@ body {
  
  //======================로그인 끝========================================== 
     
-
     // 회원가입을 유도한다.. 안 됐다면 넘어갈 수 없음..
     function sessionCheck(){
     
@@ -1518,5 +1342,4 @@ body {
       	}
       		
       });  
-
 </script>

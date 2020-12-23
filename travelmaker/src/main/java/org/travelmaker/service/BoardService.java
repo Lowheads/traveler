@@ -1,7 +1,7 @@
 package org.travelmaker.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
@@ -11,6 +11,7 @@ public interface BoardService {
 	public void register(BoardVO board);
 	
 	public BoardVO get(int boardNo);
+
 	
 	public BoardVO getbySchNo(BoardVO board);
 	

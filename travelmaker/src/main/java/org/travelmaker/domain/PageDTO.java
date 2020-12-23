@@ -1,10 +1,10 @@
 package org.travelmaker.domain;
 
+import lombok.Data;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
-@ToString
+@Data
 public class PageDTO {
 
 	private int startPage;

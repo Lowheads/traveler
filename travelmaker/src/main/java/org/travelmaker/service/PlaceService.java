@@ -18,6 +18,7 @@ public interface PlaceService {
    //삭제(하트클릭할때)
    public boolean removePlace(long plcNo);
 
+	
    public boolean modify(PlaceVO place);
    
    //종운 getList
