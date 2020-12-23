@@ -37,7 +37,7 @@
 									</div>	
 								</c:forEach>
 							</c:forEach>
-							<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+							<a class="dropdown-item text-center small text-gray-500" href="/qnaboard/list">Show All Alerts</a>
 						</div>
 					</li>
 				</nav> 

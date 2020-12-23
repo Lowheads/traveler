@@ -567,58 +567,50 @@ text-align: center;
 	}
 	
 <!-- theme페이지 이미지 슬라이드쇼-->
-.mySlides {
-  display: none;
+div > span{
+            border:solid 3px rgb(62, 40, 192);  
 }
+.button-btn-submit{
+	position:absolute;
+	right : 15px;
+	top:70%;
+	z-index:1;
+	background-color:white;
+            border:solid 2px rgba(228, 222, 222, 0.9);
+            margin : 3px;
+            padding: 4px 7px;
+            border-radius: 7px;
 
-
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
 }
-
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
 .dots{
-    position: absolute;
-    bottom: 8px;
-    left:40%
+	 position:absolute;
+	 top:15px;
+	 left:43%;
+	 display:inline;
+            justify-content: center;
+            align-items: center;
+            z-index:1;
 }
 
 .dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
- background-color: rgb(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-  border:solid 2px rgb(255, 255, 255,0.7);
+margin: 0 2px;
+            background-color:rgba(218, 212, 212, 0.7);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+             border:solid 2px rgba(128, 128, 128, 0.7);
+cursor: pointer;
+            height:20px;
+            width: 20px;
+	z-index:1;
+	
+  
 }
 
 .dot:hover {
-    background-color:rgba(255, 255, 255, 0.8);
+    background-color:rgba(238, 238, 238, 0.7);
 }
+
 
 .active {
   background-color: #717171;
@@ -635,17 +627,24 @@ text-align: center;
 }
 
 /* .w3-left, .w3-right{cursor:pointer} */
-       .slideshow-container{
-            position : relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-       }
-        .mySlides {
-     	    width:1000px;
+
+.slideWrapper{
+	     	    width:1005px;
             height:700px;
+            position : relative;
+              max-width:100%;
+}
+
+
+        .mySlides {
+     	   /* position:absolute; */
+     	    width:100%;
+            height:100%;
             margin: 0px;
+            border:solid 2px rgba(128, 128, 128, 0.7);
+ 			border-radius: 30px;
+ 			position : absolute;
+ 			
         }
         
         .themeImage{
@@ -653,36 +652,86 @@ text-align: center;
             height:550px;
             overflow:hidden;
             position : absolute;
-            border:solid 3px rgb(166, 255, 0); 
             margin: 0px;
+            border-radius:30px 30px 0px 0px;
+            padding:0px;
+            box-sizing: border-box;
         }
 
 
         .themeImage img{
-
             width:100%;
             object-fit: cover;
-            border:solid 3px hotpink; 
+            
+        }
+        
+        .resultWrapper{
+        	position : absolute;
+        	 top:560px;
+        	  width:1000px;
+/*         	border:solid 3px rgb(255, 0, 102);   */
         }
 
         
         .travel-theme{
-            position : absolute;
-            top:570px;
-            width:1000px;
+            width:100%;
             height:30px;
-            border:solid 3px rgb(62, 40, 192); 
           padding-top : 0;
-          
+            font-weight:bold;
+/*             border:solid 2px rgb(255, 255, 0,1); */ 
         }
 
         .placeList{
-            position : absolute;
-            top:620px;
-            width:1000px;
-            height:80px;
-            border:solid 3px rgb(62, 40, 192); 
+            width:100%;
+/*             border:solid 2px rgb(255, 255, 0,1);  */
         }
+        
+          .recPlace{
+            float: left;
+            border:solid 2px rgba(228, 222, 222, 0.9);
+            margin : 3px;
+            padding: 4px 7px;
+            border-radius: 7px;
+
+        }
+
+        .recPlace:hover{
+
+            color:rgba(255, 255, 255, 0.6);
+            background-color:rgba(122, 161, 206, 0.9);
+
+        }
+
+        .clicked{
+
+            color:rgba(255, 255, 255, 1);
+            background-color:rgba(78, 110, 146, 0.9);
+
+        }
+        
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            z-index:1;
+            }
+            
+            .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
 
 <!-- -->
 

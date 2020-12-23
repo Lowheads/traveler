@@ -69,7 +69,7 @@ public class MainController {
 			rainyDay =  placeService.getPlaceByWeather(schDTO.getSchRegion());
 		}
 		
-		model.addAttribute("rainydayRec", rainyDay);
+		model.addAttribute("rainydayRec", placeService.getPlaceByWeather(schDTO.getSchRegion()));
 	
 	}
 	
