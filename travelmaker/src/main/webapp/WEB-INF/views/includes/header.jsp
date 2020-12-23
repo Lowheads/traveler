@@ -39,11 +39,6 @@
 	  registerBtn = "<li><a href='#' id='register_modal_btn'>회원가입</a></li>";
    }
 %>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
     <meta charset="utf-8">
@@ -55,8 +50,6 @@
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="utf-8">
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -73,8 +66,10 @@
 
 <style>
 /*헤더 스타일 */
-
-
+a{text-decoration: none;
+	color:black;}
+a:hover{text-decoration: none;}
+a:visited{text-decoration: none;}
 :root {
     --grey-med: #ddd;
     --grey-light: #f7f7f7;
@@ -212,6 +207,9 @@
     height: 6px;
     margin-left: 6px;
 }
+.header__drop__menu {
+	z-index: 97;
+}
 
 .header__nav .active{
 	display:flex;
@@ -307,13 +305,14 @@
    display: none;
    width: 40%;
    position: fixed;
-   height: 550px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 15%;
+   left:30%;
    background: white;
-   z-index: 1;
-   border: 3px solid black;
+   z-index: 99;
+}
+.modal-dialog{
+	background-color: white;
+	width: 100%;
+	height: 100%;
 }
 .cancelBtn{ /* 로그인 닫기 버튼 */
 	float: right;
@@ -328,7 +327,6 @@
     font-weight: bold;
     color: black;
      margin-right: 2%;
-     margin-top: -3%;
 }
 /* --- 또는 ---- */
 .hr-sect {
@@ -355,13 +353,9 @@
    display: none;
    width: 40%;
    position: fixed;
-   height: 580px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 15%;
+   left:30%;
    background: white;
-   z-index: 1;
-   border: 3px solid black;
+   z-index: 99;
 }
 #man_gender{
 	margin-left: 7px;
@@ -371,13 +365,13 @@
 }
 .black_bg {
    display: none;
-   position: absolute;
-   width: 100%;
-   height: 104%;
-   background-color: rgba(0, 0, 0, 0.5);
+   position: fixed;
    top: 0;
    left: 0;
-   z-index: 1;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 10;
 }
 .aTag{ /* a태그 글씨색 */
 	color: black;
@@ -416,13 +410,10 @@
    display: none;
    width: 40%;
    position: fixed;
-   height: 550px;
-   top: 50%;
-   margin: -250px 0 0 -250px;
-   margin-left: 15%;
+   border: 2px solid black;
+   left:30%;
    background: white;
-   z-index: 1;
-   border: 3px solid black;
+   z-index: 99;
 }
 .pwdPTag{ /* 비밀번호 찾기 P태그 */
 	font-size: 18px;
@@ -516,6 +507,7 @@ text-align: center;
 }
 .findInfo{ /* 비밀번호 찾기 */
    text-align: center;
+   margin-bottom: 10px;
 }
 .div-reg{
    padding: 5px;
@@ -543,7 +535,6 @@ text-align: center;
 	margin-top: 10px;
   position: relative;
   display: inline-block;
-  float:right;
 }
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
@@ -613,15 +604,15 @@ text-align: center;
         </ul>
     </div>
 </header>
+    <div class="black_bg"></div>
 
 <div class="container">
 
             <!-- 모달 클릭시 뒷 배경 -->
-    <div class="black_bg"></div>
     
     <!-- Login Modal -->
-    <div class="login_modal">
-    <div class="w3-container w3-orange"> 
+    <div class="login_modal" style="border:2px solid black;">
+    <div> 
     	<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>			
         	<p style="text-align: center; font-size: 30px; padding-top: 40px; margin-left: 9%">로그인</p>
         </div>
@@ -670,7 +661,7 @@ text-align: center;
     
     <!-- searchPwd Modal -->
     <div class="searchPwd_modal">
-    <div class="w3-container w3-orange"> 
+    <div> 
     	<div class="spModal_close"><a class="cancelBtn" href="#">X</a></div>
     				
         	<p style="text-align: center; font-size: 30px; padding-top: 70px; margin-left: 3%">
@@ -713,11 +704,11 @@ text-align: center;
    <!-- register Modal  -->
     <!-- Modal -->
     <div class="register_modal">
-    <div id="register">
+    <div id="register" style="background-color:white; border:3px solid black;">
         <!-- 닫기버튼 -->
         <div class="rModal_close"><a class="reg-cancelBtn" href="#">X</a></div>
 
-        <div class="modal-dialog w3-modal-content" style="width: 600px; height:400px; display: table;">
+        <div class="modal-dialog" style="display: table;">
             <p style="text-align: center; font-size: 30px; margin-left: 11%;">회원가입</p>
          <div class="wrap-main" style="margin-left: 15px;">
             <form action="/member/joinMember" method="post">

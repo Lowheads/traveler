@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,6 @@
 <!-- HeartEmoji -->
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Document</title>
@@ -54,7 +54,7 @@
 	color: #f60;
 }
 
-.active a{
+.pagination_bar .active a{
 	color: #f60;
 }
 a {
@@ -146,14 +146,14 @@ body {
 
 .card_sch {
    width: 330px;
-   height: 200px;
+   height: 270px;
    margin-bottom: 20px;
    border: 1px solid gray;
 }
 
 .sch_Img {
    width: 100%;
-   height: 100%;
+   height: 80%;
    background-color: black;
 }
 
@@ -169,7 +169,7 @@ body {
 
 .sch_content {
    width: 100%;
-   height: 30%;
+   height: 20%;
    background-color: white;
 }
 
@@ -206,20 +206,24 @@ body {
          <div class="contents">
             <!-- 카드게시물 -->
             <c:forEach items="${list }" var="sch">
-            <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.schNo }">
+            <a href="/mypage/past/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.schNo }">
                <div class="card_sch">
                   <div class="sch_Img">
-                     <div class="sch_Img_content">
+                   <%--   <div class="sch_Img_content">
                         <!-- SCHFROMDATE -->
                         <c:out value="${sch.fromDate }"/>
                         <!-- SCH_TITLE --><br>
                         <b><c:out value="${sch.schTitle }"/></b>
-                     </div>
+                     </div> --%>
                   </div>
-                  <!-- <div class="sch_content">
-                     USER_NICKNAME
-                     <br><div class="sch_title"><i class="fa fa-user-o" aria-hidden="true" style="color:black;"></i></div>
-                  </div> -->
+             <div class="sch_content">
+                        <div class="sch_title">
+                          <!-- SCHFROMDATE -->
+                        <c:out value="${sch.fromDate }"/>
+                        <!-- SCH_TITLE --><br>
+                        <b><c:out value="${sch.schTitle }"/></b>
+                        </div>
+                     </div> 
             </div>
          </a>
             </c:forEach>
