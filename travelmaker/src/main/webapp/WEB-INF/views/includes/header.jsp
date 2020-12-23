@@ -13,6 +13,7 @@
         String deleteBtn = "";
  		String mypage = "";
  		String registerBtn = "";
+ 		String qnapage = "";
  		
    // 쿠키 확인
       Cookie[] cookies = request.getCookies();
@@ -31,6 +32,7 @@
       sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
       modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
    	  mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
+   	  qnapage = "<li><a href='/qnaboard/list'>Q&A게시판</a></li>";
    }
    else{
 	  sessionBtn = "<li><a href='#' id='login_modal_btn'>로그인 </a></li>";
@@ -211,6 +213,10 @@
     margin-left: 6px;
 }
 
+.header__nav .active{
+	display:flex;
+}
+
 .header__nav ul {
     position: absolute;
     background: rgb(255, 255, 255);
@@ -218,17 +224,17 @@
     padding: 0;
     width: 200px;
     height: 150px;
-    display: flex;
+    display: none;
     /*justify-content: space-around;*/
     align-items: center;
     flex-direction: column;
     list-style: none;
     border-radius: 10px;
-    opacity: 0;
     /* pointer-events: none; */
     transform: translateY(-5px);
     transition: all 0.4s ease;
     box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    
 }
 
 .header__nav a {
@@ -254,12 +260,11 @@
     background-color: rgb(248, 248, 248);
     cursor: pointer;
 }
-
+/* 
 .header__nav button:focus + ul {
-    opacity: 1;
-/*     pointer-events: all; */
-    transform: translateY(0px);
-}
+    pointer-events: all;
+    transform: translateY(0px);	
+} */
 
 .header__nav li:first-of-type {
     margin-top: 8px;
@@ -585,8 +590,7 @@ text-align: center;
     </div>
 
    		<div class="header__nav">
-        <button type="button" onclick="location.href='/board/list'" class="header__nav__button
-        header__nav__button-greyHover"> 게시판
+        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 게시판
         </button>
 
         <button onclick="location.href='/buddt/get'" class="header__nav__button
@@ -596,17 +600,16 @@ text-align: center;
             <img src="/resources/icons/chevron.png" alt="Globe"/>
         </button>
 
-        <button class="header__nav__button
-        header__nav__button-account">
-            <img src="/resources/icons/hamburger.svg" alt="Hamburger"/>
-            <img src="/resources/icons/user-1.png" alt="Account"/>
+        <button class="header__nav__button header__nav__button-account" onclick="dropMenu()"> 
+            <img class="accountImg" src="/resources/icons/hamburger.svg" alt="Hamburger"/>
+            <img class="accountImg" src="/resources/icons/user-1.png" alt="Account"/>
         </button>
-        <ul>
+        <ul class="header__drop__menu">
             <%= sessionBtn %>
  			<%= modifyBtn %>
   			<%= mypage %>
   			<%= registerBtn %>
-  			<li><a href='/qnaboard/list'>Q&A 게시판</a></li>
+  			<%= qnapage %>
         </ul>
     </div>
 </header>
@@ -778,14 +781,18 @@ text-align: center;
             
       </div>
    </div>
-        
+        </div>
     </div>
     <script type="text/javascript">
     
     //모달보고 닫는 이벤트 추가
+    if(document.getElementById('login_modal_btn')!=null){
     document.getElementById('login_modal_btn').addEventListener('click', lModalShow);
+    }
     document.querySelector('.lModal_close').addEventListener('click', lModalClose);
+    if(document.getElementById('register_modal_btn')!=null){
     document.getElementById('register_modal_btn').addEventListener('click', rModalShow);
+    }
     document.querySelector('.rModal_close').addEventListener('click', rModalClose);
     document.getElementById('searchPwd_modal_btn').addEventListener('click', spModalShow);
     document.querySelector('.spModal_close').addEventListener('click', spModalClose);
@@ -1158,4 +1165,19 @@ text-align: center;
       	}
       		
       });  
+       
+       
+       function dropMenu(){
+    	   
+    	   document.getElementsByClassName('header__drop__menu')[0].classList.toggle('active');
+       }
+       
+       window.onclick = function(event) {
+    	   if (!event.target.matches('.header__nav__button-account') && !event.target.matches('.accountImg')) {
+    	     let dropdowns = document.getElementsByClassName("header__drop__menu");
+    	       if (dropdowns[0].classList.contains('active')) {
+    	    	   dropdowns[0].classList.remove('active');
+    	     }
+    	   }
+    	 }
 </script>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- <%@ include file="../includes/jeheader.jsp" %> --%>
 
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
@@ -15,6 +16,7 @@
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -25,6 +27,42 @@
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
+/* 날씨 */
+ .weather {
+ 	  position: relative;
+ 	  float:right;
+      display: flex;
+      color: white;
+    }
+
+    .weather div {
+      width: 50px;
+      text-align: center;
+    }
+
+    .City {
+     color: black;
+    }
+
+    .weatherContent {
+      color: white;
+    }
+
+    .day {
+      font-size: 10px;
+    }
+
+    .Icon,
+    .Temp {
+      font-size: 10px;
+    }
+
+    .Icon {
+      margin-right: 2px;
+    }
+
+/*  */
+
 /* test style */
         /* 모달창 */
  #modal {
@@ -217,24 +255,24 @@ a{text-decoration: none}
 }
 
 .gallery {
-	width: 90%;
+	width: 100%;
 	height: 100%;
 	display : flex;
-	justify-content: space-around;
+	justify-content: center;
 	flex-wrap: wrap;
 	margin : 0 auto;
 }
 
 .card-contents{
-	width: 23%;
-	height: 300px;
+	width: 15%;
+	height: 450px;
 	position: relative;
  	z-index: 1;
   	display: block;
- 
+ 	margin-right: 15px;
   	margin-bottom: 10px;
   	border-radius: 10px;
-  	box-shadow: 2px 2px 2px 2px #D4D4D4;
+
 }
 
 .card-Img{
@@ -242,14 +280,18 @@ a{text-decoration: none}
 	background-size: cover;
 	width: 100%;
 	height: 70%;
+	border-radius: 10px;
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover;
 }
 
-.card-Img Img{
+/* .card-Img Img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	
-}
+} */
 
 .card-desc{
 	margin: 10px;
@@ -258,7 +300,6 @@ a{text-decoration: none}
 }
 
 .desc_bottom{
-	 margin: 30px 0 0;
 	 font-size : 12px;
 }
 /* .card-Title{
@@ -409,9 +450,14 @@ a{text-decoration: none}
 
 <body>
 		<div class="contents">
-
+		
+		
 		<!-- 상단 -->
 		<div class="ct_body">
+		
+		<!--날씨 -->
+			 <div class='weather'>
+  </div>
 			<div id="mainNav">
 				<div class="navContent"  style="text-align: center;">
 
@@ -436,6 +482,7 @@ a{text-decoration: none}
 				<div class="navContent" id="goNext">
 					<i class="material-icons w3-large">search</i>
 				</div>
+			
 			</div>
 			
 			<div class="mainMsg">
@@ -478,11 +525,12 @@ a{text-decoration: none}
 					<c:forEach items="${adminlist }" var="adminlist">
 						<div class="card-contents">
 
-							<div class="card-Img">
-								<a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
-									<img src="/resources${adminlist.boardImg}">
-								</a>
+							<c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
+							<a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+							<div class="card-Img" style="background-image: url(/resources${coverimg});" >
+<%-- 									<img src="/resources${adminlist.boardImg}"> --%>
 							</div>
+								</a>
 								<div class="card-desc">
 									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
 									<c:out value="${adminlist.boardTitle }" /></a></b>
@@ -990,4 +1038,89 @@ a{text-decoration: none}
   });
 
 
+  /* 날씨api */
+    // var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
+    var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
+
+    // let city = 'jeju';
+    // var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=33.3819233&lon=126.5617798&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
+    // let city = 'London';
+    // var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=51.5285582&lon=-0.2416812&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
+    $.ajax({
+      url: apiURI,
+      dataType: "json",
+      type: "GET",
+      async: "false",
+      success: function(resp) {
+        console.log(resp);
+        console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+
+        console.log("위도 : " + resp.lat + "  경도 : " + resp.lon);
+        console.log("==================================================================================");
+
+        for (let idx in resp.daily) {
+          let tmp = '<div class="weatherContent">';
+          let days = new Date();
+          days.setTime(resp.daily[idx].dt * 1000);
+          const today = moment(days);
+          console.log("날짜 : " + today.format('YYYY-MM-DD'));
+          tmp += '<div class="day">' + today.format('MM / DD') + '<div>';
+
+          console.log("최고 기온 : " + resp.daily[idx].temp.max);
+          tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].temp.min) + '&ordm/' + Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
+          tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].pop*100.0) + '%<div>';
+          console.log("최저 기온 : " + resp.daily[idx].temp.min);
+          console.log("강수 확률 : " + resp.daily[idx].pop);
+          console.log("자외선 지수 : " + resp.daily[idx].uvi);
+          console.log("날씨 : " + resp.daily[idx].weather[0].main);
+          console.log("상세날씨설명 : " + resp.daily[idx].weather[0].description);
+          console.log("바람   : " + resp.daily[idx].wind_speed);
+          console.log(resp.daily[idx].weather[0].icon);
+          //맑음
+          if(resp.daily[idx].weather[0].icon=='01d' || resp.daily[idx].weather[0].icon=='01n'){
+            imgURL = '/resources/design/line/animation-ready/clear-day.svg';
+          }
+          //맑고 구름
+          if(resp.daily[idx].weather[0].icon=='02d' || resp.daily[idx].weather[0].icon=='02n'){
+            imgURL = '/resources/design/line/animation-ready/partly-cloudy-day.svg';
+          }
+          //구름
+          if(resp.daily[idx].weather[0].icon=='03d' || resp.daily[idx].weather[0].icon=='03n'){
+            imgURL = '/resources/design/line/animation-ready/cloudy.svg';
+          }
+          //먹구름
+          if(resp.daily[idx].weather[0].icon=='04d' || resp.daily[idx].weather[0].icon=='04n'){
+            imgURL = '/resources/design/line/animation-ready/cloudy.svg';
+          }
+          //소나기
+          if(resp.daily[idx].weather[0].icon=='09d' || resp.daily[idx].weather[0].icon=='09d'){
+            imgURL = '/resources/design/line/animation-ready/rain.svg';
+          }
+          //비
+          if(resp.daily[idx].weather[0].icon=='10d' || resp.daily[idx].weather[0].icon=='10n'){
+            imgURL = '/resources/design/line/animation-ready/rain.svg';
+          }
+          //번개
+          if(resp.daily[idx].weather[0].icon=='11d' || resp.daily[idx].weather[0].icon=='11n'){
+            imgURL = '/resources/design/line/animation-ready/thunderstorms.svg';
+          }
+          //눈
+          if(resp.daily[idx].weather[0].icon=='13d' || resp.daily[idx].weather[0].icon=='13n'){
+            imgURL = '/resources/design/line/animation-ready/snow.svg';
+          }
+          //안개
+          if(resp.daily[idx].weather[0].icon=='50d' || resp.daily[idx].weather[0].icon=='50n'){
+            imgURL = '/resources/design/line/animation-ready/mist.svg';
+          }
+
+        // imgURL = "http://openweathermap.org/img/w/" + resp.daily[idx].weather[0].icon + ".png";
+          tmp += '<div class="Icon">' + "<img src=" + imgURL + ">" + '<div>';
+          tmp += "</div>"
+
+          $('.weather').append(tmp);
+          console.log("=====================================================================================");
+
+        }
+      }
+    })
 </script>

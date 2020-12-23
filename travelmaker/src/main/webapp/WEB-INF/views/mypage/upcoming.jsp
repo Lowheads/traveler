@@ -17,6 +17,46 @@
 <title>Document</title>
 
 <style>
+  
+   /* 페이징 */
+.pagination_bar{
+	font-size: 8pt;
+  font-weight: 400;
+  font-family: 'Open Sans', 'Source Sans Pro', Roboto, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Myriad Pro', 'Segoe UI', Myriad, Helvetica, 'Lucida Grande', 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  margin: 1em auto;
+  text-align: center;
+  transition: font-size .2s ease-in-out;
+}
+.pagination_bar{
+ list-style-type: none;
+  display: inline;
+  font-size: 100%;
+  margin: 0;
+  padding: .5em;
+  }
+  
+.pagination_btn{
+	display: inline-block;
+  font-size: 100%;
+  width: auto;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination_btn a{
+	color: #777;
+ 	font-size: 140%;
+ 	padding: .5em;
+}
+
+.pagination_btn a:hover{
+	color: #f60;
+}
+
+.active a{
+	color: #f60;
+}
 a {
    text-decoration: none;
 }
@@ -197,25 +237,26 @@ body {
          </div>
          
          
-            <div style="text-align: center;" class="w3-center">
-         <ul class="w3-bar">
+              <div style="text-align: center;">
+         <ul class="pagination_bar">
             <c:if test="${pageMaker.prev }">
-               <li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+               <li class="pagination_btn" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
             </c:if>
 
             <c:forEach var="num" begin="${pageMaker.startPage}"
                end="${pageMaker.endPage}">
-               <li class="w3-button"
-                  "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
+               <li class="pagination_btn ${pageMaker.cri.pageNum == num ? 'active':'' }" num="${num}">
                   <a> ${num }</a>
                </li>
             </c:forEach>
 
             <c:if test="${pageMaker.next }">
-               <li class="w3-button" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
+               <li class="pagination_btn" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
             </c:if>
          </ul>
       </div>
+           
+           
       </div>
    </div>
 
@@ -227,7 +268,7 @@ body {
 
    let actionForm = $("#actionForm");
 
-   $(".w3-button").on("click", function(e) {
+   $(".pagination_btn").on("click", function(e) {
 
       e.preventDefault();
 
