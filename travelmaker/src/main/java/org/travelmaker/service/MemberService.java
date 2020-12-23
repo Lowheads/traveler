@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
@@ -18,9 +19,11 @@ public interface MemberService {
    
    public boolean isDuplicateCheck(MemberVO mVO, RedirectAttributes rttr); // 회원가입(이메일, 닉네임 중복체크)
 
-   public MemberVO login(MemberVO mVO); // 로그인 정보
+   public MemberVO emailAndPwdInputCheck(MemberVO mVO); // email & pwd가 일치한지 확인
+
+   public ModelAndView loginProcess(MemberVO mVO, HttpSession session, ModelAndView mav); // 로그인 하자
    
-   public void RememberEmail(String email, HttpServletRequest request, HttpServletResponse response); // email저장
+   public void rememberEmail(String email, HttpServletRequest request, HttpServletResponse response); // email저장
    
    public boolean isMemberStatus(MemberVO mVO, RedirectAttributes rttr, HttpSession session); // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
    
@@ -63,7 +66,7 @@ public interface MemberService {
    
    public Email certEmail(String email, String certNum, Email emailObj); // 소셜 계정 회원탈퇴 인증메일 보내기
    
-   public void lastLoginSetToday(String email); // 최종로그인
+   public void setLoginDateToToday(String email); // 최종로그인
    
    public boolean isMyNicknamePass(String nickname, String email); // 정보 저장하기를 눌렀을 때, 이미 내 닉네임이면 중복된다는 멘트를 하지 않는다
    

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
 overflow-y: initial !important
 }
 .modal-body{
-height: 550px;
+height: 85%;
 overflow-y: auto;
 }
 #register_modal{
@@ -30,7 +31,7 @@ overflow-y: auto;
 }
 #hiddenlist_modal, #schedulelist_modal{
 	display: none;
-	width: 500px;
+	width: 30%;
 	height: 90%;
 	padding: 10px;
 	background-color: #fefefe;
@@ -40,13 +41,13 @@ overflow-y: auto;
 }
 /* 닫는버튼 */
 #hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
-	width: 20%;
-	margin-right: 10%;
 	background-color: white;
 	color: black;
 	border: none;
 	border-radius: 5px;
 	text-align : right;
+	float:right;
+	font-size: 25px;
 }
 /* toggle */
 .switch {
@@ -280,7 +281,7 @@ input:checked+.slider:before {
 		<div class="mainMsg">
 		<b>일정 게시판</b>	
 		<br><br>	
-		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn" class="btn">내 일정 목록</a>
+		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn" class="btn">내 일정 공유</a>
 		<!--mainMsg끝 -->
 		</div>
 		
@@ -319,6 +320,19 @@ input:checked+.slider:before {
 				<c:forEach items="${list }" var="board">
 				<div class="card-contents">
 				<c:set var="coverimg" value="${fn:replace(board.boardImg, '\\\\', '/')}" />
+				<c:set var="mem" value="<%=mem %>"/>
+				<c:choose>
+					<c:when test="${mem eq 'null'}">
+					<a href='/board/view?boardNo=<c:out value="${board.boardNo }"/>
+						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
+					<div class="card-Img" style="background-image: url(/resources${coverimg});">
+							<%-- <img src="/resources${board.boardImg}" > --%>
+								<div class="img-cover"></div>
+					</div>
+					</a>
+					</c:when>
+				
+					<c:otherwise>
 						<a href='/board/get?boardNo=<c:out value="${board.boardNo }"/>
 						&pageNum=<c:out value="${pageMaker.cri.pageNum }"/>&amount=<c:out value="${pageMaker.cri.amount }"/>'>
 					<div class="card-Img" style="background-image: url(/resources${coverimg});">
@@ -326,6 +340,8 @@ input:checked+.slider:before {
 								<div class="img-cover"></div>
 					</div>
 					</a>
+					</c:otherwise>
+				</c:choose>
 					<div class="card-desc">
 					<b><c:out value="${board.boardTitle }" /></b>
 					<div class="desc_bottom">
@@ -354,25 +370,25 @@ input:checked+.slider:before {
 <div id="hiddenlist_modal" class="modal-content">
 
 	<div>
+	<button class="modal_close_btn"> X </button>
 		<h3>공개/비공개 설정</h3><br>
 	</div>
 	<div class="modal-body">
 		<iframe name="hiddenlist" title="hiddenlist" width=100% height=100% frameBorder="0">
 		</iframe>
 	</div>
-	<button class="modal_close_btn"> 확인 </button>
 
 </div>
 
 
 <!-- Schedulelist Modal -->
 	<div id="schedulelist_modal" class="modal-content">
+	<button class="modal_close_btn"> X </button>
 	<h3>내일정 공유 </h3><br>
 	<div class="modal-body">
 		<iframe name="schedulelist" title="schedulelist" width=100% height=100% frameBorder="0">
 		</iframe>
 	</div>
-	<button class="modal_close_btn"> 취소 </button>
 </div>
 
 
@@ -476,14 +492,28 @@ input:checked+.slider:before {
 
 	// hiddenlist 모달 띄우기
 	document.getElementById('hiddenlist_open_btn').addEventListener('click',
-			function() {
-				modal('hiddenlist_modal');
+	
+		function() {
+			var mem= <%=mem%>
+			if(mem==null){
+				alert('로그인 후 이용가능합니다');
+			}
+			else{
+			 	modal('hiddenlist_modal');
+			}
 			});
 	
 	//schedulelist 모달 띄우기
 	document.getElementById('schedulelist_open_btn').addEventListener('click',
+			
 			function() {
+				var mem= <%=mem%>
+				if(mem==null){
+				alert('로그인 후 이용가능합니다');
+				}
+				else{
 				modal('schedulelist_modal');
+				}
 			});
 	//register 모달 띄우기
 	$('.register_open_btn').on("click", function() {

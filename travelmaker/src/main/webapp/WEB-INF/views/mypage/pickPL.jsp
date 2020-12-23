@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +57,7 @@
 	color: #f60;
 }
 
-.active a{
+.pagination_bar .active a{
 	color: #f60;
 }
 
@@ -359,10 +360,6 @@
    background-position: 0 -654px;
 }
 
-a {
-   text-decoration: none;
-}
-
 body {
    margin: 0;
 }
@@ -521,9 +518,11 @@ body {
 
 .sch_title {
    margin-left: 15px;
+   
 }
 .sch_title p{
-   font-size: 6px;
+	margin: 0;
+   	font-size: 6px;
    }
 </style>
 </head>
@@ -579,17 +578,18 @@ body {
                       
                       <input type="hidden" data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" 
                       data-lng="${place.lng }" data-title="${place.plcTitle }" class="markerlatlng">
-                      
+                        <h6 style="margin: 5px 0;">
                         <i class="fa fa-map-marker" aria-hidden="true"></i><b><a href="https://place.map.kakao.com/${place.plcNo }" target="_blank">
                          <c:out value="${place.plcTitle }" /></a></b>
+                         </h6>
                          <span style="float:right; margin-right: 10px;"><i class="fa fa-heart-o" aria-hidden="true"></i>
-                         <span style="font-size: 12px;">${place.likeCnt }</span></span><br>
-                        <p><i class="fa fa-map-o" aria-hidden="true"></i> <c:out value="${place.addressDt }"/></p>
-                        <p><c:if test="${place.holiday ne null }">
+                         <span style="font-size: 12px;">${place.likeCnt }</span></span>
+                        <p style="margin-bottom:3px;"><i class="fa fa-map-o" aria-hidden="true"></i> <c:out value="${place.addressDt }"/></p>
+                        <p style="margin-bottom:3px;"><c:if test="${place.holiday ne null }">
                         <i class="fa fa-calendar-check-o" aria-hidden="true"></i> 휴무일 :
                         </c:if>
                         <c:out value="${place.holiday }" /></p>
-                        <p><c:if test="${place.openingH ne null }">
+                        <p style="margin-bottom:3px;"><c:if test="${place.openingH ne null }">
                               <i class="fa fa-clock-o" aria-hidden="true"></i> 영업시간 :
                               </c:if>
                         <c:out value="${place.openingH}" /></p>

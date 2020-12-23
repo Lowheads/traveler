@@ -39,7 +39,7 @@ public class LoginHandle extends HandlerInterceptorAdapter {
 			// 로그인이 안되어 있는 상태임으로 로그인 폼으로 다시 돌려보냄(redirect)
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 후 이용해주세요.'); location.href='/member/main'</script>");
+            out.println("<script>alert('로그인 후 이용해주세요.'); location.href='/main/index'</script>");
             out.flush();
 			return false; // 더이상 컨트롤러 요청으로 가지 않도록false로 반환함
 		}

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
 <!DOCTYPE html>
 <html>
@@ -660,15 +659,6 @@ overflow-y: auto;
     </div>
 </div> 
 
-<!--대표사진 수정 모달 -->
-	<div id="modify_modal" class="modal-content">
-		<div class="modal-body" style="overflow-x:hidden; overflow-y:hidden">
-		<iframe name="modify" title="modify" width=100% height=100% frameBorder="0" scrolling="no">
-		</iframe>
-		</div>
-		<button class="modal_close_btn"> 취소 </button>
-	</div>
-
 
 <!-- 파일확대 모달   -->
 <div id="modal01" class="modal01">
@@ -685,40 +675,16 @@ overflow-y: auto;
 <!--상단 -->
 <c:set var="coverimg" value="${fn:replace(board.boardImg, '\\\\', '/')}" />
 	<div class="ct_body" style="background-image: url(${coverimg});">
-		<div class="heart">
-			<c:choose>
-				<c:when test="${pick eq 'picked' }"> 
-						<b>찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
-				</c:when>
 
-				<c:when test="${pick eq 'unpicked'}">
-						<b>찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
-				</c:when>
-			</c:choose>
-		</div>	
 		<div class="mainMsg">
 		<b>${board.boardTitle}</b>	
 		<br>
 		<br>
-		<c:choose>
-		  <c:when test="${memNo eq schedule.memNo}">
-		 <a href='/board/modify?boardNo=<c:out value="${board.boardNo}"/>&pageNum=<c:out value="${cri.pageNum}"/>&amount=<c:out value="${cri.amount}"/>' 
-		 id="modify_btn" target='modify' class='modify_open_btn'>대표사진 변경</a>
-		 </c:when>
-		 </c:choose>
-		 
 		<!--mainMsg끝 -->
 		</div>
 	
 	<!--상단 끝 -->
 	</div>
-		<c:choose>
-  <c:when test="${memNo eq schedule.memNo}">
-    <button id="dtmodify_btn" data-oper='dtmodify' class="btn btn-default">사진목록수정</button>
-  </c:when>
-</c:choose>
 	
 	<button id="list_btn" data-oper='list' class="btn btn-info">목록으로</button>
 	
@@ -726,12 +692,6 @@ overflow-y: auto;
 	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 	<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 	<input type="hidden" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
-
-	<c:choose>
-  		<c:when test="${memNo eq schedule.memNo}">
-    	<button id="remove_btn" type="submit" class="btn btn-danger subbutton">삭제</button>
-  		</c:when>
-	</c:choose>
 
 	</form>
 		
@@ -894,48 +854,6 @@ function fn_fileDown(fileNo){
 	$("#FILE_NO").attr("value", fileNo);
 	formObj.submit();
 }
-
-//좋아요
-function likeToggle(heart){
-   if(heart.className == "fa fa-heart"){
-       let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
-            type : 'post',
-            url : '/board/deletePick',
-            data : sendData,
-            success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
-             },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
-            }
-         });
-   }
-   
-  if(heart.className == "fa fa-heart fa-heart-o"){
-      let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
-            type : 'post',
-            url : '/board/insertPick',
-            data : sendData,
-            success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
-            },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
-            }
-         });
-   } 
-    
-}; 
 
 
 function modal(id) {
