@@ -1,6 +1,8 @@
 package org.zerock.mapper;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +41,7 @@ public class ScheduleMapperTests {
 	@Test
 	public void insertTests() {
 		int memno = 11;
+		List list = new ArrayList<>();
 		ScheduleVO schVO = new ScheduleVO();
 		schVO.setMemNo(memno);
 		schVO.setMemo("hi");
@@ -50,8 +53,9 @@ public class ScheduleMapperTests {
 		schVO.setSchTitle("hello");
 		schVO.setSchRegion("1");
 		schVO.setSchStatus("미완성");
-		System.out.println(schVO);
-		mapper.insert(schVO);
+		list.add(schVO);
+		//		mapper.insertSelectKey(schVO);
+		System.out.println(mapper.insertSelectKey(schVO));;
+		System.out.println(schVO.getSchNo());
 	}
-	
 }

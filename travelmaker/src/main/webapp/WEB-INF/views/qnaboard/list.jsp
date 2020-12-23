@@ -16,7 +16,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/resources/css/list.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/list.css">
 
 <title>Q&A 게시판</title>
 
@@ -72,27 +72,25 @@
   		<!-- 글쓰기 버튼 -->
   		<div class="boardRegiBtn-wrap"><a href="/qnaboard/register"><button>WRITE</button> </a></div>
   
-		<!-- 페이징 버튼 -->
-		<div class="w3-bar">
-			<ul class="paging-wrap">
-				<c:if test="${pageMaker.prev }">
-					<li class="w3-button w3-hover-none">
-					 <a href="${pageMaker.startPage -1 }">prev</a>
-					 </li>
-				</c:if>
-				
-				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-					<li class="w3-button w3-hover-none ${pageMaker.cri.pageNum == num ? "active":"" } ">
-					<a href="${num }">${num }</a></li>
-				</c:forEach>
-				
-				<c:if test="${pageMaker.next }">
-					<li class="w3-button w3-hover-none">
-					<a href="${pageMaker.endPage +1 }" >next</a>
-					</li>
-				</c:if>
-			</ul>
-		</div>
+		      <!-- 페이징 -->
+    <div class="paging">
+         <ul class="pagination_bar">
+            <c:if test="${pageMaker.prev }">
+               <li class="pagination_btn previous"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>
+            </c:if>
+
+            <c:forEach var="num" begin="${pageMaker.startPage}"
+               end="${pageMaker.endPage}">
+               <li class="pagination_btn ${pageMaker.cri.pageNum == num ? 'active':'' }" >
+                  <a href="${num}"> ${num }</a>
+               </li>
+            </c:forEach>
+
+            <c:if test="${pageMaker.next }">
+               <li class="pagination_btn next"><a href="${pageMaker.endPage +1 }">&raquo;</a></li>
+            </c:if>
+         </ul>
+      </div>
 
 	
 	<!-- 검색기능 -->
@@ -136,34 +134,50 @@
 
 <script type="text/javascript">
 
+		let actionForm = $("#actionForm");
+		let responseMessage = '<c:out value="${msg}" />';
+	
 		$(document).ready(function(){
 			
-			let actionForm = $("#actionForm");
+			checkAlert(responseMessage);
 			
-			$(".paging-wrap li a").on("click", function(e){ // 게시글 리스트 페이징
+			history.replaceState({}, null, null);
+			
+			function checkAlert(responseMessage){
+				
+				if(responseMessage === '' || history.state){
+					return;
+				}
+				
+				if(responseMessage.length > 0){ /* 이거 안 해주면 alert 아예 안 뜬다.. */
+					alert(responseMessage);
+				}
+			}
+			
+			
+			$(".pagination_btn a").on("click", function(e){ // 게시글 리스트 페이징
 				e.preventDefault();
-				console.log('click');
 				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 				actionForm.submit();
 			});
 		
-		$(".move").on("click", function(e){
-			e.preventDefault();
-			let secret = $(this).attr("id"); // 비밀여부 Y / N
-			let boardNickname = $(this).parent().next().text(); // 게시글 작성자를 변수에 저장
-			let myNickname = "${loginNickname}"; // 로그인중인 회원의 닉네임
-			let grade = "${myGrade}"; // 현재 나의 등급
-
-			if(secret == 'Y' && boardNickname != myNickname 
-					&& secret == 'Y' && grade != 'MG002'){ // 비밀글이면 본인 또는 관리자만 조회가능 
-				alert("권한이없습니다");
-					
-			}else{ // 비밀글이 아니면 편하게 게시물 조회
-				actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
-				actionForm.attr("action", "/qnaboard/get");
-				actionForm.submit();
-			}
-		});
+			$(".move").on("click", function(e){
+				e.preventDefault();
+				let secret = $(this).attr("id"); // 비밀여부 Y / N
+				let boardNickname = $(this).parent().next().text(); // 게시글 작성자를 변수에 저장
+				let myNickname = "${loginNickname}"; // 로그인중인 회원의 닉네임
+				let grade = "${myGrade}"; // 현재 나의 등급
+	
+				if(secret == 'Y' && boardNickname != myNickname 
+						&& secret == 'Y' && grade != 'MG002'){ // 비밀글이면 본인 또는 관리자만 조회가능 
+					alert("권한이없습니다");
+						
+				}else{ // 비밀글이 아니면 편하게 게시물 조회
+					actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+					actionForm.attr("action", "/qnaboard/get");
+					actionForm.submit();
+				}
+			});
 		
 	}); // end document.ready
 
@@ -200,16 +214,6 @@
 			searchForm.submit();
 		});
 		
-		
-		// rttr 메시지
- 		$(function(){ 
-			
-			var responseMessage = '<c:out value="${msg}" />';
-			
-			if(responseMessage != "")
-		    	alert(responseMessage);
-		}); 
-
 </script>
 </html>
 

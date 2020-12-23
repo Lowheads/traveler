@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +21,46 @@
 <title>Document</title>
 
 <style>
+/* 페이징 */
+.pagination_bar{
+	font-size: 8pt;
+  font-weight: 400;
+  font-family: 'Open Sans', 'Source Sans Pro', Roboto, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Myriad Pro', 'Segoe UI', Myriad, Helvetica, 'Lucida Grande', 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  margin: 1em auto;
+  text-align: center;
+  transition: font-size .2s ease-in-out;
+}
+.pagination_bar{
+ list-style-type: none;
+  display: inline;
+  font-size: 100%;
+  margin: 0;
+  padding: .5em;
+  }
+  
+.pagination_btn{
+	display: inline-block;
+  font-size: 100%;
+  width: auto;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination_btn a{
+	color: #777;
+ 	font-size: 140%;
+ 	padding: .5em;
+}
+
+.pagination_btn a:hover{
+	color: #f60;
+}
+
+.pagination_bar .active a{
+	color: #f60;
+}
+
 /* 좋아요버튼 test */
 .btn_like {
   position: absolute;
@@ -319,10 +360,6 @@
    background-position: 0 -654px;
 }
 
-a {
-   text-decoration: none;
-}
-
 body {
    margin: 0;
 }
@@ -481,9 +518,11 @@ body {
 
 .sch_title {
    margin-left: 15px;
+   
 }
 .sch_title p{
-   font-size: 6px;
+	margin: 0;
+   	font-size: 6px;
    }
 </style>
 </head>
@@ -539,17 +578,18 @@ body {
                       
                       <input type="hidden" data-plc_no="${place.plcNo }" data-plc_dt="${place.addressDt}" data-lat="${place.lat }" 
                       data-lng="${place.lng }" data-title="${place.plcTitle }" class="markerlatlng">
-                      
+                        <h6 style="margin: 5px 0;">
                         <i class="fa fa-map-marker" aria-hidden="true"></i><b><a href="https://place.map.kakao.com/${place.plcNo }" target="_blank">
                          <c:out value="${place.plcTitle }" /></a></b>
+                         </h6>
                          <span style="float:right; margin-right: 10px;"><i class="fa fa-heart-o" aria-hidden="true"></i>
-                         <span style="font-size: 12px;">${place.likeCnt }</span></span><br>
-                        <p><i class="fa fa-map-o" aria-hidden="true"></i> <c:out value="${place.addressDt }"/></p>
-                        <p><c:if test="${place.holiday ne null }">
+                         <span style="font-size: 12px;">${place.likeCnt }</span></span>
+                        <p style="margin-bottom:3px;"><i class="fa fa-map-o" aria-hidden="true"></i> <c:out value="${place.addressDt }"/></p>
+                        <p style="margin-bottom:3px;"><c:if test="${place.holiday ne null }">
                         <i class="fa fa-calendar-check-o" aria-hidden="true"></i> 휴무일 :
                         </c:if>
                         <c:out value="${place.holiday }" /></p>
-                        <p><c:if test="${place.openingH ne null }">
+                        <p style="margin-bottom:3px;"><c:if test="${place.openingH ne null }">
                               <i class="fa fa-clock-o" aria-hidden="true"></i> 영업시간 :
                               </c:if>
                         <c:out value="${place.openingH}" /></p>
@@ -563,22 +603,21 @@ body {
          </div>
       </div>
 
-      <div style="text-align: center;" class="w3-center">
-         <ul class="w3-bar">
+      <div style="text-align: center;">
+         <ul class="pagination_bar">
             <c:if test="${pageMaker.prev }">
-               <li class="w3-button" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
+               <li class="pagination_btn" num="${pageMaker.startPage-1 }"><a>&laquo;</a></li>
             </c:if>
 
             <c:forEach var="num" begin="${pageMaker.startPage}"
                end="${pageMaker.endPage}">
-               <li class="w3-button"
-                  "${pageMaker.cri.pageNum == num ? "'active' style='background-color:gray; color:white;'":"" }" num="${num}">
+               <li class="pagination_btn ${pageMaker.cri.pageNum == num ? 'active':'' }" num="${num}">
                   <a> ${num }</a>
                </li>
             </c:forEach>
 
             <c:if test="${pageMaker.next }">
-               <li class="w3-button" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
+               <li class="pagination_btn" num="${pageMaker.endPage +1 }"><a>&raquo;</a></li>
             </c:if>
          </ul>
       </div>
@@ -778,7 +817,7 @@ body {
    });
 
    //페이지정보 보내는 function
-   $(".w3-button").on("click", function(e) {
+   $(".pagination_btn").on("click", function(e) {
 
       e.preventDefault();
 

@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ include file="../../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,9 +18,6 @@
 <title>Document</title>
 
 <style>
-
-a{text-decoration: none;}
-
 /*지은스타일 */
 #customers {
   font-family: Arial, Helvetica, sans-serif;
@@ -283,6 +280,27 @@ a{text-decoration: none;}
    border: 1px solid gray;
    border-radius: 5px;
 }
+#gotoTop {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99999;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 0px 10px 0px 10px;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+
+
+#gotoTop:hover {
+   background-color: black;
+   color:white;
+}
 </style>
 </head>
 
@@ -446,6 +464,9 @@ a{text-decoration: none;}
 
 </div>
 
+  
+   <!-- gotop -->
+   <a id="gotoTop">▲</a>
 
    </div>
 
@@ -522,7 +543,7 @@ function myFunction() {
                success : function(data) {
 
                   alert("목록에서 삭제되었습니다.");
-                  location.href = "/mypage/past?pageNum="
+                  location.href = "/mypage/upcoming?pageNum="
                         + $('input[name=pageNum]').val();
                },
                error : function(xhr) {
@@ -704,5 +725,8 @@ function myFunction() {
       }
    })
    
+     $('#gotoTop').on('click',function(){
+	 	document.documentElement.scrollTop = 0;  
+   })
 </script>
 </html>

@@ -40,4 +40,9 @@ public class ScheduleServiceTests {
 		service.register(schVO);
 	}
 	
+	@Test
+	public void dateTests() {
+		Date d=  Date.valueOf("2004-06-22");
+		System.out.println(d);
+	}
 }

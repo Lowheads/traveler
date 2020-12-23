@@ -16,9 +16,9 @@
 	
 %>
 
-<link rel="stylesheet" href="/resources/css/common.css">
-<link rel="stylesheet" href="/resources/css/register.css">
-<link rel="stylesheet" href="/resources/css/modify.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/common.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/register.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/modify.css">
 
   <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ include file="../../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,8 +18,6 @@
 <title>Document</title>
 
 <style>
-
-a{text-decoration: none;}
 
 /*지은스타일 */
 #customers {
@@ -472,7 +470,7 @@ a{text-decoration: none;}
 </div>
    
    <!-- gotop -->
-   <a href="#" id="gotoTop">▲</a>
+   <a id="gotoTop">▲</a>
 
    </div>
 
@@ -725,6 +723,10 @@ function myFunction() {
             contentwrap[i].style.display = "none";
          }
       }
+   })
+   
+   $('#gotoTop').on('click',function(){
+	 	document.documentElement.scrollTop = 0;  
    })
    
 </script>

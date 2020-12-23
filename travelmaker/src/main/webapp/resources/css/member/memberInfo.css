@@ -7,7 +7,7 @@
 }
 	
 .info-wrap{ /* 전체 div */
-    width: 80%;
+    width: 70%;
     margin-top: 5%;
   	padding-bottom: 1.8%;
     margin-bottom: 10%;
@@ -37,7 +37,7 @@
 .main-wrap{ /* 내용 div(일반 회원 페이지) */
 	padding: 7%;
 	padding-left : 3%;
-    height: 700px;
+    height: 600px;
     background-color: white;
 }
 
@@ -80,7 +80,6 @@
 .pwd-modiBtn{ /* 비밀번호 변경 버튼 */
 	background-color: black;
     color: white;
-    width: 125px;
     height: 30px;
 }
 
@@ -108,7 +107,7 @@
         position: absolute;
         top:50%;
         left: 27%;
-        margin: 30px 0 30px 100px; /* 모달 위치조절 */
+        margin: -170px 100px 30px 100px;
         background:#eee;
         background-color:white;
         z-index: 2;
