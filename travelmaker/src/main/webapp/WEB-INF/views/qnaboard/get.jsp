@@ -22,9 +22,9 @@
 %>
 
 
-<link rel="stylesheet" href="/resources/css/common.css">
-<link rel="stylesheet" href="/resources/css/register.css">
-<link rel="stylesheet" href="/resources/css/get.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/common.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/register.css">
+<link rel="stylesheet" href="/resources/css/qnaboard/get.css">
 
 <!-- 페이징 처리 -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">

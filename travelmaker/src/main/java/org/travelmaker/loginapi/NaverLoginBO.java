@@ -23,7 +23,8 @@ public class NaverLoginBO {
 	private final static String CLIENT_ID = "ElSIPx2hw9EnSEtt3V6g";
     private final static String CLIENT_SECRET = "6krHtwtRO9";
 //    private final static String REDIRECT_URI = "http://http://127.0.0.1:8080//member/callback";
-    private final static String REDIRECT_URI =  "http://localhost:809/member/callback";
+//    private final static String REDIRECT_URI =  "http://localhost:809/member/callback";
+    private final static String REDIRECT_URI =  "http://localhost:809/main/callback";
     private final static String SESSION_STATE = "oauth_state";
     /* 프로필 조회 API URL */
     private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";

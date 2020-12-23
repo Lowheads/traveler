@@ -7,7 +7,7 @@
 }
 	
 .info-wrap{ /* 전체 div */
-    width: 80%;
+    width: 70%;
     margin-top: 5%;
   	padding-bottom: 1.8%;
     margin-bottom: 10%;
@@ -37,7 +37,7 @@
 .main-wrap{ /* 내용 div(일반 회원 페이지) */
 	padding: 7%;
 	padding-left : 3%;
-    height: 700px;
+    height: 600px;
     background-color: white;
 }
 
