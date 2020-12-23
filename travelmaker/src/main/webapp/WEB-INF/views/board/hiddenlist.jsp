@@ -11,11 +11,13 @@
 	width: 60px;
 	height: 34px;
 }
+
 .switch input {
 	opacity: 0;
 	width: 0;
 	height: 0;
 }
+
 .slider {
 	position: absolute;
 	cursor: pointer;
@@ -27,6 +29,7 @@
 	-webkit-transition: .4s;
 	transition: .4s;
 }
+
 .slider:before {
 	position: absolute;
 	content: "";
@@ -38,12 +41,15 @@
 	-webkit-transition: .4s;
 	transition: .4s;
 }
+
 input:checked+.slider {
 	background-color: #2196F3;
 }
+
 input:focus+.slider {
 	box-shadow: 0 0 1px #2196F3;
 }
+
 input:checked+.slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
@@ -53,36 +59,77 @@ input:checked+.slider:before {
 .slider.round {
 	border-radius: 34px;
 }
+
 .slider.round:before {
 	border-radius: 50%;
 }
 
-.hiddentable{
-	border-collapse: separate;
-  	border-spacing: 10px 10px;
-  	
-  	}
+.container {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+}
 
+.hiddentable {
+	width: 90%;
+	/*margin: 0 50px 50px 0;*/
+	margin: auto;
+	white-space: nowrap;
+	border-collapse: collapse;
+	font-size: 0.9em;
+	/*min-width: auto;*/
+	overflow: hidden;
+	border-radius: 0 0 0 0;
+}
 
+.hiddentable thead tr {
+	color: black;
+	text-align: left;
+	font-size: 19px;
+	font-weight: bold;
+	border-bottom: 2px solid #dddddd;
+}
 
+.hiddentable th, .hiddentable td {
+	font-weight: lighter;
+	text-align: center;
+	/* padding: 12px 23px */
+}
+
+.hiddentable tbody tr {
+	font-size: 15px;
+	border-bottom: 1px solid #dddddd;
+	background-color: white;
+	height: 70px;
+}
+
+.hiddentable tbody tr:nth-of-type(even) {
+	background-color: #fafafa;
+}
+
+.hiddentable tbody tr:last-of-type {
+	border-bottom: 1px #dddddd solid;
+}
 </style>
 <div class="container">
 
-	<div class="table-responsive">
+	<div>
 		<table class="hiddentable">
 			<thead>
 				<tr>
 					<th>일정번호</th>
-					<th>일정명</th>
+					<!-- <th>일정명</th> -->
 					<th>게시물제목</th>
 					<th>공개여부</th>
 
 				</tr>
 			</thead>
-
+			<tbody>
 			<c:forEach items="${hiddenlist}" var="hiddenlist">
 				<tr>
-					<td><c:out value="${hiddenlist.SCHNO }"/></td>
+					<%-- <td><c:out value="${hiddenlist.SCHNO }"/></td> --%>
 					<td><c:out value="${hiddenlist.SCHTITLE}" /></td>
 					<td><c:out value="${hiddenlist.BOARDTITLE}" /></td>
 					<td>
@@ -92,6 +139,7 @@ input:checked+.slider:before {
 					
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
 
