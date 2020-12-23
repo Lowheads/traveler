@@ -116,7 +116,6 @@ ul {
 	flex-direction:column;
 	overflow:auto;
 	flex: 0 0 70%;
-	justify-content: space-between;
 }
 .daily-place-dt {
 	width:100%;
@@ -206,7 +205,6 @@ div.hoverable-place > button.detail-button {
     border-bottom: solid #a7a7a7 1px;
     background: #fff;
 }
-
 .hoverable-place:hover {
 	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 	transition: all 0.2s ease-in-out;
@@ -1295,7 +1293,22 @@ body > div.mainContainer > div.right.menu {
        }
        
        function draw(idx) {
+    	   
     	   let colors = ["#b61aae","#f07b3f","#ea5455","#2d4059","#fdb827","#21209c","#583d72","#3ec1d3","#3490de","#086972"];
+    	   
+    	   const makeContent = (i) => {
+    		   content = [
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E1%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`,
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E1%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`,
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E3%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`,
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`,
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E5%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`,
+       		    `<img class="marker-img" src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23f43939%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E6%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A" draggable="false" style="position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);">`
+       		    ];
+    		    
+    		   return content[i];
+    	   }
+    	   
 		   let posArr = [];
 		   let markCon = [];
 		   let polyCon = [];
@@ -1306,24 +1319,26 @@ body > div.mainContainer > div.right.menu {
     		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
     		posArr.push(pos);
     		let mark = new kakao.maps.CustomOverlay({
-                content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
-                position: pos,
-                clickable: true
+    			clickable: true,
+                content: makeContent(i),
+                position: pos
             });
     		
-    		
-    		/* let mark = new kakao.maps.Marker({
-                position : pos, // 마커의 위치
-                clickable: true
-             }); */
  			mark.setMap(inmap);
+ 			
  			markCon.push(mark);
  			markArr.push(markCon);
- 			kakao.maps.event.addListener(mark, 'click', () => {
-  		      let placeNo = latlngData[i].dataset["plcNo"]
-  		      let URL = "https://place.map.kakao.com/"+placeNo;
-                window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-  			});
+ 			console.log(mark);
+ 			
+ 			const getInfo = () => {
+ 	 			  let placeNo = latlngData[i].dataset["plcNo"]
+ 	  		      let URL = "https://place.map.kakao.com/"+placeNo;
+ 	                window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+ 	  			}
+ 			let markimg = document.querySelectorAll("marker-img");
+ 			for (let e of markimg) {
+				e.addEventListener("click",getInfo);
+			}
     	   }
     	   let plen = posArr.length-1;
 		   for (let i = 0; i < plen; i++) {
@@ -1332,14 +1347,14 @@ body > div.mainContainer > div.right.menu {
 	    		    path:posArr,
 	    		    endArrow: true,
 	    		    strokeWeight: 3,
-	    		    strokeColor: colors[idx],
+	    		    strokeColor: '#f43939',
 	    		    strokeOpacity: 1,
 	    		    strokeStyle: 'solid'
 	    		    
 	    		})
 			   polyCon.push(polyline);
 			   polyArr.push(polyCon);
-			   console.log((polyline.getLength()/1000).toFixed("2")+"km");
+			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km"); */
 			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
 			}
     	   
@@ -1382,6 +1397,7 @@ body > div.mainContainer > div.right.menu {
 
     	    return content;
     	} */
+    	
        
        function searchAction(event) {
          let placeValue = $("#search-value").val();
@@ -1483,7 +1499,6 @@ body > div.mainContainer > div.right.menu {
                      objs1img.setAttribute('src',list[i].plcImg);
                      objs1img.setAttribute('style','width:5rem;height:5rem;');
                      
-                     
                      let btnobj1 = document.createElement("button");
                      btnobj1.setAttribute('class', 'add-button');
                      let iconobj1 = document.createElement("i");
@@ -1522,13 +1537,6 @@ body > div.mainContainer > div.right.menu {
                                      objs1.appendChild(btnobj1);
                                      currentList.append(objs1);
                                      
-                         
-                         if(markers.length||0){
-                            markers[0].setMap(null);
-                            markers.pop();
-                         }
-                         
-
                          dnd( function() {
                             dnd( ".daily-place-list" ).sortable();
                             dnd( ".daily-place-list" ).disableSelection();
@@ -1584,26 +1592,19 @@ body > div.mainContainer > div.right.menu {
              // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
              var bounds = new kakao.maps.LatLngBounds();
              
-              
-             
-             
              const addMarker = (position) => {
-                 /* marker = new kakao.maps.Marker({
-                    position : position, // 마커의 위치
-                 }); */
-                 /* console.log(currTarget.innerHTML); 
-                 let arr = currTarget.innerHTML.split("<span>");
-                 console.log(arr[0]); */
+                 let text = currTarget.dataset["holiday"]=="null" ? "무휴":currTarget.dataset["holiday"];
+                 let openH = currTarget.dataset["openingH"]=="null" ? "무휴":currTarget.dataset["openingH"]; 
                  let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
 				                     <ul class="dotOverlay placeInfo">
-				                     <li>
+				                     <li> 
 				                         <span class="number">\${currTarget.dataset["title"]}</span>
 				                     </li>
 				                     <li>
-				                         <span class="label">\${currTarget.dataset["holiday"]}</span>
+				                         <span class="label">\${text}</span>
 				                     </li>
 				                     <li>
-										 <span class="label">\${currTarget.dataset["openingH"]}</span>
+										 <span class="label">\${openH}</span>
 				                     </li>
 				                 </ul>
 				             	</div>`;
