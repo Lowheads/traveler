@@ -1,7 +1,5 @@
 package org.travelmaker.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
@@ -54,17 +53,17 @@ public class MemberServiceImpl implements MemberService {
    
 
    @Override
-   public MemberVO login(MemberVO mVO) { // 로그인 기능
+   public MemberVO emailAndPwdInputCheck(MemberVO mVO) { // 로그인 기능
       return mapper.login(mVO);
    }
    
    @Override
-   public void lastLoginSetToday(String email) { // 최종 로그인 날짜 수정
+   public void setLoginDateToToday(String email) { // 최종 로그인 날짜 수정
       mapper.lastLoginSetToday(email);
    }
    
    // email저장(로그인)
-   public void RememberEmail(String email, HttpServletRequest request, HttpServletResponse response) { 
+   public void rememberEmail(String email, HttpServletRequest request, HttpServletResponse response) { 
       
       String check = request.getParameter("remember"); // 체크 여부를 담자
       Cookie cookie = new Cookie("email", email);     // 쿠키 생성
@@ -81,21 +80,40 @@ public class MemberServiceImpl implements MemberService {
       }
    }
    
+   	// 로그인처리 (일반회원이면 main으로, 관리자면 관리자 페이지로 가자) 
+	@Override
+	public ModelAndView loginProcess(MemberVO mVO, HttpSession session, ModelAndView mav) {
+		// 로그인 하는 회원의 등급을 memberGrade 변수에 저장
+		String memberGrade = mapper.getMember(mVO.getEmail()).getMemGrade();
+
+		emailAndPwdInputCheck(mVO); // 입력한 email & pwd 일치하는지 확인하자
+		setLoginDateToToday(mVO.getEmail()); // 최종 로그인을 현재로 변경..
+		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
+		session.setAttribute("memNo",getMemNo(mVO.getEmail()));
+		
+		// 관리자면 관리자 페이지로 가주세요!
+		if(memberGrade.equals("MG002")) {
+			mav = new ModelAndView("redirect:/admin/main");
+			return mav;
+		}
+		return mav;
+	}
+   
    
    // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
    public boolean isMemberStatus(MemberVO mVO, RedirectAttributes rttr, HttpSession session) { 
       
       // 로그인에 실패하면 메인 페이지로
-      if(login(mVO)==null) {
+      if(emailAndPwdInputCheck(mVO)==null) {
          rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
          return true;
-         }
+      }
    
-         // 탈퇴한 회원은 접속 못함
-         if(deleteNoAccess(mVO.getEmail())) {
-            rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
-            return true;
-         }
+      // 탈퇴한 회원은 접속 못함
+      if(deleteNoAccess(mVO.getEmail())) {
+         rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
+         return true;
+      }
             
       return false;
    }
@@ -382,5 +400,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return false;
 	}
+
+
    
 }
