@@ -470,7 +470,7 @@
 </div>
    
    <!-- gotop -->
-   <a href="#" id="gotoTop">▲</a>
+   <a id="gotoTop">▲</a>
 
    </div>
 
@@ -723,6 +723,10 @@ function myFunction() {
             contentwrap[i].style.display = "none";
          }
       }
+   })
+   
+   $('#gotoTop').on('click',function(){
+	 	document.documentElement.scrollTop = 0;  
    })
    
 </script>

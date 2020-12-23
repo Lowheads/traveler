@@ -80,7 +80,6 @@
 .pwd-modiBtn{ /* 비밀번호 변경 버튼 */
 	background-color: black;
     color: white;
-    width: 125px;
     height: 30px;
 }
 
