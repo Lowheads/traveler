@@ -13,83 +13,148 @@
 </head>
 <body>
 	<!-- 달력 객체와 region no를 불러왔다. 값이 제대로 넘어 왔는지 확인하는 용도 -->
-<%-- 	<div class="scheduledto"
+ 	<div class="scheduledto"
 		data-sch-region='<c:out value="${schDto.schRegion }" />'
 		data-to-date='<c:out value="${schDto.toDate }" />'
-		data-from-date='<c:out value="${schDto.fromDate }" />'>
-		<span>RegionNum=<c:out value="${schDto.schRegion }" /></span> <span>fromDate=<c:out
-				value="${schDto.fromDate }" /></span> <span>toDate=<c:out
-				value="${schDto.toDate }" /></span>
-	</div> --%>
-
+		data-from-date='<c:out value="${schDto.fromDate }" />' style="display:none">
+		<span>RegionNum=<c:out value="${schDto.schRegion }" /></span>
+	</div> 
+	
+	<div class="slideWrapper">
 	<!-- image slide -->
 	<!-- <div class="w3-content w3-display-container">		 -->
- 	<div class="slideshow-container">
  	<!-- 비오는날 보이는 테마 -->
-	<div class="mySlides" id="rainydayRec" >
+ 		<div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span> 
+            <span class="dot" onclick="currentSlide(4)"></span> 
+            <span class="dot" onclick="currentSlide(5)"></span> 
+            <span class="dot" onclick="currentSlide(6)"></span>
+        </div>
+        	<button class="button-btn-submit">다 골랐어요</button>
+        
+	 <div class="mySlides" id="rainydayRec" >
 				<div class='themeImage'>
-					<div class="dots">
-						<span class="dot" onclick="currentSlide(1)"></span> 
-						<span class="dot" onclick="currentSlide(2)"></span> 
-						<span class="dot" onclick="currentSlide(3)"></span> 
-						<span class="dot" onclick="currentSlide(4)"></span> 
-						<span class="dot" onclick="currentSlide(5)"></span> 
-						<span class="dot" onclick="currentSlide(6)"></span>
-					</div>
+				
+		<a class="prev" onclick="plusDivs(-1)">❮</a>
+		<a class="next" onclick="plusDivs(1)">></a>
 				</div>
+		<div class="resultWrapper">
  		<div class="travel-theme"><span>비오는날 추천하는 장소</span></div>
  		<div class="placeList">
   			<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'>
 				<c:forEach items="${rainydayRec}" var="place" varStatus="status">
-	  					<input class="place-box" type="checkbox"
-							data-plc-no="<c:out value='${place.plcNo}' />">
-						<span class="placeVO-title"><c:out
-							value='${place.plcTitle }' /></span>
+						<span class="recPlace" id='${place.plcNo}' >${place.plcTitle}</span>
 	  			</c:forEach>
+  			</div>
   			</div>
 		</div><!-- end of placelist  -->
 		</div><!-- end of myslides --> 
-				
   		<c:forEach items="${themeList}" var="themeList" varStatus="status">
   		<div class="mySlides" id="theme_place_list<c:out value='${themeList.key}' />">
   		<div class='themeImage'>
-		  	 <div class="dots">
-				<span class="dot" onclick="currentSlide(1)"></span> 
-				<span class="dot" onclick="currentSlide(2)"></span> 
-				<span class="dot" onclick="currentSlide(3)"></span> 
-				<span class="dot" onclick="currentSlide(4)"></span> 
-				<span class="dot" onclick="currentSlide(5)"></span> 
-				<span class="dot" onclick="currentSlide(6)"></span>
-			 </div>
+  		
+		<a class="prev" onclick="plusDivs(-1)">❮</a>
+		<a class="next" onclick="plusDivs(1)">></a>
   		</div>
+  		<div class="resultWrapper">
 	    	<c:forEach items="${themeList.value}" var="place" varStatus="status">
   				<c:if test="${status.first}" >
 	  				<div class="travel-theme"><span class="placeVO-title"><c:out value='${place.themeName}' /></span></div>
-	  				  							    	<div class="placeList">
+	  		<div class="placeList">
   				<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'></div>
   				</c:if>
-  				<input class="place-box" type="checkbox"
-					data-plc-no="<c:out value='${place.plcNo}' />">
-				<span class="placeVO-title"><c:out
-						value='${place.plcTitle }' /></span>
+  				<span class="recPlace" id='${place.plcNo}'>${place.plcTitle}</span>
   			</c:forEach>
 			</div><!-- end of placelist -->
-
-		<button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-		<button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
-  				</div>
-		</c:forEach>
+  				</div></div>
+		</c:forEach>  
+  </div>
   
-</div><!--end of slide container  -->			
+<!--end of slide container  -->			
 
-	<button class="button-btn-submit">다 골랐어요</button>
+
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			init();
+	
+	let slideIndex = 1;
+	
+	showDivs(slideIndex);
+	
+	function plusDivs(n) {
+		  showDivs(slideIndex += n);
+		}
+
+	function currentSlide(n) {
+		showDivs(slideIndex = n);
+	}
+	
+	function showDivs(n) {
+		
+		console.log("!")
+		console.log(n)
+	  let i;
+	  let x = document.getElementsByClassName("mySlides");
+	  let placeList = document.getElementsByClassName("placeList");	
+	  
+	  if (n > x.length) {slideIndex = 1}
+	  if (n < 1) {slideIndex = x.length}
+	  
+	  
+	  for (i = 0; i < x.length; i++) {
+	    x[i].style.display = "none";  
+	    placeList[i].style.display = "none";  
+	  }
+	  
+	  x[slideIndex-1].style.display = "block";  
+	  placeList[slideIndex-1].style.display = "block";
+	  
+	}	
+	
+	$(document).ready(function() {
+		
+		$("button[id='btn']").click(function(){
+			console.log(selectedPlace);	
+			console.log(selectedPlace.length);
+			
+		})
+	
+		
+        let selectedPlace = [];
+
+
+        
+          $(".recPlace").each(function(){
+        	 
+        	}).click(function(){
+        		
+            var isClicked= ($(this).attr("class").includes("clicked"))
+            
+            var index = $(this).attr("id")
+
+            if(isClicked){
+                $("span[id="+index+"]").removeClass("clicked")
+                
+                var target = selectedPlace.indexOf(index);
+                
+                if(target!=-1){
+                	
+                	selectedPlace.splice(target,1);
+                }
+
+            }else{
+                $("span[id="+index+"]").addClass("clicked")
+                selectedPlace.push(index);
+            }
+            
+        })
+
+        init();
 					
 			var list=[];
 					
+
 			
 			//테마이미지 가져와서 띄워주기
 			for(let i =1;i<6;i++){(function() {
@@ -116,138 +181,38 @@
 						})();
 				}
 			
-			if(true){
-				
-				//ajax로 보내서 rainyday rec 장소들을 json으로 가져온다 
-				
-				var themeNo="";
-				
-				if(${schDto.schRegion}==1){
-					themeNo = 6				
-				}else{
-					themeNo = 12
-					}
-				
-				$.getJSON("/main/getWeatherRec/"+${schDto.schRegion},
-						function(data){
-						
-						var tag="";
-						
-						for(var i =0; i<Object.keys(data).length; i++){
-							
-							tag+='<input class="place-box" type="checkbox" data-plc-no='+data[i].plcNo+'>'
-							tag+='<span class="placeVO-title">'+data[i].plcTitle+'</span>'
-						}
-						
-						$("#rainydayRec .placeList").append(tag);
-						
-					$.getJSON("/admin/getAttachment", {
-						themeNo :themeNo}, 
-						function(data){
-							
-							console.log(data);
-							
-							if(data==null){
-								let str = "<img src='/resources/img/default.jpg'>";
-								$("#rainydayRec .themeImage").append(str);
-								return;
-							}
-							let str = "";
-							let fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
-							str += "<img src='/admin/display?fileName="
-									+ fileCallPath + "'>";
-							$("#rainydayRec .themeImage").append(str);
-							}).fail(function(result){
-								console.log("fail TT");
-							console.log(result);
-							let str = "<img src='/resources/img/default.jpg'>";
-							
-							$("#rainydayRec .themeImage").append(str);
-						})
-						
+			let themeNo="";
+			
+			if(${schDto.schRegion}==1){
+				themeNo = 6				
+			}else{
+				themeNo = 12
+				}
+			
+			$.getJSON("/admin/getAttachment", {
+				themeNo :themeNo}, 
+				function(data){
 					
-				}).fail(function(result){
-					console.log("failed TT")
-				})
-				
-				$(".slideshow-container").prepend();
-			}
-			
-
-			
-/* 			if($("#rainydayRec").length==1){
-				
-				var themeNo="";
-				
-				if(${schDto.schRegion}==1){
-					themeNo = 9					
-				}else{
-					themeNo = 12
+					if(data==null){
+						let str = "<img src='/resources/img/default.jpg'>";
+						$("#rainydayRec .themeImage").append(str);
+						return;
 					}
-				
-				console.log("여기까지 ok")
-				
-				$.getJSON("/admin/getAttachment", {
-					themeNo :themeNo}, 
-					function(result) {
-						console.log("ajax")
-						if(result==null){
-							let str = "<img src='/resources/img/default.jpg' width='800' height='400'>";
-							$("#theme_place_list" + i).prepend(str);
-							return;
-						}
-						
-						let str = "";
-						let fileCallPath = encodeURIComponent(result.uuid + "_" + result.fileName);
-						str += "<img src='/admin/display?fileName="
-								+ fileCallPath + "' width='800' height='400'>";
-
-						//$("#theme_place_list" + i + " ul").html(str);
-						//$("#rainydayRec").prepend(str);
+					let str = "";
+					let fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
+					str += "<img src='/admin/display?fileName="
+							+ fileCallPath + "'>";
+					$("#rainydayRec .themeImage").append(str);
 					}).fail(function(result){
-						
-						console.log(result);
-						let str = "<img src='/resources/img/default.jpg' width='800' height='400'>";
-						//$("#theme_place_list" + i + " ul").html(str);
-						// ("#rainydayRec").prepend(str);
-					})
-				} */
-				
-
-		})
-//
-
-
-var slideIndex = 1;
-showDivs(slideIndex);
-
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
-
-function currentSlide(n) {
-	showDivs(slideIndex = n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var placeList = document.getElementsByClassName("placeList");	
-  
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  
-  
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-    placeList[i].style.display = "none";  
-  }
-  x[slideIndex-1].style.display = "block";  
-  placeList[slideIndex-1].style.display = "block";
-  
-}
-		
-		//
+						console.log("fail TT");
+					console.log(result);
+					let str = "<img src='/resources/img/default.jpg'>";
+					
+					console.log(str)
+					
+					$("#rainydayRec .themeImage").append(str);
+				})
+			
 		
 			function init() {
 			let submitBtn = document
@@ -256,24 +221,20 @@ function showDivs(n) {
 		}
 
 		function submitPlace() {
-			let placeBox = document.getElementsByClassName("place-box");
-			let schDto = document.getElementsByClassName("scheduledto")[0];
-
-			let list = [];
+			
+ 			//let placeBox = document.getElementsByClassName("place-box"); 
+			
+ 			let placeBox = $(".clicked")
+ 			let schDto = document.getElementsByClassName("scheduledto")[0];
+			
 			let str = "";
-			let i;
-			for (i = 0; i < placeBox.length; i++) {
-				if (placeBox[i].checked) {
-					list.push(placeBox[i].dataset["plcNo"]);
-				}
-			}
-
+			
 			let objs1;
 			let form = document.createElement('form');
 			objs1 = document.createElement('input');
 			objs1.setAttribute('type', 'hidden');
 			objs1.setAttribute('name', 'places'); // 받을 네이밍
-			objs1.setAttribute('value', list); // 넘길 파라메터
+			objs1.setAttribute('value', selectedPlace); // 넘길 파라메터
 			form.appendChild(objs1);
 
 			let objs2;
@@ -304,6 +265,9 @@ function showDivs(n) {
 
 			form.submit();
 		}
+		
+
+		});
 	</script>
 
 </body>

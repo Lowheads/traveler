@@ -21,7 +21,7 @@ public interface ThemeService {
 	public ThemeAttachVO getAttachment(int themeNo);
 	
 	public int getTotal(String keyword);
-
 	
+	public int deleteAttach(int themeNo);
 
 }

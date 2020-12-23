@@ -21,7 +21,7 @@
 		<result property="addressDt" column="ADDRESS_DT" />
 		<result property="pCate" column="P_CATE" />
 		<result property="holiday" column="HOLIDAY" />
-		<result property="openingH" column="OPENING_suH" />
+		<result property="openingH" column="OPENING_H" />
 		<result property="likeCnt" column="LIKECNT" />
 	</resultMap>
 	
@@ -33,9 +33,9 @@
 	</select>
 
 	<select id="getThemeInfo" resultMap = "searchResult">
-		SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESS_DT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT 
+		SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESS_DT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT , V.HOLIDAY, V.OPENING_H
 		FROM THEME_PLC,
-		(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESS_DT,C.CODE_NAME, LIKECNT
+		(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESS_DT,C.CODE_NAME, LIKECNT, HOLIDAY, OPENING_H
 		FROM CODE_TABLE C, PLACE P
 		WHERE C.CODE = P.P_CATE) V
 		WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}

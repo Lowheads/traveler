@@ -50,30 +50,30 @@ public class ThemeController {
 	@GetMapping("/theme")
 	public String theme(Model model) {
 
-		List<String> list = service.getThemeList();
-
-		model.addAttribute("list", list);
+		model.addAttribute("list", service.getThemeList());
 		
 		return "theme";
 	}
 
 	@RequestMapping(value= {"/themeInfo/{themeNo}","/modifyTheme/{themeNo}"}, method=RequestMethod.GET)
-	public String themeInfo(@PathVariable("themeNo") int themeNo, Model model, HttpServletRequest req) {
+	public String theme(@PathVariable("themeNo") int themeNo, Model model, HttpServletRequest req) {
 		
-		//service.getAttachment(themeNo);
-
+		List<PlaceVO> list = service.getThemeInfo(themeNo);
+		
+		System.out.println(list.toString());
+		
 		model.addAttribute("list", service.getThemeInfo(themeNo));
 		
 		StringBuffer path = req.getRequestURL();
 		
-		String url = "modifyTheme";
+		String destinationUrl = "modifyTheme";
 
 		if(path.indexOf("themeInfo")!=-1) {
 
-			url = "themeInfo";
+			destinationUrl = "themeInfo";
 		}
 		
-		return url;
+		return destinationUrl;
 	}
 
 
@@ -82,13 +82,13 @@ public class ThemeController {
 			
 		attachment.setThemeNo(themeNo);
 		
-		 Map<String, Integer> result = service.updateTheme(removedPlaces, addedPlaces, themeNo, attachment);
+		Map<String, Integer> result = service.updateTheme(removedPlaces, addedPlaces, themeNo, attachment);
 		  
-		  if (result.get("deleteResult")== removedPlaces.length&&result.get("insertResult")== addedPlaces.length) {
+		if (result.get("deleteResult")== removedPlaces.length&&result.get("insertResult")== addedPlaces.length) {
 		  
 			  rttr.addFlashAttribute("message", "SUCCESS"); }
 		 
-		 return "redirect:/admin/themeInfo/"+themeNo;
+		return "redirect:/admin/themeInfo/"+themeNo;
 	}
 	
 	@GetMapping(value ="/getAttachment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -103,7 +103,6 @@ public class ThemeController {
 			MultipartFile uploadFile) {
 
 		// 첨부파일 처리
-		//AttachFileDTO attachDTO = new AttachFileDTO();
 		ThemeAttachVO attachVO = new ThemeAttachVO();
 		
 		String uploadFolder = "C:\\upload";
@@ -131,11 +130,9 @@ public class ThemeController {
 
 				attachVO.setImage(true);
 				
-				
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadFolder, "s_" + uploadFileName));
 				Thumbnailator.createThumbnail(in, thumbnail, 140, 140);
 				
-				//Thumbnailator.createThumbnail(saveFile.getInputStream(), thumbnail, 100, 100);
 				thumbnail.close();
 			}
 
@@ -189,11 +186,7 @@ public class ThemeController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
 
-		log.info("filename : " + fileName);
-
 		File file = new File("c:\\upload\\" + fileName);
-
-		log.info("file : " + file);
 
 		ResponseEntity<byte[]> result = null;
 
@@ -224,7 +217,7 @@ public class ThemeController {
 			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
 
 			file.delete();
-
+			
 			if (type.equals("image")) {
 
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
@@ -232,7 +225,7 @@ public class ThemeController {
 				file = new File(largeFileName);
 
 				file.delete();
-
+				
 			}
 			
 			

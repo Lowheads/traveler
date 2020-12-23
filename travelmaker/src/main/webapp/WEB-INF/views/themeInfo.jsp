@@ -22,20 +22,22 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><
 <table  class="table table-hover" style="width:100%">
 <thead>
 <tr>
-	<th>장소번호</th>
 	<th>장소명</th>
 	<th>상세주소</th>
 	<th>카테고리</th>
+	<th>휴일</th>	
+	<th>영업시간</th>
 	<th>좋아요 수</th>
 </tr>
 </thead>
 <tbody>
 <c:forEach items="${list}" var="list">
 	<tr name = row id = '<c:out value="${list.plcNo}" />'>
-	<td><c:out value="${list.plcNo}" /></td>
 		<td><c:out value="${list.plcTitle}" /></td>
 		<td><c:out value="${list.addressDt}" /></td>
 		<td><c:out value="${list.PCate}" /></td>
+		<td><c:out value="${list.holiday}" /></td>
+		<td><c:out value="${list.openingH}" /></td>
 		<td><c:out value="${list.likeCnt}" /></td>
 	</tr>
 </c:forEach>
@@ -57,11 +59,9 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><
 										data-dismiss="modal">확인</button>
 									<button id="modalDefaultBtn" type="button"
 										class="btn btn-primary" data-dismiss="modal">close</button>
-
 								</div>
 							</div>
 							<!-- /.modal-content -->
-
 						</div>
 						<!-- /.modal-dialog -->
 					</div>
@@ -81,16 +81,16 @@ $(document).ready(function() {
 
 	history.replaceState({}, null, null);
 	
-	var themeNo = ${themeNo};
+	const themeNo = ${themeNo};
 	
 	//이미지 썸네일로 보여주기 
 	(function(){
 		
 		$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(result){
 			
-			var str="";
+			let str="";
 			
-			var fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
+			const fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
 			
 /* 			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
 			"' data-type = '"+result.fileType+"'><div>";

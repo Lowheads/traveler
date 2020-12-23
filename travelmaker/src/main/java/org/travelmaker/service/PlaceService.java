@@ -37,3 +37,4 @@ public interface PlaceService {
 	
 	public List<Map<String,Object>> getYourList(String type,int memNo);
 }
+

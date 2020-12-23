@@ -140,15 +140,15 @@ public class PlaceServiceImpl implements PlaceService {
         }
     }
 
+	@Override
+	public List<PlaceVO> getPlaceByWeather(int regionNo) {
+		return mapper.getPlaceByWeather(regionNo);
+	}
+
    @Override
    public List<Map<String,Object>> getYourList(String type,int memNo) {
       // TODO Auto-generated method stub
       return mapper.getYourList(type,memNo);
-   }
-   
-   @Override
-   public List<PlaceVO> getPlaceByWeather(int regionNo) {
-       return mapper.getPlaceByWeather(regionNo);
    }
 
       

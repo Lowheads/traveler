@@ -39,18 +39,14 @@ public class ThemeServiceImpl implements ThemeService {
 	@Override
 	public Map<String, Integer> updateTheme(String[] removedPlaces,String[] addedPlaces, int themeNo, ThemeAttachVO attachment) {
 		
-		System.out.println("1");
-		
-		attMapper.delete(themeNo);
+		deleteAttach(themeNo);
 		
 		if(attachment.isImage()) {
 			
 			attMapper.update(attachment);
-					
 		}
-		System.out.println("update시작 ");
-		int update = mapper.updateTheme(themeNo);
-		System.out.println("update끝 "+update);
+		
+		int dateUpdate = mapper.updateTheme(themeNo);
 		
 		Map<String, Integer> result = new HashMap<>();
 		
@@ -67,6 +63,13 @@ public class ThemeServiceImpl implements ThemeService {
 		
 		return result;
 	}
+	
+	public int deleteAttach(int themeNo) {
+		
+		return attMapper.delete(themeNo);
+	}
+	
+	
 	
 	@Override
 	public List<PlaceVO> getPlaceList(String keyword, int pageNum ) {

@@ -38,16 +38,12 @@ private AdminBoardService service;
 	@GetMapping("/boardList")
 	public String getPost(Criteria cri, Model model) {
 		
-		List<BoardVO> result;
-		
 		if (cri.getKeyword() == null||cri.getType()==null) {
-			result = service.getBoardList();
-			model.addAttribute("board", result);
+			model.addAttribute("board", service.getBoardList());
+			
 		}else {
-			result = service.searchPost(cri);
-			model.addAttribute("board", result);
+			model.addAttribute("board", service.searchPost(cri));
 		}
-		
 		return "/boardList";
 	}
 	

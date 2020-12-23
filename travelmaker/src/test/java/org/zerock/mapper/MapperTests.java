@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.QnABoardVO;
 import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
@@ -297,7 +298,7 @@ public class MapperTests {
 		
 	}
 	
-	@Test
+	//@Test
 	public void mainMapperTest() {
 		
 		/*
@@ -333,13 +334,22 @@ public class MapperTests {
 		 */
 		
 		
-		 List<BoardVO> list = mainMapper.getPopularPostsByPick();
-		  list.forEach(theme->log.info(theme.toString()));
-		  
-		  
-		 List<BoardVO> list2 = mainMapper.getPopularPostsByView();
-		 list2.forEach(theme->log.info(theme.toString()));
+		/*
+		 * List<BoardVO> list = mainMapper.getPopularPostsByPick();
+		 * list.forEach(theme->log.info(theme.toString()));
+		 * 
+		 * 
+		 * List<BoardVO> list2 = mainMapper.getPopularPostsByView();
+		 * list2.forEach(theme->log.info(theme.toString()));
+		 */
 		 
+		/*
+		 * int result = mainMapper.cntQnaPost(); log.info(result);
+		 */
+		
+		List<QnABoardVO> list = mainMapper.getQnaPost();
+		
+		 list.forEach(theme->log.info(theme.toString()));
 	}
 	
 	//@Test
