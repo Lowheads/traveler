@@ -24,64 +24,63 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
-   @Setter(onMethod_ = @Autowired)
-   private PlaceMapper mapper;
-   
-   @Override
-   public void register(PlaceVO place) {
-      mapper.insert(place);
-   }
+	@Setter(onMethod_ = @Autowired)
+	private PlaceMapper mapper;
+	
+	@Override
+	public void register(PlaceVO place) {
+		mapper.insert(place);
+	}
 
-   @Override
-   public List<PlaceVO> get(String[] plcNoArr) {
-      return mapper.read(plcNoArr);
-   }
-   
-   @Override
-   public boolean removePlace(long plcNo) {
-      
-      return mapper.delete(plcNo)==1;
-   }
+	@Override
+	public List<PlaceVO> get(String[] plcNoArr) {
+		return mapper.read(plcNoArr);
+	}
+	
+	@Override
+	public boolean removePlace(long plcNo) {
+		
+		return mapper.delete(plcNo)==1;
+	}
 
-   @Override
-   public boolean modify(PlaceVO place) {
+	@Override
+	public boolean modify(PlaceVO place) {
 
-      return mapper.update(place) ==1;
-   }
+		return mapper.update(place) ==1;
+	}
 
-   @Override
-   public List<PlaceVO> getListWithPaging(Criteria cri) {
+	@Override
+	public List<PlaceVO> getListWithPaging(Criteria cri) {
 
-      if(cri.getSelected()==null) {
-         return mapper.getListWithPaging(cri);
-      }
-      return mapper.getSortList(cri);
-   }
+		if(cri.getSelected()==null) {
+			return mapper.getListWithPaging(cri);
+		}
+		return mapper.getSortList(cri);
+	}
 
-   @Override
-   public void updateLikeCnt(PlaceVO vo) {
-      mapper.update(vo);
-   }
+	@Override
+	public void updateLikeCnt(PlaceVO vo) {
+		mapper.update(vo);
+	}
 
-   @Override
-   public int getTotal(Criteria cri) {
-      // TODO Auto-generated method stub
-      return mapper.getTotal(cri);
-   }
-   
-   //종운 메서드
-   @Override
-   public List<PlaceVO> getList(String title,int regionNo,Criteria cri) {
-      log.info("get place List of a map" + title);
-      return mapper.getListWithTitle(title,regionNo,cri.getPageNum(),cri.getAmount());
-   }
+	@Override
+	public int getTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTotal(cri);
+	}
+	
+	//종운 메서드
+	@Override
+	public List<PlaceVO> getList(String title,int regionNo,Criteria cri) {
+		log.info("get place List of a map" + title);
+		return mapper.getListWithTitle(title,regionNo,cri.getPageNum(),cri.getAmount());
+	}
 
-   @Override
-   public List<PlaceDTO> getListWithTheme(int regionNo, String themeCode) {
-      log.info("get place List with Theme" + regionNo + " " + themeCode);
-      return mapper.getListWithTheme(regionNo, themeCode);
-   }
-   
+	@Override
+	public List<PlaceDTO> getListWithTheme(int regionNo, String themeCode) {
+		log.info("get place List with Theme" + regionNo + " " + themeCode);
+		return mapper.getListWithTheme(regionNo, themeCode);
+	}
    @Override
    public int getSearchResultTotalCnt(String title,int regionNo) {
       return mapper.getSearchResultTotalCnt(title,regionNo);

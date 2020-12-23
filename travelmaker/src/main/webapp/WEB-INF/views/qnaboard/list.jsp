@@ -73,7 +73,7 @@
   		<div class="boardRegiBtn-wrap"><a href="/qnaboard/register"><button>WRITE</button> </a></div>
   
 		      <!-- 페이징 -->
-    <div class="pagination">
+    <div class="paging">
          <ul class="pagination_bar">
             <c:if test="${pageMaker.prev }">
                <li class="pagination_btn previous"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>

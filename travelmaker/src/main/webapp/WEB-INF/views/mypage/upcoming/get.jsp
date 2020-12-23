@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ include file="../../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,9 +18,6 @@
 <title>Document</title>
 
 <style>
-
-a{text-decoration: none;}
-
 /*지은스타일 */
 #customers {
   font-family: Arial, Helvetica, sans-serif;
@@ -522,7 +519,7 @@ function myFunction() {
                success : function(data) {
 
                   alert("목록에서 삭제되었습니다.");
-                  location.href = "/mypage/past?pageNum="
+                  location.href = "/mypage/upcoming?pageNum="
                         + $('input[name=pageNum]').val();
                },
                error : function(xhr) {

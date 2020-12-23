@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Data
-public class PageDTO {
+public class PagefDTO {
 
 	private int startPage;
 	private int endPage;
@@ -14,12 +14,12 @@ public class PageDTO {
 	private int total;
 	private Criteria cri;
 	
-	public PageDTO(Criteria cri, int total) {
+	public PagefDTO(Criteria cri, int total) {
 		this.cri=cri;
 		this.total=total;
 		
-		this.endPage= (int)(Math.ceil(cri.getPageNum() /10.0))*10;
-		this.startPage = this.endPage-9;
+		this.endPage= (int)(Math.ceil(cri.getPageNum() /5.0))*5;
+		this.startPage = this.endPage-4;
 		int realEnd = (int)(Math.ceil((total*1.0)/cri.getAmount()));
 		
 		if(realEnd<this.endPage) this.endPage=realEnd;
