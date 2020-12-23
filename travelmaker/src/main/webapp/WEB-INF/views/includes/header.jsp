@@ -781,7 +781,7 @@ text-align: center;
             
       </div>
    </div>
-        
+        </div>
     </div>
     <script type="text/javascript">
     
