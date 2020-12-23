@@ -280,6 +280,27 @@
    border: 1px solid gray;
    border-radius: 5px;
 }
+#gotoTop {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99999;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 0px 10px 0px 10px;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+
+
+#gotoTop:hover {
+   background-color: black;
+   color:white;
+}
 </style>
 </head>
 
@@ -443,6 +464,9 @@
 
 </div>
 
+  
+   <!-- gotop -->
+   <a id="gotoTop">▲</a>
 
    </div>
 
@@ -701,5 +725,8 @@ function myFunction() {
       }
    })
    
+     $('#gotoTop').on('click',function(){
+	 	document.documentElement.scrollTop = 0;  
+   })
 </script>
 </html>
