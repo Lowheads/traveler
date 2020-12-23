@@ -75,7 +75,6 @@ public class BoardController {
 
 		cri.setAmount(12);
 		model.addAttribute("list",boardservice.getList(cri));
-	
 		int total= boardservice.getTotal(cri);
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
 	}
@@ -83,8 +82,10 @@ public class BoardController {
 	//schedulelist
 	@GetMapping("/schedulelist")
 	public void schedulelist(Model model,HttpServletRequest request) {
+
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
+		System.out.println(memNo);
 
 		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
 	}
@@ -195,10 +196,10 @@ public class BoardController {
 	@GetMapping({"/get"})
 	public void get(@RequestParam("boardNo")int boardNo, 
 			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) throws Exception {
-		
+		System.out.println("get");
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-
+		
 		BoardVO board=boardservice.get(boardNo);
 		int schNo=board.getSchNo();
 		ScheduleVO schedule = scheduleservice.getSchedule(schNo);
@@ -220,10 +221,30 @@ public class BoardController {
 		
 		model.addAttribute("file",fileList);
 		
-		model.addAttribute("memNo",memNo);
+		//model.addAttribute("memNo",memNo);
 	
 		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 	}
+	
+	
+	@GetMapping({"/view"})
+	public void view(@RequestParam("boardNo")int boardNo, 
+			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) throws Exception {
+		System.out.println("view");
+			
+		BoardVO board=boardservice.get(boardNo);
+		int schNo=board.getSchNo();
+		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
+		model.addAttribute("boarddt",boarddtservice.get(boardNo));
+		model.addAttribute("board",board);
+		
+		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
+		
+		model.addAttribute("file",fileList);
+	
+		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
+	}
+	
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr,MultipartFile file) throws Exception {
