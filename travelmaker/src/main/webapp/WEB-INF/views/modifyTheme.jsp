@@ -45,8 +45,7 @@
 				<td><c:out value="${list.holiday}" /></td>
 				<td><c:out value="${list.openingH}" /></td>
 				<td><c:out value="${list.likeCnt}" /></td>
-				<td><button class="btn btn-default" id="deleteBtn"
-						value='<c:out value="${list.plcNo}" />'>
+				<td><button class="btn btn-default" value='<c:out value="${list.plcNo}" />' onClick=alert($(this).parent())>
 						<i class="fas fa-times"></i></button>
 						</button></td>
 			</tr>
@@ -98,6 +97,7 @@
 	crossorigin="anonymous"></script>
 
 <script>
+
 	$(document).ready(
 			function() {
 				
@@ -106,12 +106,15 @@
 
 				let list = [];
 
+
+				let newlist = []
+
+
 				for (let i = 0; i < $("#dataTable tr").length - 1; i++) {
 					list[i] = $("#dataTable td")[7* i].innerText;
 				}
 				
-				let newlist = []
-
+			
 				Object.assign(newlist, list)
 				
 				let themeNo = ${themeNo};
@@ -194,8 +197,18 @@
 					theme.uploadFile(${themeNo},formData);
 
 				})
+				
+				function deletePlace(){
+					
+					let num = $(this).attr("value")
+					let idx = list.indexOf(num);
+					
+					newlist[idx] = ""
 
-				$("button[id=deleteBtn]").click(function() {
+					$(this).parent().parent().remove()
+				}
+
+/* 				$("button[id=deleteBtn]").click(function() {
 
 					let num = $(this).attr("value")
 					let idx = list.indexOf(num);
@@ -204,8 +217,26 @@
 
 					$(this).parent().parent().remove()
 			
-				})
+				}) */
+				
 
+
+/* 				var target = $("button[id=deleteBtn]")
+				
+				for(let i =0;i<target.length;i++){
+   					 target[i].addEventListener('click',function(){
+   						 
+   						 console.log("ㅎㅎ")
+   						 
+   						let num = $(this).attr("value")
+   						let idx = list.indexOf(num);
+   						
+   						newlist[idx] = ""
+
+   						$(this).parent().parent().remove()
+   						 
+   					 })} */
+				
 				$("button[id=appendNewPlaces]").click(
 			        function() {
 			        	$("input[id='keyword']")[0].value=""
@@ -464,8 +495,30 @@
 								info[i]="";
 							}
 						} 
+ 						
+ 						let str = document.createElement("tr");
+ 						str.setAttribute("name","row")
+ 						str.setAttribute("id",num)
+ 						
+ 						let inner = document.createElement("td");
+ 						
+ 						for(let i =0;i<6;i++){
+ 							
+ 							inner.innerText = info[i];
+ 	 						str.append(inner);	
+ 						}
+ 						
+ 						let btn = document.createElement("button");
+ 						btn.setAttribute("class","btn btn-default")
+ 						btn.setAttribute("id","deleteBtn")
+ 						btn.setAttribute("value",data.id)
+ 						
+						obj.addEventListener('click', added);
+ 						
+ 						str.append(btn);
+ 						
 						
-						var str = '<tr name="row" id='+num+'>'
+/* 						var str = '<tr name="row" id='+num+'>'
 						str+='<td>'+info[0]+'</td>'
 						str+='<td>'+info[1]+'</td>'
 						str+='<td>'+info[2]+'</td>'
@@ -473,10 +526,34 @@
 						str+='<td>'+info[4]+'</td>'
 						str+='<td>'+info[5]+'</td>'
 						str+='<td><button class="btn btn-default" id="deleteBtn" value='+data.id+'><i class="fas fa-times"></i></button></td>'
-						
+						 */
 						$("tbody").append(str);
 						
 						$("li[id=" + num + "]").remove();
+						
+						plus = document.createElement('i')
+						plus.setAttribute('class', 'fas fa-plus')
+                
+						let obj;
+						obj = document.createElement('button');
+						obj.setAttribute('id', 'added');
+						obj.setAttribute('class','btn btn-default');
+						obj.setAttribute('name', placeList[i].plcNo);
+						obj.addEventListener('click', added);
+						obj.append(plus);
+						
+						let title = document.createElement('span');
+						title.innerText = placeList[i].plcTitle;
+						let address = document.createElement('span');
+						address.innerText = placeList[i].addressDt;
+						
+						
+						ob = document.createElement('li');
+						ob.setAttribute('id', placeList[i].plcNo);
+						ob.setAttribute('title', placeList[i].plcTitle+","+placeList[i].addressDt+","+placeList[i].pcate+","+placeList[i].holiday+","+placeList[i].openingH+","+placeList[i].likeCnt);
+						
+						 ob.append(title,address,obj);
+						 
 
 					}else{
 						

@@ -31,9 +31,10 @@
 							</h6>
 							<c:forEach items="${qna}" var="qna">
 								<c:forEach items="${qna.value}" var="post">
-									<div class="dropdown-item d-flex align-items-center" href="#">
+									<a href="/qnaboard/get?pageNum=1&amount=18&type=&keyword=&bno=<c:out value='${post.bno }'/>">
+									<div class="dropdown-item d-flex align-items-center">
 										<div class="small text-gray-500"><fmt:formatDate value = '${post.regDate}' pattern='MM/dd'/>&nbsp</div>
-										<span class="font-weight-bold">${post.title}</span><br>
+										<span class="font-weight-bold">${post.title}</span></a><br>
 									</div>	
 								</c:forEach>
 							</c:forEach>

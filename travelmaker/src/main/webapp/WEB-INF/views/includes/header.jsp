@@ -569,8 +569,8 @@ div > span{
 }
 .button-btn-submit{
 	position:absolute;
-	right : 15px;
 	top:70%;
+	left:100%;
 	z-index:1;
 	background-color:white;
             border:solid 2px rgba(228, 222, 222, 0.9);
@@ -582,7 +582,7 @@ div > span{
 .dots{
 	 position:absolute;
 	 top:15px;
-	 left:43%;
+	 left:80%;
 	 display:inline;
             justify-content: center;
             align-items: center;
@@ -634,7 +634,8 @@ cursor: pointer;
 
 
         .mySlides {
-     	   /* position:absolute; */
+     	   position:absolute;
+     	   left:40%;
      	    width:100%;
             height:100%;
             margin: 0px;

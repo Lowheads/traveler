@@ -1,6 +1,7 @@
 package org.travelmaker.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,9 +35,11 @@ import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
 import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.service.BoardService;
+import org.travelmaker.service.MemberService;
 import org.travelmaker.service.PlaceService;
 import org.travelmaker.service.RegionService;
 import org.travelmaker.service.ThemeService;
+import org.travelmaker.service.apiLoginService;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
@@ -54,6 +57,9 @@ public class MainController {
 	private BoardService boardservice;
 
 	private ThemeService themeService;
+	
+	private apiLoginService apiService;
+	private MemberService memberService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

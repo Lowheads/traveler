@@ -39,8 +39,6 @@ public class AdminMainController {
 		
 		model.addAttribute("qna",service.getQnaInfo());
 		
-		List<QnABoardVO> qna = new ArrayList();
-		
 		
 		return "main";
 	}
