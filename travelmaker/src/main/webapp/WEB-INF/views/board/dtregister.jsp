@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../includes/header.jsp" %>
 
 <!-- <link rel="stylesheet" href="/resources/css/main.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -78,10 +79,10 @@
   clear: both;
 }
 
-.container{
+.boardcontainer{
   border-radius: 5px;
   background-color: #f2f2f2;
-  padding: 30px;
+  padding: 30px 30px 50px 30px;
 
 }
 @media screen and (max-width: 600px) {
@@ -244,7 +245,7 @@ label {
 
 }
 
-.btn { 
+.dtbtn { 
 	font-size:15px;
 	color: black;
 
@@ -255,7 +256,7 @@ label {
 	float: right;
 }
 
-.btn:hover{
+.dtbtn:hover{
    background-color: #203341;
    color:white;
 }
@@ -293,7 +294,7 @@ label {
 	<!-- 좌측 register -->
 		<div class="left">
 		
-		<div class="container">
+		<div class="boardcontainer">
 			<form role="form" action="/board/dtregister" method="post" enctype="multipart/form-data">
 			
 				<div class="row">
@@ -327,13 +328,13 @@ label {
 				<br>
 				사진등록
 				<div class="flex-container">
-				<button type="button" class="fileAdd_btn btn" >사진추가</button>
+				<button type="button" class="fileAdd_btn dtbtn" >사진추가</button>
 						<span id="fileIndex"></span>
 			</div>
 			
 			<br>
-				<button id="btn" type="button" onclick="location.href='/board/list'" class="btn btn-default">취소</button>	
-				<button id="btn" type="submit" class="btn btn-default" >게시글 등록</button>
+				<button id="dtbtn" type="button" onclick="location.href='/board/list'" class="dtbtn btn-default">취소</button>	
+				<button id="dtbtn" type="submit" class="dtbtn btn-default" >게시글 등록</button>
 
 				</form>
 				</div>

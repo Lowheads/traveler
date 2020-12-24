@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ include file="../includes/header.jsp" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
 <!DOCTYPE html>
@@ -265,7 +266,7 @@ input:checked+.slider:before {
    color: #f60;
 }
 
-.active a{
+.pagination_bar .active a{
    color: #f60;
 }
 
@@ -281,7 +282,7 @@ input:checked+.slider:before {
 		<div class="mainMsg">
 		<b>일정 게시판</b>	
 		<br><br>	
-		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn" class="btn">내 일정 공유</a>
+		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn">내 일정 공유</a>
 		<!--mainMsg끝 -->
 		</div>
 		
@@ -290,7 +291,7 @@ input:checked+.slider:before {
 	
 		<!-- 페이징 -->
 
-    <div class="pagination" style="text-align: center;">
+    <div class="paging" style="text-align: center;">
          <ul class="pagination_bar">
             <c:if test="${pageMaker.prev }">
                <li class="pagination_btn previous"><a href="${pageMaker.startPage-1 }">&laquo;</a></li>
@@ -312,7 +313,7 @@ input:checked+.slider:before {
 	
 	
 	
-    	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn" class="btn" >공개/비공개 설정</a>
+    	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn">공개/비공개 설정</a>
 
 		<!--게시판 리스트 출력 -->
 		<div class="boardContents">
@@ -521,7 +522,23 @@ input:checked+.slider:before {
 				$('.schedulelistbg').hide();
 				modal('register_modal');
 			});
-	
+	//게시글 작성 알림
+	$(function(){
+		
+		var responseMsg = '<c:out value="${removemsg}"/>';
+		if (responseMsg != "") {
+			alert(responseMsg);
+		}
+		return false;
+	});
+	$(function(){
+		var responseMsg = '<c:out value="${registermsg}"/>';
+		if (responseMsg != "") {
+			alert(responseMsg);
+		}
+		return false;
+		
+	});
 	
 </script>
 

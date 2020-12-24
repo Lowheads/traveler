@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ include file="../includes/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -686,7 +687,7 @@ overflow-y: auto;
 	<!--상단 끝 -->
 	</div>
 	
-	<button id="list_btn" data-oper='list' class="btn btn-info">목록으로</button>
+	<button id="list_btn" data-oper='list' class="btn-info">목록으로</button>
 	
 	<form id='actionForm' action="/board/remove" method='post'>
 	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>

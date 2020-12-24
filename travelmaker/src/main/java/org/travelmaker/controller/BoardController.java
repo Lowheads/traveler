@@ -107,7 +107,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr, MultipartFile file, Model model) throws Exception {
+	public String register(BoardVO board, MultipartFile file, Model model) throws Exception {
 		log.info("register: "+board);
 
 		//파일처리 관련 코드
@@ -115,7 +115,6 @@ public class BoardController {
 		String ymdPath =UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
 
-		rttr.addFlashAttribute("result", board.getBoardNo());
 		
 		if (file != null) {
 			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
@@ -137,7 +136,6 @@ public class BoardController {
 		//스케쥴 상태 '미작성' -> '작성중' 으로 변경
 		scheduleservice.statusupdate(board.getSchNo());
 
-		
 		return "redirect:/board/dtregister?schNo="+board.getSchNo();
 	}
 	
@@ -167,7 +165,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/dtregister")
-	public String dtregister(BoarddtVO boarddt, MultipartHttpServletRequest mpRequest, @RequestParam(value="newContent", required=false) List<String> newContent) throws Exception{
+	public String dtregister(BoarddtVO boarddt,RedirectAttributes rttr, MultipartHttpServletRequest mpRequest, @RequestParam(value="newContent", required=false) List<String> newContent) throws Exception{
 		log.info("dtregister: "+boarddt);	
 		
 		BoardVO board= new BoardVO();
@@ -178,6 +176,7 @@ public class BoardController {
 		//작성중에서 작성으로
 		scheduleservice.statusupdate(board.getSchNo());
 		
+		rttr.addFlashAttribute("registermsg","게시글이 등록되었습니다.");
 		return "redirect:/board/list";
 	}
 	
@@ -196,7 +195,6 @@ public class BoardController {
 	@GetMapping({"/get"})
 	public void get(@RequestParam("boardNo")int boardNo, 
 			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) throws Exception {
-		System.out.println("get");
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
 		
@@ -230,8 +228,6 @@ public class BoardController {
 	@GetMapping({"/view"})
 	public void view(@RequestParam("boardNo")int boardNo, 
 			@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) throws Exception {
-		System.out.println("view");
-			
 		BoardVO board=boardservice.get(boardNo);
 		int schNo=board.getSchNo();
 		model.addAttribute("schedule",scheduleservice.getListSchedule(schNo));
@@ -267,7 +263,7 @@ public class BoardController {
 		System.out.println(board.getBoardImg()+","+board.getThumbImg());
 		
 		if(boardservice.modify(board)) {
-			rttr.addFlashAttribute("result","success");
+			rttr.addFlashAttribute("modifymsg","대표사진이 변경되었습니다.");
 			
 			rttr.addAttribute("pageNum",cri.getPageNum());
 			rttr.addAttribute("amount",cri.getAmount());
@@ -303,7 +299,7 @@ public class BoardController {
 			pickService.remove(pick);
 			System.out.println("delete"+pick);
 			
-			rttr.addFlashAttribute("result","success");
+			rttr.addFlashAttribute("removemsg","게시글이 삭제되었습니다.");
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
@@ -366,7 +362,7 @@ public class BoardController {
 
 		//새로운 콘텐츠가 있을 때만 실행
 		boarddtservice.update(boarddt, files, fileNames, mpRequest, newContent);
-		
+		rttr.addFlashAttribute("dtmodifymsg","게시글이 수정되었습니다.");
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		
