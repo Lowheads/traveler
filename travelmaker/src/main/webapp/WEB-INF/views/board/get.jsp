@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ include file="../includes/header.jsp" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
 <!DOCTYPE html>
@@ -716,11 +717,11 @@ overflow-y: auto;
 	</div>
 		<c:choose>
   <c:when test="${memNo eq schedule.memNo}">
-    <button id="dtmodify_btn" data-oper='dtmodify' class="btn btn-default">사진목록수정</button>
+    <button id="dtmodify_btn" data-oper='dtmodify' class="btn-default">사진목록수정</button>
   </c:when>
 </c:choose>
 	
-	<button id="list_btn" data-oper='list' class="btn btn-info">목록으로</button>
+	<button id="list_btn" data-oper='list' class="btn-info">목록으로</button>
 	
 	<form id='actionForm' action="/board/remove" method='post'>
 	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
@@ -729,7 +730,7 @@ overflow-y: auto;
 
 	<c:choose>
   		<c:when test="${memNo eq schedule.memNo}">
-    	<button id="remove_btn" type="submit" class="btn btn-danger subbutton">삭제</button>
+    	<button id="remove_btn" type="submit" class="btn-danger subbutton">삭제</button>
   		</c:when>
 	</c:choose>
 
@@ -1151,7 +1152,24 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() { 
   modal1.style.display = "none";
 }
+
+//대표사진 수정 알림
+$(function(){
 	
+	var responseMsg = '<c:out value="${modifymsg}"/>';
+	if (responseMsg != "") {
+		alert(responseMsg);
+	}
+	return false;
+	});
+
+$(function(){
+	var responseMsg = '<c:out value="${dtmodifymsg}"/>';
+	if (responseMsg != "") {
+		alert(responseMsg);
+	}
+	return false;
+	});
 </script>
 
 </body>

@@ -1,55 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet" href="/resources/css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-					<form role="form" id="modiremoveform" name="content_form" action="/board/modify" method="post" enctype="multipart/form-data">
-					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-						
-						<div class="form-group">
-						 <input type="hidden" class="form-control" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
-						</div>
-					
-						<div class="form-group">
-						<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' />
-							<label for="boardImg">대표 사진 변경</label>
-								<input type="hidden" name="boardImg" value="${board.boardImg }">
- 								<div class="select_img" > 
-									<img src="<c:out value="/resources${board.boardImg}"/>" id="modifyimage" data-image="${board.boardImg }" 
-									width="500px" height="300px"/>
-								</div> 
-						</div>
-						<script>
-						//사진등록 시 화면에 보여주는 함수
-						$("#boardImg").change(function() {
-							if (this.files && this.files[0]) {
-							var reader = new FileReader;
-								reader.onload = function(data) {
-							$(".select_img img").attr("src", data.target.result)
-								.width(500)
-								.height(300);
-							}
-							reader.readAsDataURL(this.files[0]);
-							}
-						});
-						</script>
-					
-					
-						<div class="form-group">
-							<label>게시글 제목</label> <input class="form-control" name='boardTitle' value='<c:out value="${board.boardTitle}"/>' >
-						</div>				
-						
-							<label>공개여부</label> 공개 <input type="radio" name='hidden' value="y" checked> 
-							비공개 <input type="radio" name='hidden' value="n"><br>
+<form role="form" id="modiremoveform" name="content_form" action="/board/modify" method="post" enctype="multipart/form-data">
+	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> <input type='hidden'
+		name='amount' value='<c:out value="${cri.amount }"/>'>
 
-                        <button id="Btn" type="submit" data-oper='modify' class="btn btn-default subbutton">수정</button>
-						<!-- <button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">삭제</button> -->
-						<!-- <button id="Btn" data-oper='list' class="btn" >취소</button> -->
-					</form>
+	<div class="form-group">
+		<input type="hidden" class="form-control" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
+	</div>
+
+	<div class="form-group">
+		<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' /> 
+		<label for="boardImg">대표 사진 변경</label> <input type="hidden" name="boardImg" value="${board.boardImg }">
+		<div class="select_img">
+			<img src="<c:out value="/resources${board.boardImg}"/>"
+				id="modifyimage" data-image="${board.boardImg }" width="500px" height="300px" />
+		</div>
+	</div>
+	<script>
+		//사진등록 시 화면에 보여주는 함수
+		$("#boardImg").change(
+				function() {
+					if (this.files && this.files[0]) {
+						var reader = new FileReader;
+						reader.onload = function(data) {
+							$(".select_img img")
+									.attr("src", data.target.result).width(500)
+									.height(300);
+						}
+						reader.readAsDataURL(this.files[0]);
+					}
+				});
+	</script>
+
+
+	<div class="form-group">
+		<label>게시글 제목</label> <input class="form-control" name='boardTitle'
+			value='<c:out value="${board.boardTitle}"/>'>
+	</div>
+
+	<label>공개여부</label> 공개 <input type="radio" name='hidden' value="y"
+		checked> 비공개 <input type="radio" name='hidden' value="n"><br>
+
+	<button id="Btn" type="submit" data-oper='modify'
+		class="btn btn-default subbutton">수정</button>
+	<!-- <button id="Btn" type="submit" data-oper='remove' class="btn btn-danger subbutton">삭제</button> -->
+	<!-- <button id="Btn" data-oper='list' class="btn" >취소</button> -->
+</form>
 
 
 <style>
@@ -95,7 +96,6 @@
 .btn { 
 	font-size:15px;
 	color: black;
-	margin-top: 30px;
 	margin-bottom: 30px;
 	background-color:white;
 	border: 1px solid gray;
