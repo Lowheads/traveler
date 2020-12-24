@@ -562,6 +562,176 @@ text-align: center;
 	font-size: 17px;
 	padding-left: 10px;
 	}
+	
+<!-- theme페이지 이미지 슬라이드쇼-->
+div > span{
+            border:solid 3px rgb(62, 40, 192);  
+}
+.button-btn-submit{
+	position:absolute;
+	top:70%;
+	left:100%;
+	z-index:1;
+	background-color:white;
+            border:solid 2px rgba(228, 222, 222, 0.9);
+            margin : 3px;
+            padding: 4px 7px;
+            border-radius: 7px;
+
+}
+.dots{
+	 position:absolute;
+	 top:15px;
+	 left:80%;
+	 display:inline;
+            justify-content: center;
+            align-items: center;
+            z-index:1;
+}
+
+.dot {
+margin: 0 2px;
+            background-color:rgba(218, 212, 212, 0.7);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+             border:solid 2px rgba(128, 128, 128, 0.7);
+cursor: pointer;
+            height:20px;
+            width: 20px;
+	z-index:1;
+	
+  
+}
+
+.dot:hover {
+    background-color:rgba(238, 238, 238, 0.7);
+}
+
+
+.active {
+  background-color: #717171;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* .w3-left, .w3-right{cursor:pointer} */
+
+.slideWrapper{
+	     	    width:1005px;
+            height:700px;
+            position : relative;
+              max-width:100%;
+}
+
+
+        .mySlides {
+     	   position:absolute;
+     	   left:40%;
+     	    width:100%;
+            height:100%;
+            margin: 0px;
+            border:solid 2px rgba(128, 128, 128, 0.7);
+ 			border-radius: 30px;
+ 			position : absolute;
+ 			
+        }
+        
+        .themeImage{
+            width:1000px;
+            height:550px;
+            overflow:hidden;
+            position : absolute;
+            margin: 0px;
+            border-radius:30px 30px 0px 0px;
+            padding:0px;
+            box-sizing: border-box;
+        }
+
+
+        .themeImage img{
+            width:100%;
+            object-fit: cover;
+            
+        }
+        
+        .resultWrapper{
+        	position : absolute;
+        	 top:560px;
+        	  width:1000px;
+/*         	border:solid 3px rgb(255, 0, 102);   */
+        }
+
+        
+        .travel-theme{
+            width:100%;
+            height:30px;
+          padding-top : 0;
+            font-weight:bold;
+/*             border:solid 2px rgb(255, 255, 0,1); */ 
+        }
+
+        .placeList{
+            width:100%;
+/*             border:solid 2px rgb(255, 255, 0,1);  */
+        }
+        
+          .recPlace{
+            float: left;
+            border:solid 2px rgba(228, 222, 222, 0.9);
+            margin : 3px;
+            padding: 4px 7px;
+            border-radius: 7px;
+
+        }
+
+        .recPlace:hover{
+
+            color:rgba(255, 255, 255, 0.6);
+            background-color:rgba(122, 161, 206, 0.9);
+
+        }
+
+        .clicked{
+
+            color:rgba(255, 255, 255, 1);
+            background-color:rgba(78, 110, 146, 0.9);
+
+        }
+        
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            z-index:1;
+            }
+            
+            .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+<!-- -->
 
 
 

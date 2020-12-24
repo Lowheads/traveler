@@ -6,45 +6,37 @@
 <%@ include file="includes/adminheader.jsp"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-	<p class="mb-4">
-		DataTables is a third party plugin that is used to generate the demo
-		table below. For more information about DataTables, please visit the <a
-			target="_blank" href="https://datatables.net">official DataTables
-			documentation</a>.
-	</p>
-
-	<!-- DataTales Example -->
-	<div class="card shadow mb-4">
-		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+			<h6 class="m-0 font-weight-bold text-primary">탈퇴 회원 관리</h6>
 		</div>
 		<div class="card-body">
 			<div class="form-group row justify-content-center">
-				<form id='searchForm' action="/admin/withdraw" method='get'>
-				<div class="w100" style="padding-right: 10px">
+			<form id='searchForm' action="/admin/withdraw" method='get'><!-- 
+				<div class="w100 input-group custom-search-form" style="padding-right: 10px"> -->
+				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
 						<option selected disabled hidden><c:out value="${criteria.type}"/></option>
 						<option value="회원번호">회원번호</option>
 						<option value="이메일">이메일</option>
 						<option value="닉네임">닉네임</option>
 					</select>
-				</div>
-				<div class="w300" style="padding-right: 10px">
-							<input type="text" class="form-control form-control-sm"
+ 							<input type="text" class="form-control form-control-sm" placeholder="키워드를 입력하시오"
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
+				
+				<span class="input-group-btn">
+						<button onclick="return search()" class="btn btn-default" type="submit">
+						<i class="fa fa-search"></i></button>
+					
+				</span>
 				</div>
-				<div>
-				<button class="btn btn-sm- btn-primary">검색</button>
+				
+				<!-- <div>
+				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
 				</div>
-				</form>
+				 -->
+				 </form>
 
 				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%"
+					<table class="table table-hover" id="dataTable" width="100%"
 						cellspacing="0">
 						<thead>
 							<tr>
@@ -59,19 +51,6 @@
 								<th>MEM_GRADE</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<th>MEM_NO</th>
-								<th>EMAIL</th>
-								<th>NICKNAME</th>
-								<th>BIRTH</th>
-								<th>GENDER</th>
-								<th>STATUS</th>
-								<th>REG_DATE</th>
-								<th>LATEST LOGIN DATE</th>
-								<th>MEM_GRADE</th>
-							</tr>
-						</tfoot>
 						<tbody id="tableBody">
 
 							<c:forEach items="${users}" var="users">
@@ -147,12 +126,6 @@
 
 		</div>
 
-	</div>
-	<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->
-
 <script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 $(document).ready(function() {
@@ -183,32 +156,46 @@ $(document).ready(function() {
 			location.href = "/admin/boardList?type=mem_no&keyword="	+ id;
 		})
 	})
+	
+	const _sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
+	const timer = async () => {
+	    await _sleep(1000);
+	    $("#dataTable_filter")[0].hidden=true;
+	};
+	
+	timer();
+	
 })
 
-$("#searchForm button").on("click",function(e) {
+
+function search(){
 		
 		const type = $("select[id=type]").val();
 		const keyword = $("input[id=keyword]").val();
-	
-		let msg = "";
+		
+		let msg="";
 		
 		if (type == "") {
-			
-			showModal("검색할 대상을 선택하세요")
+			msg = "검색할 대상을 선택하세요";
+			showModal(msg);
 			return false;
 		}
 
 		if (keyword == "") {
-			showModal("검색할 단어를 입력하세요")
+			msg = "검색할 단어를 입력하세요"
+			showModal(msg);
 			return false;
 		}
+		
 		if(type =="회원번호"){
 			if(isNaN(keyword)){
-				showModal("회원번호는 숫자만 입력해주세요")
+				msg = "회원번호는 숫자만 입력해주세요"
+				showModal(msg);
 				return false;
 			}
 		}
-
+		
 		if(keyword.length>100){
 			msg = "검색은 100자리 이하만 가능합니다";
 			showModal(msg);
@@ -216,7 +203,7 @@ $("#searchForm button").on("click",function(e) {
 		}
 		
 		return true;
-	})
+	}
 
 	function showModal(msg){
 			

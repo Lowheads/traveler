@@ -7,9 +7,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.travelmaker.domain.ThemeVO;
+import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.PlaceVO;
+import org.travelmaker.domain.QnABoardVO;
+import org.travelmaker.domain.StatisticVO;
 import org.travelmaker.mapper.AdminBoardMapper;
 import org.travelmaker.mapper.AdminMemberMapper;
+import org.travelmaker.mapper.MainMapper;
+import org.travelmaker.mapper.PlaceMapper;
 import org.travelmaker.mapper.ThemeAttachMapper;
 import org.travelmaker.mapper.ThemeMapper;
 
@@ -32,6 +37,13 @@ public class MapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private ThemeAttachMapper mapper4;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MainMapper mainMapper;
+
+	@Setter(onMethod_ = @Autowired)
+	private PlaceMapper placeMapper;
+	
 
 //	@Test
 	public void dateTest() {
@@ -230,11 +242,129 @@ public class MapperTests {
 		
 		log.info("-----------------"+result+"-----------------");
 		*/
-		
-		
-		
-		
 //		
+	}
+	
+//	@Test
+	public void updateThemeTest() {
+		/*
+		 * int themeNo = 2; log.info(mapper3.updateTheme(themeNo));
+		 * 
+		 * assertTrue(mapper3.updateTheme(themeNo)==1);
+		 */	
+		
+	}
+	
+	//@Test
+	public void codeTest() {
+		
+		List<String> list = mapper3.getThemeList();
+		//List<ThemeVO> list = mapper3.getThemeList();
+		
+		
+		
+	//	HashMap<List<>, V>
+		
+		//List<ThemeVO> list = mapper3.getThemeList();
+		
+		//list.forEach(theme->log.info(theme.toString()));
+	}
+	
+//	@Test
+	public void getPostDetail() {
+		
+//		int boardNo = 19;
+//		mapper2.getPostDetail(boardNo);
+//		
+		
+	}
+	//@Test
+	public void mappertest() {
+		
+		/*
+		 * int themeNo = 3;
+		 * 
+		 * List<PlaceVO> list = mapper3.getThemeInfo(themeNo);
+		 * 
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		int pageNum = 3;
+		
+		String keyword = "바다";
+		
+		List<PlaceVO> list = mapper3.getPlaceList(keyword, pageNum);
+		
+		list.forEach(theme->log.info(theme.toString()));
+		
+	}
+	
+	//@Test
+	public void mainMapperTest() {
+		
+		/*
+		 * List<BoardVO> list = mainMapper.newestPost();
+		 * 
+		 * list.forEach(post->log.info(post.toString()));
+		 */
+		
+		
+		
+//		/* List<StatisticVO> list = mainMapper.getDaily(); */
+		 List<StatisticVO> list = mainMapper.getMonthly();
+		 list.forEach(theme->log.info(theme.toString()));
+		 
+	}
+	
+	//@Test
+	public void placeMapperTest() {
+		
+		int regionNo = 1;
+	//	List<PlaceVO> list = placeMapper.getPlaceByWeather();
+		List<PlaceVO> list = placeMapper.getPlaceByWeather(regionNo);
+		
+		list.forEach(theme->log.info(theme.toString()));
+	}
+	
+	@Test
+	public void getMonthly() {
+		
+		/*
+		 * List<StatisticVO> list = mainMapper.getMonthly();
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		
+		
+		/*
+		 * List<BoardVO> list = mainMapper.getPopularPostsByPick();
+		 * list.forEach(theme->log.info(theme.toString()));
+		 * 
+		 * 
+		 * List<BoardVO> list2 = mainMapper.getPopularPostsByView();
+		 * list2.forEach(theme->log.info(theme.toString()));
+		 */
+		 
+		/*
+		 * int result = mainMapper.cntQnaPost(); log.info(result);
+		 */
+		
+		List<QnABoardVO> list = mainMapper.getQnaPost();
+		
+		 list.forEach(theme->log.info(theme.toString()));
+	}
+	
+	//@Test
+	public void memberTest() {
+		
+		/*
+		 * Criteria cri = new Criteria(); cri.setType("닉네임"); cri.setKeyword("아침");
+		 * List<MemberVO> list= mapper.getUserList(null);
+		 * 
+		 * //List<MemberVO> list= mapper.getWithdrawUserList(cri);
+		 * 
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
+		
+		
 	}
 	
 	

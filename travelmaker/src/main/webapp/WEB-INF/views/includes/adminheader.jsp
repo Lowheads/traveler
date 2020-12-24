@@ -6,31 +6,10 @@
 
 <style>
 
-/* .uploadResult{
-	width:100%;
-	background-color:gray;
+.table{
+	margin-top:10px;
+	font-size: small;
 }
- 
- 
-.uploadResult ul{
-	display:flex;
-	flex-flow:row;
-	justify-content:center;
-	align-items:center;
-}
-
-.uploadResult ul li{
-	list-style:none;
-	padding:10px;
-	align-content:center;
-	text-align:center;
-	
-}
-
-.uploadResult ul li span{
-	color:white;
-}
-*/
 .bigPictureWrapper{
 	position:absolute;
 	display:none;
@@ -38,27 +17,55 @@
 	align-items:center;
 	top:0%;
 	width:100%;
-	height:100%;
+	height:100vh;
 	background-color:gray;
 	z-index:100;
-	background:rgba(255,255,255,0.5);
+	background:rgba(255,255,255,0.5); 
 }
 
 .bigPicture{
-	
-	position:relative;
-	display:flex;
-	justify-content:center;
-	align-items:center;
+	width:100%;
+	height:100%;
+	position:absolute;
+	display:flex; 
+ 	justify-content:center;
+	align-items:center; 
 	
 }
 
-.bigPicture img{
-	
-	width:600px;	
+
+
+#pagination li{
+	 list-style:none;
+	 list-style-type:none;
+	     padding: 0 0 0 0;
+    border : 0;
+    float: left;
+}
+
+li{
+	 list-style-type:none;
+    border : 0;
 }
 
 
+.block{
+	background-color: white;
+	width:500px;
+	height:400px;
+	border: 1px solid RGB(234,234,234);
+	 border-radius: 10px;
+	 box-shadow:3px 3px 10px RGB(189,189,189);
+	 display:inline-block;
+	 margin-left:10px;
+	
+}
+
+.uploadResult ul{
+	display:inline;
+	padding : 0px;
+	padding-bottom:10px;
+} 
 
 
 </style>
@@ -96,7 +103,11 @@
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
+	
+		<div class='bigPictureWrapper not_scroll cont'>
+			<div class='bigPicture not_scroll cont'></div>
+		</div>
+		
 		<!-- Sidebar -->
 		<ul
 			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -104,12 +115,12 @@
 
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="/admin/main">
+				href="/main/index">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
 				<div class="sidebar-brand-text mx-3">
-					여정 admin
+					여행의 정석
 				</div>
 			</a>
 
@@ -187,15 +198,14 @@
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
-			<!-- Main Content -->
+					<!-- Main Content -->
 			<div id="content">
 
 				<!-- Topbar -->
-				<nav
+<!--  				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-					<!-- Sidebar Toggle (Topbar) -->
+					Sidebar Toggle (Topbar)
 					<form class="form-inline">
 						<button id="sidebarToggleTop"
 							class="btn btn-link d-md-none rounded-circle mr-3">
@@ -203,12 +213,34 @@
 						</button>
 					</form>
 
-					<!-- Topbar Search -->
+					Topbar Search
 					<form
 						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 						
 					</form>
 
 
-				</nav>
-				<!-- End of Topbar -->
+				<li class="nav-item alarm dropdown no-arrow mx-1 status='show'">
+						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<i class="fas fa-bell fa-fw"></i>
+							Counter - Alerts
+							<span class="badge badge-danger badge-counter"></span>
+						</a>
+						Dropdown - Alerts
+						<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+							<h6 class="dropdown-header">
+								Alerts Center
+							</h6>
+							<div class="dropdown-item d-flex align-items-center" href="#">
+								<div class="small text-gray-500">December 12, 2019</div>
+								<span class="font-weight-bold">A new monthly report is ready to download!</span>
+							</div>	
+							<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+						</div>
+					</li>
+				</nav> 
+					
+				End of Topbar -->
+				<div class="container fluid">	
+<div class="card shadow mb-4 right">
+<div class="card-header py-3">

@@ -38,16 +38,12 @@ private AdminBoardService service;
 	@GetMapping("/boardList")
 	public String getPost(Criteria cri, Model model) {
 		
-		List<BoardVO> result;
-		
 		if (cri.getKeyword() == null||cri.getType()==null) {
-			result = service.getBoardList();
-			model.addAttribute("board", result);
+			model.addAttribute("board", service.getBoardList());
+			
 		}else {
-			result = service.searchPost(cri);
-			model.addAttribute("board", result);
+			model.addAttribute("board", service.searchPost(cri));
 		}
-		
 		return "/boardList";
 	}
 	
@@ -66,6 +62,8 @@ private AdminBoardService service;
 	
 	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<BoarddtVO>> getDetail(@PathVariable("boardNo") int boardNo) {
+		
+		System.out.println("controller");
 		
 		ResponseEntity<List<BoarddtVO>> result = null;
 		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostDetail(boardNo));

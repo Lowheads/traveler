@@ -15,5 +15,6 @@ public class StatisticVO {
 	private String cntMember;
 	private String cntPost;
 	private String cntWithdrawalMember;
+	private String cntTraffic;
 
 }

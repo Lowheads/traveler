@@ -5,39 +5,39 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-지역<br>
-테마<br>
+			<h6 class="m-0 font-weight-bold text-primary">상세 조회하기 </h6>
+		</div>
+<div class="card-body">
 
-<button id="searchBtn" class="btn btn-sm- btn-primary" 
-onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>	
 
-<div class="uploadResult">
-	<ul>
-	</ul>
+
+<button id="searchBtn" class="btn btn-primary float-right" 
+onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button><br>
+
+<div class="uploadResult col-sm-12">
 </div>
-<div class='bigPictureWrapper'>
-	<div class='bigPicture'></div>
-</div>
-<br>
 
-
-<table  class="table table-bordered" id="dataTable" style="width:70%">
+<div class="table-responsive">
+	
+<table  class="table table-hover" style="width:100%">
 <thead>
 <tr>
-	<th>장소번호</th>
 	<th>장소명</th>
 	<th>상세주소</th>
 	<th>카테고리</th>
+	<th>휴일</th>	
+	<th>영업시간</th>
 	<th>좋아요 수</th>
 </tr>
 </thead>
 <tbody>
 <c:forEach items="${list}" var="list">
 	<tr name = row id = '<c:out value="${list.plcNo}" />'>
-	<td><c:out value="${list.plcNo}" /></td>
 		<td><c:out value="${list.plcTitle}" /></td>
 		<td><c:out value="${list.addressDt}" /></td>
 		<td><c:out value="${list.PCate}" /></td>
+		<td><c:out value="${list.holiday}" /></td>
+		<td><c:out value="${list.openingH}" /></td>
 		<td><c:out value="${list.likeCnt}" /></td>
 	</tr>
 </c:forEach>
@@ -59,16 +59,18 @@ onClick = "location.href='/admin/modifyTheme/${themeNo}'">수정하기</button>
 										data-dismiss="modal">확인</button>
 									<button id="modalDefaultBtn" type="button"
 										class="btn btn-primary" data-dismiss="modal">close</button>
-
 								</div>
 							</div>
 							<!-- /.modal-content -->
-
 						</div>
 						<!-- /.modal-dialog -->
 					</div>
 					<!-- /.modal -->
+					</div>
+					</div>
+					</div>
 
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -79,94 +81,82 @@ $(document).ready(function() {
 
 	history.replaceState({}, null, null);
 	
-	var themeNo = ${themeNo};
+	const themeNo = ${themeNo};
 	
+	//이미지 썸네일로 보여주기 
 	(function(){
 		
 		$.getJSON("/admin/getAttachment", {themeNo:themeNo},function(result){
 			
-			var str="";
+			let str="";
 			
-			var fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
+			const fileCallPath = encodeURIComponent("/s_"+result.uuid+"_"+result.fileName);
 			
-			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
-			"' data-type = '"+result.fileType+"'></div>";
-			
+/* 			str+= "<li data-path='"+result.uploadPath+"'data-uuid='"+result.uuid+"'data-fileName='"+result.fileName+
+			"' data-type = '"+result.fileType+"'><div>";
 			str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
 			str+="</div>";
-			str+="</li>";
+			str+="</li>"; */
 			
-			$(".uploadResult ul").html(str);
-		
+
+			str+= "<ul data-uuid="+result.uuid+" data-filename="+result.fileName+"><span s>첨부파일</span><span>"+result.fileName+"</span></ul><br>"
+			$(".uploadResult").html(str);
+
 		})
 			
 	})();
-	
-	
 
 	function checkModal(message) {
 
 		if (message === '' || history.state) {
-			
 			return;
-			
 		}else{
-			
 			showModal("수정을 완료하였습니다");
 		}
 	}
 	
-$("tr[name=row]").click(function(){
-	
-	const plcNum = $(this).attr("id");
-
-	let URL = "https://place.map.kakao.com/"+plcNum;
-	
-	window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
-	
-})
-
-$(".uploadResult").on("click","li", function(e){
-	
-	let liObj = $(this);
-	
-	const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
-	showImage(path.replace(new RegExp(/\\/g),"/"));
-/*	
-	if(liObj.data("type")){
-		showImage(path.replace(new RegExp(/\\/g),"/"));
-	}else{
+	$("tr[name=row]").click(function(){
 		
-		self.location="admin/download?fileName="+path
-	}*/
+		const plcNum = $(this).attr("id");
 	
-});
-
-$(".bigPictureWrapper").on("click",function(e){
-	$(".bigPicture").animate({width:'0px', height:'0px'});
-	setTimeout(() => {
-		$(this).hide();
+		let URL = "https://place.map.kakao.com/"+plcNum;
 		
-	},300);
+		window.open(URL, "카카오 지도", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+		
+	})
 	
-});
+/* 	$(".uploadResult").on("click","img", function(e){
+		
+		let liObj = $(this).parent().parent();
+		
+		const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+		
+		theme.showImage(path.replace(new RegExp(/\\/g),"/"));
+		
+	}); */
+	
+	$(".uploadResult").on("click","span", function(e){
+		
+		let liObj = $(this).parent();
+		
+		const path = encodeURIComponent(liObj.data("uuid")+"_"+liObj.data("filename"));
+		
+		theme.showImage(path.replace(new RegExp(/\\/g),"/"));
+		
+	}); 
 
-function showModal(msg){
-	
-	$(".modal-body").html(msg);
-	$("#myModal").modal("show");
-};
+	$(".bigPictureWrapper").on("click",function(e){
+		$(".bigPicture").animate({width:'0px', height:'0px'});
+		setTimeout(() => {
+			$(this).hide();
+		},300);
+		$('body').css("overflow", "scroll");
+	});
 
-
-function showImage(fileCallPath){
-	
-	$(".bigPictureWrapper").css("display","flex").show();
-	
-	$(".bigPicture").html("<img src='/admin/display?fileName="+encodeURI(fileCallPath)+"'>")
-	.animate({width:'100%',height:'100%'},1000);
-
-	
-}
+	function showModal(msg){
+		$(".modal-body").html(msg);
+		$("#myModal").modal("show");
+	};
 
 })
 
