@@ -272,6 +272,7 @@ a{text-decoration: none}
 	background-color: white;
 	border-radius: 40px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+	display:none;
 }
 
 #goNext{
@@ -427,24 +428,23 @@ a{text-decoration: none}
 					<!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
 					<div class="selectContent dateNodeList"
 						style="margin-left: 30px; padding-left: 30px;">
-						<div>
+						<div class="dateNodeList">
 							<b class="dateNodeList">출발일</b>
 						</div>
 						<div class="dateNodeList">날짜추가</div>
-							<div class="datepickerBox">
-							
+							<div class="datepickerBox dateNodeList">
 							</div>
 					</div>
 				
 				</div>
 
 				<div class="navDateBtn">
-					<div class="selectContent"
+					<div class="selectContent dateNodeList" 
 						style="margin-left: 30px; padding-left: 30px;">
-						<div>
-							<b>도착일</b>
+						<div class="dateNodeList">
+							<b class="dateNodeList">도착일</b>
 						</div>
-						<div>날짜추가</div>
+						<div class="dateNodeList">날짜추가</div>
 					</div>
 				</div>
 
@@ -530,7 +530,7 @@ a{text-decoration: none}
 
 	$(function() {
 
-		$('input[name="daterange"]').daterangepicker({
+		$('.navDateBtn').daterangepicker({
 			startDate : moment(),
 			endDate : moment(),
 			minDate : moment(),
@@ -541,6 +541,8 @@ a{text-decoration: none}
 			/* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
 			startDate = start.format('YYYY-MM-DD');
 			endDate = end.format('YYYY-MM-DD');
+			document.getElementsByClassName("dateNodeList")[4].innerHTML = "<b style=font-size:15px;color:black;>"+start.format('MM월 DD일')+"</b>";
+			document.getElementsByClassName("dateNodeList")[9].innerHTML = "<b style=font-size:15px;color:black;>"+end.format('MM월 DD일')+"</b>";
 		});
 		document.getElementById("goNext").addEventListener("click", submitData);
 		initDate();
@@ -556,7 +558,7 @@ a{text-decoration: none}
 
 	function submitData() {
 
-		let optionRegionNo = $(".option-box:selected").get(0).dataset["regionNo"];
+		let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionno'];
 
 		console.log(startDate);
 		console.log(endDate);
@@ -1067,7 +1069,9 @@ a{text-decoration: none}
     		   $(".datepickerBox").hide();
     	 } 
     
-     $(".navDateBtn").on('click',function(){
+    
+    
+     /* 의미없는듯 달력디자인을 바꿔야함$(".navDateBtn").on('click',function(){ */
     	/* let mNavNode = document.querySelector("#mainNav").childNodes; */
     	/* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
     	$(this).children(".selectContent").css("border","none");
@@ -1075,11 +1079,13 @@ a{text-decoration: none}
     	$(this).css("border-radius","40px");
     	 */
     	 
-    	 $(".datepickerBox").show();
-    })
+    /* 	 $(".datepickerBox").show();
+    }) */
     
     $(".region").on("click",function(){
-    	
-    	document.getElementsByClassName("selectContent").innerText = $(this).text()
+    	document.getElementsByClassName("navBtnNodeList")[3].innerHTML = "<b class='navBtnNodeList' data-regionNo="+$(this).data('regionNo')+" style=color:black;font-size:15px;>"+$(this).text()+"</b>"
+    	$(".navDateBtn").first().click();
+    	$(".datepickerBox").show();
     })
+    
 </script>
