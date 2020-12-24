@@ -183,23 +183,102 @@ a{text-decoration: none}
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom: 150px;
-	width: 40%;
+	width: 60%;
 	height: 12%;
 	background-color:white;
-	border: 1px solid black;
 	border-radius: 40px;
 	display:flex;
-	justify-content: space-around;            
+	justify-content: flex-start;            
+	flex-grow: 1;
 }
 
 .navContent{
-	margin-top: auto;
-	margin-bottom: auto;
+	padding-top:15px;
+	height:100%;
+	flex-basis: 35%;
+}
+.navContent:hover{
+	background-color: rgb(128,128,128,0.1);
+	border-radius: 40px;
+}
+
+.navDateBtn{
+	padding-top:15px;
+	height:100%;
+	flex-basis: 30%;
+}
+
+.navDateBtn:hover{
+	background-color: rgb(128,128,128,0.1);
+	border-radius:40px;
+}
+.navDateBtn:hover .selectContent{
+	border:none;
+}
+
+.navDateBtn .selectContent{
+	border-left: 1px solid rgb(128,128,128,0.3);
+}
+
+.navSearchBtn{
+	padding-top:15px;
+	height:100%;
+	width: 30%;
+}
+.selectContent{
+	margin-top:auto;
+	margin-bottom:auto;
+	text-align: left;
+	color: gray;
+}
+
+.selectContent b{
+	color:black;
+	font-size: 12px;
+	text-align: left;
+}
+.selectRegionBox{
+	position: absolute;
+	display:none;
+	bottom:260px;
+	width: 500px;
+	height: 200px;
+	background-color: white;
+	border-radius: 40px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+	padding: 30px;
+	flex-wrap: wrap;
+	align-content:flex-end;
+}
+.region{
+	height:45px;
+	border-radius:10px;
+	margin-right: 10px;
+	padding:10px;
+	border:1px solid rgb(128,128,128,0.2);
+	margin-top:20px;
+}
+
+.region:hover{
+	border:5px double black;
+}
+
+.datepickerBox{
+	position:absolute;
+	bottom:60px;
+	left:20%;
+	height:400px;
+	width: 900px;
+	background-color: white;
+	border-radius: 40px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 }
 
 #goNext{
-	background-color: black;
+	background-color: #ff8b3d;
 	border-radius: 50%;
+	height: 50px;
+	width: 50px;
 }
 
 .material-icons{
@@ -310,138 +389,6 @@ a{text-decoration: none}
 /* selectbox */
 
 
-/* ===== Select Box ===== */
-.sel {
-  font-size: 10px;
-  display: inline-block;
-  margin: 1em 1em;
-  width: 230px;
-  background-color: transparent;
-  position: relative;
-  cursor: pointer;
-}
-
-.sel::before {
-  position: absolute;
-  content: '\f063';
-  font-family: 'FontAwesome';
-  font-size: 2em;
-  color: black;
-  right: 20px;
-  top: calc(50% - 0.5em);
-}
-
-.sel.active::before {
-  transform: rotateX(-180deg);
-}
-
-.sel__placeholder {
-  display: block;
-  font-family: 'Quicksand';
-  font-size: 20px;
-  color: #838e95;
-  padding: 0.2em 0.5em;
-  text-align: left;
-  pointer-events: none;
-  user-select: none;
-  visibility: visible;
-}
-
-.sel.active .sel__placeholder {
-  visibility: hidden;
-}
-
-.sel__placeholder::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.2em 0.5em;
-  content: attr(data-placeholder);
-  visibility: hidden;
-}
-
-.sel.active .sel__placeholder::before {
-  visibility: visible;
-}
-
-.sel__box {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: -4px;
-  display: none;
-  list-style-type: none;
-  text-align: left;
-  font-size: 1em;
-  background-color: #FFF;
-  width: calc(100% + 8px);
-  box-sizing: border-box;
-}
-
-.sel.active .sel__box {
-  display: block;
-  animation: fadeInUp 500ms;
-}
-
-.sel__box__options {
-  display: list-item;
-  font-family: 'Quicksand';
-  font-size: 1.5em;
-  color: #838e95;
-  padding: 0.5em 1em;
-  user-select: none;
-}
-
-.sel__box__options::after {
-  content: '\f00c';
-  font-family: 'FontAwesome';
-  font-size: 0.5em;
-  margin-left: 5px;
-  display: none;
-}
-
-.sel__box__options.selected::after {
-  display: inline;
-}
-
-.sel__box__options:hover {
-  background-color: #ebedef;
-}
-
-/* ----- Select Box Black Panther ----- */
-.sel {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
-}
-
-.sel--black-panther {
-  z-index: 2;
-}
-
-
-/* ===== Keyframes ===== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 
 
 </style>
@@ -458,29 +405,54 @@ a{text-decoration: none}
 			 <div class='weather'>
   </div>
 			<div id="mainNav">
-				<div class="navContent"  style="text-align: center;">
+				<div class="navContent navBtnNodeList"  style="text-align: center;">
 
-					<div class="sel sel--black-panther">
-						<select name="region" id="region" >
-							<option data-region-no="1" value="" disabled>지역</option>
-							<option class="option-box" data-region-no="1">제주시</option>
-							<option class="option-box" data-region-no="2">서귀포시</option>
-							<option class="option-box" >속초시</option>
-							<option class="option-box">여수시</option>
-							<option class="option-box" >부산광역시</option>
-							<option class="option-box">광주광역시</option>
-						</select>
+					<div class="selectContent navBtnNodeList" style="margin-left:40px;">
+						<div><b class="navBtnNodeList">위치</b></div>
+						<div class="navBtnNodeList">어디로 여행가세요?</div>
+					<div class="selectRegionBox">
+							<div class="region" data-region-no="1">제주시</div>
+							<div class="region" data-region-no="2">서귀포시</div>
+							<div class="region">속초시</div>
+							<div class="region">여수시</div>
+							<div class="region">부산광역시</div>
+							<div class="region">광주광역시</div>
+							<div class="region">경주시</div>
+							<div class="region">대구광역시</div>
+					</div>
 					</div>
 
 				</div>
-				<div class="navContent">
-					<input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; />
-				</div>
+				<div class="navDateBtn dateNodeList">
+					<!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
+					<div class="selectContent dateNodeList"
+						style="margin-left: 30px; padding-left: 30px;">
+						<div>
+							<b class="dateNodeList">출발일</b>
+						</div>
+						<div class="dateNodeList">날짜추가</div>
+							<div class="datepickerBox">
+							
+							</div>
+					</div>
 				
-				
-				<div class="navContent" id="goNext">
-					<i class="material-icons w3-large">search</i>
 				</div>
+
+				<div class="navDateBtn">
+					<div class="selectContent"
+						style="margin-left: 30px; padding-left: 30px;">
+						<div>
+							<b>도착일</b>
+						</div>
+						<div>날짜추가</div>
+					</div>
+				</div>
+
+
+				<div class="navSearchBtn" style="display:flex; justify-content: space-between;">
+				<div></div>
+					<div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; " aria-hidden="true"></i>
+				</div></div>
 			
 			</div>
 			
@@ -989,52 +961,6 @@ a{text-decoration: none}
   }
   
   
-  /* ===== Logic for creating fake Select Boxes ===== */
-  $('.sel').each(function() {
-    $(this).children('select').css('display', 'none');
-    
-    var $current = $(this);
-    
-    $(this).find('option').each(function(i) {
-      if (i == 0) {
-        $current.prepend($('<div>', {
-          class: $current.attr('class').replace(/sel/g, 'sel__box')
-        }));
-        
-        var placeholder = $(this).text();
-        $current.prepend($('<span>', {
-          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
-          text: placeholder,
-          'data-placeholder': placeholder
-        }));
-        
-        return;
-      }
-      
-      $current.children('div').append($('<span>', {
-        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
-        text: $(this).text()
-      }));
-    });
-  });
-
-  // Toggling the `.active` state on the `.sel`.
-  $('.sel').click(function() {
-    $(this).toggleClass('active');
-  });
-
-  // Toggling the `.selected` state on the options.
-  $('.sel__box__options').click(function() {
-    var txt = $(this).text();
-    var index = $(this).index();
-    
-    $(this).siblings('.sel__box__options').removeClass('selected');
-    $(this).addClass('selected');
-    
-    var $currentSel = $(this).closest('.sel');
-    $currentSel.children('.sel__placeholder').text(txt);
-    $currentSel.children('select').prop('selectedIndex', index + 1);
-  });
 
 
   /* 날씨api */
@@ -1121,5 +1047,34 @@ a{text-decoration: none}
 
         }
       }
+    })
+    
+    $(".navContent").on('click',function(){
+    	
+    	/* 블러처리 */
+    /* 	$(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2)");
+    	$(this).css("background-color","white");
+    	$(this).css("border-radius","40px"); */
+    	$(".selectRegionBox").css("display","flex");
+    })
+    
+      window.onclick = function(event) {
+    	   if (!event.target.matches('.navBtnNodeList')) {
+    		   $(".selectRegionBox").hide();
+    	   }
+    	   
+    	   if(!event.target.matches('.dateNodeList'))
+    		   $(".datepickerBox").hide();
+    	 } 
+    
+     $(".navDateBtn").on('click',function(){
+    	/* let mNavNode = document.querySelector("#mainNav").childNodes; */
+    	/* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
+    	$(this).children(".selectContent").css("border","none");
+    	$(this).css("background-color","white");
+    	$(this).css("border-radius","40px");
+    	 */
+    	 
+    	 $(".datepickerBox").show();
     })
 </script>

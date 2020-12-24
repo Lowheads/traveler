@@ -61,7 +61,7 @@
 
 <select id="getSchedule" resultType="hashMap">
 <![CDATA[
-	select * from schedule s, board b where s.sch_no = #{schNo} and s.sch_no = b.sch_no
+	select * from schedule s where s.sch_no = #{schNo}
 ]]>
 </select>
 
