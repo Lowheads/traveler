@@ -1077,4 +1077,9 @@ a{text-decoration: none}
     	 
     	 $(".datepickerBox").show();
     })
+    
+    $(".region").on("click",function(){
+    	
+    	document.getElementsByClassName("selectContent").innerText = $(this).text()
+    })
 </script>
