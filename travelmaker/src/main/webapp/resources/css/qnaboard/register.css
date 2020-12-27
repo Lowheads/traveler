@@ -1,8 +1,9 @@
 
 .title-head{ /* 타이틀 div */
-	margin-left: 10%;
     margin-top: 10%;
+   	margin-bottom: 10%;
 }
+
 
 .ct_body { /* 글쓰기 박스 */
     width: 100%;

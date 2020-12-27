@@ -28,16 +28,17 @@
 <div class="wrapper">
         <div class="header_wrapper">
         
-            <div class="title-head">
-        	<h4>Q&A 게시글 수정</h4>
-        </div>
         </div>
         <div class="contents">
             <div class="ct_head">
             </div>
             <div class="ct_body">
-            				
-            		<form role="form" action="/qnaboard/modify" method="post">
+
+			<div class="title-head">
+				<h4>Q&A 게시글 수정</h4>
+			</div>
+
+			<form role="form" action="/qnaboard/modify" method="post">
             				
             				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
             				<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>

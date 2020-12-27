@@ -496,7 +496,7 @@ body {
 }
 .center {
    text-align: center;
-   padding: 4px;
+   /* padding: 4px; */
 }
 .wrap-Addition{ /* email기억하기 & 로그인 */
 text-align: center;
@@ -612,11 +612,11 @@ text-align: center;
     
     <!-- Login Modal -->
     <div class="login_modal" style="border:2px solid black;">
-    <div> 
-    	<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>			
-        	<p style="text-align: center; font-size: 30px; padding-top: 40px; margin-left: 9%">로그인</p>
+		<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>	
+    	
+    	<div> 
+        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 9%">로그인</p>
         </div>
-            <p style="padding-bottom: 10px"></p>
             
             <div class="wrap-main">
             
@@ -652,6 +652,8 @@ text-align: center;
          <span style="color: black;">|</span>
          <a class="aTag" onclick="fromLoginToSearchPwd()" id="searchPwd_modal_btn" style="font-size: 15px;">비밀번호 찾기</a>
             </div>
+            
+            <!-- <p style="padding-bottom: 10px"></p> -->
     </div>
    <!-- end Login Modal -->
    
@@ -706,7 +708,7 @@ text-align: center;
     <div class="register_modal">
     <div id="register" style="background-color:white; border:3px solid black;">
         <!-- 닫기버튼 -->
-        <div class="rModal_close"><a class="reg-cancelBtn" href="#">X</a></div>
+        <div class="rModal_close"><a class="reg-cancelBtn" href="#" style="margin-top: 1%;">X</a></div>
 
         <div class="modal-dialog" style="display: table;">
             <p style="text-align: center; font-size: 30px; margin-left: 11%;">회원가입</p>
@@ -855,6 +857,25 @@ text-align: center;
     	rModalClose();
  	   spModalShow();
     }; 
+    
+    
+	// RedirectAttribute 메시지
+    let responseMessage = '<c:out value="${msg}" />';
+    
+		 checkAlert(responseMessage);
+		
+		history.replaceState({}, null, null);
+		
+		function checkAlert(responseMessage){
+			
+			if(responseMessage === '' || history.state){
+				return;
+			}
+			
+		 	if(responseMessage.length > 0){ /* 이거 안 해주면 alert 아예 안 뜬다.. */
+				alert(responseMessage);
+			} 
+		} 
     
     
     /* 회원가입 */
@@ -1146,17 +1167,6 @@ text-align: center;
 		return true;
 	}
      
-       //rttr 창띄우기
-        	$(function(){
-        		
-      		var responseMessage = '<c:out value="${msg}" />';
-      		
-      		if(responseMessage != ""){
-      	    alert(responseMessage);
-      	}
-      		
-      });  
-       
        
        function dropMenu(){
     	   

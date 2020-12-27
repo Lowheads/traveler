@@ -125,8 +125,13 @@
 	    <!-- 저장하기 버튼 -->
 		<button type="submit" class="save-btn" onclick="return apiInfoNickSaveCheck()">저장하기</button>
 	     <!-- 저장하기 버튼 끝 -->
-		</div>
-            
+	
+		
+		 <!-- 취소 버튼 -->
+		<button type="button" class="back-btn" onclick="history.back()">취소</button>
+	     <!-- 취소 버튼 끝 -->
+       
+       	</div>     
       </div>
 	<!-- end info-wrap -->
 	</div>
@@ -280,17 +285,6 @@
 		
 }); // end 탈퇴 인증메일
 
-
-	//rttr 창띄우기
-	$(function() {
-
-		var responseMessage = '<c:out value="${msg}" />';
-
-		if (responseMessage != "") {
-			alert(responseMessage);
-		}
-
-	});
 </script>
 
 

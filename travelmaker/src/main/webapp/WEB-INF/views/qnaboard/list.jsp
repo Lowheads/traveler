@@ -66,11 +66,13 @@
 				<td><c:out value="${board.viewCnt }" /></td> <!-- 조회수 -->
 			</tr>
 		</c:forEach>
+		  
     </tbody>
-  </table>
   
-  		<!-- 글쓰기 버튼 -->
+  </table>
+  <!-- 글쓰기 버튼 -->
   		<div class="boardRegiBtn-wrap"><a href="/qnaboard/register"><button>WRITE</button> </a></div>
+  		
   
 		      <!-- 페이징 -->
     <div class="paging">
@@ -135,25 +137,8 @@
 <script type="text/javascript">
 
 		let actionForm = $("#actionForm");
-		let responseMessage = '<c:out value="${msg}" />';
 	
 		$(document).ready(function(){
-			
-			checkAlert(responseMessage);
-			
-			history.replaceState({}, null, null);
-			
-			function checkAlert(responseMessage){
-				
-				if(responseMessage === '' || history.state){
-					return;
-				}
-				
-				if(responseMessage.length > 0){ /* 이거 안 해주면 alert 아예 안 뜬다.. */
-					alert(responseMessage);
-				}
-			}
-			
 			
 			$(".pagination_btn a").on("click", function(e){ // 게시글 리스트 페이징
 				e.preventDefault();

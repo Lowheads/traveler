@@ -93,15 +93,19 @@ $(document).ready(function(){
     <div class="wrapper">
         <div class="header_wrapper">
         
-        <div class="title-head">
-        	<h4>Q&A 질문 등록하기</h4>
-        </div>
+        
         </div>
         <div class="contents">
+	       
+	        
             <div class="ct_head">
             </div>
             <div class="ct_body">
-            
+	
+			 <div class="title-head">
+	        	<h4>Q&A 질문 등록하기</h4>
+	        </div>
+
             	 <form action="/qnaboard/register" method="post">
             	 			
                         	<div class="form-group">

@@ -165,13 +165,15 @@
 		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
 	        	 <!-- 탈퇴 버튼 끝 -->
 	        	 
-	        	 <!-- 홈 버튼 -->
-					<!-- <button type="button" class="home-btn" onclick="location.href = '/member/main'">홈으로</button> -->
-	        	 <!-- 홈 버튼 끝 -->
-	        	 
+	        	
 	        	 <!-- 저장하기 버튼 -->
 					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
+	        	 
+	        	  <!-- 취소 버튼 -->
+					<button type="button" class="back-btn" onclick="history.back()">취소</button>
+	        	  <!-- 취소 버튼 끝 -->
+	        	 
 			</div>
 			<!-- end foot -->
 			
@@ -375,19 +377,6 @@
 			return false;
 		}
 	} 
-	
-
-	//rttr 창띄우기
-	$(function() {
-
-		var responseMessage = '<c:out value="${msg}" />';
-
-		if (responseMessage != "") {
-			alert(responseMessage);
-		}
-		return false;
-
-	});
 </script>
 
 </html>

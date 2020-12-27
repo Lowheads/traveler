@@ -30,7 +30,11 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <div class="wrapper">
-        <div class="header_wrapper">
+       
+        <div class="contents">
+        
+            <div class="ct_body">
+            				 <div class="header_wrapper">
             <!-- <div class="header">
                 <div class="logo">
                     <a href="/qnaboard/list">Q&A 게시판</a>
@@ -40,9 +44,6 @@
 	        	<h4>Q&A 게시글 조회</h4>
 	        </div>
         </div>
-        <div class="contents">
-            <div class="ct_body">
-            				
             				<div class="form-group">
             					<img alt="eye" src="/resources/img/eye.png" width="18px" height="18px">
             					 : ${board.viewCnt }

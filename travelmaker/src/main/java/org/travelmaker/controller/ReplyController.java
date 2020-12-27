@@ -1,6 +1,5 @@
 package org.travelmaker.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,11 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ReplyController {
 
-	@Setter(onMethod_ = @Autowired)
-	private ReplyService service;
+	private final ReplyService service;
+	
+	public ReplyController(ReplyService replySevice) {
+		this.service = replySevice;
+	}
 	
 	// consumes : 서버는 Content-Type이 일치해야 response를 준다.
 	// produces : 서버는 MediaType이 일치해야 response를 준다.

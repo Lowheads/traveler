@@ -19,11 +19,14 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor
 public class QnABoardServiceImpl implements QnABoardService {
 
-	@Setter(onMethod_ = @Autowired)
-	private QnABoardMapper  mapper;
+	private final QnABoardMapper  mapper;
+	
+	public QnABoardServiceImpl(QnABoardMapper qnaBoardMapper) {
+		this.mapper = qnaBoardMapper;
+	}
+	
 	
 	@Override
 	public List<QnABoardVO> getList(QnABoardCriteria cri) { // 게시글 목록

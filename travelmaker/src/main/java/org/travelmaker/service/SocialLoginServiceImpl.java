@@ -16,12 +16,13 @@ import org.travelmaker.loginapi.NaverLoginBO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-public class apiLoginServiceImpl implements apiLoginService {
-	
+public class SocialLoginServiceImpl implements SocialLoginService {
+
 	private NaverLoginBO naverLoginBO = new NaverLoginBO();     // 네이버
 	private Kakao_restapi kakao_restapi = new Kakao_restapi();  // 카카오
 
@@ -78,6 +79,6 @@ public class apiLoginServiceImpl implements apiLoginService {
 		JsonNode userProfile = KakaoUserInfo.getKakaoUserInfo(access_token.get("access_token"));
 		return userProfile;
 	}
-	
+
+
 }
-	

@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
+<%@ include file="../includes/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet"

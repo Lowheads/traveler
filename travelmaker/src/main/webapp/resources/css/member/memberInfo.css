@@ -7,9 +7,8 @@
 }
 	
 .info-wrap{ /* 전체 div */
-    width: 70%;
+    width: 50%;
     margin-top: 5%;
-  	padding-bottom: 1.8%;
     margin-bottom: 10%;
     justify-content: center;
     border: 1px solid black;
@@ -29,20 +28,20 @@
 .info-foot{ /* 내정보 푸터 div */
 	height: auto;
 	border-top: 1px solid black;
-	display: flex;
-	justify-content: space-between;
+/* 	display: flex;
+	justify-content: space-between; */
 	padding: 3%;
 }
 
 .main-wrap{ /* 내용 div(일반 회원 페이지) */
-	padding: 7%;
+	padding: 5%;
 	padding-left : 3%;
-    height: 600px;
+    height: 550px;
     background-color: white;
 }
 
 .api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
-	padding : 7%;
+	padding : 6%;
 }
 
 .info-title{ /* title div */
@@ -56,7 +55,7 @@
 	text-align: center;
 	display: flex;
     justify-content: end;
-    margin-bottom: 6%;
+    margin-bottom: 4%;
     margin-left: 20%;
 }
 
@@ -87,9 +86,7 @@
 	background-color: black;
 	color: white;
 	font-size: 16px;
-/* 	width: 75px;
-    height: 30px;
-    font-size: 13px; */
+	float: right;
 }
 
 .delete-btn{ /* 탈퇴하기 버튼 */
@@ -97,6 +94,14 @@
 	border: none;
 	font-size: 16px;
 	color: black;
+}
+
+.back-btn{ /* 취소 버튼 */
+	background-color: white;
+	color: black;
+	font-size: 16px;
+	float: right;
+	margin-right: 0.5%;
 }
 
 /*	=========비번 바꾸기 모달 창============*/

@@ -7,7 +7,7 @@
 
 .title-wrap { /* 메인 타이틀 div */
 	font-size: 50px;
-	margin-top: 13%;
+	margin-top: 8%;
     margin-bottom: 8%;
     text-align: center;
     color: black;
@@ -52,8 +52,9 @@ table.board-wrap td {
 
 .boardRegiBtn-wrap{ /* 글 쓰기 버튼 div */
 	text-align: right;
-	margin-right: -15%;
 	margin-top: 0.5%;
+	width: 1350px;
+	margin: auto;
 }
 
 .boardRegiBtn-wrap button{ /* 글 쓰기 버튼 div */
@@ -63,6 +64,8 @@ table.board-wrap td {
 	font-size: 10px;
 	width : 5%;
     height: 30px;
+    margin-right: 4%;
+    margin-top: 1%;
 }
 
 .w3-bar{ /* 페이징 버튼 */
