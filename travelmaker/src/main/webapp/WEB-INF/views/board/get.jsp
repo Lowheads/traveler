@@ -53,8 +53,8 @@
 
 
 .card-contents{
-	width: 250px;
-	height: 200px;
+	width: 280px;
+	height: 220px;
 	margin-bottom: 50px;
 	position: relative;
   	display: block;
@@ -88,7 +88,7 @@
 	font-size: 15px;
 }
 .desc-bottom{
-	 margin: 40px 0 0;
+	 margin: 25px 5px;
 	 font-size : 12px;
 	 float: right;
 }
@@ -120,13 +120,13 @@
 }
 
 .col-75{
+  width:90%;
   float: left;
-
   margin-top: 6px;
 }
 .form-control, select, textarea {
   margin-left: 10px;
-  width: 500px;
+  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -243,7 +243,7 @@ overflow-y: auto;
 
 .dt_top_left{
    width: 15%;
-   background-color: #203341;
+   background-color: #ff8b3d;
    color:white;
     text-align: center;
    line-height: 70px;    
@@ -272,8 +272,9 @@ overflow-y: auto;
    padding-right: 10px;
 }
 .showMap:hover , #dtmodify_btn:hover, #list_btn:hover, #modify_btn:hover, #remove_btn:hover{
-   background-color: #203341;
+   background-color: #ff8b3d;
    color:white;
+   border: 1px solid #ff8b3d;
 }
 .schdt_bottom{
    height: 100px;
@@ -293,7 +294,7 @@ overflow-y: auto;
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#203341;
+   background-color:#ff8b3d;
    border-radius: 50%;
    width: 20px;
     height: 20px;
@@ -351,12 +352,10 @@ overflow-y: auto;
 
 .modal_close_btn{
 	width: 20%;
-	margin-right: 10%;
 	background-color: white;
 	color: black;
 	border: none;
 	border-radius: 5px;
-	text-align : right;
 
 }
 .modal_close>a {
@@ -717,7 +716,7 @@ overflow-y: auto;
 	</div>
 		<c:choose>
   <c:when test="${memNo eq schedule.memNo}">
-    <button id="dtmodify_btn" data-oper='dtmodify' class="btn-default">사진목록수정</button>
+    <button id="dtmodify_btn" data-oper='dtmodify'>사진목록수정</button>
   </c:when>
 </c:choose>
 	
@@ -730,7 +729,7 @@ overflow-y: auto;
 
 	<c:choose>
   		<c:when test="${memNo eq schedule.memNo}">
-    	<button id="remove_btn" type="submit" class="btn-danger subbutton">삭제</button>
+    	<button id="remove_btn" data-oper='remove'>삭제</button>
   		</c:when>
 	</c:choose>
 
@@ -862,9 +861,22 @@ overflow-y: auto;
 	</form>
 
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function(){	
+		
 	
+		var actionForm = $("#actionForm");
+		$("button[data-oper='remove']").on("click",function(e){
+			if(confirm("삭제하시겠습니까?")){
+				actionForm.attr("action","/board/remove").submit();
+			}
+			else{
+				return false;
+				}			
+		});
 
+
+	
+	
 	var operForm = $("#operForm");
 	
 /* 	$("button[data-oper='modify']").on("click",function(e){
@@ -1170,6 +1182,7 @@ $(function(){
 	}
 	return false;
 	});
+	
 </script>
 
 </body>

@@ -145,15 +145,77 @@ ul {
 	flex:70 70 70%
 }
 
+/*지은수정 */
 #registerForm {
    display: none;
-   width: 50%;
+   width: 20%;
    height: 50%;
-   padding: 20px 30px;
+   padding: 20px 80px;
    background-color: #fefefe;
    border: 1px solid #888;
    border-radius: 3px;
 }
+
+#registerForm h1{
+ 	margin: 40px 40px;
+ 	font-size:30px;
+ 	text-align: center;
+}
+
+.form-group input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 7px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.form-group textarea {
+    width: 100%;
+    height: 30%;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.modal_close_btn{
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	position: absolute;
+    right: 20px;
+	font-size: 25px;
+}
+
+.savebtn{
+	position: absolute;
+	bottom:30px;
+	right:80px;
+	width:80px;
+	font-size:15px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	text-decoration: none;
+}
+
+.savebtn:hover{
+	background-color: #203341;
+   	color:white;
+	
+}
+
+/*지은 수정 끝 */
 
 #searchForm {
 	display:flex;
@@ -544,16 +606,21 @@ body > div.mainContainer > div.right.menu {
       </div>    
       
       <div id="registerForm">
-				<p> 
-					<input type="text" class="title-box" placeholder ="plz write down title" required />
-				</p>
-				<p>
-					<input type="text" class="content-box" placeholder="plz write down content" required />
-      			</p>
-      			<button type="button" onclick="insertSchedule()">저장</button>
-      			<button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button>
-      	</div>
-        
+      			<div>
+      			<button class="modal_close_btn">X</button></div>
+      			<h1>일정 저장</h1><br>
+				
+					<div class="form-group">
+					일정명을 입력하세요<br>
+					<input type="text" class="title-box" required />		
+					</div>
+					
+					<div class="form-group">
+					내용을 입력하세요<br>
+					<textarea class="content-box" required></textarea>
+      				</div>
+      			<button class="savebtn " onclick="insertSchedule()" >저장</button>
+      		</div>
       <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
 <div class="mainContainer">
 

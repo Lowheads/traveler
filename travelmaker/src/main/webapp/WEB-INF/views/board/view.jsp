@@ -52,8 +52,8 @@
 
 
 .card-contents{
-	width: 250px;
-	height: 200px;
+	width: 300px;
+	height: 230px;
 	margin-bottom: 50px;
 	position: relative;
   	display: block;
@@ -87,7 +87,7 @@
 	font-size: 15px;
 }
 .desc-bottom{
-	 margin: 40px 0 0;
+	 margin: 25px 5px;
 	 font-size : 12px;
 	 float: right;
 }
@@ -119,13 +119,13 @@
 }
 
 .col-75{
+  width:90%;
   float: left;
-
   margin-top: 6px;
 }
 .form-control, select, textarea {
   margin-left: 10px;
-  width: 500px;
+  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -242,7 +242,7 @@ overflow-y: auto;
 
 .dt_top_left{
    width: 15%;
-   background-color: #203341;
+   background-color: #ff8b3d;
    color:white;
     text-align: center;
    line-height: 70px;    
@@ -271,8 +271,9 @@ overflow-y: auto;
    padding-right: 10px;
 }
 .showMap:hover , #dtmodify_btn:hover, #list_btn:hover, #modify_btn:hover, #remove_btn:hover{
-   background-color: #203341;
+   background-color: #ff8b3d;
    color:white;
+   border: 1px solid #ff8b3d;
 }
 .schdt_bottom{
    height: 100px;
@@ -292,7 +293,7 @@ overflow-y: auto;
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#203341;
+   background-color:#ff8b3d;
    border-radius: 50%;
    width: 20px;
     height: 20px;
@@ -820,6 +821,7 @@ overflow-y: auto;
 	<form name='fileForm' action="/board/fileDown" method="get">
 		<input type='hidden' id="FILE_NO" name='FILE_NO' value="">
 	</form>
+
 
 <script type="text/javascript">
 $(document).ready(function(){

@@ -85,7 +85,6 @@ public class BoardController {
 
 		HttpSession session = request.getSession();
 		int memNo = Integer.parseInt(String.valueOf(session.getAttribute("memNo")));
-		System.out.println(memNo);
 
 		model.addAttribute("schedulelist",scheduleservice.getList(memNo));
 	}
@@ -108,7 +107,6 @@ public class BoardController {
 	
 	@PostMapping("/register")
 	public String register(BoardVO board, MultipartFile file, Model model) throws Exception {
-		log.info("register: "+board);
 
 		//파일처리 관련 코드
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -125,7 +123,6 @@ public class BoardController {
 		board.setBoardImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		board.setThumbImg(
 				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		System.out.println(board.getBoardImg()+","+board.getThumbImg());
 		
 		model.addAttribute("board",board);
 		
@@ -143,7 +140,6 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value= "/hidden", method=RequestMethod.POST, produces="application/json")
 	public void hidden(BoardVO board) {
-		System.out.println(board);
 		
 		boardservice.updateHidden(board);
 
@@ -166,8 +162,7 @@ public class BoardController {
 	
 	@PostMapping("/dtregister")
 	public String dtregister(BoarddtVO boarddt,RedirectAttributes rttr, MultipartHttpServletRequest mpRequest, @RequestParam(value="newContent", required=false) List<String> newContent) throws Exception{
-		log.info("dtregister: "+boarddt);	
-		
+			
 		BoardVO board= new BoardVO();
 		board=boardservice.get(boarddt.getBoardNo());
 		
@@ -185,7 +180,6 @@ public class BoardController {
 	@GetMapping({"/modify"})
 	public void modify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model) {
 	
-		log.info("/modify");
 		
 		model.addAttribute("board",boardservice.get(boardNo));
 	
@@ -218,8 +212,6 @@ public class BoardController {
 		List<Map<String,Object>> fileList = boarddtservice.selectFileList(boardNo);
 		
 		model.addAttribute("file",fileList);
-		
-		//model.addAttribute("memNo",memNo);
 	
 		model.addAttribute("Schdt",schdtservice.getSchdtList(schNo));
 	}
@@ -244,7 +236,7 @@ public class BoardController {
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr,MultipartFile file) throws Exception {
-		log.info("modify:"+board);
+
 		//파일처리 관련 코드
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath =UploadFileUtils.calcPath(imgUploadPath);
@@ -260,7 +252,6 @@ public class BoardController {
 
 		board.setThumbImg(
 				File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		System.out.println(board.getBoardImg()+","+board.getThumbImg());
 		
 		if(boardservice.modify(board)) {
 			rttr.addFlashAttribute("modifymsg","대표사진이 변경되었습니다.");
@@ -274,7 +265,6 @@ public class BoardController {
 	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("boardNo") int boardNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, HttpSession session) {
-		log.info("remove..."+boardNo);
 		
 		BoardVO board= boardservice.get(boardNo);
 		int schNo=board.getSchNo();
@@ -312,12 +302,12 @@ public class BoardController {
 	@RequestMapping(value="/fileDown")
 	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{
 		Map<String, Object> resultMap = boarddtservice.selectFileInfo(map);
-		System.out.println(resultMap);
+
 		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
 		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
 		
 		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\upload\\file\\"+storedFileName));
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\Users\\Jeong Jieun\\git\\traveler\\travelmaker\\src\\main\\webapp\\resources\\imgUpload\\boarddtFile\\"+storedFileName));
 		
 		response.setContentType("application/octet-stream");
 		response.setContentLength(fileByte.length);
@@ -331,7 +321,6 @@ public class BoardController {
 	//dtmodify 폼
 	@GetMapping(value="/dtmodify")
 	public void dtmodify(@RequestParam("boardNo")int boardNo, @ModelAttribute("cri") Criteria cri, Model model, RedirectAttributes rttr) throws Exception {
-		log.info("dtmodify");
 
 		BoardVO board = boardservice.get(boardNo);
 		int schNo= board.getSchNo();
@@ -355,10 +344,12 @@ public class BoardController {
 	public String update(BoarddtVO boarddt,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr,
 			@RequestParam(required = false, value="fileNoDel[]") String[] files, @RequestParam(required = false, value="fileNameDel[]") String[] fileNames, @RequestParam(required = false, value="newContent") List<String> newContent
 			,@RequestParam(required = false, value="fileContent") List<String> fileContent, @RequestParam(required = false, value="fileNo") List<Integer> fileNo, MultipartHttpServletRequest mpRequest) throws Exception{
-		log.info("update dtmodify");
 
 		//내용만 수정된 메소드 만들기
-		boarddtservice.updateContent(fileNo,fileContent);
+
+		  if(fileNo!=null) {
+			  boarddtservice.updateContent(fileNo,fileContent);
+		  	}
 
 		//새로운 콘텐츠가 있을 때만 실행
 		boarddtservice.update(boarddt, files, fileNames, mpRequest, newContent);

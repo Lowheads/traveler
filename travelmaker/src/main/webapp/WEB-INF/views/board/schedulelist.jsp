@@ -40,7 +40,7 @@
 .schtable thead tr {
 	color: black;
 	text-align: left;
-	font-size: 19px;
+	font-size: 17px;
 	font-weight: bold;
 	border-bottom: 2px solid #dddddd;
 }
@@ -67,7 +67,6 @@
 }
 
 .container {
-	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
 	align-content: center;

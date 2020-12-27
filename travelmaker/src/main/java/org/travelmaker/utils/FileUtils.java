@@ -38,7 +38,6 @@ public class FileUtils {
 		Map<String, Object> listMap = null;
 		
 		int bno = boarddt.getBoardNo();
-		System.out.println("------------------------------"+bno);
 		File file = new File(filePath);
 		if(file.exists() == false) {
 			file.mkdirs();
@@ -65,16 +64,22 @@ public class FileUtils {
 	}
 	public List<Map<String, Object>> parseUpdateFileInfo(BoarddtVO boarddt, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception{ 
 		Iterator<String> iterator = mpRequest.getFileNames();
+		
+		
 		MultipartFile multipartFile = null; 
 		String originalFileName = null; 
 		String originalFileExtension = null; 
 		String storedFileName = null; 
 		
+		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String, Object> listMap = null; 
 		int bno = boarddt.getBoardNo();
+		
+		MultipartFile uploadFile = mpRequest.getFile("file_1");
+		if (uploadFile!=null) {
 		while(iterator.hasNext()){ 
-			multipartFile = mpRequest.getFile(iterator.next()); 
+			multipartFile = mpRequest.getFile(iterator.next());
 			if(multipartFile.isEmpty() == false){ 
 				originalFileName = multipartFile.getOriginalFilename(); 
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf(".")); 
@@ -89,6 +94,8 @@ public class FileUtils {
 				list.add(listMap); 
 			} 
 		}
+		}
+		
 		if(files != null && fileNames != null){ 
 			for(int i = 0; i<fileNames.length; i++) {
 					listMap = new HashMap<String,Object>();
