@@ -116,7 +116,6 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping(value = "/testResult", method = RequestMethod.POST, produces = "application/json")
 	public List<Map<String,Object>> resultType(String type,HttpSession session){
-
 		if(session.getAttribute("memNo") == null) {
 			return placeService.getYourList(type, 0);
 		}

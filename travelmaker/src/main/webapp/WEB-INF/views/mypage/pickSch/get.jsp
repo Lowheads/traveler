@@ -17,8 +17,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 
-<style>
 
+<style>
 /*지은스타일 */
 #customers {
   font-family: Arial, Helvetica, sans-serif;
@@ -40,7 +40,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #203341;
+  background-color:#ff8b3d;
   color: white;
 }
 #tabletitle{
@@ -50,31 +50,43 @@
 
 /*지은스타일 끝 */
 .plan_content {
-   width: 80%;
    margin-left: auto;
    margin-right: auto;
 }
 .contentTitle{
    width:100%;
    height: 200px;
-   background-color: #203341;
-   color:white;
-   padding:20px;
+   color:black;
+ 	padding:15px 10% 15px 10%;
 }
 
 .plan_mnu_box {
    background-color:white;
    display: flex;
-   border: 1px solid black;
    margin-bottom: 50px;
+   box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
+   padding-left: 10%;
+   padding-right: 10%;
 }
 
 .plan_mnu {
    text-align: center;
    height: 60px;
-   border-right: 1px solid gray;
-   padding-left: 35px;
    padding-right: 35px;
+   padding-left: 35px;
+   font-weight: bold;
+}
+
+.plan_mnu:hover{
+    background-color: rgb(128,128,128,0.2);
+}
+
+
+
+.content_wrap{
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .sticky {
@@ -91,7 +103,7 @@
 }
 .plan_mnu.active{
    font-weight: bold;
-   color: #33ccff;
+   color: #3099dd;
 }
 
 
@@ -106,20 +118,29 @@
 #gotoList{
    height:30px;
    margin-top:15px;
-   background-color: #203341;
+   background-color:#ff8b3d;
    color:white;
-   padding: 3px 15px 0 15px;
+   padding: 3px 8px 0 8px;
    margin-right: 15px;
    text-align: center;
+   cursor: pointer;
+}
+
+#gotoList:hover{
+	background-color: #d8702a;
 }
 #sch_remove_btn{
    height:30px;
    margin-top:15px;
    background-color: #ff6666;
    color:white;
-   padding: 3px 15px 0 15px;
+   padding: 3px 8px 0 8px;
    margin-right: 15px;
    text-align: center;
+}
+
+#sch_remove_btn:hover{
+	background-color: #c33e3e;
 }
 
 .schedule_dt_content {
@@ -144,16 +165,16 @@
 
 .dt_top_left{
    width: 15%;
-   background-color: #203341;
+   background-color:#ff8b3d;
    color:white;
     text-align: center;
    line-height: 70px;    
-   border-right: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
 }
 
 .dt_top_right{
-   border-top: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-left: 10px;
    width: 85%;
    display: flex;
@@ -165,7 +186,7 @@
 }
 .showMap{
    margin-right: 15px;
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    margin-top: auto;
    margin-bottom: auto;
    border-radius: 10px;
@@ -173,8 +194,7 @@
    padding-right: 10px;
 }
 .showMap:hover{
-   background-color: #203341;
-   color:white;
+   background-color: rgb(128,128,128,0.2);
 }
 .schdt_bottom{
    height: 100px;
@@ -183,9 +203,9 @@
 .dt_bottom_left{
    width: 15%;
    text-align: center;
-   border-top: 1px solid gray;
-   border-left: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-left: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-top: 40px;
 }
 
@@ -194,7 +214,7 @@
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#203341;
+   background-color:#ff8b3d;
    border-radius: 50%;
    width: 20px;
     height: 20px;
@@ -205,8 +225,8 @@
    padding-left: 10px;
    width: 85%;
    line-height: 100px;  
-   border-right: 1px solid gray;
-   border-top: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
+   border-top: 1px solid rgb(128,128,128,0.2);
 }
 .dt_bottom_right img{
    width: 75px;
@@ -215,7 +235,7 @@
 .dt_box_footer{
    display:flex;
    background-color: #e6e6e6;
-   border:1px solid gray;
+   border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
    width: 15%;
@@ -242,7 +262,7 @@
 }
 
 #places{
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    padding: 15px;
    font-size: 15px;
    text-align: center;
@@ -281,7 +301,6 @@
    border: 1px solid gray;
    border-radius: 5px;
 }
-
 #gotoTop {
   position: fixed;
   bottom: 20px;
@@ -295,7 +314,7 @@
   cursor: pointer;
   padding: 0px 10px 0px 10px;
   border-radius: 4px;
-  border: 1px solid gray;
+  border: 1px solid rgb(128,128,128,0.2);
 }
 
 
@@ -303,7 +322,6 @@
    background-color: black;
    color:white;
 }
-
 </style>
 </head>
 
@@ -499,9 +517,7 @@ var sticky = header.offsetTop;
 function myFunction() {
   if (window.pageYOffset > sticky) {
     header.classList.add("sticky");
-    header.style.width = "80%";
-    header.style.marginLeft = "auto";
-    header.style.marginRight = "auto";
+    header.style.width = "100%";
     
     mapWrapper.classList.add("stickyMap");
   } 
@@ -648,8 +664,8 @@ function myFunction() {
          
       for (i = 0; i < markerlatlng.length; i++) {
          
-         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#203341; color:white;'>"+(i+1)+"</div>"+"<a href=https://place.map.kakao.com/"+markerlatlng[i].dataset['plc_no']+" target='_blank'>"+markerlatlng[i].dataset["title"] + "</a><br>";
-         
+    	  let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#ff8b3d; color:white;'>"+(i+1)+"</div><a href=https://place.map.kakao.com/"+markerlatlng[i].dataset["plc_no"]+" target=_blank>"+markerlatlng[i].dataset["title"] + "</a><br>";
+          
          $("#places").append(pTag)
          
          // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
