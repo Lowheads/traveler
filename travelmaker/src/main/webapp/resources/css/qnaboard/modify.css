@@ -1,20 +1,27 @@
 @charset "UTF-8";
 
 .mod-btn{
-	background-color: black;
+	background-color: #ff8b3d;
 	color: white;
 	width: 60px;
     height: 30px;
     font-size: 13px;
+    border: 1px solid #ff8b3d;
 }
 
 .del-btn{
-	background-color: gray;
-	color:white;
+	background-color: white;
+	color:black;
 	width: 73px;
     height: 30px;
     font-size: 13px;
     float: left;
+}
+
+.del-btn:hover{
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
 }
 
 .list-btn{
@@ -22,4 +29,10 @@
 	width: 60px;
     height: 30px;
     font-size: 13px;
+}
+
+.list-btn:hover{
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
 }

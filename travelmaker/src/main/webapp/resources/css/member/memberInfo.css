@@ -72,19 +72,22 @@
 
 	
 .dupl-btn{ /* 닉네임 중복체크 버튼 */
-	background-color: black;
+	background-color: #ff8b3d;
 	color: white;
+	border: 1px solid #ff8b3d;
 }
 
 .pwd-modiBtn{ /* 비밀번호 변경 버튼 */
-	background-color: black;
-    color: white;
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
     height: 30px;
 }
 
 .save-btn{ /* 저장하기 버튼 */
-	background-color: black;
+	background-color: #ff8b3d;
 	color: white;
+	border: 1px solid #ff8b3d;
 	font-size: 16px;
 	float: right;
 }
@@ -102,6 +105,12 @@
 	font-size: 16px;
 	float: right;
 	margin-right: 0.5%;
+}
+
+.back-btn:hover{
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
 }
 
 /*	=========비번 바꾸기 모달 창============*/
@@ -159,8 +168,9 @@
 }
 
 .pwd-pwd{ /* 비번 변경하기 버튼 */
-	background: black;
+	background: #ff8b3d;
     color: white;
+    border : 1px solid #ff8b3d;
     height: 30px;
     width: 240px;
     height: 60px;
@@ -230,8 +240,9 @@ pwd-change{ /* 비번 변경 input 창 */
 }
 
 #delete_confirm{ /* 회원탈퇴 버튼(최종) */
-	background: black;
+	background:  #ff8b3d;
     color: white;
+    border: 1px solid #ff8b3d;
     height: 30px;
     width: 240px;
     height: 60px;
@@ -276,8 +287,20 @@ pwd-change{ /* 비번 변경 input 창 */
 }
 
 #sendEmailBtn{
-	background-color: black;
-    color: white;
+	background-color: white;
+    color: black;
     margin-left: -20px;
     font-size: 14px;
+}
+
+#sendEmailBtn:hover{
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
+}
+
+
+button{
+	
+	border:1px solid gray;
 }

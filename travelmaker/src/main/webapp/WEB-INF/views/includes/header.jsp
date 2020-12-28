@@ -51,6 +51,7 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="utf-8">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -65,6 +66,14 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 
 <style>
+
+@font-face {
+    font-family: 'Bazzi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /*헤더 스타일 */
 a{text-decoration: none;
 	color:black;}
@@ -277,30 +286,6 @@ a:visited{text-decoration: none;}
 }
 
 /*성현 style */
-/* .modal_wrap{
-        display: none;
-        width: 70%;
-        position:fixed;
-        height: 500px;
-        top:50%;
-        margin: -250px 0 0 0;
-        background:#eee;
-        z-index: 2;
-    }
-    .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -30px;
-        right: 0;
-    }
-    .modal_close> a{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
-        text-indent: -9999px;
-    } */
 .login_modal {
    display: none;
    width: 40%;
@@ -471,7 +456,7 @@ a:visited{text-decoration: none;}
 body {
    padding : 0px;
    margin : 0px;
-   font-family: san-serif;
+   font-family: 'Bazzi';
 }
 #regBtn {
    border-top-left-radius: 5px;
@@ -487,10 +472,16 @@ body {
    width: 260px;
    height: 50px;
    text-align: center;
-   background-color: black;
-   color: white;
+   background-color: white;
    border: 1px solid #4e266d;
 }
+
+#button:hover { /*로그인 버튼 hover*/
+	color: white;
+	background-color: #ff8b3d;
+	border: 1px solid #ff8b3d;
+}
+
 .wrap-main{
    padding: 10px;
 }
@@ -564,7 +555,6 @@ text-align: center;
 	}
 
 
-
 </style>
 
 
@@ -611,7 +601,7 @@ text-align: center;
             <!-- 모달 클릭시 뒷 배경 -->
     
     <!-- Login Modal -->
-    <div class="login_modal" style="border:2px solid black;">
+    <div class="login_modal" style="border:1px solid black;">
 		<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>	
     	
     	<div> 
@@ -629,7 +619,8 @@ text-align: center;
                <input type="password" style="width: 210px; height: 30px;" 
                placeholder="비밀번호" id="login_pwd" name="pwd"></p></div>
                
-               <div class="wrap-Addition"  style="font-size: 15px;"> <input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
+               <div class="wrap-Addition"  style="font-size: 15px;"> 
+               	<input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
                <div class="wrap-Addition"> 
                <button style="font-size: 20px" type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
             </form>

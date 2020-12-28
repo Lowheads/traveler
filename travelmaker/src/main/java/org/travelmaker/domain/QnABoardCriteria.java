@@ -1,7 +1,5 @@
 package org.travelmaker.domain;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
-
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Getter;
@@ -19,7 +17,7 @@ public class QnABoardCriteria {
 	private String keyword;		// 검색어
 	
 	public QnABoardCriteria() {
-		this(1, 15); // 페이지번호, 18개씩 출력
+		this(1, 15); 
 	}
 	
 	public QnABoardCriteria(int pageNum, int amount) {

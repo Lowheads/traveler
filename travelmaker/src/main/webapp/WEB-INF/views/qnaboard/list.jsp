@@ -24,6 +24,8 @@
 </head>
 
 <body>
+
+<div class="full-wrap">
 	
 	<!-- 메인 타이틀 -->
 	<div class="title-wrap"><a href="/qnaboard/list">Q&A 게시판</a></div>
@@ -113,8 +115,6 @@
 						<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : '' }"/>>제목 or 내용</option>
 						<option value="TW" 
 						<c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>제목 or 작성자</option>
-						<%-- <option value="TWC" 
-						<c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : '' }"/>>제목 또는 내용 또는 작성자</option> --%>
 					</select>
 						<input type='text' name='keyword' id="searchKeyword" value='<c:out value="${pageMaker.cri.keyword }"/>' />
 						<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum }"/>' />
@@ -123,7 +123,9 @@
 				</form>
 			</div>
 		</div>
-
+		
+		</div>
+<!-- end full-wrap -->
 
 		<form id="actionForm" action="/qnaboard/list" method="get">
 			<input type="hidden" name='pageNum' value='${pageMaker.cri.pageNum }'>

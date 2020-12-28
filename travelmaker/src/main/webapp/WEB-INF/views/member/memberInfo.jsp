@@ -62,11 +62,10 @@
 			<div class="info-content"> 
 				<div class="content-name">생일</div>
 				<div class="content-proper">${member.birth }</div> 
-			<%-- <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/> --%>
 			</div>
 			
 			<!-- 비밀번호 -->
-			<div class="info-content"><%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
+			<div class="info-content">
 				<div class="content-name">비밀번호</div>
 				<button class="pwd-modiBtn" type='button' id="modal_btn" class="button">비밀번호 재설정</button></div>
 		
@@ -171,7 +170,7 @@
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
 	        	  <!-- 취소 버튼 -->
-					<button type="button" class="back-btn" onclick="history.back()">취소</button>
+					<button type="button" class="back-btn" onclick="location.href='/main/index'">홈으로</button>
 	        	  <!-- 취소 버튼 끝 -->
 	        	 
 			</div>

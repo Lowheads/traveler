@@ -36,10 +36,11 @@
 
 .reg-btn{ /* 등록 버튼 */
 	color: white;
-	background-color: black;
+	background-color: #ff8b3d;
 	width: 60px;
     height: 30px;
     font-size: 13px;
+    border: 1px solid #ff8b3d;
 }
 
 .cancel-btn{ /* 취소 버튼 */
@@ -53,6 +54,6 @@
 .btn-wrap{ /* 등록/ 삭제 버튼 div */
 	text-align: right;	
 	padding-top: 20px;
-    padding-bottom: 20%;
+    padding-bottom: 10%;
 }
 

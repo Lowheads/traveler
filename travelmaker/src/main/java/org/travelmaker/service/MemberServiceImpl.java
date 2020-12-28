@@ -72,12 +72,14 @@ public class MemberServiceImpl implements MemberService {
       
       // email 저장하기 눌렀다면..
       if(isChecked(check)) {
+    	 cookie.setPath("/");
          response.addCookie(cookie);
       }
       
       // email 저장하기를 해제했다면..
       if(!(isChecked(check))) {
          cookie.setMaxAge(0);
+         cookie.setPath("/");
          response.addCookie(cookie);
       }
    }

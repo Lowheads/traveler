@@ -35,7 +35,7 @@
             <div class="ct_body">
 
 			<div class="title-head">
-				<h4>Q&A 게시글 수정</h4>
+				<h4 style="font-family: 'Bazzi';">Q&A 게시글 수정</h4>
 			</div>
 
 			<form role="form" action="/qnaboard/modify" method="post">

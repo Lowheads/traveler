@@ -89,8 +89,9 @@
 						<when test="type == 'T'.toString()">
 							title like '%' || #{keyword} || '%'
 						</when>
-						<when test="type == 'C'.toString()">
-							content like '%' || #{keyword} || '%'
+						<when test="type == 'C'.toString()"> 
+							content like '%' || #{keyword} || '%' 
+							and secret = 'N' 
 						</when>
 						<when test="type == 'W'.toString()">
 							nickname like '%' || #{keyword} || '%'
