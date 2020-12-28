@@ -194,14 +194,15 @@
       .mnu_box.active {
          padding: 10px 20px 0 20px;
          text-align: center;
-         color: #0b1322;
-         background-color: rgb(255, 194, 34);
+         color: white;
+   background-color: #ff8b3d;
          
       }
 
       
 .mnu_box:hover {
-   background-color: rgb(255, 194, 34);
+   background-color:#ff8b3d;
+     color:white;
 }
       .content_wrap {
          width: 70%;
