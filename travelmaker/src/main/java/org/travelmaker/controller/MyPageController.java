@@ -104,6 +104,7 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping(value = "/insertPick", method = RequestMethod.POST, produces = "application/json")
 	public int insertPickPlace(HttpSession session,PickVO vo) throws Exception {
+		
 		if(session.getAttribute("memNo")==null) {
 			return 0;
 		}
