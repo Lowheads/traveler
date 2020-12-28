@@ -33,35 +33,27 @@
       display: flex;
       color: white;
     }
-
     .weather div {
       width: 50px;
       text-align: center;
     }
-
     .City {
      color: black;
     }
-
     .weatherContent {
       color: white;
     }
-
     .day {
       font-size: 10px;
     }
-
     .Icon,
     .Temp {
       font-size: 10px;
     }
-
     .Icon {
       margin-right: 2px;
     }
-
 /*  */
-
 /* test style */
         /* 모달창 */
  #modal {
@@ -74,7 +66,6 @@
    border-radius: 15px;
    background-color: rgb(244, 246, 250);
 }
-
 /* 닫는버튼 */
 #modal .modal_close_btn {
    float: right;
@@ -82,14 +73,12 @@
    border-radius: 15px;
    background-color: rgb(244, 246, 250);
 }
-
 #test {
    width: 100%;
    height: 100%;
    padding: 20px;
    border-radius: 15px;
 }
-
 .progbarbg {
    background: #f0f0f0;
    height: 10px;
@@ -98,7 +87,6 @@
    margin-top: 40px;
    margin-bottom: 40px;
 }
-
 .progbar {
    background: #00F260; /* fallback for old browsers */
    background: -webkit-linear-gradient(to left, #0575E6, #00F260);
@@ -110,18 +98,15 @@
    border-radius: 10px;
    transition: width 400ms;
 }
-
 #question {
    text-align: center;
    font-size: 25px;
    font-weight: bold;
 }
-
 #result {
    text-align: center;
    display: none;
 }
-
 .answer {
    text-align: center;
    width: 100%;
@@ -133,7 +118,6 @@
    font-weight: bold;
    padding: 40px 0;
 }
-
 .yourList {
    width: 100%;
    text-align: left;
@@ -141,32 +125,25 @@
    border-radius: 8px;
    padding: 2%;
 }
-
 .resultplacedt {
    display: flex;
 }
-
 .resultplacedt h4 {
    margin-top: auto;
    margin-bottom: auto;
    margin-left: 15px;
 }
-
 /* 좋아요버튼  */
 .heart {
    width: auto;
    margin: auto 5% auto auto;
    text-align: right;
 }
-
 /* test 스타일 끝 */
-
 body{
 	margin: 0;
 }
-
 a{text-decoration: none}
-
 .ct_body{
 	padding: 30px;
 	background-image: url('https://images.unsplash.com/photo-1593182440709-4b7b56482c55?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
@@ -175,7 +152,6 @@ a{text-decoration: none}
   	background-size: cover;
   	margin-bottom:50px; 
 }
-
 #mainNav{
  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	text-align:center;
@@ -183,121 +159,35 @@ a{text-decoration: none}
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom: 150px;
-	width: 60%;
+	width: 40%;
 	height: 12%;
 	background-color:white;
+	border: 1px solid black;
 	border-radius: 40px;
 	display:flex;
-	justify-content: flex-start;            
-	flex-grow: 1;
+	justify-content: space-around;            
 }
-
 .navContent{
-	padding-top:15px;
-	height:100%;
-	flex-basis: 35%;
+	margin-top: auto;
+	margin-bottom: auto;
 }
-.navContent:hover{
-	background-color: rgb(128,128,128,0.1);
-	border-radius: 40px;
-}
-
-.navDateBtn{
-	padding-top:15px;
-	height:100%;
-	flex-basis: 30%;
-}
-
-.navDateBtn:hover{
-	background-color: rgb(128,128,128,0.1);
-	border-radius:40px;
-}
-.navDateBtn:hover .selectContent{
-	border:none;
-}
-
-.navDateBtn .selectContent{
-	border-left: 1px solid rgb(128,128,128,0.3);
-}
-
-.navSearchBtn{
-	padding-top:15px;
-	height:100%;
-	width: 30%;
-}
-.selectContent{
-	margin-top:auto;
-	margin-bottom:auto;
-	text-align: left;
-	color: gray;
-}
-
-.selectContent b{
-	color:black;
-	font-size: 12px;
-	text-align: left;
-}
-.selectRegionBox{
-	position: absolute;
-	display:none;
-	bottom:260px;
-	width: 500px;
-	height: 200px;
-	background-color: white;
-	border-radius: 40px;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-	padding: 30px;
-	flex-wrap: wrap;
-	align-content:flex-end;
-}
-.region{
-	height:45px;
-	border-radius:10px;
-	margin-right: 10px;
-	padding:10px;
-	border:1px solid rgb(128,128,128,0.2);
-	margin-top:20px;
-}
-
-.region:hover{
-	border:5px double black;
-}
-
-.datepickerBox{
-	position:absolute;
-	bottom:60px;
-	left:20%;
-	height:400px;
-	width: 900px;
-	background-color: white;
-	border-radius: 40px;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-	display:none;
-}
-
 #goNext{
-	background-color: #ff8b3d;
+	background-color: black;
 	border-radius: 50%;
-	height: 50px;
-	width: 50px;
 }
-
 .material-icons{
 	color:white;
 	margin: 10px;
 	font-size: 10px;
 }
-
 .mainMsg{
 	margin-left: 7%;
 }
-
 .mainMsg b{
 	font-size:50px;
 	color:white;
 	text-shadow: 2px 2px gray;
 }
-
 #popup_open_btn{
 	font-size:12px;
 	margin-right: 1%;
@@ -308,7 +198,6 @@ a{text-decoration: none}
 	padding: 7px 10px 7px 10px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 #goList{
 	font-size:15px;
 	margin-right: 1%;
@@ -318,21 +207,18 @@ a{text-decoration: none}
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
 }
-
 #goList:hover{
 	background-color:gray;
 	color:white;
 	border: 1px solid gray;
 	border-radius: 14px;
 }
-
 .boardContents{
 	width: 100%;
 	height: auto;
 	background-color: white;
 	display:inline-block;
 }
-
 .gallery {
 	width: 100%;
 	height: 100%;
@@ -341,7 +227,6 @@ a{text-decoration: none}
 	flex-wrap: wrap;
 	margin : 0 auto;
 }
-
 .card-contents{
 	width: 15%;
 	height: 450px;
@@ -351,9 +236,7 @@ a{text-decoration: none}
  	margin-right: 15px;
   	margin-bottom: 10px;
   	border-radius: 10px;
-
 }
-
 .card-Img{
 	position : relative;
 	background-size: cover;
@@ -364,20 +247,17 @@ a{text-decoration: none}
 	background-repeat: no-repeat; 
 	background-size: cover;
 }
-
 /* .card-Img Img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	
 } */
-
 .card-desc{
 	margin: 10px;
 	height: auto;
 	font-size: 15px;
 }
-
 .desc_bottom{
 	 font-size : 12px;
 }
@@ -386,12 +266,119 @@ a{text-decoration: none}
 	height: auto;
 	font-size: 15px;
 } */
-
 /* selectbox */
-
-
-
-
+/* ===== Select Box ===== */
+.sel {
+  font-size: 10px;
+  display: inline-block;
+  margin: 1em 1em;
+  width: 230px;
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+}
+.sel::before {
+  position: absolute;
+  content: '\f063';
+  font-family: 'FontAwesome';
+  font-size: 2em;
+  color: black;
+  right: 20px;
+  top: calc(50% - 0.5em);
+}
+.sel.active::before {
+  transform: rotateX(-180deg);
+}
+.sel__placeholder {
+  display: block;
+  font-family: 'Quicksand';
+  font-size: 20px;
+  color: #838e95;
+  padding: 0.2em 0.5em;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  visibility: visible;
+}
+.sel.active .sel__placeholder {
+  visibility: hidden;
+}
+.sel__placeholder::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2em 0.5em;
+  content: attr(data-placeholder);
+  visibility: hidden;
+}
+.sel.active .sel__placeholder::before {
+  visibility: visible;
+}
+.sel__box {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: -4px;
+  display: none;
+  list-style-type: none;
+  text-align: left;
+  font-size: 1em;
+  background-color: #FFF;
+  width: calc(100% + 8px);
+  box-sizing: border-box;
+}
+.sel.active .sel__box {
+  display: block;
+  animation: fadeInUp 500ms;
+}
+.sel__box__options {
+  display: list-item;
+  font-family: 'Quicksand';
+  font-size: 1.5em;
+  color: #838e95;
+  padding: 0.5em 1em;
+  user-select: none;
+}
+.sel__box__options::after {
+  content: '\f00c';
+  font-family: 'FontAwesome';
+  font-size: 0.5em;
+  margin-left: 5px;
+  display: none;
+}
+.sel__box__options.selected::after {
+  display: inline;
+}
+.sel__box__options:hover {
+  background-color: #ebedef;
+}
+/* ----- Select Box Black Panther ----- */
+.sel {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+}
+.sel--black-panther {
+  z-index: 2;
+}
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 </style>
 
 
@@ -406,53 +393,29 @@ a{text-decoration: none}
 			 <div class='weather'>
   </div>
 			<div id="mainNav">
-				<div class="navContent navBtnNodeList"  style="text-align: center;">
+				<div class="navContent"  style="text-align: center;">
 
-					<div class="selectContent navBtnNodeList" style="margin-left:40px;">
-						<div><b class="navBtnNodeList">위치</b></div>
-						<div class="navBtnNodeList">어디로 여행가세요?</div>
-					<div class="selectRegionBox">
-							<div class="region" data-region-no="1">제주시</div>
-							<div class="region" data-region-no="2">서귀포시</div>
-							<div class="region">속초시</div>
-							<div class="region">여수시</div>
-							<div class="region">부산광역시</div>
-							<div class="region">광주광역시</div>
-							<div class="region">경주시</div>
-							<div class="region">대구광역시</div>
-					</div>
+					<div class="sel sel--black-panther">
+						<select name="region" id="region" >
+							<option data-region-no="1" value="" disabled>지역</option>
+							<option class="option-box" data-region-no="1">제주시</option>
+							<option class="option-box" data-region-no="2">서귀포시</option>
+							<option class="option-box" >속초시</option>
+							<option class="option-box">여수시</option>
+							<option class="option-box" >부산광역시</option>
+							<option class="option-box">광주광역시</option>
+						</select>
 					</div>
 
 				</div>
-				<div class="navDateBtn dateNodeList">
-					<!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
-					<div class="selectContent dateNodeList"
-						style="margin-left: 30px; padding-left: 30px;">
-						<div class="dateNodeList">
-							<b class="dateNodeList">출발일</b>
-						</div>
-						<div class="dateNodeList">날짜추가</div>
-							<div class="datepickerBox dateNodeList">
-							</div>
-					</div>
+				<div class="navContent">
+					<input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; />
+				</div>
 				
+				
+				<div class="navContent" id="goNext">
+					<i class="material-icons w3-large">search</i>
 				</div>
-
-				<div class="navDateBtn">
-					<div class="selectContent dateNodeList" 
-						style="margin-left: 30px; padding-left: 30px;">
-						<div class="dateNodeList">
-							<b class="dateNodeList">도착일</b>
-						</div>
-						<div class="dateNodeList">날짜추가</div>
-					</div>
-				</div>
-
-
-				<div class="navSearchBtn" style="display:flex; justify-content: space-between;">
-				<div></div>
-					<div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; " aria-hidden="true"></i>
-				</div></div>
 			
 			</div>
 			
@@ -527,80 +490,62 @@ a{text-decoration: none}
 <script type="text/javascript">
 	var startDate;
 	var endDate;
-
 	$(function() {
-
-		$('.navDateBtn').daterangepicker({
-			startDate : moment(),
-			endDate : moment(),
-			minDate : moment(),
-			locale : {
-				format : 'YYYY-MM-DD'
-			},
+		$('input[name="daterange"]').daterangepicker({
+			startDate: moment(),
+			endDate: moment(),
+			minDate: moment(),
+			maxSpan: {
+		        "days": 9 // 9일이어야 1일차부터 10일차까지 가능 <= <=이니까
+		    },
 		}, function(start, end, label) {
 			/* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
 			startDate = start.format('YYYY-MM-DD');
 			endDate = end.format('YYYY-MM-DD');
-			document.getElementsByClassName("dateNodeList")[4].innerHTML = "<b style=font-size:15px;color:black;>"+start.format('MM월 DD일')+"</b>";
-			document.getElementsByClassName("dateNodeList")[9].innerHTML = "<b style=font-size:15px;color:black;>"+end.format('MM월 DD일')+"</b>";
 		});
 		document.getElementById("goNext").addEventListener("click", submitData);
 		initDate();
-
 	});
-
 	function initDate() {
 		let datePicker = document.getElementsByClassName("data-range-picker")[0];
 		let dateList = datePicker.value.split(' - ');
 		startDate = dateList[0];
 		endDate = dateList[1];
 	}
-
 	function submitData() {
-
-		let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionno'];
-
+		let optionRegionNo = $(".option-box:selected").get(0).dataset["regionNo"];
 		console.log(startDate);
 		console.log(endDate);
-
 		let form = document.createElement('form');
-
 		let objs1;
 		objs1 = document.createElement('input');
 		objs1.setAttribute('type', 'hidden');
 		objs1.setAttribute('name', 'schRegion'); // 받을 네이밍
 		objs1.setAttribute('value', optionRegionNo);
 		form.appendChild(objs1);
-
 		let objs2;
 		objs2 = document.createElement('input');
 		objs2.setAttribute('type', 'hidden');
 		objs2.setAttribute('name', 'toDate'); // 받을 네이밍
 		objs2.setAttribute('value', endDate);
 		form.appendChild(objs2);
-
 		let objs3;
 		objs3 = document.createElement('input');
 		objs3.setAttribute('type', 'hidden');
 		objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
 		objs3.setAttribute('value', startDate);
 		form.appendChild(objs3);
-
 		form.setAttribute('method', 'post');
 		form.setAttribute('action', "/main/theme"); // URL
 		document.body.appendChild(form);
-
 		form.submit();
-
 	}
 	
-
 	
     function modal(id) {
         
         var zIndex = 9999;
         var modal = document.getElementById(id);
-
         // 모달 div 뒤에 희끄무레한 레이어
         var bg = document.createElement('div');
         bg.setStyle({
@@ -615,23 +560,18 @@ a{text-decoration: none}
             backgroundColor: 'rgba(0,0,0,0.4)'
         });
         document.body.append(bg);
-
         // 닫기 처리
         modal.querySelector('.modal_close_btn').addEventListener('click', function () {
             init();
             bg.remove();
-
             modal.style.display = 'none';
         });
-
         modal.setStyle({
             position: 'fixed',
             display: 'block',
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
             // 시꺼먼 레이어 보다 한칸 위에 보이기
             zIndex: zIndex + 1,
-
             // 모달 가운데 이쁘게
             top: '50%',
             left: '50%',
@@ -640,18 +580,15 @@ a{text-decoration: none}
             webkitTransform: 'translate(-50%, -50%)'
         });
     };
-
     // 이건 먼지모르겟음..
     Element.prototype.setStyle = function (styles) {
         for (var k in styles) this.style[k] = styles[k];
         return this;
     };
-
     // 모달창 띄우기
     document.getElementById('popup_open_btn').addEventListener('click', function () {
         modal('modal');
     });
-
     function init() {
         var cnt = 0;
         aCnt = 0;
@@ -673,7 +610,6 @@ a{text-decoration: none}
         answer[1].innerText = answers[0][1];
         answer[1].removeEventListener("click",atest);
     }
-
     let question = [
         "나에게 ... 여행이란?",
         "누구와 함께?",
@@ -691,7 +627,6 @@ a{text-decoration: none}
         "여행지에서 식사할때?",
         "여행가서 아침에 늦잠을 잔 친구에게 당신이 건넨 말?"
     ]
-
     let answers = [
     ["아무것도 하지않고 쉬는것도 여행이라고 생각한다.", "일분일초를 의미있게 보내야 그것이 비로소 여행이다."], //IE
         ["역시 혼자 자유로운게 좋아", "무엇을 하는지 보다 누구와 함께하는지가 중요하다."], //IE
@@ -709,7 +644,6 @@ a{text-decoration: none}
         ["처음본순간 사랑에 빠진 길거리가게", "유~명한 맛집헌터"],   //SN
         ["쉬는것도 여행의 일부지 서두르지 말자", "잘 시간이 어딨어! 계획에서 어긋나면 안돼"]   //SN
     ]
-
     let personalityDt = [
         "독창적인 세계관이 있으며 반복되는 일상에 무료함을 느끼고 있습니다. 현실에 구애받지 않는 자유로운 성격이기도 합니다",
         "빠른 판단력을 가진 사람입니다. 끈기가 넘치고 의지가 강한 성격입니다",
@@ -720,7 +654,6 @@ a{text-decoration: none}
         "인싸기질이 타고났어요. 또한 낙천적인 성격이며 매사에 열정적인 타입입니다",
         "겉보기와 달리 마음이 여린 성격이에요. 주변에 사랑을 퍼주는 사람입니다"
     ]
-
     $(document).ready(function () {
        $("#progbar").html("<div class='progbarbg'><div class='progbar' style='width:0%; text-align:center;'></div></div></div>")
         $("#question").html("1." + question[0])
@@ -739,12 +672,10 @@ a{text-decoration: none}
     let pN = 0;
     let answer = document.getElementsByClassName("answer");
    let prog = 0;
-
     $('.answer').on("click", function () {
        prog+=6.7;
        progMove(prog);
         let result = this.innerText;
-
         if (0 <= qCnt && qCnt <= 4) {
             if (result == answers[aCnt][0]) pI++;
             if (result == answers[aCnt][1]) pE++;
@@ -757,17 +688,13 @@ a{text-decoration: none}
             if (result == answers[aCnt][0]) pS++;
             if (result == answers[aCnt][1]) pN++;
         }
-
         if(qCnt<=13){
         $("#question").text(qCnt + 2+ "." + question[qCnt + 1])
         // console.log(count)
-
         answer[0].innerHTML = answers[aCnt + 1][0];
         answer[1].innerHTML = answers[aCnt + 1][1];
-
         qCnt += 1;
         aCnt += 1;
-
         if (answer[0].innerText == answers[answers.length - 1][0]) {
             answer[0].addEventListener("click", atest);
             answer[1].addEventListener("click", atest);
@@ -775,7 +702,6 @@ a{text-decoration: none}
         }
         }
     })
-
     //결과 띄워주고 디비에 인서트하는 함수
     function atest() {
         let resultA,resultB,resultC;
@@ -797,7 +723,6 @@ a{text-decoration: none}
         if(pS>pN){
             resultC = 'S';
         }
-
         let yourType = resultA+resultB+resultC,
         typeDt;
         if(yourType=='ITS'){
@@ -854,7 +779,6 @@ a{text-decoration: none}
                divTag.innerHTML = '<h5>추천장소 리스트</h5>'
                
               for (let i = 0; i < data.length; i++) {
-
                let divTag1 = document.createElement("div");
                
                divTag1.className = 'resultplacedt';
@@ -884,7 +808,6 @@ a{text-decoration: none}
                iTag.style.fontSize = '24px';
                iTag.style.color = 'red';
                iTag.setAttribute('onclick','likeToggle(this)');
-
                divTag.appendChild(divTag1);
                divTag1.appendChild(aTag);
                aTag.appendChild(imgTag);
@@ -963,12 +886,53 @@ a{text-decoration: none}
   }
   
   
-
-
+  /* ===== Logic for creating fake Select Boxes ===== */
+  $('.sel').each(function() {
+    $(this).children('select').css('display', 'none');
+    
+    var $current = $(this);
+    
+    $(this).find('option').each(function(i) {
+      if (i == 0) {
+        $current.prepend($('<div>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__box')
+        }));
+        
+        var placeholder = $(this).text();
+        $current.prepend($('<span>', {
+          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+          text: placeholder,
+          'data-placeholder': placeholder
+        }));
+        
+        return;
+      }
+      
+      $current.children('div').append($('<span>', {
+        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+        text: $(this).text()
+      }));
+    });
+  });
+  // Toggling the `.active` state on the `.sel`.
+  $('.sel').click(function() {
+    $(this).toggleClass('active');
+  });
+  // Toggling the `.selected` state on the options.
+  $('.sel__box__options').click(function() {
+    var txt = $(this).text();
+    var index = $(this).index();
+    
+    $(this).siblings('.sel__box__options').removeClass('selected');
+    $(this).addClass('selected');
+    
+    var $currentSel = $(this).closest('.sel');
+    $currentSel.children('.sel__placeholder').text(txt);
+    $currentSel.children('select').prop('selectedIndex', index + 1);
+  });
   /* 날씨api */
     // var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
     var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
-
     // let city = 'jeju';
     // var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=33.3819233&lon=126.5617798&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
     // let city = 'London';
@@ -981,10 +945,8 @@ a{text-decoration: none}
       success: function(resp) {
         console.log(resp);
         console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-
         console.log("위도 : " + resp.lat + "  경도 : " + resp.lon);
         console.log("==================================================================================");
-
         for (let idx in resp.daily) {
           let tmp = '<div class="weatherContent">';
           let days = new Date();
@@ -992,7 +954,6 @@ a{text-decoration: none}
           const today = moment(days);
           console.log("날짜 : " + today.format('YYYY-MM-DD'));
           tmp += '<div class="day">' + today.format('MM / DD') + '<div>';
-
           console.log("최고 기온 : " + resp.daily[idx].temp.max);
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].temp.min) + '&ordm/' + Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].pop*100.0) + '%<div>';
@@ -1039,53 +1000,12 @@ a{text-decoration: none}
           if(resp.daily[idx].weather[0].icon=='50d' || resp.daily[idx].weather[0].icon=='50n'){
             imgURL = '/resources/design/line/animation-ready/mist.svg';
           }
-
         // imgURL = "http://openweathermap.org/img/w/" + resp.daily[idx].weather[0].icon + ".png";
           tmp += '<div class="Icon">' + "<img src=" + imgURL + ">" + '<div>';
           tmp += "</div>"
-
           $('.weather').append(tmp);
           console.log("=====================================================================================");
-
         }
       }
     })
-    
-    $(".navContent").on('click',function(){
-    	
-    	/* 블러처리 */
-    /* 	$(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2)");
-    	$(this).css("background-color","white");
-    	$(this).css("border-radius","40px"); */
-    	$(".selectRegionBox").css("display","flex");
-    })
-    
-      window.onclick = function(event) {
-    	   if (!event.target.matches('.navBtnNodeList')) {
-    		   $(".selectRegionBox").hide();
-    	   }
-    	   
-    	   if(!event.target.matches('.dateNodeList'))
-    		   $(".datepickerBox").hide();
-    	 } 
-    
-    
-    
-     /* 의미없는듯 달력디자인을 바꿔야함$(".navDateBtn").on('click',function(){ */
-    	/* let mNavNode = document.querySelector("#mainNav").childNodes; */
-    	/* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
-    	$(this).children(".selectContent").css("border","none");
-    	$(this).css("background-color","white");
-    	$(this).css("border-radius","40px");
-    	 */
-    	 
-    /* 	 $(".datepickerBox").show();
-    }) */
-    
-    $(".region").on("click",function(){
-    	document.getElementsByClassName("navBtnNodeList")[3].innerHTML = "<b class='navBtnNodeList' data-regionNo="+$(this).data('regionNo')+" style=color:black;font-size:15px;>"+$(this).text()+"</b>"
-    	$(".navDateBtn").first().click();
-    	$(".datepickerBox").show();
-    })
-    
 </script>
