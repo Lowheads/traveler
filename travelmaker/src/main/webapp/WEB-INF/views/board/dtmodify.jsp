@@ -75,10 +75,6 @@
   resize: vertical;
 }
 
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
 
 .board_contents{
 	width: 100%;
@@ -185,6 +181,8 @@ label {
   border-collapse: collapse;
   width: 100%;
   table-layout:fixed;
+  overflow: hidden;
+  border-radius: 15px;
 }
 
 #customers td, #customers th {
@@ -200,7 +198,7 @@ label {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #203341;
+  background-color: #ff8b3d;
   color: white;
 }
 #tabletitle{
@@ -209,30 +207,31 @@ label {
 }
 
 .left {
-     width: 48%;
+     width: 46%;
      margin-right : 4%;
 
 }
 
 .right {
-     width: 48%;
+     width: 50%;
 
 }
 
-.btn { 
-	font-size:15px;
-	color: black;
-
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
-	padding: 5px 20px 5px 20px;
-	float: right;
+.fileAdd_btn { 
+	font-size: 15px;
+    color: black;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 14px;
+    padding: 5px 10px 5px 10px;
+    float:right;
+    margin-top:10px;
 }
 
-.btn:hover, .cancel_btn:hover, .update_btn:hover{
-   background-color: #203341;
+.btn:hover, .cancel_btn:hover, .update_btn:hover , .fileAdd_btn:hover , #fileDel:hover{
+   background-color: #ff8b3d;
    color:white;
+   border: 1px solid #ff8b3d;	
 }
 
 .cancel_btn, .update_btn{
@@ -250,30 +249,88 @@ label {
 	margin-top: 10px;
 	border-radius : 5px;
 	background-color: white;
-	padding: 40px;
+	padding: 50px;
 
 }
 
 /* 파일  */
 
 .orgfilecontent{
- 	text-align: center;
+ 	text-align: right;
+ 	margin-bottom:20px;
 }
 
 .orgfilecontent input{
 	margin-top:10px;
-	width: 80%;
-	height:30px;
 }
 .filecontent{
+	width:100%;
+	position: relative;
+    overflow: hidden;
+}
+.filecontent input[type=file]{
+	position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: none;
 
-	text-align: center;
+
 }
 
-.imgcontent input{
+#fileName{
+	font-size:13px;
+}
+
+
+/* 
+.orgimg img{
+	width:100%;
+	height:250px;
 	margin-top:10px;
-	width: 92%;
-	height:30px;
+	margin-bottom:10px;
+} */
+
+#fileDel{
+	font-size: 15px;
+    color: black;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 14px;
+    padding: 5px 10px 5px 10px;
+
+}
+
+.select_img{
+	text-align:center;
+	display:inline-block;
+}
+
+.select_img img{
+	width:100%;
+	height:200px;
+	margin-top:10px;
+	margin-bottom:10px;
+	
+}
+
+.fileDelBtn{
+	font-size:15px;
+	color: black;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
+	float: right;
+	margin-top:10px;
 }
 
 </style>
@@ -300,7 +357,7 @@ label {
 					<label>게시글 제목</label>
 					</div>
 					<div class="col-75">
-					 <input class="form-control"  value='${board.boardTitle }' readonly="readonly">
+					 <input class="form-control"  name='boardTitle' value='${board.boardTitle }' readonly="readonly">
 					</div>
 					</div>
 		
@@ -310,7 +367,7 @@ label {
 						<label>일정명</label>
 						</div>
 						<div class="col-75">
-						<input class="form-control" value='${schedule.schTitle }' readonly="readonly">
+						<input class="form-control"  value='${schedule.schTitle }' readonly="readonly">
 					</div>
 					</div>
 			
@@ -328,21 +385,22 @@ label {
 						사진목록
 						<div class="flex-container">
 						<c:forEach var="file" items="${file}" varStatus="var">
+							<div class="orgfilecontent">
 							<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}" value="${file.FILE_NO }">
 							<input type="hidden" name="fileNo" value="${file.FILE_NO }">
 							<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
-							<div class="orgfilecontent">
-								<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
-								<img src="<c:url value="/img/${file.STORED_FILE_NAME} "/>" width="300px" height="200px"/>
-								<input type='text' id='content' name='fileContent' value='<c:out value="${file.FILE_CONTENT }"/>'>
-								<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');">삭제</button><br>
-							</div>
+							
+							<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a><%-- (${file.FILE_SIZE}kb) --%>
+							<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');">삭제</button><br>
+							<img src="<c:url value="/img/${file.STORED_FILE_NAME} "/>" style='width:100%; height:250px; margin-top:10px; margin-bottom:10px;'/>
+							<input type='text' id='content' class='form-control' name='fileContent' value='<c:out value="${file.FILE_CONTENT }"/>'>
 							<br>
+						</div>
 						</c:forEach>
 
 					
 					<div class="form-group">
-						<button type="button" class="fileAdd_btn btn">사진추가</button>
+						<button type="button" class="fileAdd_btn">사진추가</button>
 						<span id="fileIndex"></span>
 					</div>	
 						</div>
@@ -450,10 +508,10 @@ label {
 			var fileIndex = 1;
 			var i=0;
 			$(".fileAdd_btn").on("click", function(){
-				$("#fileIndex").append("<div class='filecontent'><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"
-				+"<div class='select_img'><img src=''/></div>"	
-				+"<div class='imgcontent'><input type='text' name='newContent'/>"
-				+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
+				$("#fileIndex").append("<div class='filebox'><label class='filecontent'><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"
+				+"<div class='select_img'><img src='/resources/img/plusimg.JPG'/></div></label>"	
+				+"<input type='text' class='form-control' name='newContent'/>"
+				+"<button type='button' class='fileDelBtn' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 			});
 			
 	 		$(document).on("change","#boarddtImg",function(){
@@ -463,9 +521,7 @@ label {
 				if (this.files && this.files[0]) {
 					var reader = new FileReader;
 						reader.onload = function(data) {
-					tmp.next().children().attr("src", data.target.result)
-						.width(300)
-						.height(200);
+					tmp.next().children().attr("src", data.target.result);
 					}
 					reader.readAsDataURL(this.files[0]);
 					}

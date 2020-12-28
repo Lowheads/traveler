@@ -126,8 +126,9 @@ input:checked+.slider:before {
 }
 
 #schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
-	background-color: #203341;
+	background-color: #ff8b3d;
    	color:white;
+   	border: 1px solid #ff8b3d;
 
 }
 

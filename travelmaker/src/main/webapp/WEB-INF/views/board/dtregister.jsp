@@ -31,32 +31,10 @@
   	margin-bottom:10px;
 }
 
-/* .form-group input {
-    width: 100%;
-    margin: 10px 0;
-    padding: 7px 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+.filebox{
+	
+
 }
-.form-group textarea {
-    width: 100%;
-    height: 500px;
-    margin: 10px 0;
-    padding: 5px 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-#form {
-    width: 650px;
-    margin: 0 auto;
-}
-.form-group label {
-    font-weight: bold;
-    font-size: 15px;
-} */
 
 .col-25{
   float: left;
@@ -72,6 +50,7 @@
 
 
 }
+
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -101,10 +80,10 @@
   resize: vertical;
 }
 
-label {
+/* label {
   padding: 12px 12px 12px 0;
   display: inline-block;
-}
+} */
 
 .boardContents{
 	width: 100%;
@@ -211,6 +190,8 @@ label {
   border-collapse: collapse;
   width: 100%;
   table-layout:fixed;
+  overflow: hidden;
+  border-radius: 15px;
 }
 
 #customers td, #customers th {
@@ -226,7 +207,7 @@ label {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #203341;
+  background-color: #ff8b3d;
   color: white;
 }
 #tabletitle{
@@ -235,8 +216,8 @@ label {
 }
 
 .left {
-     width: 45%;
-     margin-right : 5%;
+     width: 46%;
+     margin-right : 4%;
 
 }
 
@@ -248,7 +229,6 @@ label {
 .dtbtn { 
 	font-size:15px;
 	color: black;
-
 	background-color:white;
 	border: 1px solid gray;
 	border-radius: 14px;
@@ -257,35 +237,73 @@ label {
 }
 
 .dtbtn:hover{
-   background-color: #203341;
+   background-color: #ff8b3d;
+   	border: 1px solid #ff8b3d;
    color:white;
 }
 .flex-container{
 	margin-top: 10px;
 	border-radius : 5px;
 	background-color: white;
-	padding: 40px;
+	padding: 50px;
 
 }
 
 .select_img{
 	text-align:center;
+	display:inline-block;
+}
+
+.select_img img{
+	width:100%;
+	height:200px;
+	margin-top:10px;
+	margin-bottom:10px;
+	
 }
 
 .filecontent{
-
-	text-align: center;
+	position: relative;
+    overflow: hidden;
 }
 
-.imgcontent input{
-	margin-top:10px;
-	width: 92%;
-	height:30px;
+.filecontent input[type=file]{
+	position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: none;
+
+
 }
+
+.fileAdd_btn{
+	font-size: 15px;
+    color: black;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 14px;
+    padding: 5px 10px 5px 10px;
+    float: right;
+}
+
+.fileAdd_btn:hover{
+   background-color: #ff8b3d;
+   color:white;
+   border: 1px solid #ff8b3d;
+}
+
 
 </style>
 
-  
 
 <div class="contents">
 <!--상단 -->
@@ -328,8 +346,8 @@ label {
 				<br>
 				사진등록
 				<div class="flex-container">
-				<button type="button" class="fileAdd_btn dtbtn" >사진추가</button>
-						<span id="fileIndex"></span>
+				<button type="button" class="fileAdd_btn" >사진추가</button>
+						<span id="fileIndex" class="btn-file"></span>
 			</div>
 			
 			<br>
@@ -397,17 +415,18 @@ label {
 <script type="text/javascript">
 $(document).ready(function(){
 	fn_addFile();
+	
 	function fn_addFile(){
 		var fileIndex = 1;
 		var contentIndex= 1;
 		$(".fileAdd_btn").on("click", function(){
-			$("#fileIndex").append("<div class='filecontent'><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
-			+"<div class='select_img'><img src=''/></div>"		
-			+"<div class='imgcontent'><input type='text' name='newContent'/></div>"
-			+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
+			$("#fileIndex").append("<div class='filebox'><label class='filecontent'><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
+			+"<div class='select_img'><img id='errorimg' src='/resources/img/plusimg.JPG' /></div></label>"		
+			+"<div class='imgcontent'><input type='text' class='form-control' name='newContent'/></div>"
+			+"<button type='button' id='fileDelBtn' class='dtbtn' style='margin-top:10px;'>"+"삭제"+"</button></div><br>");
 		});
-
-	
+		
+		
  		$(document).on("change","#boarddtImg",function(){
  			
  			
@@ -415,9 +434,7 @@ $(document).ready(function(){
 			if (this.files && this.files[0]) {
 				var reader = new FileReader;
 					reader.onload = function(data) {
-				tmp.next().children().attr("src", data.target.result)
-					.width(300)
-					.height(200);
+				tmp.next().children().attr("src", data.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
 				}

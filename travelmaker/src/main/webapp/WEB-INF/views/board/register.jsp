@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
- <link rel="stylesheet" href="/resources/css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
@@ -9,7 +8,7 @@
 				 <input type="hidden" class="form-control" name='schNo' id='schNo' value='${schNo }' readonly="readonly">
 				</div>
 				<div>
-				<div class="form-control" style="text-align:center">
+				<div style="text-align:center">
 					<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' />
 					
 					<label for = 'boardImg' style="display:inline-block"><i class="far fa-file-image"></i>대표사진 선택</label>
@@ -19,7 +18,6 @@
 					<div class="select_img" style="text-align:center"><img src=""/></div>
 						
 						<script>
-						//사진등록 시 화면에 보여주는 함수
 						$("[name=boardTitle]").attr("required",true);
 						$("#boardImg").change(function() {
 							if (this.files && this.files[0]) {
@@ -39,7 +37,7 @@
 				<div class="form-group">
 					<label>게시글 제목</label>
 					<input class="form-control" name='boardTitle' id='boardTitle'>
-				</div>
+				</div><br>
 						<label>공개여부</label> 
 					공개<input type="radio" name='hidden' value="y" required checked> 
 					비공개<input type="radio" name='hidden' value="n">
@@ -88,13 +86,21 @@
 	padding: 5px 20px 5px 20px;
 }
 .btn:hover{
-   background-color: #203341;
+   background-color: #ff8b3d;
    color:white;
+   border: 1px solid #ff8b3d;
+}
+
+.form-control, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
 }
 </style>
 <script type="text/javascript">
 
-	//같은 일정번호의 게시물명 중복일 때 알람창 ajax
  	$('#dtregister').on("click",function(e){
 		e.preventDefault();
 		var boardTitle=document.getElementById('boardTitle').value;
@@ -102,12 +108,12 @@
 		 
 		//게시물 제목 입력 체크
 		if(boardTitle==""){		
-			alert('게시물 제목을 입력하세요');
+			alert('게시글 제목을 입력하세요');
 			return;
 		}	
 		//게시물 제목 길이 체크
 		if((boardTitle.length>60)){
-			alert('게시물 제목을 20자 이내로 작성해주세요');
+			alert('게시글 제목을 20자 이내로 작성해주세요');
 			document.getElementById('boardTitle').value= "";
 			return;
 		}
