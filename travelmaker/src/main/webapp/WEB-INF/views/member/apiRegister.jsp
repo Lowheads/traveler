@@ -25,11 +25,11 @@ img.ui-datepicker-trigger {
 	background-color: white;
     display: flex;
     justify-content: center;
-    margin-top: 7%;
+    margin-top: 2%;
 }
 
 .apiReg-input-wrap{
-    width: 60%;
+    width: 46%;
     margin-top: 5%;
     margin-bottom: 10%;
     justify-content: center;
@@ -59,6 +59,7 @@ img.ui-datepicker-trigger {
 .tag-wrap{
 	display: flex;
 	margin-bottom: 1%;
+	padding: 2%;
 }
 
 .text-div{
