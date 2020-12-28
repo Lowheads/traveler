@@ -162,9 +162,10 @@
 	font-size:15px;
 	margin-bottom: 50px;
 	background-color:white;
-	border: 1px solid gray;
+	border: 1px solid rgb(128,128,128,0.2);
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
+	outline: 0;
 }
 
 #dtmodify_btn, #list_btn{
@@ -172,10 +173,11 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 	background-color:white;
-	border: 1px solid gray;
-	/* border-radius: 14px; */
+	border: 1px solid rgb(128,128,128,0.2);
+	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: left;
+	outline: 0;
 
 }
 
@@ -183,11 +185,13 @@
 	font-size:15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	background-color:white;
-	border: 1px solid gray;
-	/* border-radius: 14px; */
+	background-color:#ff8b3d;
+	color:white;
+	border: 1px solid #ff8b3d;
+	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: right;
+	outline: 0;
 
 }
 
@@ -247,12 +251,12 @@ overflow-y: auto;
    color:white;
     text-align: center;
    line-height: 70px;    
-   border-right: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
 }
 
 .dt_top_right{
-   border-top: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-left: 10px;
    width: 85%;
    display: flex;
@@ -264,7 +268,7 @@ overflow-y: auto;
 }
 .showMap{
    margin-right: 15px;
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    margin-top: auto;
    margin-bottom: auto;
    border-radius: 10px;
@@ -283,9 +287,9 @@ overflow-y: auto;
 .dt_bottom_left{
    width: 15%;
    text-align: center;
-   border-top: 1px solid gray;
-   border-left: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-left: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-top: 40px;
 }
 
@@ -305,8 +309,8 @@ overflow-y: auto;
    padding-left: 10px;
    width: 85%;
    line-height: 100px;  
-   border-right: 1px solid gray;
-   border-top: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
+   border-top: 1px solid rgb(128,128,128,0.2);
    
 }
 .dt_bottom_right img{
@@ -315,8 +319,8 @@ overflow-y: auto;
 }   
 .dt_box_footer{
    display:flex;
-   background-color: #e6e6e6;
-   border:1px solid gray;
+   background-color: #faf3ea;
+   border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
    width: 15%;
@@ -640,6 +644,92 @@ overflow-y: auto;
   }
 }
 
+/* 좋아요버튼 test */
+.btn_like {
+
+  position: absolute;
+  right:13%;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  color: #DD5D54;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+  cursor: pointer;
+}
+
+.btn_like:hover {
+  border: 1px solid rgba(228,89,89,0.3);
+  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+}
+
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
+}
+.btn_like:focus{
+   border: 0;
+   outline: 0;
+}
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+
+.btn_like .ani_heart_m {
+    margin: -63px 0 0 -63px;
+}
+
+.ani_heart_m {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 125px;
+    height: 125px;
+    margin: -63px 0 0 -63px;
+    pointer-events: none;
+}
+
+.ani_heart_m.hi {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+    animation: on_m 1.06s steps(72);
+}
+
+.ani_heart_m.bye {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+    -webkit-background-size: 8250px 125px;
+    background-size: 8250px 125px;
+    animation: off_m 1.06s steps(66);
+}
+
+@keyframes on_m {
+  from { background-position: 0 }
+  to { background-position: -9000px }
+}
+
+@keyframes off_m {
+  from { background-position: 0 }
+  to { background-position: -8250px }
+}
+/* 좋아요버튼 */
+
 </style>
 
 
@@ -688,13 +778,22 @@ overflow-y: auto;
 		<div class="heart">
 			<c:choose>
 				<c:when test="${pick eq 'picked' }"> 
-						<b>찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
+<%-- 						<b>찜하기 <i class="fa fa-heart" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b> --%>
+						 <button type="button" class="heartbtn btn_like btn_unlike" data-sch_no="${board.schNo}" onclick="likeToggle(this)">
+     						<span class="img_emoti">좋아요</span>
+      						<span class="ani_heart_m hi"></span>
+    					 </button>
+						
 				</c:when>
 
 				<c:when test="${pick eq 'unpicked'}">
-						<b>찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
-						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b>
+<%-- 						<b>찜하기 <i class="fa fa-heart fa-heart-o" data-sch_no="${board.schNo}"
+						style="font-size: 24px; color: red;" onclick="likeToggle(this)"></i></b> --%>
+						<button type="button" class="heartbtn btn_like" data-sch_no="${board.schNo}" onclick="likeToggle(this)">
+     						<span class="img_emoti">좋아요</span>
+      						<span class="ani_heart_m bye"></span>
+    					 </button>
 				</c:when>
 			</c:choose>
 		</div>	
@@ -811,13 +910,13 @@ overflow-y: auto;
                             <!-- distance -->
                             <div class="dt_box_footer">
                                 <div class="dt_footer_left"></div>
-                                <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE } km</div>
+                                <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE }</div>
                             </div>
                         </c:if>
                         
                         <!-- 마지막 -->
                         <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid rgb(128,128,128,0.2);">
                                 <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
                                 </div>
@@ -849,12 +948,14 @@ overflow-y: auto;
 
 <!--contents 끝 -->
 </div>
-
+<%@ include file="../includes/footer.jsp" %>
 
 	<form name='operForm' id='operForm' action="/board/modify" method="get">
 		<input type='hidden' id='boardNo' name='boardNo' value='<c:out value="${board.boardNo }"/>'> 
 		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
 		<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+		<input type="hidden" name='keyword' value='<c:out value="${cri.keyword }"/>'>
+		<input type="hidden" name="type" value='<c:out value="${cri.type }"/>'>
 	</form>
 	<form name='fileForm' action="/board/fileDown" method="get">
 		<input type='hidden' id="FILE_NO" name='FILE_NO' value="">
@@ -908,47 +1009,46 @@ function fn_fileDown(fileNo){
 	formObj.submit();
 }
 
-//좋아요
+
 function likeToggle(heart){
-   if(heart.className == "fa fa-heart"){
-       let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
+    let sendData = {
+      'schNo' : heart.dataset['sch_no'],
+   }
+if(heart.classList.contains('btn_unlike')){
+   //ajax 기능 추가 
+   $.ajax({
             type : 'post',
             url : '/board/deletePick',
             data : sendData,
             success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
-             },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
+               heart.classList.remove('btn_unlike');
+               heart.children[1].classList.remove('hi');
+                heart.children[1].classList.add('bye');
+            },
+            error : function(error) {
+               alert("에러발생!! 다시시도해주세요" + error);
             }
-         });
-   }
-   
-  if(heart.className == "fa fa-heart fa-heart-o"){
-      let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
+         }); 
+} 
+ else{
+   //ajax 기능 추가 
+   $.ajax({
             type : 'post',
             url : '/board/insertPick',
             data : sendData,
             success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
+               heart.classList.add('btn_unlike');
+               heart.children[1].classList.add('hi');
+               heart.children[1].classList.remove('bye');
             },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
+            error : function(error) {
+               alert("에러발생!! 다시시도해주세요" + error);
             }
-         });
-   } 
-    
-}; 
+         }); 
+         
+}
+};
+
 
 
 function modal(id) {

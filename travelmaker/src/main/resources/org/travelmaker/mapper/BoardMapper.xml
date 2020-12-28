@@ -54,14 +54,36 @@ select * from board where board_no>0
 </select>
 
 
+	<!--  페이징 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							board_title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							memo like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							nickname like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
 <select id="getListWithPaging" resultMap="BoardResult">
    <![CDATA[
   select *
     from (
-    select rownum no,a.*
+    select rownum rn,a.*
     from
 (select 
-         b.board_no, b.sch_no, board_title, w_date, mod_date, pick_cnt, v_cnt, hidden, board_img, thumbImg, m.nickname
+         b.board_no, b.sch_no, b.board_title, b.w_date, b.mod_date, b.pick_cnt, b.v_cnt, b.hidden, b.board_img, b.thumbImg, m.nickname, s.memo
        from
          schedule s, member m,board b
        where s.sch_status = 'BS001'
@@ -70,9 +92,15 @@ select * from board where board_no>0
             order by
             board_no desc
             )a
-            where rownum <= #{pageNum} * #{amount}
+            where 
+            ]]>
+            
+            <include refid="criteria"></include>
+            
+            <![CDATA[
+            rownum <= #{pageNum} * #{amount}
             )
-            where no >= (#{pageNum} -1) *#{amount}+1 
+            where rn > (#{pageNum} -1) *#{amount}
    ]]>
 
 </select>
@@ -101,7 +129,10 @@ select * from board where board_no>0
 <select id="getTotalCount" resultType="int">
    select count(*) 
    from schedule s, member m,board b
-   where s.sch_status = 'BS001' and hidden='y'
+   where 
+   <include refid="criteria"></include>
+   
+   s.sch_status = 'BS001' and hidden='y'
    and s.sch_no=b.sch_no and s.mem_no=m.mem_no and m.mem_grade='MG001'
 </select>
 

@@ -36,7 +36,6 @@ public class PickServiceImpl implements PickService{
          placeMapper.upCnt(vo.getPlcNo());
          return pickMapper.insert(vo); 
       }
-      System.out.println(vo.getSchNo());
       boardMapper.upCnt(vo.getSchNo());
       return pickMapper.insertSch(vo);
    }
