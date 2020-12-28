@@ -5,8 +5,6 @@
 <%@ include file="../includes/header.jsp" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
-<%@ include file="../includes/header.jsp" %>
-
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet"
@@ -104,7 +102,6 @@ input:checked+.slider:before {
 .slider.round:before {
 	border-radius: 50%;
 }
-
 #hiddenlist_open_btn{
 	font-size:15px;
 	margin-right:3%;
@@ -116,7 +113,6 @@ input:checked+.slider:before {
 	float: right;
 	text-decoration: none;
 }
-
 #schedulelist_open_btn{
 	font-size:15px;
 	margin-bottom: 50px;
@@ -126,14 +122,11 @@ input:checked+.slider:before {
 	padding: 5px 20px 5px 20px;
 	text-decoration: none;
 }
-
 #schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
 	background-color: #ff8b3d;
    	color:white;
    	border: 1px solid #ff8b3d;
-
 }
-
 .ct_body{
 	padding: 30px;
 	background-image: url('/resources/img/boardimg.jpg');
@@ -142,14 +135,12 @@ input:checked+.slider:before {
   	background-size: cover;
   	margin-bottom:50px; 
 }
-
 .boardContents{
 	width: 100%;
 	height: auto;
 	background-color: white;
 	display:inline-block;
 }
-
 .gallery {
 	width: 100%;
 	height: 100%;
@@ -158,7 +149,6 @@ input:checked+.slider:before {
 	flex-wrap: wrap;
 	margin: 0 auto;
 }
-
 .card-contents{
 	width: 15%;
 	height: 450px;
@@ -168,11 +158,9 @@ input:checked+.slider:before {
   	display: block;
 	border-radius: 10px;
   	margin-bottom: 30px;
-
 /*   	box-shadow: 2px 2px 2px 2px #D4D4D4; */
   
 }
-
 .card-Img{
 	position : relative;
 	background-size: cover;
@@ -190,14 +178,12 @@ input:checked+.slider:before {
      width: 100%;                                                              
      z-index:1;
 } */
-
 /* .card-Img img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	
 } */
-
 .card-Img .heart{
      position: absolute;
      top:2%;
@@ -208,31 +194,22 @@ input:checked+.slider:before {
      z-index: 2;
      text-align: center;
   }
-
 .card-desc{
 	margin: 10px;
 	height: auto;
 	font-size: 15px;
 }
-
 .desc_bottom{
 	 font-size : 12px;
 }
-
 .mainMsg{
 	margin-left: 5%;
 }
-
 .mainMsg b{
 	font-size:30px;
 	color:white;
-
 }
-
 /* 페이징 */
-
-
-
 .pagination_bar{
    font-size: 8pt;
   font-weight: 400;
@@ -257,22 +234,18 @@ input:checked+.slider:before {
   border-radius: 3px;
   cursor: pointer;
 }
-
 .pagination_btn a{
    color: #777;
     font-size: 140%;
     padding: .5em;
     text-decoration : none;
 }
-
 .pagination_btn a:hover{
    color: #f60;
 }
-
 .pagination_bar .active a{
    color: #f60;
 }
-
 </style>
 
 </head>
@@ -410,7 +383,6 @@ input:checked+.slider:before {
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-
 		var actionForm = $("#actionForm");
 		$(".pagination_btn a").on("click", function(e) {
 			e.preventDefault();
@@ -418,14 +390,11 @@ input:checked+.slider:before {
 			//alert(actionForm.find("input[name='pageNum']").val($(this).attr("href")))
 			actionForm.submit();
 		});
-
 	});
 	
 	//hiddenlist script
 	$(".round").on("click", function() {
-
 		let sendData = {
-
 			"hidden" : $(this).data("hidden"),
 			"schNo" : $(this).data("schno")
 		};
@@ -433,18 +402,14 @@ input:checked+.slider:before {
 			type : 'post',
 			url : '/board/hidden',
 			data : sendData,
-
 			success : function(data) {
 			}
-
 		});
-
 	});
 	
 	function modal(id) {
 		var zIndex = 9999;
 		var modal = document.getElementById(id);
-
 		// 모달 div 뒤에 희끄무레한 레이어
 		var bg = document.createElement('div');
 		bg.setStyle({
@@ -460,7 +425,6 @@ input:checked+.slider:before {
 		});
 		bg.classList.add('schedulelistbg');
 		document.body.append(bg);
-
 		// 닫기 처리
 		modal.querySelector('.modal_close_btn').addEventListener('click',
 				function() {
@@ -468,16 +432,13 @@ input:checked+.slider:before {
 					modal.style.display = 'none';
 					window.location.reload();
 				});
-
 		modal
 				.setStyle({
 					position : 'fixed',
 					display : 'block',
 					boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
 					// 시꺼먼 레이어 보다 한칸 위에 보이기
 					zIndex : zIndex + 1,
-
 					// 모달 가운데 이쁘게
 					top : '50%',
 					left : '50%',
@@ -486,14 +447,12 @@ input:checked+.slider:before {
 					webkitTransform : 'translate(-50%, -50%)'
 				});
 	};
-
 	// 이건 먼지모르겟음..
 	Element.prototype.setStyle = function(styles) {
 		for ( var k in styles)
 			this.style[k] = styles[k];
 		return this;
 	};
-
 	// hiddenlist 모달 띄우기
 	document.getElementById('hiddenlist_open_btn').addEventListener('click',
 	
