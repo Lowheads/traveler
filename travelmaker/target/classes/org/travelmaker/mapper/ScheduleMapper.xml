@@ -48,11 +48,11 @@
 </insert>
 <!-- insert 할때 img 넣을지 말지 생각해보자 두개의 차이는 memno 일단 없는걸로 실험-->
 <insert id="insertSelectKey">
-	<selectKey keyProperty="schNo" order="BEFORE" resultType="Integer">
+	<selectKey keyProperty="schNo" order="BEFORE" resultType="int">
 		select sch_seq.nextval from dual
 	</selectKey>
 	insert into schedule (sch_no, mem_no, sch_title, from_date, to_date, sch_status, memo, sch_region)
-	values (sch_seq.nextval, #{memNo}, #{schTitle}, #{fromDate}, #{toDate}, #{schStatus}, #{memo}, #{schRegion})
+	values (#{schNo}, #{memNo}, #{schTitle}, #{fromDate}, #{toDate}, #{schStatus}, #{memo}, #{schRegion})
 </insert>
 
 <select id="read" resultMap="ScheduleResult">
@@ -61,7 +61,7 @@
 
 <select id="getSchedule" resultType="hashMap">
 <![CDATA[
-	select * from schedule s where s.sch_no = #{schNo}
+	select * from schedule s, board b where s.sch_no = #{schNo} and s.sch_no = b.sch_no
 ]]>
 </select>
 
