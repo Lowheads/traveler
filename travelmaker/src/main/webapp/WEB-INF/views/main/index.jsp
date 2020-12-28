@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -10,94 +10,26 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript"
-   src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript"
-   src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet"
-   href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
-<script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />   
-   <!-- <script src="/resources/js/daterangepicker.js"></script> -->
-   <!-- <link href="/resources/css/daterangepicker.css" rel="stylesheet"/> -->
+	href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
 <!--<link href="/resources/css/index.css" rel="stylesheet">  -->
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
-
-/* daterangepicker 디자인 수정 */
-
- .daterangepicker{
-
-position: absolute;
-
-    border-radius: 20px;
-    padding: 18px;
-
-} 
-
-.opensright{
-
-	width:42%;
-}
-
-.daterangepicker .calendar-table table{
-	border-spacing:5px;
-	border-collapse: inherit;
-	font-size:12px;
-	text-align:center;
-}
-
-.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
-	font-size:13px;
-
-}
-
-.daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #ff8b3d;
-    border-color: transparent;
-    color: #fff;
-}
-
-.daterangepicker .calendar-table {
-	padding: 10px;
-	}
-	
-.table-condensed{
-	border-spacing:10px;
-}
-
-
-/* daterangepicker 디자인 끝 */
-
-
-.btn{
-	width: 130px;
-    height: 35px;
-    text-align: center;
-    background-color: #ff8b3d;
-    color: white;
-    border: 1px solid white;
-
-}
-
-.cancelBtn{
-	float: none; 
-    font-size: 17px;
-    font-weight: bold;
-    color: white;
-    margin: 2%;
-
-
-}
 /* 날씨 */
  .weather {
-      position: relative;
-      float:right;
+ 	  position: relative;
+ 	  float:right;
       display: flex;
       color: white;
     }
@@ -230,228 +162,228 @@ position: absolute;
 /* test 스타일 끝 */
 
 body{
-   margin: 0;
+	margin: 0;
 }
 
 a{text-decoration: none}
 
 .ct_body{
-   padding: 30px;
-   background-image: url('https://images.unsplash.com/photo-1593182440709-4b7b56482c55?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
-   height: 700px;
-   background-repeat: no-repeat;
-     background-size: cover;
-     margin-bottom:50px; 
+	padding: 30px;
+	background-image: url('https://images.unsplash.com/photo-1593182440709-4b7b56482c55?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
+	height: 700px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	margin-bottom:50px; 
 }
 
 #mainNav{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-   text-align:center;
-   margin-top: 100px;
-   margin-left:auto;
-   margin-right:auto;
-   margin-bottom: 150px;
-   width: 60%;
-   height: 12%;
-   background-color:white;
-   border-radius: 40px;
-   display:flex;
-   justify-content: flex-start;            
-   flex-grow: 1;
+ 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	text-align:center;
+	margin-top: 100px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 150px;
+	width: 60%;
+	height: 12%;
+	background-color:white;
+	border-radius: 40px;
+	display:flex;
+	justify-content: flex-start;            
+	flex-grow: 1;
 }
 
 .navContent{
-   padding-top:15px;
-   height:100%;
-   flex-basis: 35%;
+	padding-top:15px;
+	height:100%;
+	flex-basis: 35%;
 }
 .navContent:hover{
-   background-color: rgb(128,128,128,0.1);
-   border-radius: 40px;
+	background-color: rgb(128,128,128,0.1);
+	border-radius: 40px;
 }
 
 .navDateBtn{
-   padding-top:15px;
-   height:100%;
-   flex-basis: 30%;
+	padding-top:15px;
+	height:100%;
+	flex-basis: 30%;
 }
 
 .navDateBtn:hover{
-   background-color: rgb(128,128,128,0.1);
-   border-radius:40px;
+	background-color: rgb(128,128,128,0.1);
+	border-radius:40px;
 }
 .navDateBtn:hover .selectContent{
-   border:none;
+	border:none;
 }
 
 .navDateBtn .selectContent{
-   border-left: 1px solid rgb(128,128,128,0.3);
+	border-left: 1px solid rgb(128,128,128,0.3);
 }
 
 .navSearchBtn{
-   padding-top:15px;
-   height:100%;
+	padding-top:15px;
+	height:100%;
+	width: 30%;
 }
 .selectContent{
-   margin-top:auto;
-   margin-bottom:auto;
-   text-align: left;
-   color: gray;
+	margin-top:auto;
+	margin-bottom:auto;
+	text-align: left;
+	color: gray;
 }
 
 .selectContent b{
-   color:black;
-   font-size: 12px;
-   text-align: left;
+	color:black;
+	font-size: 12px;
+	text-align: left;
 }
 .selectRegionBox{
-   position: absolute;
-   display:none;
-   bottom:260px;
-   width: 500px;
-   height: 200px;
-   background-color: white;
-   border-radius: 40px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-   padding: 30px;
-   flex-wrap: wrap;
-   align-content:flex-end;
+	position: absolute;
+	display:none;
+	bottom:260px;
+	width: 500px;
+	height: 200px;
+	background-color: white;
+	border-radius: 40px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+	padding: 30px;
+	flex-wrap: wrap;
+	align-content:flex-end;
 }
 .region{
-   height:45px;
-   border-radius:10px;
-   margin-right: 10px;
-   padding:10px;
-   border:1px solid rgb(128,128,128,0.2);
-   margin-top:20px;
+	height:45px;
+	border-radius:10px;
+	margin-right: 10px;
+	padding:10px;
+	border:1px solid rgb(128,128,128,0.2);
+	margin-top:20px;
 }
 
 .region:hover{
-   border:5px double black;
+	border:5px double black;
 }
 
 .datepickerBox{
-   position:absolute;
-   bottom:60px;
-   left:20%;
-   height:400px;
-   width: 900px;
-   background-color: white;
-   border-radius: 40px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-   display:none;
+	position:absolute;
+	bottom:60px;
+	left:20%;
+	height:400px;
+	width: 900px;
+	background-color: white;
+	border-radius: 40px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 }
 
 #goNext{
-   background-color: #ff8b3d;
-   border-radius: 50%;
-   height: 50px;
-   width: 50px;
+	background-color: #ff8b3d;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
 }
 
 .material-icons{
-   color:white;
-   margin: 10px;
-   font-size: 10px;
+	color:white;
+	margin: 10px;
+	font-size: 10px;
 }
 
 .mainMsg{
-   margin-left: 7%;
+	margin-left: 7%;
 }
 
 .mainMsg b{
-   font-size:50px;
-   color:white;
-   text-shadow: 2px 2px gray;
+	font-size:50px;
+	color:white;
+	text-shadow: 2px 2px gray;
 }
 
 #popup_open_btn{
-   font-size:12px;
-   margin-right: 1%;
-   margin-bottom: 50px;
-   background-color:white;
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 7px 10px 7px 10px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	font-size:12px;
+	margin-right: 1%;
+	margin-bottom: 50px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 7px 10px 7px 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #goList{
-   font-size:15px;
-   margin-right: 1%;
-   margin-bottom: 50px;
-   background-color:white;
-   border: 1px solid gray;
-   border-radius: 14px;
-   padding: 5px 20px 5px 20px;
+	font-size:15px;
+	margin-right: 1%;
+	margin-bottom: 50px;
+	background-color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
+	padding: 5px 20px 5px 20px;
 }
 
 #goList:hover{
-   background-color:gray;
-   color:white;
-   border: 1px solid gray;
-   border-radius: 14px;
+	background-color:gray;
+	color:white;
+	border: 1px solid gray;
+	border-radius: 14px;
 }
 
 .boardContents{
-   width: 100%;
-   height: auto;
-   background-color: white;
-   display:inline-block;
+	width: 100%;
+	height: auto;
+	background-color: white;
+	display:inline-block;
 }
 
 .gallery {
-   width: 100%;
-   height: 100%;
-   display : flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   margin : 0 auto;
+	width: 100%;
+	height: 100%;
+	display : flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin : 0 auto;
 }
 
 .card-contents{
-   width: 15%;
-   height: 450px;
-   position: relative;
-    z-index: 1;
-     display: block;
-    margin-right: 15px;
-     margin-bottom: 10px;
-     border-radius: 10px;
+	width: 15%;
+	height: 450px;
+	position: relative;
+ 	z-index: 1;
+  	display: block;
+ 	margin-right: 15px;
+  	margin-bottom: 10px;
+  	border-radius: 10px;
 
 }
 
 .card-Img{
-   position : relative;
-   background-size: cover;
-   width: 100%;
-   height: 70%;
-   border-radius: 10px;
-   background-position: center; 
-   background-repeat: no-repeat; 
-   background-size: cover;
+	position : relative;
+	background-size: cover;
+	width: 100%;
+	height: 70%;
+	border-radius: 10px;
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover;
 }
 
 /* .card-Img Img{
-   width: 100%;
-   height: 100%;
-   border-radius: 10px;
-   
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	
 } */
 
 .card-desc{
-   margin: 10px;
-   height: auto;
-   font-size: 15px;
+	margin: 10px;
+	height: auto;
+	font-size: 15px;
 }
 
 .desc_bottom{
-    font-size : 12px;
+	 font-size : 12px;
 }
 /* .card-Title{
-   margin-top: 10px;
-   height: auto;
-   font-size: 15px;
+	margin-top: 10px;
+	height: auto;
+	font-size: 15px;
 } */
 
 /* selectbox */
@@ -463,72 +395,73 @@ a{text-decoration: none}
 
 
 <body>
-      <div class="contents">
-      
-      
-      <!-- 상단 -->
-      <div class="ct_body">
-      
-      <!--날씨 -->
-          <div class='weather'>
+		<div class="contents">
+		
+		
+		<!-- 상단 -->
+		<div class="ct_body">
+		
+		<!--날씨 -->
+			 <div class='weather'>
   </div>
-         <div id="mainNav">
-            <div class="navContent navBtnNodeList"  style="text-align: center;">
+			<div id="mainNav">
+				<div class="navContent navBtnNodeList"  style="text-align: center;">
 
-               <div class="selectContent navBtnNodeList" style="margin-left:40px;">
-                  <div><b class="navBtnNodeList">위치</b></div>
-                  <div class="navBtnNodeList">어디로 여행가세요?</div>
-               <div class="selectRegionBox">
-                     <div class="region" data-region-no="1">제주시</div>
-                     <div class="region" data-region-no="2">서귀포시</div>
-                     <div class="region">속초시</div>
-                     <div class="region">여수시</div>
-                     <div class="region">부산광역시</div>
-                     <div class="region">광주광역시</div>
-                     <div class="region">경주시</div>
-                     <div class="region">대구광역시</div>
-               </div>
-               </div>
+					<div class="selectContent navBtnNodeList" style="margin-left:40px;">
+						<div><b class="navBtnNodeList">위치</b></div>
+						<div class="navBtnNodeList">어디로 여행가세요?</div>
+					<div class="selectRegionBox">
+							<div class="region" data-region-no="1">제주시</div>
+							<div class="region" data-region-no="2">서귀포시</div>
+							<div class="region">속초시</div>
+							<div class="region">여수시</div>
+							<div class="region">부산광역시</div>
+							<div class="region">광주광역시</div>
+							<div class="region">경주시</div>
+							<div class="region">대구광역시</div>
+					</div>
+					</div>
 
-            </div>
-            <div class="navDateBtn dateNodeList">
-               <!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
-               <div class="selectContent dateNodeList"
-                  style="margin-left: 30px; padding-left: 30px;">
-                  <div class="dateNodeList">
-                     <b class="dateNodeList">출발일</b>
-                  </div>
-                  <div class="dateNodeList">날짜추가</div>
-                     <div class="datepickerBox dateNodeList">
-                     </div>
-               </div>
-            
-            </div>
+				</div>
+				<div class="navDateBtn dateNodeList">
+					<!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
+					<div class="selectContent dateNodeList"
+						style="margin-left: 30px; padding-left: 30px;">
+						<div>
+							<b class="dateNodeList">출발일</b>
+						</div>
+						<div class="dateNodeList">날짜추가</div>
+							<div class="datepickerBox">
+							
+							</div>
+					</div>
+				
+				</div>
 
-            <div class="navDateBtn">
-               <div class="selectContent dateNodeList" 
-                  style="margin-left: 30px; padding-left: 30px;">
-                  <div class="dateNodeList">
-                     <b class="dateNodeList">도착일</b>
-                  </div>
-                  <div class="dateNodeList">날짜추가</div>
-               </div>
-            </div>
+				<div class="navDateBtn">
+					<div class="selectContent"
+						style="margin-left: 30px; padding-left: 30px;">
+						<div>
+							<b>도착일</b>
+						</div>
+						<div>날짜추가</div>
+					</div>
+				</div>
 
 
-            <div class="navSearchBtn" style="display:flex; justify-content: space-between;">
-            <div></div>
-               <div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; cursor:pointer; " aria-hidden="true"></i>
-            </div></div>
-         
-         </div>
-         
-         <div class="mainMsg">
-         <b>이제, 여행은 <br>
-         가까운 곳에서</b>
-         <br><br>
-         <button id="popup_open_btn">여행성향검사</button>
-         
+				<div class="navSearchBtn" style="display:flex; justify-content: space-between;">
+				<div></div>
+					<div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; " aria-hidden="true"></i>
+				</div></div>
+			
+			</div>
+			
+			<div class="mainMsg">
+			<b>이제, 여행은 <br>
+			가까운 곳에서</b>
+			<br><br>
+			<button id="popup_open_btn">여행성향검사</button>
+			
 <!--  test 모달창 -->
     <div id="modal">
 
@@ -547,122 +480,120 @@ a{text-decoration: none}
         </div>
 
     </div>
-         
-         </div>
-      </div>
+			
+			</div>
+		</div>
 
 
 
 
-      <!-- 관리자 게시판리스트 출력 -->
-   
-         <button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
-   
-         <div class="boardContents">
-            <div class="gallery">
-               <c:forEach items="${adminlist }" var="adminlist">
-                  <div class="card-contents">
+		<!-- 관리자 게시판리스트 출력 -->
+	
+			<button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
+	
+			<div class="boardContents">
+				<div class="gallery">
+					<c:forEach items="${adminlist }" var="adminlist">
+						<div class="card-contents">
 
-                     <c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
-                     <a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
-                     <div class="card-Img" style="background-image: url(/resources${coverimg});" >
-<%--                            <img src="/resources${adminlist.boardImg}"> --%>
-                     </div>
-                        </a>
-                        <div class="card-desc">
-                           <b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
-                           <c:out value="${adminlist.boardTitle }" /></a></b>
-                           <div class="desc_bottom">
-                              <i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
-                              <i class="fa fa-heart-o"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
-                              <div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
-                           
-                           </div>
-                           
-                        </div>
-                  </div>
-               </c:forEach>
+							<c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
+							<a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+							<div class="card-Img" style="background-image: url(/resources${coverimg});" >
+<%-- 									<img src="/resources${adminlist.boardImg}"> --%>
+							</div>
+								</a>
+								<div class="card-desc">
+									<b><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+									<c:out value="${adminlist.boardTitle }" /></a></b>
+									<div class="desc_bottom">
+										<i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
+										<i class="fa fa-heart-o"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
+										<div style="float:right;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
+									
+									</div>
+									
+								</div>
+						</div>
+					</c:forEach>
 
-            </div>
-            <!-- 갤러리끝 -->
-         </div>
-         <!-- 게시판끝 -->
-      </div>
+				</div>
+				<!-- 갤러리끝 -->
+			</div>
+			<!-- 게시판끝 -->
+		</div>
 </body>
 
 
 <script type="text/javascript">
-   var startDate;
-   var endDate;
+	var startDate;
+	var endDate;
 
-   $(function() {
+	$(function() {
 
-      $('.navDateBtn').daterangepicker({
-         startDate : moment(),
-         endDate : moment(),
-         minDate : moment(),
-         locale : {
-            format : 'YYYY-MM-DD'
-         },
-      }, function(start, end, label) {
-         /* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
-         startDate = start.format('YYYY-MM-DD');
-         endDate = end.format('YYYY-MM-DD');
-         document.getElementsByClassName("dateNodeList")[4].innerHTML = "<b style=font-size:15px;color:black;>"+start.format('MM월 DD일')+"</b>";
-         document.getElementsByClassName("dateNodeList")[9].innerHTML = "<b style=font-size:15px;color:black;>"+end.format('MM월 DD일')+"</b>";
-      });
-      document.getElementById("goNext").addEventListener("click", submitData);
-      initDate();
+		$('input[name="daterange"]').daterangepicker({
+			startDate : moment(),
+			endDate : moment(),
+			minDate : moment(),
+			locale : {
+				format : 'YYYY-MM-DD'
+			},
+		}, function(start, end, label) {
+			/* console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); */
+			startDate = start.format('YYYY-MM-DD');
+			endDate = end.format('YYYY-MM-DD');
+		});
+		document.getElementById("goNext").addEventListener("click", submitData);
+		initDate();
 
-   });
+	});
 
-   function initDate() {
-      let datePicker = document.getElementsByClassName("data-range-picker")[0];
-      let dateList = datePicker.value.split(' - ');
-      startDate = dateList[0];
-      endDate = dateList[1];
-   }
+	function initDate() {
+		let datePicker = document.getElementsByClassName("data-range-picker")[0];
+		let dateList = datePicker.value.split(' - ');
+		startDate = dateList[0];
+		endDate = dateList[1];
+	}
 
-   function submitData() {
+	function submitData() {
 
-      let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionno'];
+		let optionRegionNo = $(".option-box:selected").get(0).dataset["regionNo"];
 
-      console.log(startDate);
-      console.log(endDate);
+		console.log(startDate);
+		console.log(endDate);
 
-      let form = document.createElement('form');
+		let form = document.createElement('form');
 
-      let objs1;
-      objs1 = document.createElement('input');
-      objs1.setAttribute('type', 'hidden');
-      objs1.setAttribute('name', 'schRegion'); // 받을 네이밍
-      objs1.setAttribute('value', optionRegionNo);
-      form.appendChild(objs1);
+		let objs1;
+		objs1 = document.createElement('input');
+		objs1.setAttribute('type', 'hidden');
+		objs1.setAttribute('name', 'schRegion'); // 받을 네이밍
+		objs1.setAttribute('value', optionRegionNo);
+		form.appendChild(objs1);
 
-      let objs2;
-      objs2 = document.createElement('input');
-      objs2.setAttribute('type', 'hidden');
-      objs2.setAttribute('name', 'toDate'); // 받을 네이밍
-      objs2.setAttribute('value', endDate);
-      form.appendChild(objs2);
+		let objs2;
+		objs2 = document.createElement('input');
+		objs2.setAttribute('type', 'hidden');
+		objs2.setAttribute('name', 'toDate'); // 받을 네이밍
+		objs2.setAttribute('value', endDate);
+		form.appendChild(objs2);
 
-      let objs3;
-      objs3 = document.createElement('input');
-      objs3.setAttribute('type', 'hidden');
-      objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
-      objs3.setAttribute('value', startDate);
-      form.appendChild(objs3);
+		let objs3;
+		objs3 = document.createElement('input');
+		objs3.setAttribute('type', 'hidden');
+		objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
+		objs3.setAttribute('value', startDate);
+		form.appendChild(objs3);
 
-      form.setAttribute('method', 'post');
-      form.setAttribute('action', "/main/theme"); // URL
-      document.body.appendChild(form);
+		form.setAttribute('method', 'post');
+		form.setAttribute('action', "/main/theme"); // URL
+		document.body.appendChild(form);
 
-      form.submit();
+		form.submit();
 
-   }
-   
+	}
+	
 
-   
+	
     function modal(id) {
         
         var zIndex = 9999;
@@ -972,7 +903,7 @@ a{text-decoration: none}
     
     
   //조와요
-  function likeToggle(하트){
+  function likeToggle(heart){
      if(heart.className == "fa fa-heart"){
         let sendData = {
               'plcNo' : heart.dataset['plc_no'],
@@ -1119,40 +1050,31 @@ a{text-decoration: none}
     })
     
     $(".navContent").on('click',function(){
-       
-       /* 블러처리 */
-    /*    $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2)");
-       $(this).css("background-color","white");
-       $(this).css("border-radius","40px"); */
-       $(".selectRegionBox").css("display","flex");
+    	
+    	/* 블러처리 */
+    /* 	$(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2)");
+    	$(this).css("background-color","white");
+    	$(this).css("border-radius","40px"); */
+    	$(".selectRegionBox").css("display","flex");
     })
     
       window.onclick = function(event) {
-          if (!event.target.matches('.navBtnNodeList')) {
-             $(".selectRegionBox").hide();
-          }
-          
-          if(!event.target.matches('.dateNodeList'))
-             $(".datepickerBox").hide();
-        } 
+    	   if (!event.target.matches('.navBtnNodeList')) {
+    		   $(".selectRegionBox").hide();
+    	   }
+    	   
+    	   if(!event.target.matches('.dateNodeList'))
+    		   $(".datepickerBox").hide();
+    	 } 
     
-    
-    
-     /* 의미없는듯 달력디자인을 바꿔야함$(".navDateBtn").on('click',function(){ */
-       /* let mNavNode = document.querySelector("#mainNav").childNodes; */
-       /* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
-       $(this).children(".selectContent").css("border","none");
-       $(this).css("background-color","white");
-       $(this).css("border-radius","40px");
-        */
-        
-    /*     $(".datepickerBox").show();
-    }) */
-    
-    $(".region").on("click",function(){
-       document.getElementsByClassName("navBtnNodeList")[3].innerHTML = "<b class='navBtnNodeList' data-regionNo="+$(this).data('regionNo')+" style=color:black;font-size:15px;>"+$(this).text()+"</b>"
-       $(".navDateBtn").first().click();
-       $(".datepickerBox").show();
+     $(".navDateBtn").on('click',function(){
+    	/* let mNavNode = document.querySelector("#mainNav").childNodes; */
+    	/* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
+    	$(this).children(".selectContent").css("border","none");
+    	$(this).css("background-color","white");
+    	$(this).css("border-radius","40px");
+    	 */
+    	 
+    	 $(".datepickerBox").show();
     })
-    
 </script>
