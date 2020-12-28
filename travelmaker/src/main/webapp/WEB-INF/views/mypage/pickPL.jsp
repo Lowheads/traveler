@@ -359,11 +359,6 @@
 #placesList .item .marker_15 {
    background-position: 0 -654px;
 }
-
-body {
-   margin: 0;
-}
-
 .pick_plan_content {
    width: 100%;
 }
@@ -456,7 +451,7 @@ body {
 }
 
 #viewMap_btn:hover{
-   background-color: gray;
+   background-color: #ff8b3d;
    color: white;   
 }
 
