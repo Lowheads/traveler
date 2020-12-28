@@ -385,9 +385,6 @@ input:checked+.slider:before {
 			</div>
 			</c:forEach>
 			</div>
-		</div>
-<!--contents끝 -->
-</div>
 
 	<!-- 검색기능 -->
 		<div class='search'>
@@ -414,6 +411,10 @@ input:checked+.slider:before {
 				</form>
 			</div>
 		</div>
+		</div>
+<!--contents끝 -->
+</div>
+
 
 		<form id="actionForm" action="/board/list" method="get">
 			<input type="hidden" name='pageNum' value='${pageMaker.cri.pageNum }'>
@@ -631,5 +632,4 @@ input:checked+.slider:before {
 </script>
 
 </body>
-
-</html>
+<%@ include file="../includes/footer.jsp" %>

@@ -948,7 +948,7 @@ overflow-y: auto;
 
 <!--contents 끝 -->
 </div>
-
+<%@ include file="../includes/footer.jsp" %>
 
 	<form name='operForm' id='operForm' action="/board/modify" method="get">
 		<input type='hidden' id='boardNo' name='boardNo' value='<c:out value="${board.boardNo }"/>'> 
@@ -1009,47 +1009,6 @@ function fn_fileDown(fileNo){
 	formObj.submit();
 }
 
-/* //좋아요
-function likeToggle(heart){
-   if(heart.className == "fa fa-heart"){
-       let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
-            type : 'post',
-            url : '/board/deletePick',
-            data : sendData,
-            success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
-             },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
-            }
-         });
-   }
-   
-  if(heart.className == "fa fa-heart fa-heart-o"){
-      let sendData = {
-            'schNo' : heart.dataset['sch_no'],
-         }
-         //ajax 기능 추가 
-         $.ajax({
-            type : 'post',
-            url : '/board/insertPick',
-            data : sendData,
-            success : function(data) {
-               heart.classList.toggle("fa-heart-o");
-              
-            },
-            error : function(error){
-               alert("에러발생!! 다시시도해주세요"+error);
-            }
-         });
-   } 
-    
-};  */
 
 function likeToggle(heart){
     let sendData = {
