@@ -228,7 +228,7 @@
     margin-top:10px;
 }
 
-.btn:hover, .cancel_btn:hover, .update_btn:hover{
+.btn:hover, .cancel_btn:hover, .update_btn:hover , .fileAdd_btn:hover , #fileDel:hover{
    background-color: #ff8b3d;
    color:white;
    border: 1px solid #ff8b3d;	
@@ -257,6 +257,7 @@
 
 .orgfilecontent{
  	text-align: right;
+ 	margin-bottom:20px;
 }
 
 .orgfilecontent input{
@@ -284,6 +285,11 @@
 
 
 }
+
+#fileName{
+	font-size:13px;
+}
+
 
 /* 
 .orgimg img{
@@ -384,7 +390,7 @@
 							<input type="hidden" name="fileNo" value="${file.FILE_NO }">
 							<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
 							
-							<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
+							<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a><%-- (${file.FILE_SIZE}kb) --%>
 							<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');">삭제</button><br>
 							<img src="<c:url value="/img/${file.STORED_FILE_NAME} "/>" style='width:100%; height:250px; margin-top:10px; margin-bottom:10px;'/>
 							<input type='text' id='content' class='form-control' name='fileContent' value='<c:out value="${file.FILE_CONTENT }"/>'>

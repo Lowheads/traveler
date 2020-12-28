@@ -348,6 +348,9 @@ public class BoardController {
 		//내용만 수정된 메소드 만들기
 
 		  if(fileNo!=null) {
+				if (fileContent.isEmpty()) {
+					fileContent.add(0, "");
+				}
 			  boarddtservice.updateContent(fileNo,fileContent);
 		  	}
 

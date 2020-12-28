@@ -52,8 +52,8 @@
 
 
 .card-contents{
-	width: 300px;
-	height: 230px;
+	width: 280px;
+	height: 220px;
 	margin-bottom: 50px;
 	position: relative;
   	display: block;
