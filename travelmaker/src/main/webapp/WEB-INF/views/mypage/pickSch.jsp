@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    
     <%@ include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -194,14 +196,15 @@
       .mnu_box.active {
          padding: 10px 20px 0 20px;
          text-align: center;
-         color: #0b1322;
-         background-color: rgb(255, 194, 34);
+         color: white;
+   background-color: #ff8b3d;
          
       }
 
       
 .mnu_box:hover {
-   background-color: rgb(255, 194, 34);
+   background-color:#ff8b3d;
+     color:white;
 }
       .content_wrap {
          width: 70%;
@@ -253,7 +256,7 @@
 .sch_Imgbg{
    background-size:cover; 
    background-repeat: no-repeat; 
-   background-position:center cetner; 
+   background-position:center; 
    width:100%; 
    height:100%; 
    cursor: pointer;
@@ -340,6 +343,7 @@
             <c:forEach items="${list }" var="sch">
                <div class="card_sch">
                      <div class="sch_Img">
+                     <c:set var="coverimg" value="${fn:replace(sch.BOARD_IMG, '\\\\', '/')}" />
                         <div class="white_layer">
                            <button type="button" class="heartbtn btn_like btn_unlike"
                               data-sch_no="${sch.SCH_NO}">
@@ -348,7 +352,7 @@
                         </div>
                         <!-- 스케줄썸네일임 원래는 -->
                         <div class="sch_Imgbg" num="${pageMaker.cri.pageNum }" data-sch_no="${sch.SCH_NO}"
-                           style="background-color: gray;"></div>
+                           style="background-Image: url(/resources${coverimg});"></div>
                      </div>
                   <div class="sch_content">
                         <!-- USER_NICKNAME -->

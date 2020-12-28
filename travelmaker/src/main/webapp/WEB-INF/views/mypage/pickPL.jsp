@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -359,11 +359,6 @@
 #placesList .item .marker_15 {
    background-position: 0 -654px;
 }
-
-body {
-   margin: 0;
-}
-
 .pick_plan_content {
    width: 100%;
 }
@@ -405,12 +400,13 @@ body {
 .mnu_box.active {
    padding: 10px 20px 0 20px;
    text-align: center;
-   color: #0b1322;
-   background-color: rgb(255, 194, 34);
+   color: white;
+   background-color:#ff8b3d;
 }
 
 .mnu_box:hover {
-   background-color: rgb(255, 194, 34);
+   background-color:#ff8b3d;
+     color:white;
 }
 
 .content_wrap {
@@ -455,7 +451,7 @@ body {
 }
 
 #viewMap_btn:hover{
-   background-color: gray;
+   background-color: #ff8b3d;
    color: white;   
 }
 

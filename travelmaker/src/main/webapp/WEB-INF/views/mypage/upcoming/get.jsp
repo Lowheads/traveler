@@ -39,7 +39,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #203341;
+  background-color:#ff8b3d;
   color: white;
 }
 #tabletitle{
@@ -49,31 +49,43 @@
 
 /*지은스타일 끝 */
 .plan_content {
-   width: 80%;
    margin-left: auto;
    margin-right: auto;
 }
 .contentTitle{
    width:100%;
    height: 200px;
-   background-color: #203341;
-   color:white;
-   padding:20px;
+   color:black;
+ 	padding:15px 10% 15px 10%;
 }
 
 .plan_mnu_box {
    background-color:white;
    display: flex;
-   border: 1px solid black;
    margin-bottom: 50px;
+   box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
+   padding-left: 10%;
+   padding-right: 10%;
 }
 
 .plan_mnu {
    text-align: center;
    height: 60px;
-   border-right: 1px solid gray;
-   padding-left: 35px;
    padding-right: 35px;
+   padding-left: 35px;
+   font-weight: bold;
+}
+
+.plan_mnu:hover{
+    background-color: rgb(128,128,128,0.2);
+}
+
+
+
+.content_wrap{
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .sticky {
@@ -90,7 +102,7 @@
 }
 .plan_mnu.active{
    font-weight: bold;
-   color: #33ccff;
+   color: #3099dd;
 }
 
 
@@ -105,20 +117,29 @@
 #gotoList{
    height:30px;
    margin-top:15px;
-   background-color: #203341;
+   background-color:#ff8b3d;
    color:white;
-   padding: 3px 15px 0 15px;
+   padding: 3px 8px 0 8px;
    margin-right: 15px;
    text-align: center;
+   cursor: pointer;
+}
+
+#gotoList:hover{
+	background-color: #d8702a;
 }
 #sch_remove_btn{
    height:30px;
    margin-top:15px;
    background-color: #ff6666;
    color:white;
-   padding: 3px 15px 0 15px;
+   padding: 3px 8px 0 8px;
    margin-right: 15px;
    text-align: center;
+}
+
+#sch_remove_btn:hover{
+	background-color: #c33e3e;
 }
 
 .schedule_dt_content {
@@ -143,16 +164,16 @@
 
 .dt_top_left{
    width: 15%;
-   background-color: #203341;
+   background-color:#ff8b3d;
    color:white;
     text-align: center;
    line-height: 70px;    
-   border-right: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
 }
 
 .dt_top_right{
-   border-top: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-left: 10px;
    width: 85%;
    display: flex;
@@ -164,7 +185,7 @@
 }
 .showMap{
    margin-right: 15px;
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    margin-top: auto;
    margin-bottom: auto;
    border-radius: 10px;
@@ -172,8 +193,7 @@
    padding-right: 10px;
 }
 .showMap:hover{
-   background-color: #203341;
-   color:white;
+   background-color: rgb(128,128,128,0.2);
 }
 .schdt_bottom{
    height: 100px;
@@ -182,9 +202,9 @@
 .dt_bottom_left{
    width: 15%;
    text-align: center;
-   border-top: 1px solid gray;
-   border-left: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-left: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-top: 40px;
 }
 
@@ -193,7 +213,7 @@
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#203341;
+   background-color:#ff8b3d;
    border-radius: 50%;
    width: 20px;
     height: 20px;
@@ -204,8 +224,8 @@
    padding-left: 10px;
    width: 85%;
    line-height: 100px;  
-   border-right: 1px solid gray;
-   border-top: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
+   border-top: 1px solid rgb(128,128,128,0.2);
 }
 .dt_bottom_right img{
    width: 75px;
@@ -214,7 +234,7 @@
 .dt_box_footer{
    display:flex;
    background-color: #e6e6e6;
-   border:1px solid gray;
+   border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
    width: 15%;
@@ -241,7 +261,7 @@
 }
 
 #places{
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    padding: 15px;
    font-size: 15px;
    text-align: center;
@@ -293,7 +313,7 @@
   cursor: pointer;
   padding: 0px 10px 0px 10px;
   border-radius: 4px;
-  border: 1px solid gray;
+  border: 1px solid rgb(128,128,128,0.2);
 }
 
 
@@ -366,19 +386,20 @@
                                  <a href="http://place.map.kakao.com/${dt.TO_PLC }" style="float:right; margin-right: 30px;" target="_blank">
                                     <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
                                     </a>
+                                    <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.FROMADT }"/></b>
                                  </div>
                               </div>
 
                               <!-- distance -->
                               <div class="dt_box_footer">
                                  <div class="dt_footer_left"></div>
-                                 <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE } km</div>
+                                 <div class="dt_footer_right">-> 이동거리 ${dt.DISTANCE }</div>
                               </div>
                            </c:if>
                            
                            <!-- 마지막 -->
                            <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid rgb(128,128,128,0.2);">
                                  <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
                                  </div>
@@ -392,6 +413,7 @@
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="float:right; margin-right: 30px;" target="_blank">
                                     <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
                                     </a>
+                                   <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.TOADT }"/></b>
                                  </div>
                               </div>
                            </c:if>
@@ -493,9 +515,7 @@ var sticky = header.offsetTop;
 function myFunction() {
   if (window.pageYOffset > sticky) {
     header.classList.add("sticky");
-    header.style.width = "80%";
-    header.style.marginLeft = "auto";
-    header.style.marginRight = "auto";
+    header.style.width = "100%";
     
     mapWrapper.classList.add("stickyMap");
   } 
@@ -648,7 +668,7 @@ function myFunction() {
          
       for (i = 0; i < markerlatlng.length; i++) {
          
-         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#203341; color:white;'>"+(i+1)+"</div>"+markerlatlng[i].dataset["title"] + "<br>";
+         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#ff8b3d; color:white;'>"+(i+1)+"</div><a href=https://place.map.kakao.com/"+markerlatlng[i].dataset["plc_no"]+" target=_blank>"+markerlatlng[i].dataset["title"] + "</a><br>";
          
          $("#places").append(pTag)
          
