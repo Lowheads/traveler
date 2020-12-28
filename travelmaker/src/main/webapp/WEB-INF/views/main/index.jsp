@@ -7,7 +7,7 @@
 
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -28,6 +28,95 @@
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
+button{
+	outline: 0;
+}
+/* 좋아요버튼 test */
+.btn_like {
+  right:10%;
+  position: absolute;
+  /* display: block; */
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  color: #DD5D54;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+  cursor: pointer;
+}
+
+.btn_like:hover {
+  border: 1px solid rgba(228,89,89,0.3);
+  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+}
+
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
+}
+.btn_like:focus{
+   border: 0;
+   outline: 0;
+}
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+
+.btn_like .ani_heart_m {
+    margin: -63px 0 0 -63px;
+}
+
+.ani_heart_m {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 125px;
+    height: 125px;
+    margin: -63px 0 0 -63px;
+    pointer-events: none;
+}
+
+.ani_heart_m.hi {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+    animation: on_m 1.06s steps(72);
+}
+
+.ani_heart_m.bye {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+    -webkit-background-size: 8250px 125px;
+    background-size: 8250px 125px;
+    animation: off_m 1.06s steps(66);
+}
+
+@keyframes on_m {
+  from { background-position: 0 }
+  to { background-position: -9000px }
+}
+
+@keyframes off_m {
+  from { background-position: 0 }
+  to { background-position: -8250px }
+}
+/* 좋아요버튼 */
+
 /* daterangepicker 디자인 수정 */
  .daterangepicker{
 position: absolute;
@@ -38,7 +127,6 @@ position: absolute;
 	width:42%;
 }
 .daterangepicker .calendar-table table{
-	border-spacing:5px;
 	border-collapse: inherit;
 	font-size:12px;
 	text-align:center;
@@ -68,10 +156,8 @@ position: absolute;
     border: 1px solid white;
 }
 .cancelBtn{
-	float: none; 
     font-size: 17px;
     font-weight: bold;
-    color: white;
     margin: 2%;
 }
 /* 날씨 */
@@ -150,11 +236,14 @@ position: absolute;
    text-align: center;
    font-size: 25px;
    font-weight: bold;
+   height: 15%;
 }
+
 #result {
    text-align: center;
    display: none;
 }
+
 .answer {
    text-align: center;
    width: 100%;
@@ -166,26 +255,21 @@ position: absolute;
    font-weight: bold;
    padding: 40px 0;
 }
+
 .yourList {
    width: 100%;
    text-align: left;
-   background-color: white;
-   border-radius: 8px;
    padding: 2%;
 }
+
 .resultplacedt {
    display: flex;
 }
-.resultplacedt h4 {
+
+.resultplacedt h6 {
    margin-top: auto;
    margin-bottom: auto;
    margin-left: 15px;
-}
-/* 좋아요버튼  */
-.heart {
-   width: auto;
-   margin: auto 5% auto auto;
-   text-align: right;
 }
 /* test 스타일 끝 */
 body{
@@ -319,8 +403,9 @@ a{text-decoration: none}
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #goList{
+  float:right;
    font-size:15px;
-   margin-right: 1%;
+   margin-right: 3%;
    margin-bottom: 50px;
    background-color:white;
    border: 1px solid gray;
@@ -328,9 +413,9 @@ a{text-decoration: none}
    padding: 5px 20px 5px 20px;
 }
 #goList:hover{
-   background-color:gray;
+    background-color:#ff8b3d;
    color:white;
-   border: 1px solid gray;
+   border: 1px solid #ff8b3d;
    border-radius: 14px;
 }
 .boardContents{
@@ -484,7 +569,7 @@ a{text-decoration: none}
 
       <!-- 관리자 게시판리스트 출력 -->
    
-         <button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
+         <button id="goList" onclick="location.href='/board/list'">더보기</button>
    
          <div class="boardContents">
             <div class="gallery">
@@ -679,14 +764,14 @@ a{text-decoration: none}
         ["쉬는것도 여행의 일부지 서두르지 말자", "잘 시간이 어딨어! 계획에서 어긋나면 안돼"]   //SN
     ]
     let personalityDt = [
-        "독창적인 세계관이 있으며 반복되는 일상에 무료함을 느끼고 있습니다. 현실에 구애받지 않는 자유로운 성격이기도 합니다",
-        "빠른 판단력을 가진 사람입니다. 끈기가 넘치고 의지가 강한 성격입니다",
-        "감성적이고 따뜻한 사람이에요. 화려한 풍경속의 고독을 즐기는 성격이네요",
-        "안정감있는 상황을 좋아하는 성격입니다. 주변사람들로부터 성실하고 다정하다는 소리를 자주 듣곤 합니다.",
-        "활동적이고 에너지가 넘치는 성격이네요. 아이디어가 넘치는 타입",
-        "활력이 넘치는 성격이에요. 호불호가 확실하고 애매모호한 것을 싫어해요 ",
-        "인싸기질이 타고났어요. 또한 낙천적인 성격이며 매사에 열정적인 타입입니다",
-        "겉보기와 달리 마음이 여린 성격이에요. 주변에 사랑을 퍼주는 사람입니다"
+        "독창적인 세계관이 있으며 반복되는 일상에 무료함을 느끼고 있습니다.<br> 현실에 구애받지 않는 자유로운 성격이기도 합니다",
+        "빠른 판단력을 가진 사람입니다.<br> 끈기가 넘치고 의지가 강한 성격입니다",
+        "감성적이고 따뜻한 사람이에요.<br> 화려한 풍경속의 고독을 즐기는 성격이네요",
+        "안정감있는 상황을 좋아하는 성격입니다.<br> 주변사람들로부터 성실하고 다정하다는 소리를 자주 듣곤 합니다.",
+        "활동적이고 에너지가 넘치는 성격이네요.<br> 아이디어가 넘치는 타입",
+        "활력이 넘치는 성격이에요.<br> 호불호가 확실하고 애매모호한 것을 싫어해요 ",
+        "인싸기질이 타고났어요.<br> 또한 낙천적인 성격이며 매사에 열정적인 타입입니다",
+        "겉보기와 달리 마음이 여린 성격이에요.<br> 주변에 사랑을 퍼주는 사람입니다"
     ]
     $(document).ready(function () {
        $("#progbar").html("<div class='progbarbg'><div class='progbar' style='width:0%; text-align:center;'></div></div></div>")
@@ -757,6 +842,7 @@ a{text-decoration: none}
         if(pS>pN){
             resultC = 'S';
         }
+
         let yourType = resultA+resultB+resultC,
         typeDt;
         if(yourType=='ITS'){
@@ -807,16 +893,20 @@ a{text-decoration: none}
         data : sendData,
         success : function(data) {
            
-               let tag = "<h2>당신에게 추천하는 여행테마는? "+yourType+"</h2><br>"+"<p>당신은 "+typeDt
+               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:#ff8b3d;color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
                let divTag = document.createElement("div");
                divTag.className = 'yourList'
-               divTag.innerHTML = '<h5>추천장소 리스트</h5>'
+               divTag.innerHTML = "<h5 style='font-family:Spoqa Han Sans Neo,sans-serif;text-align:center;'>당신에게 추천하는 장소</h5>";
                
               for (let i = 0; i < data.length; i++) {
+
                let divTag1 = document.createElement("div");
                
                divTag1.className = 'resultplacedt';
-               
+               divTag1.style.marginTop = '10px';
+               divTag1.style.border = "1px solid rgb(128,128,128,0.1)";
+               divTag1.style.borderRadius = "20px";
+               divTag1.style.backgroundColor = "white";
                let aTag = document.createElement("a");
                aTag.setAttribute('href','https://place.map.kakao.com/'+data[i].PLC_NO);
                aTag.setAttribute('target','_blank');
@@ -829,27 +919,34 @@ a{text-decoration: none}
                let aTag2 = document.createElement("a");
                aTag2.setAttribute('href','https://place.map.kakao.com/'+data[i].PLC_NO);
                aTag2.setAttribute('target','_blank');
-               
-               let hTag = document.createElement("h4");
+               aTag2.style.fontFamily = "Spoqa Han Sans Neo,sans-serif";
+               let hTag = document.createElement("h6");
                aTag2.innerText = data[i].PLC_TITLE;
                
-               let divTag2 = document.createElement("div");
-               divTag2.className = 'heart';
-               divTag2.innerText = '눌러서 찜하기 '
-               let iTag = document.createElement("i");
-               iTag.className = data[i].CHECKED;
-               iTag.setAttribute('data-plc_no',data[i].PLC_NO)
-               iTag.style.fontSize = '24px';
-               iTag.style.color = 'red';
-               iTag.setAttribute('onclick','likeToggle(this)');
+               let divTag2 = document.createElement("button");
+               divTag2.className = data[i].CHECKED;
+               divTag2.setAttribute('data-plc_no',data[i].PLC_NO);
+               divTag2.setAttribute('onclick','likeToggle(this)');
+               let sTag1 = document.createElement("span");
+               sTag1.className = "img_emoti";
+               sTag1.innerText = "좋아요";
+               let sTag2 = document.createElement("span");
+               if(data[i].CHECKED=="heartbtn btn_like"){
+            
+               sTag2.className = "ani_heart_m bye";
+               }
+               else{
+               sTag2.className = "ani_heart_m hi";
+               }
                divTag.appendChild(divTag1);
                divTag1.appendChild(aTag);
                aTag.appendChild(imgTag);
                hTag.appendChild(aTag2);
                divTag1.appendChild(hTag);
-               divTag1.appendChild(divTag2);
-               divTag2.appendChild(iTag);
-                 
+               hTag.appendChild(divTag2);
+               divTag2.appendChild(sTag1);
+               divTag2.appendChild(sTag2);
+                
               }
               $("#result").append(tag);
               $("#result").append(divTag);
@@ -861,54 +958,46 @@ a{text-decoration: none}
     }
     
     
+    
   //조와요
-  function likeToggle(하트){
-     if(heart.className == "fa fa-heart"){
-        let sendData = {
-              'plcNo' : heart.dataset['plc_no'],
-           }
-           //ajax 기능 추가 
-           $.ajax({
-              type : 'post',
-              url : '/mypage/deletePick',
-              data : sendData,
-              success : function(data) {
-                 if(data==0){
-                    alert("로그인 후 이용해주세요")
-                    return;
-                 }
-                 heart.classList.toggle("fa-heart-o");
-               },
-              error : function(error){
-                 alert("에러발생!! 다시시도해주세요"+error);
-              }
-           });
-     }
-     
-     if(heart.className == "fa fa-heart fa-heart-o"){
-        let sendData = {
-              'plcNo' : heart.dataset['plc_no'],
-           }
-           //ajax 기능 추가 
-           $.ajax({
-              type : 'post',
-              url : '/mypage/insertPick',
-              data : sendData,
-              success : function(data) {
-                 if(data==0){
-                    alert("로그인 후 이용해주세요")
-                    return;
-                 }
-                 heart.classList.toggle("fa-heart-o");
-                 
-              },
-              error : function(error){
-                 alert("에러발생!! 다시시도해주세요"+error);
-              }
-           });
-     }
-     
-  }; 
+  function likeToggle(heart){
+          let sendData = {
+            'plcNo' : heart.dataset['plc_no'],
+         }
+      if(heart.classList.contains('btn_unlike')){
+         //ajax 기능 추가 
+         $.ajax({
+                  type : 'post',
+                  url : '/mypage/deletePick',
+                  data : sendData,
+                  success : function(data) {
+                	  heart.classList.remove('btn_unlike');
+                	  heart.lastChild.classList.remove('hi');
+                      heart.lastChild.classList.add('bye');
+                  },
+                  error : function(error) {
+                     alert("에러발생!! 다시시도해주세요" + error);
+                  }
+               }); 
+      } 
+       else{
+         //ajax 기능 추가 
+         $.ajax({
+                  type : 'post',
+                  url : '/mypage/insertPick',
+                  data : sendData,
+                  success : function(data) {
+                	  heart.classList.add('btn_unlike');
+                	  heart.lastChild.classList.add('hi');
+                	  heart.lastChild.classList.remove('bye');
+                  },
+                  error : function(error) {
+                     alert("에러발생!! 다시시도해주세요" + error);
+                  }
+               }); 
+               
+      }
+   };
   
   
   function progMove(prog){
@@ -1008,7 +1097,13 @@ a{text-decoration: none}
        $(".selectRegionBox").css("display","flex");
     })
     
-      window.onclick = function(event) {
+       window.onclick = function(event) {
+    	  if (!event.target.matches('.header__nav__button-account') && !event.target.matches('.accountImg')) {
+     	     let dropdowns = document.getElementsByClassName("header__drop__menu");
+     	       if (dropdowns[0].classList.contains('active')) {
+     	    	   dropdowns[0].classList.remove('active');
+     	     }
+     	   }
           if (!event.target.matches('.navBtnNodeList')) {
              $(".selectRegionBox").hide();
           }

@@ -61,7 +61,7 @@
 
 <select id="getSchedule" resultType="hashMap">
 <![CDATA[
-	select * from schedule s, board b where s.sch_no = #{schNo} and s.sch_no = b.sch_no
+	select * from schedule s where s.sch_no = #{schNo}
 ]]>
 </select>
 
@@ -95,7 +95,7 @@
     select rownum no,a.*
     from
 (select 
-        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,
+        s.sch_no,s.mem_no,s.sch_title,s.from_date,s.to_date,s.img,s.sch_reg_date,s.sch_last_date,s.sch_status,s.memo,s.sch_region,b.pick_cnt,b.board_img,
         (select nickname from member where s.mem_no = member.mem_no)as NICKNAME
        from
          schedule s, pick_sch pl, board b
