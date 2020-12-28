@@ -7,7 +7,7 @@
 
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -28,41 +28,117 @@
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
-
-/* daterangepicker 디자인 수정 */
-
- .daterangepicker{
-
-position: absolute;
-
-    border-radius: 20px;
-    padding: 18px;
-
-} 
-
-.opensright{
-
-	width:42%;
+button{
+	outline: 0;
+}
+/* 좋아요버튼 test */
+.btn_like {
+  right:10%;
+  position: absolute;
+  /* display: block; */
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  color: #DD5D54;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+  cursor: pointer;
 }
 
+.btn_like:hover {
+  border: 1px solid rgba(228,89,89,0.3);
+  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+}
+
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
+}
+.btn_like:focus{
+   border: 0;
+   outline: 0;
+}
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+
+.btn_like .ani_heart_m {
+    margin: -63px 0 0 -63px;
+}
+
+.ani_heart_m {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 125px;
+    height: 125px;
+    margin: -63px 0 0 -63px;
+    pointer-events: none;
+}
+
+.ani_heart_m.hi {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+    animation: on_m 1.06s steps(72);
+}
+
+.ani_heart_m.bye {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+    -webkit-background-size: 8250px 125px;
+    background-size: 8250px 125px;
+    animation: off_m 1.06s steps(66);
+}
+
+@keyframes on_m {
+  from { background-position: 0 }
+  to { background-position: -9000px }
+}
+
+@keyframes off_m {
+  from { background-position: 0 }
+  to { background-position: -8250px }
+}
+/* 좋아요버튼 */
+
+/* daterangepicker 디자인 수정 */
+ .daterangepicker{
+position: absolute;
+    border-radius: 20px;
+    padding: 18px;
+} 
+.opensright{
+	width:42%;
+}
 .daterangepicker .calendar-table table{
-	border-spacing:5px;
 	border-collapse: inherit;
 	font-size:12px;
 	text-align:center;
 }
-
 .daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
 	font-size:13px;
-
 }
-
 .daterangepicker td.active, .daterangepicker td.active:hover {
     background-color: #ff8b3d;
     border-color: transparent;
     color: #fff;
 }
-
 .daterangepicker .calendar-table {
 	padding: 10px;
 	}
@@ -70,11 +146,7 @@ position: absolute;
 .table-condensed{
 	border-spacing:10px;
 }
-
-
 /* daterangepicker 디자인 끝 */
-
-
 .btn{
 	width: 130px;
     height: 35px;
@@ -82,17 +154,11 @@ position: absolute;
     background-color: #ff8b3d;
     color: white;
     border: 1px solid white;
-
 }
-
 .cancelBtn{
-	float: none; 
     font-size: 17px;
     font-weight: bold;
-    color: white;
     margin: 2%;
-
-
 }
 /* 날씨 */
  .weather {
@@ -101,35 +167,27 @@ position: absolute;
       display: flex;
       color: white;
     }
-
     .weather div {
       width: 50px;
       text-align: center;
     }
-
     .City {
      color: black;
     }
-
     .weatherContent {
       color: white;
     }
-
     .day {
       font-size: 10px;
     }
-
     .Icon,
     .Temp {
       font-size: 10px;
     }
-
     .Icon {
       margin-right: 2px;
     }
-
 /*  */
-
 /* test style */
         /* 모달창 */
  #modal {
@@ -142,7 +200,6 @@ position: absolute;
    border-radius: 15px;
    background-color: rgb(244, 246, 250);
 }
-
 /* 닫는버튼 */
 #modal .modal_close_btn {
    float: right;
@@ -150,14 +207,12 @@ position: absolute;
    border-radius: 15px;
    background-color: rgb(244, 246, 250);
 }
-
 #test {
    width: 100%;
    height: 100%;
    padding: 20px;
    border-radius: 15px;
 }
-
 .progbarbg {
    background: #f0f0f0;
    height: 10px;
@@ -166,7 +221,6 @@ position: absolute;
    margin-top: 40px;
    margin-bottom: 40px;
 }
-
 .progbar {
    background: #00F260; /* fallback for old browsers */
    background: -webkit-linear-gradient(to left, #0575E6, #00F260);
@@ -178,11 +232,11 @@ position: absolute;
    border-radius: 10px;
    transition: width 400ms;
 }
-
 #question {
    text-align: center;
    font-size: 25px;
    font-weight: bold;
+   height: 15%;
 }
 
 #result {
@@ -205,8 +259,6 @@ position: absolute;
 .yourList {
    width: 100%;
    text-align: left;
-   background-color: white;
-   border-radius: 8px;
    padding: 2%;
 }
 
@@ -214,27 +266,16 @@ position: absolute;
    display: flex;
 }
 
-.resultplacedt h4 {
+.resultplacedt h6 {
    margin-top: auto;
    margin-bottom: auto;
    margin-left: 15px;
 }
-
-/* 좋아요버튼  */
-.heart {
-   width: auto;
-   margin: auto 5% auto auto;
-   text-align: right;
-}
-
 /* test 스타일 끝 */
-
 body{
    margin: 0;
 }
-
 a{text-decoration: none}
-
 .ct_body{
    padding: 30px;
    background-image: url('https://images.unsplash.com/photo-1593182440709-4b7b56482c55?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
@@ -243,7 +284,6 @@ a{text-decoration: none}
      background-size: cover;
      margin-bottom:50px; 
 }
-
 #mainNav{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
    text-align:center;
@@ -259,7 +299,6 @@ a{text-decoration: none}
    justify-content: flex-start;            
    flex-grow: 1;
 }
-
 .navContent{
    padding-top:15px;
    height:100%;
@@ -269,13 +308,11 @@ a{text-decoration: none}
    background-color: rgb(128,128,128,0.1);
    border-radius: 40px;
 }
-
 .navDateBtn{
    padding-top:15px;
    height:100%;
    flex-basis: 30%;
 }
-
 .navDateBtn:hover{
    background-color: rgb(128,128,128,0.1);
    border-radius:40px;
@@ -283,11 +320,9 @@ a{text-decoration: none}
 .navDateBtn:hover .selectContent{
    border:none;
 }
-
 .navDateBtn .selectContent{
    border-left: 1px solid rgb(128,128,128,0.3);
 }
-
 .navSearchBtn{
    padding-top:15px;
    height:100%;
@@ -298,7 +333,6 @@ a{text-decoration: none}
    text-align: left;
    color: gray;
 }
-
 .selectContent b{
    color:black;
    font-size: 12px;
@@ -325,11 +359,9 @@ a{text-decoration: none}
    border:1px solid rgb(128,128,128,0.2);
    margin-top:20px;
 }
-
 .region:hover{
    border:5px double black;
 }
-
 .datepickerBox{
    position:absolute;
    bottom:60px;
@@ -341,30 +373,25 @@ a{text-decoration: none}
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
    display:none;
 }
-
 #goNext{
    background-color: #ff8b3d;
    border-radius: 50%;
    height: 50px;
    width: 50px;
 }
-
 .material-icons{
    color:white;
    margin: 10px;
    font-size: 10px;
 }
-
 .mainMsg{
    margin-left: 7%;
 }
-
 .mainMsg b{
    font-size:50px;
    color:white;
    text-shadow: 2px 2px gray;
 }
-
 #popup_open_btn{
    font-size:12px;
    margin-right: 1%;
@@ -375,31 +402,28 @@ a{text-decoration: none}
    padding: 7px 10px 7px 10px;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 #goList{
+  float:right;
    font-size:15px;
-   margin-right: 1%;
+   margin-right: 3%;
    margin-bottom: 50px;
    background-color:white;
    border: 1px solid gray;
    border-radius: 14px;
    padding: 5px 20px 5px 20px;
 }
-
 #goList:hover{
-   background-color:gray;
+    background-color:#ff8b3d;
    color:white;
-   border: 1px solid gray;
+   border: 1px solid #ff8b3d;
    border-radius: 14px;
 }
-
 .boardContents{
    width: 100%;
    height: auto;
    background-color: white;
    display:inline-block;
 }
-
 .gallery {
    width: 100%;
    height: 100%;
@@ -408,7 +432,6 @@ a{text-decoration: none}
    flex-wrap: wrap;
    margin : 0 auto;
 }
-
 .card-contents{
    width: 15%;
    height: 450px;
@@ -418,9 +441,7 @@ a{text-decoration: none}
     margin-right: 15px;
      margin-bottom: 10px;
      border-radius: 10px;
-
 }
-
 .card-Img{
    position : relative;
    background-size: cover;
@@ -431,20 +452,17 @@ a{text-decoration: none}
    background-repeat: no-repeat; 
    background-size: cover;
 }
-
 /* .card-Img Img{
    width: 100%;
    height: 100%;
    border-radius: 10px;
    
 } */
-
 .card-desc{
    margin: 10px;
    height: auto;
    font-size: 15px;
 }
-
 .desc_bottom{
     font-size : 12px;
 }
@@ -453,12 +471,7 @@ a{text-decoration: none}
    height: auto;
    font-size: 15px;
 } */
-
 /* selectbox */
-
-
-
-
 </style>
 
 
@@ -556,7 +569,7 @@ a{text-decoration: none}
 
       <!-- 관리자 게시판리스트 출력 -->
    
-         <button id="goList" onclick="location.href='/board/list'" style="float: right; margin-right:6%">더보기</button>
+         <button id="goList" onclick="location.href='/board/list'">더보기</button>
    
          <div class="boardContents">
             <div class="gallery">
@@ -594,9 +607,7 @@ a{text-decoration: none}
 <script type="text/javascript">
    var startDate;
    var endDate;
-
    $(function() {
-
       $('.navDateBtn').daterangepicker({
          startDate : moment(),
          endDate : moment(),
@@ -613,61 +624,47 @@ a{text-decoration: none}
       });
       document.getElementById("goNext").addEventListener("click", submitData);
       initDate();
-
    });
-
    function initDate() {
       let datePicker = document.getElementsByClassName("data-range-picker")[0];
       let dateList = datePicker.value.split(' - ');
       startDate = dateList[0];
       endDate = dateList[1];
    }
-
    function submitData() {
-
       let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionno'];
-
       console.log(startDate);
       console.log(endDate);
-
       let form = document.createElement('form');
-
       let objs1;
       objs1 = document.createElement('input');
       objs1.setAttribute('type', 'hidden');
       objs1.setAttribute('name', 'schRegion'); // 받을 네이밍
       objs1.setAttribute('value', optionRegionNo);
       form.appendChild(objs1);
-
       let objs2;
       objs2 = document.createElement('input');
       objs2.setAttribute('type', 'hidden');
       objs2.setAttribute('name', 'toDate'); // 받을 네이밍
       objs2.setAttribute('value', endDate);
       form.appendChild(objs2);
-
       let objs3;
       objs3 = document.createElement('input');
       objs3.setAttribute('type', 'hidden');
       objs3.setAttribute('name', 'fromDate'); // 받을 네이밍
       objs3.setAttribute('value', startDate);
       form.appendChild(objs3);
-
       form.setAttribute('method', 'post');
       form.setAttribute('action', "/main/theme"); // URL
       document.body.appendChild(form);
-
       form.submit();
-
    }
    
-
    
     function modal(id) {
         
         var zIndex = 9999;
         var modal = document.getElementById(id);
-
         // 모달 div 뒤에 희끄무레한 레이어
         var bg = document.createElement('div');
         bg.setStyle({
@@ -682,23 +679,18 @@ a{text-decoration: none}
             backgroundColor: 'rgba(0,0,0,0.4)'
         });
         document.body.append(bg);
-
         // 닫기 처리
         modal.querySelector('.modal_close_btn').addEventListener('click', function () {
             init();
             bg.remove();
-
             modal.style.display = 'none';
         });
-
         modal.setStyle({
             position: 'fixed',
             display: 'block',
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
             // 시꺼먼 레이어 보다 한칸 위에 보이기
             zIndex: zIndex + 1,
-
             // 모달 가운데 이쁘게
             top: '50%',
             left: '50%',
@@ -707,18 +699,15 @@ a{text-decoration: none}
             webkitTransform: 'translate(-50%, -50%)'
         });
     };
-
     // 이건 먼지모르겟음..
     Element.prototype.setStyle = function (styles) {
         for (var k in styles) this.style[k] = styles[k];
         return this;
     };
-
     // 모달창 띄우기
     document.getElementById('popup_open_btn').addEventListener('click', function () {
         modal('modal');
     });
-
     function init() {
         var cnt = 0;
         aCnt = 0;
@@ -740,7 +729,6 @@ a{text-decoration: none}
         answer[1].innerText = answers[0][1];
         answer[1].removeEventListener("click",atest);
     }
-
     let question = [
         "나에게 ... 여행이란?",
         "누구와 함께?",
@@ -758,7 +746,6 @@ a{text-decoration: none}
         "여행지에서 식사할때?",
         "여행가서 아침에 늦잠을 잔 친구에게 당신이 건넨 말?"
     ]
-
     let answers = [
     ["아무것도 하지않고 쉬는것도 여행이라고 생각한다.", "일분일초를 의미있게 보내야 그것이 비로소 여행이다."], //IE
         ["역시 혼자 자유로운게 좋아", "무엇을 하는지 보다 누구와 함께하는지가 중요하다."], //IE
@@ -776,18 +763,16 @@ a{text-decoration: none}
         ["처음본순간 사랑에 빠진 길거리가게", "유~명한 맛집헌터"],   //SN
         ["쉬는것도 여행의 일부지 서두르지 말자", "잘 시간이 어딨어! 계획에서 어긋나면 안돼"]   //SN
     ]
-
     let personalityDt = [
-        "독창적인 세계관이 있으며 반복되는 일상에 무료함을 느끼고 있습니다. 현실에 구애받지 않는 자유로운 성격이기도 합니다",
-        "빠른 판단력을 가진 사람입니다. 끈기가 넘치고 의지가 강한 성격입니다",
-        "감성적이고 따뜻한 사람이에요. 화려한 풍경속의 고독을 즐기는 성격이네요",
-        "안정감있는 상황을 좋아하는 성격입니다. 주변사람들로부터 성실하고 다정하다는 소리를 자주 듣곤 합니다.",
-        "활동적이고 에너지가 넘치는 성격이네요. 아이디어가 넘치는 타입",
-        "활력이 넘치는 성격이에요. 호불호가 확실하고 애매모호한 것을 싫어해요 ",
-        "인싸기질이 타고났어요. 또한 낙천적인 성격이며 매사에 열정적인 타입입니다",
-        "겉보기와 달리 마음이 여린 성격이에요. 주변에 사랑을 퍼주는 사람입니다"
+        "독창적인 세계관이 있으며 반복되는 일상에 무료함을 느끼고 있습니다.<br> 현실에 구애받지 않는 자유로운 성격이기도 합니다",
+        "빠른 판단력을 가진 사람입니다.<br> 끈기가 넘치고 의지가 강한 성격입니다",
+        "감성적이고 따뜻한 사람이에요.<br> 화려한 풍경속의 고독을 즐기는 성격이네요",
+        "안정감있는 상황을 좋아하는 성격입니다.<br> 주변사람들로부터 성실하고 다정하다는 소리를 자주 듣곤 합니다.",
+        "활동적이고 에너지가 넘치는 성격이네요.<br> 아이디어가 넘치는 타입",
+        "활력이 넘치는 성격이에요.<br> 호불호가 확실하고 애매모호한 것을 싫어해요 ",
+        "인싸기질이 타고났어요.<br> 또한 낙천적인 성격이며 매사에 열정적인 타입입니다",
+        "겉보기와 달리 마음이 여린 성격이에요.<br> 주변에 사랑을 퍼주는 사람입니다"
     ]
-
     $(document).ready(function () {
        $("#progbar").html("<div class='progbarbg'><div class='progbar' style='width:0%; text-align:center;'></div></div></div>")
         $("#question").html("1." + question[0])
@@ -806,12 +791,10 @@ a{text-decoration: none}
     let pN = 0;
     let answer = document.getElementsByClassName("answer");
    let prog = 0;
-
     $('.answer').on("click", function () {
        prog+=6.7;
        progMove(prog);
         let result = this.innerText;
-
         if (0 <= qCnt && qCnt <= 4) {
             if (result == answers[aCnt][0]) pI++;
             if (result == answers[aCnt][1]) pE++;
@@ -824,17 +807,13 @@ a{text-decoration: none}
             if (result == answers[aCnt][0]) pS++;
             if (result == answers[aCnt][1]) pN++;
         }
-
         if(qCnt<=13){
         $("#question").text(qCnt + 2+ "." + question[qCnt + 1])
         // console.log(count)
-
         answer[0].innerHTML = answers[aCnt + 1][0];
         answer[1].innerHTML = answers[aCnt + 1][1];
-
         qCnt += 1;
         aCnt += 1;
-
         if (answer[0].innerText == answers[answers.length - 1][0]) {
             answer[0].addEventListener("click", atest);
             answer[1].addEventListener("click", atest);
@@ -842,7 +821,6 @@ a{text-decoration: none}
         }
         }
     })
-
     //결과 띄워주고 디비에 인서트하는 함수
     function atest() {
         let resultA,resultB,resultC;
@@ -915,17 +893,20 @@ a{text-decoration: none}
         data : sendData,
         success : function(data) {
            
-               let tag = "<h2>당신에게 추천하는 여행테마는? "+yourType+"</h2><br>"+"<p>당신은 "+typeDt
+               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:#ff8b3d;color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
                let divTag = document.createElement("div");
                divTag.className = 'yourList'
-               divTag.innerHTML = '<h5>추천장소 리스트</h5>'
+               divTag.innerHTML = "<h5 style='font-family:Spoqa Han Sans Neo,sans-serif;text-align:center;'>당신에게 추천하는 장소</h5>";
                
               for (let i = 0; i < data.length; i++) {
 
                let divTag1 = document.createElement("div");
                
                divTag1.className = 'resultplacedt';
-               
+               divTag1.style.marginTop = '10px';
+               divTag1.style.border = "1px solid rgb(128,128,128,0.1)";
+               divTag1.style.borderRadius = "20px";
+               divTag1.style.backgroundColor = "white";
                let aTag = document.createElement("a");
                aTag.setAttribute('href','https://place.map.kakao.com/'+data[i].PLC_NO);
                aTag.setAttribute('target','_blank');
@@ -938,28 +919,34 @@ a{text-decoration: none}
                let aTag2 = document.createElement("a");
                aTag2.setAttribute('href','https://place.map.kakao.com/'+data[i].PLC_NO);
                aTag2.setAttribute('target','_blank');
-               
-               let hTag = document.createElement("h4");
+               aTag2.style.fontFamily = "Spoqa Han Sans Neo,sans-serif";
+               let hTag = document.createElement("h6");
                aTag2.innerText = data[i].PLC_TITLE;
                
-               let divTag2 = document.createElement("div");
-               divTag2.className = 'heart';
-               divTag2.innerText = '눌러서 찜하기 '
-               let iTag = document.createElement("i");
-               iTag.className = data[i].CHECKED;
-               iTag.setAttribute('data-plc_no',data[i].PLC_NO)
-               iTag.style.fontSize = '24px';
-               iTag.style.color = 'red';
-               iTag.setAttribute('onclick','likeToggle(this)');
-
+               let divTag2 = document.createElement("button");
+               divTag2.className = data[i].CHECKED;
+               divTag2.setAttribute('data-plc_no',data[i].PLC_NO);
+               divTag2.setAttribute('onclick','likeToggle(this)');
+               let sTag1 = document.createElement("span");
+               sTag1.className = "img_emoti";
+               sTag1.innerText = "좋아요";
+               let sTag2 = document.createElement("span");
+               if(data[i].CHECKED=="heartbtn btn_like"){
+            
+               sTag2.className = "ani_heart_m bye";
+               }
+               else{
+               sTag2.className = "ani_heart_m hi";
+               }
                divTag.appendChild(divTag1);
                divTag1.appendChild(aTag);
                aTag.appendChild(imgTag);
                hTag.appendChild(aTag2);
                divTag1.appendChild(hTag);
-               divTag1.appendChild(divTag2);
-               divTag2.appendChild(iTag);
-                 
+               hTag.appendChild(divTag2);
+               divTag2.appendChild(sTag1);
+               divTag2.appendChild(sTag2);
+                
               }
               $("#result").append(tag);
               $("#result").append(divTag);
@@ -971,54 +958,46 @@ a{text-decoration: none}
     }
     
     
+    
   //조와요
-  function likeToggle(하트){
-     if(heart.className == "fa fa-heart"){
-        let sendData = {
-              'plcNo' : heart.dataset['plc_no'],
-           }
-           //ajax 기능 추가 
-           $.ajax({
-              type : 'post',
-              url : '/mypage/deletePick',
-              data : sendData,
-              success : function(data) {
-                 if(data==0){
-                    alert("로그인 후 이용해주세요")
-                    return;
-                 }
-                 heart.classList.toggle("fa-heart-o");
-               },
-              error : function(error){
-                 alert("에러발생!! 다시시도해주세요"+error);
-              }
-           });
-     }
-     
-     if(heart.className == "fa fa-heart fa-heart-o"){
-        let sendData = {
-              'plcNo' : heart.dataset['plc_no'],
-           }
-           //ajax 기능 추가 
-           $.ajax({
-              type : 'post',
-              url : '/mypage/insertPick',
-              data : sendData,
-              success : function(data) {
-                 if(data==0){
-                    alert("로그인 후 이용해주세요")
-                    return;
-                 }
-                 heart.classList.toggle("fa-heart-o");
-                 
-              },
-              error : function(error){
-                 alert("에러발생!! 다시시도해주세요"+error);
-              }
-           });
-     }
-     
-  }; 
+  function likeToggle(heart){
+          let sendData = {
+            'plcNo' : heart.dataset['plc_no'],
+         }
+      if(heart.classList.contains('btn_unlike')){
+         //ajax 기능 추가 
+         $.ajax({
+                  type : 'post',
+                  url : '/mypage/deletePick',
+                  data : sendData,
+                  success : function(data) {
+                	  heart.classList.remove('btn_unlike');
+                	  heart.lastChild.classList.remove('hi');
+                      heart.lastChild.classList.add('bye');
+                  },
+                  error : function(error) {
+                     alert("에러발생!! 다시시도해주세요" + error);
+                  }
+               }); 
+      } 
+       else{
+         //ajax 기능 추가 
+         $.ajax({
+                  type : 'post',
+                  url : '/mypage/insertPick',
+                  data : sendData,
+                  success : function(data) {
+                	  heart.classList.add('btn_unlike');
+                	  heart.lastChild.classList.add('hi');
+                	  heart.lastChild.classList.remove('bye');
+                  },
+                  error : function(error) {
+                     alert("에러발생!! 다시시도해주세요" + error);
+                  }
+               }); 
+               
+      }
+   };
   
   
   function progMove(prog){
@@ -1030,12 +1009,9 @@ a{text-decoration: none}
   }
   
   
-
-
   /* 날씨api */
     // var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
     var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
-
     // let city = 'jeju';
     // var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=33.3819233&lon=126.5617798&exclude=current,minutely,hourly,alerts&appid=f8af762b9aae8076bdab55c83501d7d3&lang=kr&units=metric";
     // let city = 'London';
@@ -1048,10 +1024,8 @@ a{text-decoration: none}
       success: function(resp) {
         console.log(resp);
         console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-
         console.log("위도 : " + resp.lat + "  경도 : " + resp.lon);
         console.log("==================================================================================");
-
         for (let idx in resp.daily) {
           let tmp = '<div class="weatherContent">';
           let days = new Date();
@@ -1059,7 +1033,6 @@ a{text-decoration: none}
           const today = moment(days);
           console.log("날짜 : " + today.format('YYYY-MM-DD'));
           tmp += '<div class="day">' + today.format('MM / DD') + '<div>';
-
           console.log("최고 기온 : " + resp.daily[idx].temp.max);
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].temp.min) + '&ordm/' + Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].pop*100.0) + '%<div>';
@@ -1106,14 +1079,11 @@ a{text-decoration: none}
           if(resp.daily[idx].weather[0].icon=='50d' || resp.daily[idx].weather[0].icon=='50n'){
             imgURL = '/resources/design/line/animation-ready/mist.svg';
           }
-
         // imgURL = "http://openweathermap.org/img/w/" + resp.daily[idx].weather[0].icon + ".png";
           tmp += '<div class="Icon">' + "<img src=" + imgURL + ">" + '<div>';
           tmp += "</div>"
-
           $('.weather').append(tmp);
           console.log("=====================================================================================");
-
         }
       }
     })
@@ -1127,7 +1097,13 @@ a{text-decoration: none}
        $(".selectRegionBox").css("display","flex");
     })
     
-      window.onclick = function(event) {
+       window.onclick = function(event) {
+    	  if (!event.target.matches('.header__nav__button-account') && !event.target.matches('.accountImg')) {
+     	     let dropdowns = document.getElementsByClassName("header__drop__menu");
+     	       if (dropdowns[0].classList.contains('active')) {
+     	    	   dropdowns[0].classList.remove('active');
+     	     }
+     	   }
           if (!event.target.matches('.navBtnNodeList')) {
              $(".selectRegionBox").hide();
           }

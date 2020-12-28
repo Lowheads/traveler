@@ -172,14 +172,14 @@ and theme_code = 'C001') -> and theme_code = #{themeNum})
 
 <select id="getYourList" resultType="hashMap">
 <![CDATA[
-      SELECT * FROM
-   ( SELECT distinct p.*, (case when (select count(*) from pick_pl where pick_pl.plc_no= p.plc_no)= 1 and pl.mem_no = #{memNo} then 'fa fa-heart'
-    else 'fa fa-heart fa-heart-o' END) as checked FROM pick_pl pl, TRAVEL_TYPE_TABLE ttt,THEME tm,THEME_PLC tmp ,place p
-   where ttt.travel_type = #{type}
-   and ttt.theme_code = tm.theme_code
-   and tm.theme_no = tmp.theme_no
-   and tmp.plc_no = p.plc_no 
-   ORDER BY dbms_random.value )
+      SELECT a.*,(case when (select count(*) from pick_pl where pick_pl.mem_no = #{memNo} and a.plc_no = pick_pl.plc_no )= 1 then 'heartbtn btn_like btn_unlike'
+    else 'heartbtn btn_like' END) as checked FROM
+   ( SELECT distinct p.* FROM pick_pl pl, TRAVEL_TYPE_TABLE ttt,THEME tm,THEME_PLC tmp ,place p
+   where ttt.travel_type like #{type}
+   and tm.theme_code = ttt.theme_code
+   and tmp.theme_no =  tm.theme_no
+   and p.plc_no = tmp.plc_no
+   ORDER BY dbms_random.value )a
    WHERE rownum <= 3
    ]]>
 </select>

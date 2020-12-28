@@ -67,13 +67,6 @@
 
 <style>
 
-@font-face {
-    font-family: 'Bazzi';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 /*헤더 스타일 */
 a{text-decoration: none;
 	color:black;}
@@ -299,14 +292,14 @@ a:visited{text-decoration: none;}
 	width: 100%;
 	height: 100%;
 }
-.cancelBtn{ /* 로그인 닫기 버튼 */
+.modalCloseBtn{ /* 로그인 닫기 버튼 */
 	float: right;
     font-size: 17px;
     font-weight: bold;
     color: black;
     margin: 2%;
 }
-.reg-cancelBtn{
+.reg-modalCloseBtn{
 	float: right;
 	font-size: 17px;
     font-weight: bold;
@@ -456,7 +449,7 @@ a:visited{text-decoration: none;}
 body {
    padding : 0px;
    margin : 0px;
-   font-family: 'Bazzi';
+   font-family: 'Spoqa Han Sans Neo,sans-serif';
 }
 #regBtn {
    border-top-left-radius: 5px;
@@ -772,7 +765,7 @@ cursor: pointer;
     
     <!-- Login Modal -->
     <div class="login_modal" style="border:1px solid black;">
-		<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>	
+		<div class="lModal_close"><a class="modalCloseBtn" href="#">X</a></div>	
     	
     	<div> 
         	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 9%">로그인</p>
@@ -825,7 +818,7 @@ cursor: pointer;
     <!-- searchPwd Modal -->
     <div class="searchPwd_modal">
     <div> 
-    	<div class="spModal_close"><a class="cancelBtn" href="#">X</a></div>
+    	<div class="spModal_close"><a class="modalCloseBtn" href="#">X</a></div>
     				
         	<p style="text-align: center; font-size: 30px; padding-top: 70px; margin-left: 3%">
         	비밀번호를 잊으셨나요?</p>
@@ -869,7 +862,7 @@ cursor: pointer;
     <div class="register_modal">
     <div id="register" style="background-color:white; border:3px solid black;">
         <!-- 닫기버튼 -->
-        <div class="rModal_close"><a class="reg-cancelBtn" href="#" style="margin-top: 1%;">X</a></div>
+        <div class="rModal_close"><a class="reg-modalCloseBtn" href="#" style="margin-top: 1%;">X</a></div>
 
         <div class="modal-dialog" style="display: table;">
             <p style="text-align: center; font-size: 30px; margin-left: 11%;">회원가입</p>

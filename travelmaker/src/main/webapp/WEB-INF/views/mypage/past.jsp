@@ -107,12 +107,13 @@ body {
 .mnu_box.active {
    padding: 10px 20px 0 20px;
    text-align: center;
-   color: #0b1322;
-   background-color: rgb(255, 194, 34);
+   color: white;
+   background-color: #ff8b3d;
 }
 
 .mnu_box:hover {
-   background-color: rgb(255, 194, 34);
+   background-color: #ff8b3d;
+   color:white;
 }
 
 .content_wrap {
@@ -264,5 +265,26 @@ body {
       actionForm.submit();
    });
 
+   $(document).ready(function() {
+		let imgArr = [
+				'https://t1.daumcdn.net/cfile/tistory/993B303359E8954A18',
+				'https://t1.daumcdn.net/cfile/tistory/99C0A13359E895480A',
+				'https://t1.daumcdn.net/cfile/tistory/997F013359E8954528',
+				'https://t1.daumcdn.net/cfile/tistory/993E693359E8954417',
+				'https://t1.daumcdn.net/cfile/tistory/99FB8A3359E895421E',
+				'https://t1.daumcdn.net/cfile/tistory/99D7EF3359E8954035',
+				'https://t1.daumcdn.net/cfile/tistory/99AB833359E8953E0C',
+				'https://t1.daumcdn.net/cfile/tistory/99936B3359E8953C27',
+				'https://t1.daumcdn.net/cfile/tistory/998E003359E8953828' ]
+
+		let divBg = document.getElementsByClassName('sch_Img');
+		for (let i = 0; i < divBg.length; i++) {
+			let num = Math.random();
+
+			divBg[i].style.backgroundImage = "url("
+					+ imgArr[Math.floor(num * 9)] + ")";
+		}
+
+	})
 </script>
 </html>
