@@ -77,18 +77,20 @@
 
 .btn { 
 	font-size:15px;
-	color: black;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
+	background-color:#ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
+	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
+	outline: 0;
 }
 .btn:hover{
    background-color: #ff8b3d;
    color:white;
    border: 1px solid #ff8b3d;
+   cursor: pointer;
 }
 
 .form-control, select, textarea {

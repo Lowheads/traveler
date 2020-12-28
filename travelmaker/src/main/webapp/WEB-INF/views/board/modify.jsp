@@ -45,18 +45,20 @@
 
 .btn { 
 	font-size:15px;
-	color: black;
+	color: white;
 	margin-bottom: 30px;
-	background-color:white;
-	border: 1px solid gray;
+	background-color:#ff8b3d;
+	border: 1px solid #ff8b3d;
 	border-radius: 14px;
 	padding: 5px 20px 5px 20px;
 	float: right;
+	outline: 0;
 }
 .btn:hover{
    background-color: #ff8b3d;
    color:white;
    border: 1px solid #ff8b3d;	
+   cursor: pointer;
 }
 
 .form-control, select, textarea {
@@ -82,10 +84,12 @@
 
 
 <form role="form" id="modiremoveform" name="content_form" action="/board/modify" method="post" enctype="multipart/form-data">
-	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> <input type='hidden'
-		name='amount' value='<c:out value="${cri.amount }"/>'>
+	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
+	<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+	<input type="hidden" name='keyword' value='<c:out value="${cri.keyword }"/>'>
+	<input type="hidden" name="type" value='<c:out value="${cri.type }"/>'>
 
-		<input type="hidden" class="form-control" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
+	<input type="hidden" class="form-control" name='boardNo' value='<c:out value="${board.boardNo}"/>' readonly="readonly">
 
 	<div class="modifyimg">
 		<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' /> 
@@ -157,10 +161,14 @@ $(document).ready(function(){
 			var boardNo= $("input[name='boardNo']").clone();
 			var pageNumTag = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amount']").clone();
+			var keywordTag = $("input[name='keyword']").clone();
+			var typeTag = $("input[name='type']").clone();
 			formObj.empty();
 			formObj.append(boardNo);
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
+			formObj.append(keywordTag);
+			formObj.append(typeTag);
 			}
 			formObj.submit();
 			});

@@ -229,16 +229,29 @@
 .dtbtn { 
 	font-size:15px;
 	color: black;
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
+	background-color:#e9e9e9;
+	border: 1px solid #e9e9e9;
+	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
 	float: right;
+	outline: 0;
+}
+
+.registerbtn{
+	font-size:15px;
+	color: white;
+	background-color:#ff8b3d;
+	border: 1px solid #ff8b3d;
+	border-radius: 7px;
+	padding: 5px 20px 5px 20px;
+	float: right;
+	outline: 0;
+
 }
 
 .dtbtn:hover{
-   background-color: #ff8b3d;
-   	border: 1px solid #ff8b3d;
+   background-color: #A9A9A9;
+   	border: 1px solid #A9A9A9;
    color:white;
 }
 .flex-container{
@@ -293,6 +306,7 @@
     border-radius: 14px;
     padding: 5px 10px 5px 10px;
     float: right;
+    text-decoration: none;
 }
 
 .fileAdd_btn:hover{
@@ -351,8 +365,8 @@
 			</div>
 			
 			<br>
-				<button id="dtbtn" type="button" onclick="location.href='/board/list'" class="dtbtn btn-default">취소</button>	
-				<button id="dtbtn" type="submit" class="dtbtn btn-default" >게시글 등록</button>
+				<button id="dtbtn" type="button" onclick="location.href='/board/list'" class="dtbtn">취소</button>	
+				<button id="dtbtn" type="submit" class="registerbtn" >게시글 등록</button>
 
 				</form>
 				</div>
