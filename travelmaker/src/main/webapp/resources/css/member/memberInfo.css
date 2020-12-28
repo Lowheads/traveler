@@ -28,8 +28,6 @@
 .info-foot{ /* 내정보 푸터 div */
 	height: auto;
 	border-top: 1px solid black;
-/* 	display: flex;
-	justify-content: space-between; */
 	padding: 3%;
 }
 
@@ -42,6 +40,8 @@
 
 .api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
 	padding : 6%;
+	padding-top : 7%;
+	height: 400px;
 }
 
 .info-title{ /* title div */
@@ -297,10 +297,4 @@ pwd-change{ /* 비번 변경 input 창 */
 	background-color: #ff8b3d;
 	color: white;
 	border: 1px solid #ff8b3d;
-}
-
-
-button{
-	
-	border:1px solid gray;
 }

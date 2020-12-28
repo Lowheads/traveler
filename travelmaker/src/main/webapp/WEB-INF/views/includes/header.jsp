@@ -303,7 +303,7 @@ a:visited{text-decoration: none;}
 	float: right;
     font-size: 17px;
     font-weight: bold;
-    color: black;
+    color: red;
     margin: 2%;
 }
 .reg-cancelBtn{
@@ -311,7 +311,7 @@ a:visited{text-decoration: none;}
 	font-size: 17px;
     font-weight: bold;
     color: black;
-     margin-right: 2%;
+    margin-right: 2%;
 }
 /* --- 또는 ---- */
 .hr-sect {
@@ -395,22 +395,30 @@ a:visited{text-decoration: none;}
    display: none;
    width: 40%;
    position: fixed;
-   border: 2px solid black;
+   border: 1px solid black;
    left:30%;
    background: white;
    z-index: 99;
 }
 .pwdPTag{ /* 비밀번호 찾기 P태그 */
 	font-size: 18px;
+ 	color: deeppink;
 }
 #searchPwdBtn{
 	width: 260px;
     height: 50px;
     text-align: center;
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     border: 1px solid #4e266d;
 }
+
+#searchPwdBtn:hover{
+	background-color: #ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
+}
+
 #menu_wrap {
    position: absolute;
    top: 0;
@@ -503,14 +511,15 @@ text-align: center;
 .div-reg{
    padding: 5px;
    padding-top: 2px;
+   margin-left: 10%;
 }
 .btn{ /* 닉네임 중복체크 버튼 */
    width: 130px;
    height: 35px;
    text-align: center;
-   background-color: black;
+   background-color: #ff8b3d;
    color: white;
-   border: 1px solid #4e266d;
+   border: 1px solid #ff8b3d;
 }
 /* dropdown  */
 .dropbtn {
@@ -551,7 +560,8 @@ text-align: center;
 .reg-font{
 	font-weight: bold;
 	font-size: 17px;
-	padding-left: 10px;
+	padding-left: 8%;
+	margin-bottom: 1%;
 	}
 	
 <!-- theme페이지 이미지 슬라이드쇼-->
@@ -775,7 +785,7 @@ cursor: pointer;
 		<div class="lModal_close"><a class="cancelBtn" href="#">X</a></div>	
     	
     	<div> 
-        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 9%">로그인</p>
+        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 4%">로그인</p>
         </div>
             
             <div class="wrap-main">
@@ -867,12 +877,12 @@ cursor: pointer;
    <!-- register Modal  -->
     <!-- Modal -->
     <div class="register_modal">
-    <div id="register" style="background-color:white; border:3px solid black;">
+    <div id="register" style="background-color:white; border:1px solid black;">
         <!-- 닫기버튼 -->
         <div class="rModal_close"><a class="reg-cancelBtn" href="#" style="margin-top: 1%;">X</a></div>
 
         <div class="modal-dialog" style="display: table;">
-            <p style="text-align: center; font-size: 30px; margin-left: 11%;">회원가입</p>
+            <p style="text-align: center; font-size: 30px; margin-left: 4%;">회원가입</p>
          <div class="wrap-main" style="margin-left: 15px;">
             <form action="/member/joinMember" method="post">
                   
@@ -906,14 +916,16 @@ cursor: pointer;
                   
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
-                  <div class="div-reg">
+                  <div class="div-reg" style="margin-bottom: 1%;">
                   <input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
                   
                   <!-- 성별 -->
                   <div class="reg-font">성별</div>
+                   <div class="div-reg">
                      <input type="radio" name="gender" id="man_gender" value="M">남 
                      <input type="radio" name="gender" id="woman_gender" value="F">여
                      <p><span id="spanGender"></span></p>
+                   </div>
                   
                   <!-- 상태(정상, 휴면 등...) -->
                   <p><input type="hidden" name="status" id="status" value="MS001"></p>
