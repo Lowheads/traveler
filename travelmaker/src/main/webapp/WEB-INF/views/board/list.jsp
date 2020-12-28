@@ -5,6 +5,8 @@
 <%@ include file="../includes/header.jsp" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 
+<%@ include file="../includes/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet"

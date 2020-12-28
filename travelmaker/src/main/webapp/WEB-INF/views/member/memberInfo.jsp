@@ -62,11 +62,10 @@
 			<div class="info-content"> 
 				<div class="content-name">생일</div>
 				<div class="content-proper">${member.birth }</div> 
-			<%-- <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/> --%>
 			</div>
 			
 			<!-- 비밀번호 -->
-			<div class="info-content"><%-- <input type="hidden" id="realPwdCfm" value="${member.pwd }"> --%>
+			<div class="info-content">
 				<div class="content-name">비밀번호</div>
 				<button class="pwd-modiBtn" type='button' id="modal_btn" class="button">비밀번호 재설정</button></div>
 		
@@ -165,13 +164,15 @@
 		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
 	        	 <!-- 탈퇴 버튼 끝 -->
 	        	 
-	        	 <!-- 홈 버튼 -->
-					<!-- <button type="button" class="home-btn" onclick="location.href = '/member/main'">홈으로</button> -->
-	        	 <!-- 홈 버튼 끝 -->
-	        	 
+	        	
 	        	 <!-- 저장하기 버튼 -->
 					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
+	        	 
+	        	  <!-- 취소 버튼 -->
+					<button type="button" class="back-btn" onclick="location.href='/main/index'">홈으로</button>
+	        	  <!-- 취소 버튼 끝 -->
+	        	 
 			</div>
 			<!-- end foot -->
 			
@@ -375,19 +376,6 @@
 			return false;
 		}
 	} 
-	
-
-	//rttr 창띄우기
-	$(function() {
-
-		var responseMessage = '<c:out value="${msg}" />';
-
-		if (responseMessage != "") {
-			alert(responseMessage);
-		}
-		return false;
-
-	});
 </script>
 
 </html>

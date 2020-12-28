@@ -302,16 +302,6 @@ img.ui-datepicker-trigger {
 			
 		});
 	 
-		//rttr 창띄우기
-		$(function() {
-
-			var responseMessage = '<c:out value="${msg}" />';
-
-			if (responseMessage != "") {
-				alert(responseMessage);
-			}
-
-		});
 	 
 </script>
 

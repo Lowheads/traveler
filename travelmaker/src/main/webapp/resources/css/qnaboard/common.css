@@ -10,27 +10,6 @@ a { text-decoration: none;
     width: 100%;
 }
 
-/* header */
-.header_wrapper {
-    width: 100%;
-    background-color: #fff;
-    border-bottom: 1px  solid #f0f0f0;
-}
-.header {
-    width: 960px;
-    height: 64px;
-    margin: 0 auto;
-    position: relative;
-    background-color: #fff;
-}
-.header::after {
-    display: block;
-    content: "";
-    clear: both;
-}
-.header div {
-    float: left;
-}
 .logo>a {
     font-size: 40px;
     color: orange;

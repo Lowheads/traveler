@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.MemberVO;
+import org.travelmaker.service.SocialLoginService;
 import org.travelmaker.service.MemberService;
-import org.travelmaker.service.apiLoginService;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -30,17 +28,15 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/member/*")
 public class MemberController {
 
-	@Setter(onMethod_ = @Autowired) // 무조건 주입
-	private MemberService service;
+	private final MemberService service;
+	private final SocialLoginService socialLoginService;
 	
-	@Setter(onMethod_ = @Autowired)
-	private apiLoginService apiService;
-	
-	@GetMapping("/main")
-	public void getMain() {
-		log.info("main");
+	public MemberController(MemberService memberService, SocialLoginService socialLoginService) {
+		this.service = memberService;
+		this.socialLoginService = socialLoginService;
 	}
 	
+
 	// 회원가입
 	@RequestMapping(value = "/joinMember", method = RequestMethod.POST)
 	public ModelAndView joinMember(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
@@ -60,7 +56,9 @@ public class MemberController {
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
-		ModelAndView mav = new ModelAndView("redirect:/main/index");
+		
+		String referer = request.getHeader("Referer"); // 로그인 하는 페이지의 주소를 referer 변수에 저장한다.
+		ModelAndView mav = new ModelAndView("redirect:" + referer); 
 		
 		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
 		if(service.isMemberStatus(mVO, rttr, session)) {
@@ -69,19 +67,23 @@ public class MemberController {
 		// email 저장하기 여부
 		service.rememberEmail(mVO.getEmail(), request, response);	
 		
-		// 로그인 하자
-		mav = service.loginProcess(mVO, session, mav);
 		log.info("로그인한 회원의 번호 : " + mVO.getMemNo());
+		
+		// 로그인 하자
+		if(service.isAdminLogin(mVO, session)) {
+			// 관리자는 관리자 페이지로 가주세요
+			return mav = new ModelAndView("redirect:/admin/main"); 
+		}
+		
 		return mav;
-	
 	}
 	
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception{
+	public String logout(HttpSession session, HttpServletRequest request) throws Exception{
 		session.invalidate(); // 세션 삭제
 		
-		// 메인으로 이동
+		// 로그아웃은 메인으로 이동시키자
 		return "redirect:/main/index";
 	}
 	
@@ -173,67 +175,26 @@ public class MemberController {
 		return "redirect:/member/main";
 	}
 	
-	// 네아로
-//    @RequestMapping("/main")
-//    public ModelAndView naverLogin(HttpSession session) { // <- 네이버 로그인 성공하면 callback으로..
-//    	try {
-//    		
-//        /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
-//        String naverAuthUrl = apiService.getNaverAuthUrl(session);
-//        
-//        /* 생성한 인증 URL을 View로 전달 */
-//        return new ModelAndView("/member/main", "url", naverAuthUrl);
-//    	}catch(Exception e) {
-//    		e.getMessage();
-//    		return new ModelAndView("/member/main");
-//    	}
-//    }
-    
-//	  //네이버 로그인 성공시 callback호출 메소드
-//	  // 'id'값은 각 애플리케이션마다 회원 별로 유니크한 값
-//     @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-//     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rttr) throws IOException, ParseException {
-//	    System.out.println("여기는 callback");
-//	    
-//	    OAuth2AccessToken oauthToken = apiService.getNaverToken(code, state, session); // 네이버 토큰을 얻는다.
-//	    String userInfo = apiService.getNaverUserProfile(oauthToken); // // 로그인한 사용자 정보를 읽어온다.
-//	    
-//	    // 데이터 파싱
-//	    // 토큰과 네이버 프로필을 JSON형태로 
-//	    JSONObject responseObj = apiService.getJsonByNaver(oauthToken, userInfo);
-//	    String email = (String)responseObj.get("email"); // 로그인한 사용자의 이메일을 저장한다
-//	    
-//	    if(service.isNaverApiJoinCheck(responseObj, model)) { // 회원이 아니면 회원가입 창으로 보낸다.
-//	    	return "/member/apiRegister";
-//	    }
-//	     
-//	    if(service.isDeleteAlready(email, rttr)) { // 탏퇴한 계정이면 로그인 안됩니다.
-//	    	return "redirect:/member/main";
-//	    }
-//	    
-//	    // 이미 회원이라면 세션주고 로그인
-//	    session.setAttribute("email", email);
-//	    service.lastLoginSetToday(email); // 최종 로그인은 오늘..
-//	    System.out.println("네이버 로그인한 회원의 번호 : " + service.getMemNo(email));
-//	    return "redirect:/member/main";
-//	    
-//     }
-    
+
 	// 카카오 로그인 시작
 	 @RequestMapping(value="/kakao",method= RequestMethod.GET)
-	 public String kakaoConnect() {
-		  StringBuffer url = apiService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
+	 public String kakaoConnect(HttpServletRequest request, HttpSession session) {
+		 String referer = request.getHeader("Referer"); // 로그인하는 페이지의 주소를 저장한다.
+		 session.setAttribute("referer", referer);		// 현재 주소를 세션에 저장하자
+		 
+		  StringBuffer url = socialLoginService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
 		  return "redirect:" + url.toString();
 	 }
 	 
 		 
 	 @RequestMapping(value="/kakaoLogin",produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
-	 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes rttr, HttpSession session, HttpServletResponse response, Model model)throws IOException {
+	 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes rttr, HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model)throws IOException {
 			 
-	  System.out.println("kakao code:"+code);
+		 String referer = (String)session.getAttribute("referer"); // 세션에 저장한 주소를 변수에 저장한다.
+		 System.out.println("kakao code:"+code);
 		  
-	  JsonNode access_token = apiService.getKakaoToken(code); // 카카오 토큰을 얻어온다
-	  JsonNode userProfile = apiService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
+	  JsonNode access_token = socialLoginService.getKakaoToken(code); // 카카오 토큰을 얻어온다
+	  JsonNode userProfile = socialLoginService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
 	  String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일를 가져온다.
 		         
 	  		// 회원이 아니면 회원가입해주세요
@@ -243,14 +204,14 @@ public class MemberController {
 	  		
 	  		// 탈퇴한 계정이면 로그인 안됩니다.
 	  	    if(service.isDeleteAlready(email, rttr)) { 
-		    	return "redirect:/member/main";
+		    	return "redirect:" + referer;
 		    }
 	  		
 	  	// 이미 회원이면 로그인 처리
 	  	session.setAttribute("email", email);
 	  	service.setLoginDateToToday(email); // 최종 로그인은 오늘..
 	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMemNo(email));
-	    return "redirect:/main/index";
+	  	return "redirect:" + referer;
 	  
 	 }
     

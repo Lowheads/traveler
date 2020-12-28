@@ -29,31 +29,23 @@
 <!-- 페이징 처리 -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+
+<div class="full-wrap">
 <div class="wrapper">
-        <div class="header_wrapper">
-            <!-- <div class="header">
-                <div class="logo">
-                    <a href="/qnaboard/list">Q&A 게시판</a>
-                </div>      
-            </div> -->
+       
+        <div class="contents">
+        
+            <div class="ct_body">
+            				 <div class="header_wrapper">
             <div class="title-head">
-	        	<h4>Q&A 게시글 조회</h4>
+	        	<h4 style="font-family: 'Bazzi';">Q&A 게시글 조회</h4>
 	        </div>
         </div>
-        <div class="contents">
-            <div class="ct_body">
-            				
             				<div class="form-group">
             					<img alt="eye" src="/resources/img/eye.png" width="18px" height="18px">
             					 : ${board.viewCnt }
             				</div>
             					
-            				<%-- <div class="form-group">
-                        		<label>#게시물 번호</label> 
-                        		<input class="form-control" name="bno" id="bno" 
-                        		value='<c:out value="${board.bno }"/>' readonly="readonly">
-                        	</div> --%>
-            				
                         	<div class="form-group">
                         		<label>제목</label> 
                         		<input style="background-color: white;" class="form-control" name="title"
@@ -82,7 +74,7 @@
                 <c:if test="${board.memNo == loginMemNo }">	
             	<button data-oper='modify' class="reg-btn">수정하기</button>
             	</c:if>
-				<button data-oper='list' class="cancel-btn">목록</button>
+				<button data-oper='list' class="list-btn">목록</button>
             </div>
 				
 				<form id='operForm' action="/qnaboard/modify" method="get">
@@ -132,7 +124,9 @@
 				<input class="replyRegiBtn" type="button" id="replyResigerBtn"  value="댓글등록">
 			</div>
 	</div>
-	
+</div>
+</div>
+
 	
 <script type="text/javascript" src=/resources/js/reply.js charset="utf-8"></script>
 	

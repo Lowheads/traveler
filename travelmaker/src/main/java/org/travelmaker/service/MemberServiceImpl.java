@@ -26,12 +26,14 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor
-// 로직을 담당한다.
 public class MemberServiceImpl implements MemberService {
    
-   @Setter(onMethod_ = @Autowired)
-   private MemberMapper mapper; // 무조건 주입
+   private final MemberMapper mapper; 
+   
+   public MemberServiceImpl(MemberMapper memberMapper) {
+	   this.mapper = memberMapper;
+   }
+   
    
    @Override
    public void join(MemberVO mVO) {    // 회원가입
@@ -70,19 +72,21 @@ public class MemberServiceImpl implements MemberService {
       
       // email 저장하기 눌렀다면..
       if(isChecked(check)) {
+    	 cookie.setPath("/");
          response.addCookie(cookie);
       }
       
       // email 저장하기를 해제했다면..
       if(!(isChecked(check))) {
          cookie.setMaxAge(0);
+         cookie.setPath("/");
          response.addCookie(cookie);
       }
    }
    
    	// 로그인처리 (일반회원이면 main으로, 관리자면 관리자 페이지로 가자) 
 	@Override
-	public ModelAndView loginProcess(MemberVO mVO, HttpSession session, ModelAndView mav) {
+	public boolean isAdminLogin(MemberVO mVO, HttpSession session) {
 		// 로그인 하는 회원의 등급을 memberGrade 변수에 저장
 		String memberGrade = mapper.getMember(mVO.getEmail()).getMemGrade();
 
@@ -93,10 +97,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		// 관리자면 관리자 페이지로 가주세요!
 		if(memberGrade.equals("MG002")) {
-			mav = new ModelAndView("redirect:/admin/main");
-			return mav;
+			return true;
 		}
-		return mav;
+		
+		return false;
 	}
    
    

@@ -27,11 +27,13 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/qnaboard/*")
 public class QnABoardController {
 
-	@Setter(onMethod_ = @Autowired)
-	private QnABoardService service;
+	private final QnABoardService service;
+	private final MemberService memberService;
 	
-	@Setter(onMethod_ = @Autowired)
-	private MemberService memberService;
+	public QnABoardController(QnABoardService qnaBoardService, MemberService memberService) {
+		this.service = qnaBoardService;
+		this.memberService = memberService;
+	}
 	
 	@GetMapping("/list")
 	public void list(QnABoardCriteria cri, Model model, HttpSession session) {

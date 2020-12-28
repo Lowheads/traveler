@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
-public interface apiLoginService { // api 로그인에 관한 서비스 인터페이스
+public interface SocialLoginService { // api 로그인에 관한 서비스 인터페이스
 	
 	// Naver
 	public String getNaverAuthUrl(HttpSession session); // 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 

@@ -24,6 +24,8 @@
 </head>
 
 <body>
+
+<div class="full-wrap">
 	
 	<!-- 메인 타이틀 -->
 	<div class="title-wrap"><a href="/qnaboard/list">Q&A 게시판</a></div>
@@ -66,11 +68,13 @@
 				<td><c:out value="${board.viewCnt }" /></td> <!-- 조회수 -->
 			</tr>
 		</c:forEach>
+		  
     </tbody>
-  </table>
   
-  		<!-- 글쓰기 버튼 -->
+  </table>
+  <!-- 글쓰기 버튼 -->
   		<div class="boardRegiBtn-wrap"><a href="/qnaboard/register"><button>WRITE</button> </a></div>
+  		
   
 		      <!-- 페이징 -->
     <div class="paging">
@@ -111,8 +115,6 @@
 						<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : '' }"/>>제목 or 내용</option>
 						<option value="TW" 
 						<c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>제목 or 작성자</option>
-						<%-- <option value="TWC" 
-						<c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : '' }"/>>제목 또는 내용 또는 작성자</option> --%>
 					</select>
 						<input type='text' name='keyword' id="searchKeyword" value='<c:out value="${pageMaker.cri.keyword }"/>' />
 						<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum }"/>' />
@@ -121,7 +123,9 @@
 				</form>
 			</div>
 		</div>
-
+		
+		</div>
+<!-- end full-wrap -->
 
 		<form id="actionForm" action="/qnaboard/list" method="get">
 			<input type="hidden" name='pageNum' value='${pageMaker.cri.pageNum }'>
@@ -135,25 +139,8 @@
 <script type="text/javascript">
 
 		let actionForm = $("#actionForm");
-		let responseMessage = '<c:out value="${msg}" />';
 	
 		$(document).ready(function(){
-			
-			checkAlert(responseMessage);
-			
-			history.replaceState({}, null, null);
-			
-			function checkAlert(responseMessage){
-				
-				if(responseMessage === '' || history.state){
-					return;
-				}
-				
-				if(responseMessage.length > 0){ /* 이거 안 해주면 alert 아예 안 뜬다.. */
-					alert(responseMessage);
-				}
-			}
-			
 			
 			$(".pagination_btn a").on("click", function(e){ // 게시글 리스트 페이징
 				e.preventDefault();

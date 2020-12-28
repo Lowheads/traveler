@@ -32,7 +32,7 @@ p{ /* 내용 */
 
 
 	<div class="img-wrap">
-		<img id="img" src="/resources/img/500error.jpg" style="width: 700px" height="550px"> 
+		<img id="img" src="/resources/img/500error.png" style="width: 700px" height="550px"> 
 	</div>
 	
 	

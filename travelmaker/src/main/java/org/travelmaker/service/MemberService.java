@@ -21,7 +21,7 @@ public interface MemberService {
 
    public MemberVO emailAndPwdInputCheck(MemberVO mVO); // email & pwd가 일치한지 확인
 
-   public ModelAndView loginProcess(MemberVO mVO, HttpSession session, ModelAndView mav); // 로그인 하자
+   public boolean isAdminLogin(MemberVO mVO, HttpSession session); // 로그인 하자
    
    public void rememberEmail(String email, HttpServletRequest request, HttpServletResponse response); // email저장
    
