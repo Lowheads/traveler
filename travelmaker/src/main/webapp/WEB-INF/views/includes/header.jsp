@@ -281,10 +281,12 @@ a:visited{text-decoration: none;}
 /*성현 style */
 .login_modal {
    display: none;
-   width: 40%;
+   width: 32%;
+   height : 600px;
    position: fixed;
    left:30%;
    background: white;
+   margin-left: 3.5%;
    z-index: 99;
 }
 .modal-dialog{
@@ -296,7 +298,7 @@ a:visited{text-decoration: none;}
 	float: right;
     font-size: 17px;
     font-weight: bold;
-    color: red;
+    color: black;
     margin: 2%;
 }
 .reg-modalCloseBtn{
@@ -316,6 +318,8 @@ a:visited{text-decoration: none;}
 	margin: 8px 0px;
 	padding-left: 20%;
 	padding-right: 20%;
+	padding-top: 2%;
+    padding-bottom: 3%;
 }
 .hr-sect::before,
 .hr-sect::after {
@@ -386,11 +390,12 @@ a:visited{text-decoration: none;}
 }
 .searchPwd_modal{ /* 비밀번호 찾기 모달 */
    display: none;
-   width: 40%;
+   width: 32%;
    position: fixed;
    border: 1px solid black;
    left:30%;
    background: white;
+   margin-left: 3.5%;
    z-index: 99;
 }
 .pwdPTag{ /* 비밀번호 찾기 P태그 */
@@ -485,6 +490,7 @@ body {
 
 .wrap-main{
    padding: 10px;
+   margin-top: 40px;
 }
 .center {
    text-align: center;
@@ -504,7 +510,7 @@ text-align: center;
 .div-reg{
    padding: 5px;
    padding-top: 2px;
-   margin-left: 10%;
+   margin-left: 5%;
 }
 .btn{ /* 닉네임 중복체크 버튼 */
    width: 130px;
@@ -725,8 +731,9 @@ cursor: pointer;
   background-color: rgba(0,0,0,0.8);
 }
 
-<!-- -->
-
+.reg-input{
+	border: 1px solid black;
+}
 
 </style>
 
@@ -778,31 +785,31 @@ cursor: pointer;
 		<div class="lModal_close"><a class="modalCloseBtn" href="#">X</a></div>	
     	
     	<div> 
-        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 4%">로그인</p>
+        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 8%">로그인</p>
         </div>
             
             <div class="wrap-main">
             
             <form action="/member/login" method="post">
-               <div class="center"><p style="font-weight: bold; font-size: 15px">&nbsp;&nbsp;이메일&nbsp;&nbsp;
-               <input type="text" style="width: 210px; height: 30px;" 
-               placeholder="이메일" id="login_inputEmail" name="email" value="<%=id %>"></p></div>
+               <div class="center" style="margin-bottom: 2%;">
+               		<input type="text" style="width: 250px; height: 30px;" 
+               		placeholder="이메일" id="login_inputEmail" name="email" value="<%=id %>"></div>
                
-               <div class="center"><p style="font-weight: bold; font-size: 15px">비밀번호 
-               <input type="password" style="width: 210px; height: 30px;" 
-               placeholder="비밀번호" id="login_pwd" name="pwd"></p></div>
+               <div class="center">
+               		<input type="password" style="width: 250px; height: 30px; margin-bottom: 3%;" 
+               		placeholder="비밀번호" id="login_pwd" name="pwd"></div>
                
-               <div class="wrap-Addition"  style="font-size: 15px;"> 
+               <div class="wrap-Addition"  style="font-size: 15px; margin-bottom: 2%;"> 
                	<input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
                <div class="wrap-Addition"> 
-               <button style="font-size: 20px" type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
+               <button style="font-size: 20px; " type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
             </form>
             </div>
 				<!-- 또는 영역 -->
 			<div class="hr-sect">또는</div> 
 				   
 			<!-- 네이버 로그인 -->
-            <div id="naverIdLogin" style="text-align:center;"><a href="${url}">
+            <div id="naverIdLogin" style="text-align:center; margin-bottom: 0.5%;"><a href="${url}">
             <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
             <br>
             
@@ -827,11 +834,12 @@ cursor: pointer;
     
     <!-- searchPwd Modal -->
     <div class="searchPwd_modal">
-    <div> 
+    
     	<div class="spModal_close"><a class="modalCloseBtn" href="#">X</a></div>
-    				
-        	<p style="text-align: center; font-size: 30px; padding-top: 70px; margin-left: 3%">
-        	비밀번호를 잊으셨나요?</p>
+
+	    <div> 
+        	<p style="text-align: center; font-size: 30px; padding-top: 25px; margin-left: 3%; margin-bottom: -20px;">
+        	비밀번호 찾기</p>
         </div>
             <p style="padding-bottom: 10px"></p>
             
@@ -872,29 +880,31 @@ cursor: pointer;
     <div class="register_modal">
     <div id="register" style="background-color:white; border:1px solid black;">
         <!-- 닫기버튼 -->
-        <div class="rModal_close"><a class="reg-modalCloseBtn" href="#" style="margin-top: 1%;">X</a></div>
+        <div class="rModal_close"><a class="reg-modalCloseBtn" href="#" style="margin :2%;">X</a></div>
 
         <div class="modal-dialog" style="display: table;">
-            <p style="text-align: center; font-size: 30px; margin-left: 4%;">회원가입</p>
+            <h4 style="text-align: center; font-size: 30px; margin-left: 4%; margin-top: -20px;">회원가입</h4>
          <div class="wrap-main" style="margin-left: 15px;">
             <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
                   <div class="reg-font">이메일</div>
-                  <div class="div-reg"><input type="text" name="email" id="email" placeholder="이메일주소" size="30">
+                  <div class="div-reg">
+                  	 <input class="reg-input" type="text" name="email" id="email" placeholder="이메일주소" size="30">
                      <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
                   <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
                   <div class="reg-font">비밀번호</div>
-                  <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" 
-                  onblur="pwdCheck()" size="30">
-                     비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
+                  <div class="div-reg">
+                  	<input class="reg-input" type="password" name="pwd" id="pwd" placeholder="비밀번호" onblur="pwdCheck()" size="30">
+                     비밀번호는 숫자/영문자/특수문자를 모두 포함해주세요
                   <div class="div-reg"><span id="spanPwd"></span></div></div>
                   
                   <!-- 비밀번호 확인 -->
                   <div class="reg-font">비밀번호 확인</div>
-                   <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" 
+                   <div class="div-reg">
+                   	 <input class="reg-input" type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" 
                    onblur="pwdCheck()" size="30">
                      비밀번호 확인
                   <p><span id="spanPwdCfm"></span></p></div>
@@ -902,7 +912,8 @@ cursor: pointer;
                   
                   <!-- 닉네임 -->
                   <div class="reg-font">닉네임</div>
-                  <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
+                  <div class="div-reg">
+                   	 <input class="reg-input"  type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
                   <div class="div-reg"><span id="spanNickname"></span></div></div>
@@ -910,7 +921,7 @@ cursor: pointer;
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
                   <div class="div-reg" style="margin-bottom: 1%;">
-                  <input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
+                  <input class="reg-input" type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
                   
                   <!-- 성별 -->
                   <div class="reg-font">성별</div>

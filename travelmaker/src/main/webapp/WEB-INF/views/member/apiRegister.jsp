@@ -34,7 +34,7 @@ img.ui-datepicker-trigger {
     margin-bottom: 10%;
     justify-content: center;
     border: 1px solid black;
-    box-shadow: 2px 5px 5px 5px grey;
+    box-shadow: 2px 2px 2px grey;
 }
 
 .api_reg_head{
@@ -63,13 +63,15 @@ img.ui-datepicker-trigger {
 }
 
 .text-div{
-	margin-left: 12%;
+	margin-left: 22%;
+	margin-top: -2%;
+	
 }
 
 .span-div{
 	padding: 5px;
     padding-top: 2px;
-    padding-left: 13%;
+    padding-left: 22%;
 }
 
 .apiSpanNickname{
