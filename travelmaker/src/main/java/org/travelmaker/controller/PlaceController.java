@@ -57,8 +57,11 @@ public class PlaceController {
 	@PostMapping(value = "/")
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO, @RequestParam("places") String[] plcNoArr,
 			Model model) {
-		List<PlaceVO> list = service.get(plcNoArr);
-		model.addAttribute("places", list);
+		
+		if(plcNoArr.length!=0) {
+			List<PlaceVO> list = service.get(plcNoArr);
+			model.addAttribute("places", list);
+		}
 		return "/place/home";
 	}
 

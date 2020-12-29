@@ -142,14 +142,18 @@ select count(*) from place p, pick_pl pl
 </select>
 
 <select id="getListWithTheme" resultMap="placeDTO">  
-   select tplc.theme_no, p.plc_no , p.plc_title, ctb.code_name
-   from theme_plc tplc,  place p, code_table ctb
-   where tplc.theme_no = (select theme_no
-   from theme t
-   where t.region_no = #{regionNo}
-   and theme_code = #{themeCode})
-   and tplc.plc_no = p.plc_no
-   and concat(ctb.code_type_id,ctb.code) = #{themeCode}
+<![CDATA[
+	SELECT *
+	FROM (   SELECT TPLC.THEME_NO, P.PLC_NO , P.PLC_TITLE, CTB.CODE_NAME
+   FROM THEME_PLC TPLC,  PLACE P, CODE_TABLE CTB
+   WHERE TPLC.THEME_NO = (SELECT THEME_NO
+   FROM THEME T
+   WHERE T.REGION_NO = #{regionNo}
+   AND THEME_CODE = #{themeCode})
+   AND TPLC.PLC_NO = P.PLC_NO
+   AND CONCAT(CTB.CODE_TYPE_ID,CTB.CODE) = #{themeCode}
+   ORDER BY DBMS_RANDOM.VALUE)
+   WHERE ROWNUM<16]]>
 </select>
 <select id="getPlaceByWeather" resultMap="placeVO">
 <![CDATA[
@@ -161,7 +165,7 @@ FROM WEATHER_REC
 WHERE REC_INDEX=1)
 AND REGION_NO =#{regionNo}
 ORDER BY DBMS_RANDOM.VALUE)
-WHERE ROWNUM<=10]]>
+WHERE ROWNUM<16]]>
 </select>
 
 
