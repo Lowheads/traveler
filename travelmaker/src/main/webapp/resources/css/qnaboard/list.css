@@ -104,6 +104,7 @@ table.board-wrap td {
 	background-color: white;
     color: black;
     font-size: 10px;
+    border: 1px solid black;
 }
 
 .searchBtn:hover{

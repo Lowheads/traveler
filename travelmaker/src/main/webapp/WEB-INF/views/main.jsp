@@ -206,8 +206,11 @@
 			
 				let str = boardNo+"번 게시글 상세정보 <br>";
 				for (let i = 0; i < list.length; i++) {
-				str+="내용	:	"+list[i].boardCon	+"<br>";
-
+					if(list[i].boardCon!=null){
+						str+="내용	:	"+list[i].boardCon	+"<br>";
+					}else{
+						str+="내용없음"
+					}
 			}
 			
 			showModal(str);

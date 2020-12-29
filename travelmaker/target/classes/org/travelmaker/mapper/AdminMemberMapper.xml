@@ -17,97 +17,58 @@
 		<result property="status" column="STATUS" />
 		<result property="memGrade" column="MEM_GRADE" />
 	</resultMap>
-
-<!-- 	<select id="getUserList" resultMap="MemberResult">
-		select /*+ index_desc(member pk_member) */ *
-		from member
-		<where>
-			<choose>
-				<when test="type == '닉네임'">
-					nickname like '%'||#{keyword}||'%'
-				</when>
-				<when test="type == '이메일'">
-					email like '%'||#{keyword}||'%'
-				</when>
-				<when test="type == '회원번호'">
-					mem_no =#{keyword}
-				</when>
-			</choose>
-		</where>
-		order by mem_no desc
-	</select> -->
 	<select id="getUserList" resultMap="MemberResult">
-		select mem_no, email, nickname, pwd, birth, gender, reg_date, last_date, status, code_name as mem_grade
-		from(
-			select  mem_no, email, nickname, pwd, birth, gender, reg_date, last_date, code_name as status, mem_grade
-			from member m, code_table c
-			where m.status= concat(c.code_type_id,code)
+		SELECT MEM_NO, EMAIL, NICKNAME, PWD, BIRTH, GENDER, REG_DATE, LAST_DATE, STATUS, CODE_NAME AS MEM_GRADE
+		FROM(
+			SELECT  MEM_NO, EMAIL, NICKNAME, PWD, BIRTH, GENDER, REG_DATE, LAST_DATE, CODE_NAME AS STATUS, MEM_GRADE
+			FROM MEMBER M, CODE_TABLE C
+			WHERE M.STATUS= CONCAT(C.CODE_TYPE_ID,CODE)
 			<trim prefix="and">	
 				<choose>
-					<when test="type == '닉네임'">
-						(nickname like '%'||#{keyword}||'%')
+					<when test='type == "N"'>
+						(NICKNAME LIKE '%'||#{keyword}||'%')
 					</when>
-					<when test="type == '이메일'">
-						(email like '%'||#{keyword}||'%')
+					<when test='type == "E"'>
+						(EMAIL LIKE '%'||#{keyword}||'%')
 					</when>
-					<when test="type == '회원번호'">
-						(mem_no =#{keyword})
+					<when test='type == "NO"'>
+						(MEM_NO =#{keyword})
 					</when>
 				</choose>
 			</trim>
-			), code_table c
-		where mem_grade = concat(c.code_type_id,code)
-		order by mem_no desc
+			), CODE_TABLE C
+		WHERE MEM_GRADE = CONCAT(C.CODE_TYPE_ID,CODE)
+		ORDER BY MEM_NO DESC
 	</select>
 
 	<update id="removeUser" parameterType="int[]">
-		update member
-		set status='MS002'
-		where mem_no in
+		UPDATE MEMBER
+		SET STATUS='MS002'
+		WHERE MEM_NO IN
 		<foreach collection="list" item="id" open="(" close=")" separator=",">
 			#{id}
 		</foreach>
 	</update>
-
-<!-- 	<select id="getWithdrawUserList" resultMap="MemberResult">
-		select /*+ index_desc(member pk_member) */ *
-		from member where
-		status='MS002'
-		<trim prefix="and">
-		<choose>
-				<when test="type == '닉네임'">
-					(nickname like '%'||#{keyword}||'%')
-				</when>
-				<when test="type == '이메일'">
-					(email like '%'||#{keyword}||'%')
-				</when>
-				<when test="type == '회원번호'">
-					(mem_no like '%'||#{keyword}||'%')
-				</when>
-			</choose>
-		</trim>
-		order by mem_no desc
-	</select> -->
-	
 	<select id="getWithdrawUserList" resultMap="MemberResult">
-		select mem_no, email, nickname, pwd, birth, gender, reg_date, last_date, status, code_name as mem_grade
-		from (select mem_no, email, nickname, pwd, birth, gender, reg_date, last_date, code_name as status, mem_grade
-		from member m, code_table c
-		where status='MS002' and m.status= concat(c.code_type_id,code)
+		SELECT MEM_NO, EMAIL, NICKNAME, PWD, BIRTH, GENDER, REG_DATE, LAST_DATE, STATUS, CODE_NAME AS MEM_GRADE
+		FROM (
+			SELECT MEM_NO, EMAIL, NICKNAME, PWD, BIRTH, GENDER, REG_DATE, LAST_DATE, CODE_NAME AS STATUS, MEM_GRADE
+			FROM MEMBER M, CODE_TABLE C
+			WHERE STATUS='MS002' AND M.STATUS= CONCAT(C.CODE_TYPE_ID,CODE)
 		<trim prefix="and">
 		<choose>
-				<when test="type == '닉네임'">
-					(nickname like '%'||#{keyword}||'%')
-				</when>
-				<when test="type == '이메일'">
-					(email like '%'||#{keyword}||'%')
-				</when>
-				<when test="type == '회원번호'">
-					(mem_no like '%'||#{keyword}||'%')
-				</when>
+					<when test='type == "N"'>
+						(NICKNAME LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='type == "E"'>
+						(EMAIL LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='type == "NO"'>
+						(MEM_NO =#{keyword})
+					</when>
 			</choose>
 		</trim>
-		), code_table c
-		where mem_grade = concat(c.code_type_id,code)
+		), CODE_TABLE C
+		WHERE MEM_GRADE = CONCAT(C.CODE_TYPE_ID,CODE)
 	</select>
 </mapper>

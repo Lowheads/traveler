@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.travelmaker.domain.BoardVO;
+import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.QnABoardVO;
 import org.travelmaker.domain.StatisticVO;
@@ -288,13 +288,15 @@ public class MapperTests {
 		 * 
 		 * list.forEach(theme->log.info(theme.toString()));
 		 */
-		int pageNum = 3;
-		
-		String keyword = "바다";
-		
-		List<PlaceVO> list = mapper3.getPlaceList(keyword, pageNum);
-		
-		list.forEach(theme->log.info(theme.toString()));
+		/*
+		 * int pageNum = 3;
+		 * 
+		 * String keyword = "바다";
+		 * 
+		 * List<PlaceVO> list = mapper3.getPlaceList(keyword, pageNum);
+		 * 
+		 * list.forEach(theme->log.info(theme.toString()));
+		 */
 		
 	}
 	
@@ -325,7 +327,7 @@ public class MapperTests {
 		list.forEach(theme->log.info(theme.toString()));
 	}
 	
-	@Test
+	//@Test
 	public void getMonthly() {
 		
 		/*
@@ -367,6 +369,19 @@ public class MapperTests {
 		
 	}
 	
+	@Test
+	public void getPlaceList() {
+		
+		Criteria cri = new Criteria();
+		
+		cri.setKeyword("제주");
+		cri.setPageNum(1);
+		
+		int regionNo=1;
+		
+		List<PlaceVO> list = mapper3.getPlaceList(cri.getKeyword(), cri.getPageNum(),regionNo);
+		list.forEach(theme->log.info(theme.toString()));
+	}
 	
 
 }

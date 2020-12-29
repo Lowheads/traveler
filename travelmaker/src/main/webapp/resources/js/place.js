@@ -5,7 +5,7 @@ var placeService = (function(){
 			var title = param.title;
 			var regionNo = param.regionNo;
 			var pageNum = param.pageNum;
-			$.getJSON("/place/pages/"+title+"/"+regionNo+"/"+pageNum+".json", function(data){
+			$.getJSON("/place/pages/"+regionNo+"/"+pageNum+"/"+title+".json", function(data){
 				if(callback) {			
 					callback(data);
 				}

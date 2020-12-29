@@ -64,8 +64,8 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
-
 <style>
+
 
 /*헤더 스타일 */
 a{text-decoration: none;
@@ -281,10 +281,12 @@ a:visited{text-decoration: none;}
 /*성현 style */
 .login_modal {
    display: none;
-   width: 40%;
+   width: 32%;
+   height : 600px;
    position: fixed;
    left:30%;
    background: white;
+   margin-left: 3.5%;
    z-index: 99;
 }
 .modal-dialog{
@@ -296,7 +298,7 @@ a:visited{text-decoration: none;}
 	float: right;
     font-size: 17px;
     font-weight: bold;
-    color: red;
+    color: black;
     margin: 2%;
 }
 .reg-modalCloseBtn{
@@ -316,6 +318,8 @@ a:visited{text-decoration: none;}
 	margin: 8px 0px;
 	padding-left: 20%;
 	padding-right: 20%;
+	padding-top: 2%;
+    padding-bottom: 3%;
 }
 .hr-sect::before,
 .hr-sect::after {
@@ -386,11 +390,12 @@ a:visited{text-decoration: none;}
 }
 .searchPwd_modal{ /* 비밀번호 찾기 모달 */
    display: none;
-   width: 40%;
+   width: 32%;
    position: fixed;
    border: 1px solid black;
    left:30%;
    background: white;
+   margin-left: 3.5%;
    z-index: 99;
 }
 .pwdPTag{ /* 비밀번호 찾기 P태그 */
@@ -485,6 +490,7 @@ body {
 
 .wrap-main{
    padding: 10px;
+   margin-top: 40px;
 }
 .center {
    text-align: center;
@@ -504,7 +510,7 @@ text-align: center;
 .div-reg{
    padding: 5px;
    padding-top: 2px;
-   margin-left: 10%;
+   margin-left: 5%;
 }
 .btn{ /* 닉네임 중복체크 버튼 */
    width: 130px;
@@ -557,54 +563,64 @@ text-align: center;
 	margin-bottom: 1%;
 	}
 	
-<!-- theme페이지 이미지 슬라이드쇼-->
-div > span{
+
+/* div > span{
             border:solid 3px rgb(62, 40, 192);  
+}
+ */
+<!-- theme페이지 이미지 슬라이드쇼-->
+.submit{
 }
 .button-btn-submit{
 	position:absolute;
-	top:70%;
-	left:100%;
-	z-index:1;
-	background-color:white;
-            border:solid 2px rgba(228, 222, 222, 0.9);
-            margin : 3px;
-            padding: 4px 7px;
-            border-radius: 7px;
+	right:7%;
+	bottom:0px; 
+	background-color:rgba(168, 168, 168, 0.2);
+    margin : 3px;
+    padding: 4px 7px;
+    border-radius: 7px;
+    display:inline-block;
+    float:right;
+    
+}
+
+.button-btn-submit:hover{
+ 
+	/* background-color:rgba(255, 51, 0, 0.8); */
+	background-color: #ff8b3d;
+    border:solid 2px rgba(255,255,255,1);
 
 }
+
+
+
 .dots{
+
 	 position:absolute;
-	 top:15px;
-	 left:80%;
-	 display:inline;
-            justify-content: center;
-            align-items: center;
-            z-index:1;
+	 top:5%;
+	 left:45%;
+	 z-index:1;
 }
 
 .dot {
-margin: 0 2px;
-            background-color:rgba(218, 212, 212, 0.7);
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-             border:solid 2px rgba(128, 128, 128, 0.7);
-cursor: pointer;
-            height:20px;
-            width: 20px;
-	z-index:1;
-	
-  
+		margin: 0 2px;
+		background-color:rgba(218, 212, 212, 0.7);
+		border-radius: 50%;
+		display: inline-block;
+		transition: background-color 0.6s ease;
+		 border:solid 2px rgba(128, 128, 128, 0.7);
+		cursor: pointer;
+		height:20px;
+		width: 20px;
+		z-index:1;
 }
 
 .dot:hover {
-    background-color:rgba(238, 238, 238, 0.7);
+   background-color:rgba(82, 82, 82, 0.7);
 }
 
-
-.active {
-  background-color: #717171;
+.current{
+	background-color:rgba(255, 255, 255, 0.9); 
 }
 
 @-webkit-keyframes fade {
@@ -617,115 +633,110 @@ cursor: pointer;
   to {opacity: 1}
 }
 
-/* .w3-left, .w3-right{cursor:pointer} */
-
 .slideWrapper{
-	     	    width:1005px;
-            height:700px;
-            position : relative;
-              max-width:100%;
+	position:relative;
+    width:100%;
+    height:80%;
 }
 
 
-        .mySlides {
-     	   position:absolute;
-     	   left:40%;
-     	    width:100%;
-            height:100%;
-            margin: 0px;
-            border:solid 2px rgba(128, 128, 128, 0.7);
- 			border-radius: 30px;
- 			position : absolute;
- 			
-        }
+ .mySlides {
+		width:70%;
+     height:auto;
+   /*  border:solid 1.5px rgb(167, 168, 168);   */
+     border-radius: 25px;
+     margin:0 auto;
+      text-align: center;
+      position:relative;
+     background:rgb(255, 255, 255);
+     box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ }
         
-        .themeImage{
-            width:1000px;
-            height:550px;
-            overflow:hidden;
-            position : absolute;
-            margin: 0px;
-            border-radius:30px 30px 0px 0px;
-            padding:0px;
-            box-sizing: border-box;
-        }
+ .themeImage{
+     width:100%;
+     height:75vh;
+     overflow:hidden;
+     border-radius:25px 25px 0px 0px;
+     margin: 0px;
+     box-sizing: border-box;
+ }
 
 
-        .themeImage img{
-            width:100%;
-            object-fit: cover;
-            
-        }
-        
-        .resultWrapper{
-        	position : absolute;
-        	 top:560px;
-        	  width:1000px;
-/*         	border:solid 3px rgb(255, 0, 102);   */
-        }
+.themeImage img{
+    width:100%;
+    object-fit: cover;
+}
 
-        
-        .travel-theme{
-            width:100%;
-            height:30px;
-          padding-top : 0;
-            font-weight:bold;
-/*             border:solid 2px rgb(255, 255, 0,1); */ 
-        }
 
-        .placeList{
-            width:100%;
-/*             border:solid 2px rgb(255, 255, 0,1);  */
-        }
-        
-          .recPlace{
-            float: left;
-            border:solid 2px rgba(228, 222, 222, 0.9);
-            margin : 3px;
-            padding: 4px 7px;
-            border-radius: 7px;
+.travel-theme{
+	font-weight:bold;
+    width:100%;
+    height:auto;
+    padding: 15px 30px 10px;
+    box-sizing: border-box;
+    text-align: left;
+}
 
-        }
+.placeList{
+    width:100%;
+    height:auto; 
+    padding: 5px 25px 5px;	
+}
 
-        .recPlace:hover{
+.recPlace{
+	height:35px;
+    float: left;
+    border:solid 2px rgba(213, 213, 213, 0.9);
+    margin : 3px;
+    padding: 4px 7px;
+    border-radius: 7px;
+    
+}
 
-            color:rgba(255, 255, 255, 0.6);
-            background-color:rgba(122, 161, 206, 0.9);
+.recPlace:hover{
 
-        }
+    color:rgba(255, 255, 255, 0.9);
+    /* background-color:rgba(122, 161, 206, 0.9);
+     */
+    background-color: rgba(255,139,61, 0.75);
 
-        .clicked{
+}
 
-            color:rgba(255, 255, 255, 1);
-            background-color:rgba(78, 110, 146, 0.9);
+.clicked{
+	color:rgba(0,0,0,0.8);
+    /* color:rgba(255, 255, 255, 0.9); */
+/*     background-color:rgba(78, 110, 146, 0.9); */
+		background-color: #ff8b3d;
+}
 
-        }
-        
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            margin-top: -22px;
-            padding: 16px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            z-index:1;
-            }
-            
-            .next {
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    margin-top: -22px;
+    padding: 16px;
+    color: white; 
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    z-index:1;
+    }
+    
+.next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-
+ 
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
+  
 }
 
-<!-- -->
+.reg-input{
+	border: 1px solid black;
+}
 
 
 </style>
@@ -778,31 +789,31 @@ cursor: pointer;
 		<div class="lModal_close"><a class="modalCloseBtn" href="#">X</a></div>	
     	
     	<div> 
-        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 4%">로그인</p>
+        	<p style="text-align: center; font-size: 30px; padding-top: 10px; margin-left: 8%">로그인</p>
         </div>
             
             <div class="wrap-main">
             
             <form action="/member/login" method="post">
-               <div class="center"><p style="font-weight: bold; font-size: 15px">&nbsp;&nbsp;이메일&nbsp;&nbsp;
-               <input type="text" style="width: 210px; height: 30px;" 
-               placeholder="이메일" id="login_inputEmail" name="email" value="<%=id %>"></p></div>
+               <div class="center" style="margin-bottom: 2%;">
+               		<input type="text" style="width: 250px; height: 30px;" 
+               		placeholder="이메일" id="login_inputEmail" name="email" value="<%=id %>"></div>
                
-               <div class="center"><p style="font-weight: bold; font-size: 15px">비밀번호 
-               <input type="password" style="width: 210px; height: 30px;" 
-               placeholder="비밀번호" id="login_pwd" name="pwd"></p></div>
+               <div class="center">
+               		<input type="password" style="width: 250px; height: 30px; margin-bottom: 3%;" 
+               		placeholder="비밀번호" id="login_pwd" name="pwd"></div>
                
-               <div class="wrap-Addition"  style="font-size: 15px;"> 
+               <div class="wrap-Addition"  style="font-size: 15px; margin-bottom: 2%;"> 
                	<input type="checkbox" name="remember" <%=remember %>>   email 기억하기</div>
                <div class="wrap-Addition"> 
-               <button style="font-size: 20px" type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
+               <button style="font-size: 20px; " type="submit" id="button" onclick="return loginCheck()">로그인</button> </div>
             </form>
             </div>
 				<!-- 또는 영역 -->
 			<div class="hr-sect">또는</div> 
 				   
 			<!-- 네이버 로그인 -->
-            <div id="naverIdLogin" style="text-align:center;"><a href="${url}">
+            <div id="naverIdLogin" style="text-align:center; margin-bottom: 0.5%;"><a href="${url}">
             <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
             <br>
             
@@ -827,11 +838,12 @@ cursor: pointer;
     
     <!-- searchPwd Modal -->
     <div class="searchPwd_modal">
-    <div> 
+    
     	<div class="spModal_close"><a class="modalCloseBtn" href="#">X</a></div>
-    				
-        	<p style="text-align: center; font-size: 30px; padding-top: 70px; margin-left: 3%">
-        	비밀번호를 잊으셨나요?</p>
+
+	    <div> 
+        	<p style="text-align: center; font-size: 30px; padding-top: 25px; margin-left: 3%; margin-bottom: -20px;">
+        	비밀번호 찾기</p>
         </div>
             <p style="padding-bottom: 10px"></p>
             
@@ -872,29 +884,31 @@ cursor: pointer;
     <div class="register_modal">
     <div id="register" style="background-color:white; border:1px solid black;">
         <!-- 닫기버튼 -->
-        <div class="rModal_close"><a class="reg-modalCloseBtn" href="#" style="margin-top: 1%;">X</a></div>
+        <div class="rModal_close"><a class="reg-modalCloseBtn" href="#" style="margin :2%;">X</a></div>
 
         <div class="modal-dialog" style="display: table;">
-            <p style="text-align: center; font-size: 30px; margin-left: 4%;">회원가입</p>
+            <h4 style="text-align: center; font-size: 30px; margin-left: 4%; margin-top: -20px;">회원가입</h4>
          <div class="wrap-main" style="margin-left: 15px;">
             <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
                   <div class="reg-font">이메일</div>
-                  <div class="div-reg"><input type="text" name="email" id="email" placeholder="이메일주소" size="30">
+                  <div class="div-reg">
+                  	 <input class="reg-input" type="text" name="email" id="email" placeholder="이메일주소" size="30">
                      <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
                   <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
                   <div class="reg-font">비밀번호</div>
-                  <div class="div-reg"><input type="password" name="pwd" id="pwd" placeholder="비밀번호" 
-                  onblur="pwdCheck()" size="30">
-                     비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다
+                  <div class="div-reg">
+                  	<input class="reg-input" type="password" name="pwd" id="pwd" placeholder="비밀번호" onblur="pwdCheck()" size="30">
+                     비밀번호는 숫자/영문자/특수문자를 모두 포함해주세요
                   <div class="div-reg"><span id="spanPwd"></span></div></div>
                   
                   <!-- 비밀번호 확인 -->
                   <div class="reg-font">비밀번호 확인</div>
-                   <div class="div-reg"><input type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" 
+                   <div class="div-reg">
+                   	 <input class="reg-input" type="password" name="pwdCfm" id="pwdCfm" placeholder="비밀번호 확인" 
                    onblur="pwdCheck()" size="30">
                      비밀번호 확인
                   <p><span id="spanPwdCfm"></span></p></div>
@@ -902,7 +916,8 @@ cursor: pointer;
                   
                   <!-- 닉네임 -->
                   <div class="reg-font">닉네임</div>
-                  <div class="div-reg"><input type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
+                  <div class="div-reg">
+                   	 <input class="reg-input"  type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
                   <div class="div-reg"><span id="spanNickname"></span></div></div>
@@ -910,7 +925,7 @@ cursor: pointer;
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
                   <div class="div-reg" style="margin-bottom: 1%;">
-                  <input type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
+                  <input class="reg-input" type="text" name="birth" id="birth" placeholder="누르면 달력이 나와요!" size="30" readonly="readonly"></div>
                   
                   <!-- 성별 -->
                   <div class="reg-font">성별</div>

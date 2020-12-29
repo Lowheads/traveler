@@ -25,7 +25,7 @@ public class ScheduleDtMapperTests {
 	public void insertSchdt() {
 		Date d=  Date.valueOf("2004-06-22");
 		SchdtVO schdtVO = new SchdtVO();
-		schdtVO.setDistance(1);
+		schdtVO.setDistance("1");
 		schdtVO.setDuration("이킬로메타");
 		schdtVO.setFromPlc(5133393);
 		schdtVO.setNum(2);
@@ -35,7 +35,7 @@ public class ScheduleDtMapperTests {
 		schdtVO.setTransit("car");
 
 		SchdtVO schdtVO2 = new SchdtVO();
-		schdtVO2.setDistance(1);
+		schdtVO2.setDistance("1");
 		schdtVO2.setDuration("이킬로메타");
 		schdtVO2.setFromPlc(5133393);
 		schdtVO2.setNum(3);
