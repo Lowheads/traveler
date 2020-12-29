@@ -131,7 +131,11 @@ position: absolute;
 }
 .daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
 	font-size:13px;
+	height: auto;
 }
+
+
+
 .daterangepicker td.active, .daterangepicker td.active:hover {
     background-color: #ff8b3d;
     border-color: transparent;
