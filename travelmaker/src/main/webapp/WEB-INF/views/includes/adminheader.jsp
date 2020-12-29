@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	
 <!DOCTYPE html>
 <html lang="en">
-
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
 <style>
 
 .table{
@@ -69,7 +73,14 @@ li{
 
 
 </style>
-
+<script>
+	const ss = '<%=session.getAttribute("email")%>'
+	
+	if(ss!="myadmin82@gmail.com"){
+		location.href="/main/index"
+	}
+	
+</script>
 <head>
 
 <meta charset="utf-8">
@@ -183,8 +194,6 @@ li{
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
-			
-
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -201,46 +210,6 @@ li{
 					<!-- Main Content -->
 			<div id="content">
 
-				<!-- Topbar -->
-<!--  				<nav
-					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-					Sidebar Toggle (Topbar)
-					<form class="form-inline">
-						<button id="sidebarToggleTop"
-							class="btn btn-link d-md-none rounded-circle mr-3">
-							<i class="fa fa-bars"></i>
-						</button>
-					</form>
-
-					Topbar Search
-					<form
-						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-						
-					</form>
-
-
-				<li class="nav-item alarm dropdown no-arrow mx-1 status='show'">
-						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<i class="fas fa-bell fa-fw"></i>
-							Counter - Alerts
-							<span class="badge badge-danger badge-counter"></span>
-						</a>
-						Dropdown - Alerts
-						<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-							<h6 class="dropdown-header">
-								Alerts Center
-							</h6>
-							<div class="dropdown-item d-flex align-items-center" href="#">
-								<div class="small text-gray-500">December 12, 2019</div>
-								<span class="font-weight-bold">A new monthly report is ready to download!</span>
-							</div>	
-							<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-						</div>
-					</li>
-				</nav> 
-					
-				End of Topbar -->
 				<div class="container fluid">	
 <div class="card shadow mb-4 right">
 <div class="card-header py-3">

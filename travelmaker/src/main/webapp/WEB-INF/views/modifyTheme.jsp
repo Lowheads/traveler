@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+	<h1 style='display: none'><c:out value="${region}" /></h1>
 			<h6 class="m-0 font-weight-bold text-primary">여행 테마 수정하기 </h6>
 		</div>
 	<div class="card-body">
@@ -39,13 +40,14 @@
 	
 		<c:forEach items="${list}" var="list">
 			<tr name=row id='<c:out value="${list.plcNo}" />'>
+				<td style='display:none'><c:out value="${list.plcNo}" /></td>
 				<td><c:out value="${list.plcTitle}" /></td>
 				<td><c:out value="${list.addressDt}" /></td>
 				<td><c:out value="${list.PCate}" /></td>
 				<td><c:out value="${list.holiday}" /></td>
 				<td><c:out value="${list.openingH}" /></td>
 				<td><c:out value="${list.likeCnt}" /></td>
-				<td><button class="btn btn-default" value='<c:out value="${list.plcNo}" />' onClick=alert($(this).parent())>
+				<td><button class="btn btn-default" id = "deleteBtn" value='<c:out value="${list.plcNo}" />'>
 						<i class="fas fa-times"></i></button>
 						</button></td>
 			</tr>
@@ -105,19 +107,18 @@
 				let addedPlaces = [];
 
 				let list = [];
-
-
 				let newlist = []
-
-
+				
+				const regionNo = $("h1")[0].innerText;
+				
 				for (let i = 0; i < $("#dataTable tr").length - 1; i++) {
-					list[i] = $("#dataTable td")[7* i].innerText;
+					list[i] = $("#dataTable td")[8* i].innerText; 
 				}
 				
-			
 				Object.assign(newlist, list)
-				
+
 				let themeNo = ${themeNo};
+				
 				
 				//db에 저장된 사진 보여주기 
 				(function(){
@@ -129,7 +130,7 @@
 						const fileCallPath = encodeURIComponent("/s_"+thumbnail.uuid+"_"+thumbnail.fileName);
 						
 						str+= "<li data-path='"+thumbnail.uploadPath+"'data-uuid='"+thumbnail.uuid+"'data-fileName='"+thumbnail.fileName+
-						"' data-type = '"+thumbnail.fileType+"'></div>";
+						"' data-type = true></div>";
 						str+="<div>";
 						str+= "<img src='/admin/display?fileName="+fileCallPath+"'>";
 						str += "<span> "+thumbnail.fileName+"</span>";
@@ -172,7 +173,7 @@
 					
 					theme.deleteFile(targetFile,type);
 					
-				})
+				});
 				
 				$("input[type='file']").change(function(e){
 					
@@ -196,19 +197,9 @@
 					
 					theme.uploadFile(${themeNo},formData);
 
-				})
-				
-				function deletePlace(){
-					
-					let num = $(this).attr("value")
-					let idx = list.indexOf(num);
-					
-					newlist[idx] = ""
+				});
 
-					$(this).parent().parent().remove()
-				}
-
-/* 				$("button[id=deleteBtn]").click(function() {
+  				$("button[id=deleteBtn]").click(function() {
 
 					let num = $(this).attr("value")
 					let idx = list.indexOf(num);
@@ -217,25 +208,9 @@
 
 					$(this).parent().parent().remove()
 			
-				}) */
+				});   
 				
 
-
-/* 				var target = $("button[id=deleteBtn]")
-				
-				for(let i =0;i<target.length;i++){
-   					 target[i].addEventListener('click',function(){
-   						 
-   						 console.log("ㅎㅎ")
-   						 
-   						let num = $(this).attr("value")
-   						let idx = list.indexOf(num);
-   						
-   						newlist[idx] = ""
-
-   						$(this).parent().parent().remove()
-   						 
-   					 })} */
 				
 				$("button[id=appendNewPlaces]").click(
 			        function() {
@@ -243,7 +218,7 @@
 			        	$("div[id=resultPage] *").remove()
 			        	$("#pagination").empty()
 			        	$("#myModal").modal("show")
-			        })
+			        });
 						
 				$("button[id=searchBtn]").click(function(){
 			        let keyword = $("input[id=keyword]").val();
@@ -265,13 +240,13 @@
 			        
 			        paginate(keyword,pageNum);
 			       
-					})
+					});
 							
 				$("#modalInBtn").click(function(e){
 					
 					e.preventDefault();
 					
-				})
+				});
 				
 				$("form[id=sendData]").click(function(e){
 					
@@ -286,8 +261,8 @@
 						img += "<input type='hidden' name = 'fileName' value='"+image.filename+"'>";
 						img += "<input type='hidden' name = 'uuid' value='"+image.uuid+"'>";
 						img += "<input type='hidden' name = 'uploadPath' value='"+image.path+"'>";
-						img += "<input type='hidden' name = 'image' value='"+image.type+"'>";
-						
+						/* img += "<input type='hidden' name = 'image' value='"+image.type+"'>"; */
+						img += "<input type='hidden' name = image value="+image.type+">";
 					}
 					
 					for (let i = 0; i < list.length; i++) {
@@ -310,11 +285,11 @@
 					$("#sendData").append(img);
 					
 					$("#sendData").submit();
-				})
+				});
 				
 				function paginate(keyword, pageNum){
 					
-					$.getJSON("/admin/getPlaceList/"+keyword+"/"+pageNum, function(list) {
+					$.getJSON("/admin/getPlaceList/"+keyword+"/"+pageNum+"/"+regionNo, function(list) {
 										
 										$("div[id=resultPage] *").remove()
 										$("#pagination").empty()
@@ -351,7 +326,7 @@
 												 ob.append(title,address,obj);
 												 
 												$("div[id=resultPage]").append(ob);
-											}//end of repeat 
+											}
 										
 										//가장 첫 페이지로 가는 버튼
 										 if(pageDto.cri.pageNum != 1){
@@ -440,7 +415,6 @@
 				                           
 										 		$(".goNextPage").click(function(){
 				                           
-										 			//page = Number(pageDto.endPage) + 1;
 				                           			page = pageDto.endPage + 1;
 
 										 			pageFlag = 1;
@@ -464,14 +438,12 @@
 										        });
 
 
-
 											}).fail(function(result){
 														
 														console.log("fail");
 											});
 					
-					
-				}
+				};
 				
 				function added(){
 
@@ -500,59 +472,26 @@
  						str.setAttribute("name","row")
  						str.setAttribute("id",num)
  						
- 						let inner = document.createElement("td");
- 						
  						for(let i =0;i<6;i++){
- 							
+ 							let inner = document.createElement("td");
  							inner.innerText = info[i];
  	 						str.append(inner);	
  						}
  						
  						let btn = document.createElement("button");
- 						btn.setAttribute("class","btn btn-default")
- 						btn.setAttribute("id","deleteBtn")
- 						btn.setAttribute("value",data.id)
+ 						btn.setAttribute("class","btn btn-default");
+ 						btn.setAttribute("id","deleteBtn");
+ 						btn.setAttribute("value",data.id);
  						
-						obj.addEventListener('click', added);
+ 						let icon = document.createElement("i");
+ 						icon.setAttribute("class","fas fa-times");
  						
- 						str.append(btn);
- 						
+ 						btn.append(icon);
+ 						str.append(btn); 
 						
-/* 						var str = '<tr name="row" id='+num+'>'
-						str+='<td>'+info[0]+'</td>'
-						str+='<td>'+info[1]+'</td>'
-						str+='<td>'+info[2]+'</td>'
-						str+='<td>'+info[3]+'</td>'
-						str+='<td>'+info[4]+'</td>'
-						str+='<td>'+info[5]+'</td>'
-						str+='<td><button class="btn btn-default" id="deleteBtn" value='+data.id+'><i class="fas fa-times"></i></button></td>'
-						 */
 						$("tbody").append(str);
 						
 						$("li[id=" + num + "]").remove();
-						
-						plus = document.createElement('i')
-						plus.setAttribute('class', 'fas fa-plus')
-                
-						let obj;
-						obj = document.createElement('button');
-						obj.setAttribute('id', 'added');
-						obj.setAttribute('class','btn btn-default');
-						obj.setAttribute('name', placeList[i].plcNo);
-						obj.addEventListener('click', added);
-						obj.append(plus);
-						
-						let title = document.createElement('span');
-						title.innerText = placeList[i].plcTitle;
-						let address = document.createElement('span');
-						address.innerText = placeList[i].addressDt;
-						
-						
-						ob = document.createElement('li');
-						ob.setAttribute('id', placeList[i].plcNo);
-						ob.setAttribute('title', placeList[i].plcTitle+","+placeList[i].addressDt+","+placeList[i].pcate+","+placeList[i].holiday+","+placeList[i].openingH+","+placeList[i].likeCnt);
-						
-						 ob.append(title,address,obj);
 						 
 
 					}else{
@@ -561,7 +500,7 @@
 						return;
 					}
 				 
-				}
+				};
 	
 			})
 </script>

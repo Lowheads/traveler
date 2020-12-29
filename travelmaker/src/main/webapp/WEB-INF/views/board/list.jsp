@@ -253,8 +253,6 @@ input:checked+.slider:before {
 .pagination_bar .active a{
    color: #f60;
 }
-<<<<<<< HEAD
-=======
 
 
 /* 검색 */
@@ -282,7 +280,6 @@ input:checked+.slider:before {
 	
 }
 
->>>>>>> refs/heads/jieun
 </style>
 
 </head>

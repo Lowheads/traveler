@@ -45,7 +45,7 @@
 				 	<input type="text" id="infoNickname" name="nickname" value="${member.nickname }">	
 				 	<input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 				 	<button type="button" class="dupl-btn" id="infoNicknameCheck">중복 체크</button>
-				 	<p style="margin-top: 3%;"><span id="infoSpanNickname"></span></p>
+				 	<div style="margin-top: 3%; text-align: left;"><span id="infoSpanNickname"></span></div>
 				 </form>
 			 	</div>
 			 	<!-- end proper -->
@@ -170,7 +170,7 @@
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
 	        	  <!-- 취소 버튼 -->
-					<button type="button" class="back-btn" onclick="location.href='/main/index'">홈으로</button>
+					<!-- <button type="button" class="back-btn" onclick="history.back()'">홈으로</button> -->
 	        	  <!-- 취소 버튼 끝 -->
 	        	 
 			</div>

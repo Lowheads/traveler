@@ -16,7 +16,7 @@ public interface ThemeMapper {
 	
 	public int insertTheme(@Param(value = "list") String[] places, @Param(value = "themeNo") int themeNo);
 	
-	public List<PlaceVO> getPlaceList(@Param("keyword")String keyword, @Param("pageNum")int pageNum);
+	public List<PlaceVO> getPlaceList(@Param("keyword")String keyword, @Param("pageNum")int pageNum, @Param("regionNo")int regionNo);
 
 	public int getTotalCount(String keyword);
 	

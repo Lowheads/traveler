@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
  <%@ include file="../includes/header.jsp" %>
-
+<%String mem= String.valueOf(session.getAttribute("memNo")); %>
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
@@ -22,9 +22,7 @@
     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />   
-   <!-- <script src="/resources/js/daterangepicker.js"></script> -->
-   <!-- <link href="/resources/css/daterangepicker.css" rel="stylesheet"/> -->
-<!--<link href="/resources/css/index.css" rel="stylesheet">  -->
+
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
@@ -575,11 +573,20 @@ a{text-decoration: none}
             <div class="gallery">
                <c:forEach items="${adminlist }" var="adminlist">
                   <div class="card-contents">
-
+					<c:set var="mem" value="<%=mem %>"/>
                      <c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
+                     
+                    <c:choose>
+					<c:when test="${mem eq 'null'}">
+                     <a href='/board/view?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                     </c:when>
+     
+                     <c:otherwise>
                      <a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                     </c:otherwise>
+                     </c:choose>
+                                   
                      <div class="card-Img" style="background-image: url(/resources${coverimg});" >
-<%--                            <img src="/resources${adminlist.boardImg}"> --%>
                      </div>
                         </a>
                         <div class="card-desc">

@@ -12,7 +12,7 @@
     margin-bottom: 10%;
     justify-content: center;
     border: 1px solid black;
-    box-shadow: 2px 5px 5px 5px grey;
+    box-shadow: 2px 2px 2px grey;
 }
 
 .info-head{ /* 내 정보 div */
@@ -21,7 +21,7 @@
 	border-bottom: 1px solid black;
 	color: black;
     font-size: 25px;
-    padding-top: 2.5%;
+    padding-top: 1.5%;
     padding-left: 3%;
 }
 
@@ -29,19 +29,24 @@
 	height: auto;
 	border-top: 1px solid black;
 	padding: 3%;
+	padding-top: 2%;
 }
 
 .main-wrap{ /* 내용 div(일반 회원 페이지) */
 	padding: 5%;
+	padding-top : 8%;
 	padding-left : 3%;
     height: 550px;
     background-color: white;
+    
 }
 
 .api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
-	padding : 6%;
+	padding : 7%;
 	padding-top : 7%;
 	height: 400px;
+	margin-bottom: 5%;
+	padding-left: 0%;
 }
 
 .info-title{ /* title div */
@@ -94,9 +99,9 @@
 
 .delete-btn{ /* 탈퇴하기 버튼 */
 	background-color: white;
-	border: none;
 	font-size: 16px;
 	color: black;
+	border: 1px solid black;
 }
 
 .back-btn{ /* 취소 버튼 */
@@ -105,6 +110,7 @@
 	font-size: 16px;
 	float: right;
 	margin-right: 0.5%;
+	border: 1px solid black;
 }
 
 .back-btn:hover{
@@ -192,7 +198,7 @@ pwd-change{ /* 비번 변경 input 창 */
         background:#eee;
         background-color:white;
         z-index: 2;
-        border: 3px solid black;
+        border: 1px solid black;
         text-align: center;
     }
     
@@ -260,7 +266,7 @@ pwd-change{ /* 비번 변경 input 창 */
         background:#eee;
         background-color:white;
         z-index: 2;
-        border: 3px solid black;
+        border: 1px solid black;
         text-align: center;
     }
     
@@ -297,4 +303,10 @@ pwd-change{ /* 비번 변경 input 창 */
 	background-color: #ff8b3d;
 	color: white;
 	border: 1px solid #ff8b3d;
+}
+
+.apiInfo-foot{
+	height: auto;
+    border-top: 1px solid black;
+    padding: 2%;
 }

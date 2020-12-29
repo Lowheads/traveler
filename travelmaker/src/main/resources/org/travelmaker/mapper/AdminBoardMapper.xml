@@ -28,36 +28,36 @@
 
 	<select id="getBoardList" resultMap="BoardVO">
  <![CDATA[
-	select /*+ index_desc(tbl_board pk_board) */ * 
-	from board 
-	order by board_no desc]]>
+	SELECT /*+ INDEX_DESC(TBL_BOARD PK_BOARD) */ * 
+	FROM BOARD 
+	ORDER BY BOARD_NO DESC]]>
 	</select>
 
 	<delete id="removePost" parameterType="int[]">
-		delete board
-		where board_no in 
+		DELETE BOARD
+		WHERE BOARD_NO IN 
 		<foreach collection="list" item="post" open="(" close=")" separator=",">
 			#{post}
 		</foreach>
 	</delete>
 
 	<select id="searchPost" resultMap="BoardVO">
-		select /*+ index_desc(member pk_board) */ *
-		from board b, schedule s, member m
-		where
+		SELECT /*+ INDEX_DESC(MEMBER PK_BOARD) */ *
+		FROM BOARD B, SCHEDULE S, MEMBER M
+		WHERE
 		<choose>
-			<when test="type == '회원번호'">
-				(m.mem_no = #{keyword})
+			<when test='type == "NO"'>
+				(M.MEM_NO = #{keyword})
 			</when>
-			<when test="type == '닉네임'">
-				(nickname like '%'||#{keyword}||'%')
+			<when test='type == "N"'>
+				(NICKNAME LIKE '%'||#{keyword}||'%')
 			</when>
-			<when test="type == '제목'">
-				(board_title like '%'||#{keyword}||'%')
+			<when test='type == "T"'>
+				(BOARD_TITLE LIKE '%'||#{keyword}||'%')
 			</when>
 		</choose>
-		and b.sch_no = s.sch_no and s.mem_no=m.mem_no
-		order by board_no desc
+		AND B.SCH_NO = S.SCH_NO AND S.MEM_NO=M.MEM_NO
+		ORDER BY BOARD_NO DESC
 	</select>
 	
 	<select id="getPostDetail" resultMap="Boarddt">

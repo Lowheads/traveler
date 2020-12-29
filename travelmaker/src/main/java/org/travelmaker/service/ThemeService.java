@@ -16,7 +16,7 @@ public interface ThemeService {
 	
 	public Map<String, Integer> updateTheme(String[] removedPlaces, String[] addedPlaces, int themeNo, ThemeAttachVO attachment);
 	
-	public List<PlaceVO> getPlaceList(String keyword, int pageNum);
+	public List<PlaceVO> getPlaceList(String keyword, int pageNum, int regionNo);
 	
 	public ThemeAttachVO getAttachment(int themeNo);
 	

@@ -19,63 +19,54 @@
 		data-from-date='<c:out value="${schDto.fromDate }" />' style="display:none">
 		<span>RegionNum=<c:out value="${schDto.schRegion }" /></span>
 	</div> 
-	
+        	
+	<!-- image slide -->	
 	<div class="slideWrapper">
-	<!-- image slide -->
-	<!-- <div class="w3-content w3-display-container">		 -->
  	<!-- 비오는날 보이는 테마 -->
- 		<div class="dots">
-            <span class="dot" onclick="currentSlide(1)"></span> 
-            <span class="dot" onclick="currentSlide(2)"></span> 
-            <span class="dot" onclick="currentSlide(3)"></span> 
-            <span class="dot" onclick="currentSlide(4)"></span> 
-            <span class="dot" onclick="currentSlide(5)"></span> 
-            <span class="dot" onclick="currentSlide(6)"></span>
-        </div>
-        	<button class="button-btn-submit">다 골랐어요</button>
-        
+ 	<!-- <button class="button-btn-submit submitResult">선택완료</button> -->
+ 	 <div class="button-btn-submit">선택완료</div> 
+  		<div class="dots">
+            <span class="dot" id = "1" onclick="currentSlide(1)"></span> 
+            <span class="dot" id = "2" onclick="currentSlide(2)"></span> 
+            <span class="dot" id = "3" onclick="currentSlide(3)"></span> 
+            <span class="dot" id = "4" onclick="currentSlide(4)"></span> 
+            <span class="dot" id = "5" onclick="currentSlide(5)"></span> 
+            <span class="dot" id = "6" onclick="currentSlide(6)"></span>
+        </div> 
 	 <div class="mySlides" id="rainydayRec" >
+	 <!-- 	<div class="button-btn-submit">선택완료</div> -->
 				<div class='themeImage'>
-				
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
-		<a class="next" onclick="plusDivs(1)">></a>
+		<a class="next" onclick="plusDivs(1)">&#10095;</a>
 				</div>
-		<div class="resultWrapper">
- 		<div class="travel-theme"><span>비오는날 추천하는 장소</span></div>
- 		<div class="placeList">
-  			<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'>
+ 		<div class="travel-theme"><span>우산여행</span></div>
+ 		<div class="placeList" id = '${place.themeNo}'>
 				<c:forEach items="${rainydayRec}" var="place" varStatus="status">
 						<span class="recPlace" id='${place.plcNo}' >${place.plcTitle}</span>
 	  			</c:forEach>
-  			</div>
-  			</div>
-		</div><!-- end of placelist  -->
+		</div>
 		</div><!-- end of myslides --> 
   		<c:forEach items="${themeList}" var="themeList" varStatus="status">
   		<div class="mySlides" id="theme_place_list<c:out value='${themeList.key}' />">
+  			 	<!-- <div class="button-btn-submit">선택완료</div> -->
   		<div class='themeImage'>
-  		
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
-		<a class="next" onclick="plusDivs(1)">></a>
+		<a class="next" onclick="plusDivs(1)">&#10095;</a>
   		</div>
-  		<div class="resultWrapper">
 	    	<c:forEach items="${themeList.value}" var="place" varStatus="status">
   				<c:if test="${status.first}" >
-	  				<div class="travel-theme"><span class="placeVO-title"><c:out value='${place.themeName}' /></span></div>
+	  				<div class="travel-theme" id = '${place.themeNo}'><span class="placeVO-title"><c:out value='${place.themeName}' /></span></div>
 	  		<div class="placeList">
-  				<div class="text themeNo" name = "themeNo" id = '${place.themeNo}'></div>
   				</c:if>
   				<span class="recPlace" id='${place.plcNo}'>${place.plcTitle}</span>
   			</c:forEach>
-			</div><!-- end of placelist -->
-  				</div></div>
+  				</div>
+  				</div>
 		</c:forEach>  
   </div>
   
-<!--end of slide container  -->			
-
-
-
+<!--end of slide container  -->	
+	
 	<script type="text/javascript">
 	
 	let slideIndex = 1;
@@ -92,8 +83,6 @@
 	
 	function showDivs(n) {
 		
-		console.log("!")
-		console.log(n)
 	  let i;
 	  let x = document.getElementsByClassName("mySlides");
 	  let placeList = document.getElementsByClassName("placeList");	
@@ -108,7 +97,13 @@
 	  }
 	  
 	  x[slideIndex-1].style.display = "block";  
-	  placeList[slideIndex-1].style.display = "block";
+	  placeList[slideIndex-1].style.display = "inline-block";
+	  
+	  for(let i =0;i<7;i++){
+		  $(".dot[id="+i+"]").removeClass("current");
+	  }
+	  
+	  $(".dot[id="+n+"]").addClass("current");
 	  
 	}	
 	
@@ -160,7 +155,7 @@
 			for(let i =1;i<6;i++){(function() {
 							
 				$.getJSON("/admin/getAttachment", {
-							themeNo : $("div .themeNo")[i].id}, 
+							themeNo : $("div .travel-theme")[i].id}, 
 							function(image) {
 								
 								let str = "";
@@ -214,11 +209,11 @@
 				})
 			
 		
-			function init() {
+  			function init() {
 			let submitBtn = document
 					.getElementsByClassName("button-btn-submit");
 			submitBtn[0].addEventListener("click", submitPlace);
-		}
+		}  
 
 		function submitPlace() {
 			

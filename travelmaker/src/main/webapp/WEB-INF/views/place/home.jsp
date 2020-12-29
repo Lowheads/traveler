@@ -9,586 +9,14 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="/resources/css/home.css" rel="stylesheet">
    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-   <style>
-* {
-outline:0;
-}
-img {
-	width:80px;
-	height:80px;
-}
-.daily-place-list {
-   list-style-type: none;
-   margin: 10px;
-   width: 80%;
-}
-
-.daily-place-list li {
-   margin: 0 3px 3px 3px;
-   padding: 0.4em;
-   width: auto;
-   font-size: 15px;
-}
-
-.daily-place-list li span {
-   position: absolute;
-   margin-left: -1.3em;
-}
-
-.mainContainer {
-   display: flex;
-   height:100%;
-}
-
-.menu {
-   flex-basis: 0;
-   flex-grow: 1;
-   height: 750px;
-}
-
-.left-menu {
-   position:relative;
-   height:100%;
-   background-color:#ffffff;
-   flex: 0 0 18%;
-   margin : 0 0 10px;
-   display: flex;
-}
-
-.left-date {
-   background-color:#203341;
-   flex: 0 0 25%;
-   
-}
-
-.left-date ul {
-   padding: 0;
-}
-
-.left-place-list {
-	flex: 0 0 75%;
-}
-
-.container {
-   flex: 64 64 64%;
-}
-
-.daily-place-all {
-   border-style: groove;
-   width: 200px;
-}
-
-ul {
-   list-style: none;
-   padding: 0;
-}
-
-#Allschedule {
-   display: flex;
-}
-
-#showAll {
-   display: none;
-   width: 70%;
-   height: 80%;
-   padding: 20px 30px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
-}
-
-
-#all-date {
-	display: flex;
-    flex-direction: column;
-    flex: 0 0 30%;
-    background-color: #203341;
-}
-#all-schedule {
-	display: flex;
-	flex-direction:column;
-	overflow:auto;
-	flex: 0 0 70%;
-}
-.daily-place-dt {
-	width:100%;
-    padding: 10px 0 0;
-    text-align: center;
-}
-#left-container {
-	display:flex;
-	flex:30 30 30%;
-}
-
-.daily-place-all {
-	display:none;
-	width:100%;
-}
-
-#show-schedule {
-   display: none;
-   overflow:auto;
-   width: 96%;
-   height: 96%;
-   background-color: #fefefe;
-   border-radius: 3px;
-}
-
-.in-container {
-	flex:70 70 70%
-}
-
-#registerForm {
-   display: none;
-   width: 50%;
-   height: 50%;
-   padding: 20px 30px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
-}
-
-#searchForm {
-	display:flex;
-    border-bottom: solid #a7a7a7 1px;
-}
-#searchForm > {
-	display:inline;
-}
-.search-button:hover {
-	 background-color:#1a7ad9;
-}
-
-button {
-	border:0;
-	width: 40px;
-	height: 40px;
-}
-button:hover {
-	background-color:#939393;
-}
-div.hoverable-place > img {
-    grid-area:img;
-    width:10rem;
-    height:10rem;
-}
-div.hoverable-place > span {
-	text-align: left;
-    line-height: 1.2em;
-    width: 200px;
-    grid-area: text;
-    overflow: auto;
-}
-div.hoverable-place > button.add-button {
-    grid-area:btn1;
-}
-div.hoverable-place > button.detail-button {
-    grid-area:btn2;
-}
-.hoverable-place {
-	width:95%;
-	height:6rem;
-	display: grid;
-	grid-gap:0.1rem;
-  	grid-template-areas:
-    'img text text text'
-    'img . btn1 btn2';
-	align-items:center;
-	padding: 2.5%;
-    border-bottom: solid #a7a7a7 1px;
-    background: #fff;
-}
-.hoverable-place:hover {
-	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-	transition: all 0.2s ease-in-out;
-}
-
-.pageNoWrap {
-	display:flex;
-}
-.pageNoWrap > div ~ div {
-	padding: 0 1px;
-}
-.right-paging-bar {
-	justify-content: center;
-	display:grid;
-	grid-template-areas: 'btn1 num btn2';
-	align-items: center;
-}
-.right-paging-bar > button.prev-btn {
-	width:15px;
-	height:15px;
-	grid-area:btn1;
-}
-.right-paging-bar > div {
-	grid-area:num;
-}
-.right-paging-bar > button.next-btn {
-	width:15px;
-	height:15px;
-	grid-area:btn2;
-}
-.left-date-list>button {
-	border:1px #263846 solid;
-	box-sizing:border-box;
-	background-color:#203341;
-	width:100%;
-	color:white;
-	height:72px;
-}
-.left-date-list>button:hover {
-	background-color:rgb(22,76,136);
-}
-
-.selected-place {
-	display:flex;
-	width:100%;
-	padding: 10px 0px;
-	cursor:move;
-	border-bottom:solid #a7a7a7 1px;
-	align-items:center;
-	justify-content:space-between;
-}
-.selected-place > span {
-	flex: 0 0 40%;
-	padding:0 10px;
-}
-#left-date-list > button.daily-place-btn.active{
-	background-color:#1a7ad9;
-}
-
-#rec-place {
-	overflow:auto;
-	background-color:#203341;
-	color:white;
-	z-index: 10;
-	display:none;
-	position:absolute;
-	top: 70px;
-    left: 50px;
-    flex-direction:column;
-    height: max-content;
-    max-height: 50%;
-    border-radius:5px;
-}
-.rec-place {
-	display: flex;
-	padding:10px 10px 0;
-    justify-content: space-between;
-    align-items: center;
-}
-.rec-place:last-child {
-	padding:10px 10px 10px;
-}
-
-
-#map>.btn-rec-place {
-	z-index:10;
-	position:absolute;
-	width:100px;
-	height:42px;
-	top:10px;
-	text-align: center;
-	left:20px;
-	border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-}
-
-#map>.transit-btn-transit{
-	z-index:10;
-	position:absolute;
-	right: 120px;
-	bottom:10px;
-	background-color:#ffffff;
-	width:100px;
-	height:42px;
-	text-align: center;
-	border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-}
-#map>.transit-btn-car {
-	z-index:10;
-	position:absolute;
-	right:20px;
-	bottom:10px;
-	background-color:#ffffff;
-	width:100px;
-	height:42px;
-	text-align: center;
-	border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-}
-#map>.make-button {
-	background-color:#ff9320;
-	color:white;
-	z-index:10;
-	position:absolute;
-	right:20px;
-	top:10px;
-	width:100px;
-	height:42px;
-	text-align: center;
-	border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-}
-
-#map>.insert-button {
-	z-index:10;
-	position:absolute;
-	right:20rem;
-	top:10px;
-	width:100px;
-	height:42px;
-	padding:0;
-	text-align: center;
-}
-
-body > div.mainContainer > div.right.menu {
-	overflow:auto;
-	flex:18 18 18%;
-	flex-direction:column;
-	height:100%;
-	display:flex;
-}
-.data-range-picker {
-	text-align: center;
-	border:0;
-	padding:10px 10px;
-	font-size:16px;
-}
-#show > button {
-	background-color: #373737;
-    color: #d3d3d3;
-    font-weight: 400;
-    font-size: 30px;
-}
-#hide {
-	background-color: #373737;
-    color: #d3d3d3;
-    font-weight: 400;
-    font-size: 30px;
-    top: 200px;
-    right: -40px;
-    position:absolute;
-    z-index: 2;
-    width: 40px;
-    height: 40px;
-}
-#show {
-	display:none;
-    z-index: 1000;
-    top: 200px;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    left: 0px;
-}
-
-.date-wrapper {
-	text-align:center;
-	size:20px;
-}
-#left-place-list > div > div {
-	background-color:#707070;
-	padding: 10px 20px;
-}
-
-
-#left-place-list > div > div > span:nth-child(1) {
-	color:white;
-	padding-right:10px;
-}
-
-#left-place-list > div > div > span:nth-child(2) {
-	color:#999999;
-	padding-right:10px;
-}
-#left-place-list > div > div > span:nth-child(3) {
-	color:white;
-}
-.search-button {
-	flex:0 0 13%;
- 	background-color:#1a7ad9;
-}
-#search-value {
-	flex:0 0 87%;
-}
-#left-place-list > div > ul > div > button {
-	flex:0 0 20%;
-}
-#left-date-list > button.showAllBtn.active{
-	background-color:#1a7ad9;
-}
-.place-perday-list {
-	display: flex;
-	position:relative;
-	/* display:grid;
-    grid-template-areas: 'img text btn'
-    					 'memo memo memo'; */
-    justify-content:space-between;
-	align-items:center;
-	position:relative;
-	padding:10px 10px 0;
-}
-#all-schedule > div > ul > div > button {
-	width:100%;
-	height:1.5em;
-	background-color:#90a4ae;
-	color:white;
-	grid-area:btn;
-}
-
-#all-schedule > ul > div > img {
-	grid-area:img;
-}
-#all-schedule > ul > div > span {
-	grid-area:text;
-	flex: 4 4 50%;
-}
-/* #all-schedule > ul > div > button:hover {
-} */
-#all-schedule > div > ul > div > button:hover {
-	background-color:#2196f3;
-}
-.outplcdt-wrap-div {
-    text-align: center;
-}
-
-#all-schedule > div > ul > div {
-	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    margin: 10px;
-}
-
-.plcdt-wrap-div > span {
-	color: #ff9100;
-}
-{
-	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-}
-
-#all-schedule > div > span {
-	margin-top:10px;
-}
-
-.dotOverlay {
-	position:relative;
-	bottom:10px;
-	text-align:center;
-	border-radius:6px;
-	border: 1px solid #ccc;
-	border-bottom:2px solid #ddd;
-	font-size:12px;
-	padding:5px;
-	background:#fff;
-}
-.dotOverlay:nth-of-type(n) {
-	border:0; box-shadow:0px 1px 2px #888;
-}    
-.number {
-	font-weight:bold;color:#ee6152;
-}
-.dotOverlay:after {
-		content:'';
-		position:absolute;
-		margin-left:-6px;
-		left:50%;
-		bottom:-8px;
-		width:11px;
-		height:8px;
-		background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png');
-	}
-.placeInfo {
-	position:relative;top:5px;left:5px;list-style:none;margin:0;
-}
-.placeInfo .label {
-	margin-top:2px;display:inline-block;width:100%;
-}
-.placeInfo:after {
-	content:none;
-}
-
-/*지은수정 */
-#registerForm {
-   display: none;
-   width: 20%;
-   height: 50%;
-   padding: 20px 80px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
-}
-
-#registerForm h1{
-    margin: 40px 40px;
-    font-size:30px;
-    text-align: center;
-}
-
-.form-group input {
-    width: 100%;
-    margin: 10px 0;
-    padding: 7px 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.form-group textarea {
-    width: 100%;
-    height: 30%;
-    margin: 10px 0;
-    padding: 5px 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.form-group label {
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.modal_close_btn{
-   background-color: white;
-   color: black;
-   border: none;
-   border-radius: 5px;
-   position: absolute;
-    right: 20px;
-   font-size: 25px;
-}
-
-.savebtn{
-   position: absolute;
-   bottom:30px;
-   right:80px;
-   width:80px;
-   font-size:15px;
-   background-color:white;
-   border: 1px solid gray;
-   border-radius: 14px;
-   text-decoration: none;
-}
-
-.savebtn:hover{
-   background-color: #203341;
-      color:white;
-   
-}
-
-/*지은 수정 끝 */
-
-
-</style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <link href="/resources/css/home.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   var dnd = $.noConflict(true);
@@ -596,11 +24,6 @@ body > div.mainContainer > div.right.menu {
 </head>
 <body>
    <!-- /.panel-heading -->
-   <!-- 전체보기 모달 -->
-    <div id="showAll">
-    <div id="Allschedule"></div>
-               <button class="modal_close_btn" style="float:right;">닫기</button>
-        </div>
    <!-- 일정생성 모달 -->
     <div id="show-schedule">
       	  <div id="left-container">
@@ -612,7 +35,7 @@ body > div.mainContainer > div.right.menu {
 			  	<div id="in-map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
 			  </div>
 		  </div> 
-		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button></div>
+		  <div id="right-container"><button class="modal_close_btn">X</button></div>
       	<button class="submit-btn" style="position: absolute;right:80px;z-index:110;">저장</button>
       </div>    
       <!-- 일정등록 inner 모달 -->
@@ -620,7 +43,6 @@ body > div.mainContainer > div.right.menu {
                <div>
                <button class="modal_close_btn">X</button></div>
                <h1>일정 저장</h1><br>
-            
                <div class="form-group">
                일정명을 입력하세요<br>
                <input type="text" class="title-box" required />      
@@ -632,29 +54,24 @@ body > div.mainContainer > div.right.menu {
                   </div>
                <button class="savebtn" onclick="insertSchedule()" >저장</button>
             </div>
-        
-      <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
+      <!-- start place List -->
 <div class="mainContainer">
-
       <div class="left-menu">
-      
       	<button id="hide"><</button>
-      
       <div class="left-date">
       
       <ul class="left-date-list" id="left-date-list">
-      
-      <!-- 일자별 모든 녀석들 출력하는 리스트 -->
+      <!-- 일자별 모든 버튼을 출력하는 리스트 -->
       </ul> 
+      
       </div>
       
       <div class="left-place-list">
       <div class="date-wrapper">
             <input type="text" name="daterange" class="data-range-picker" data-region-no='<c:out value="${schDto.schRegion}" />' data-init-todate='<c:out value="${schDto.toDate}" />' data-init-fromdate='<c:out value="${schDto.fromDate}" />' />
       </div>
-      
       <div class="left-place-list" id="left-place-list">
-            
+     <!-- 일자별 모든 장소를 출력하는 리스트 -->
       </div>
    </div>
    </div>
@@ -666,7 +83,9 @@ body > div.mainContainer > div.right.menu {
 	         <div class="left clearfix" id="rec-place">
 	         <c:forEach items="${places}" var="list">
 	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
+	                  <div class="img-wrap-div" style="border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);">
 	                  <img src='<c:out value="${list.plcImg}"></c:out>'>
+	                  </div>
 	                  <span><c:out value="${list.plcTitle}"></c:out></span>
 	                  <button class="rec-add-button" type="button">
 	                  <i class="fas fa-plus"></i>
@@ -694,7 +113,7 @@ body > div.mainContainer > div.right.menu {
       <!-- 검색 창의 끝 -->
    <!-- /.panel-heading -->
    <div class="panel-body">
-      <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
+      <!-- start place List -->
       <ul class="right-place-list">
       </ul>
    </div>
@@ -713,6 +132,7 @@ body > div.mainContainer > div.right.menu {
       var marker;
       var overlay;
       var markArr = [];
+      var recMarks = [];
       var polyArr = [];
       var resultset = [];
 	  var distArr = [];
@@ -754,7 +174,6 @@ body > div.mainContainer > div.right.menu {
             objs.setAttribute('class','daily-place-all');
             objs.style.display = 'inline';
              objs.innerText="DAY"+(1+i);
-             
              listAll.appendChild(objs);
 
              for (let j = 0; j < dpList[i].getElementsByTagName('li').length; j++) {
@@ -776,16 +195,13 @@ body > div.mainContainer > div.right.menu {
               width: '100%',
               height: '100%',
               overflow: 'auto',
-              // 레이어 색깔은 여기서 바꾸면 됨
               backgroundColor: 'rgba(0,0,0,0.4)'
           });
           document.body.append(bg);
 
-          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           modal.querySelector('.modal_close_btn').addEventListener('click', function() {
               bg.remove();
                   modal.style.display = 'none';
-                  //자식 노드 초기화
          $("#Allschedule").empty();
           });
 
@@ -794,10 +210,8 @@ body > div.mainContainer > div.right.menu {
               display: 'block',
               boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-              // 시꺼먼 레이어 보다 한칸 위에 보이기
               zIndex: zIndex + 1,
-
-              // div center 정렬
+              
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
@@ -919,10 +333,12 @@ body > div.mainContainer > div.right.menu {
           totalPlace.innerHTML = null; // 수정되면 초기화 작업
           
           let objs = document.createElement('button');
-          objs.setAttribute('class', 'showAllBtn');
-          objs.innerText="전체 일정 보기";
-          //전체보기 이벤트생성
-          objs.addEventListener('click', showAll);
+          objs.setAttribute('class', 'home-btn');
+          objs.innerText="홈으로";
+          objs.addEventListener('click', function(){
+        	  location.href = "/main/index";
+          })
+          
           
           totalDate.appendChild(objs);
             
@@ -995,16 +411,13 @@ body > div.mainContainer > div.right.menu {
                width: '100%',
                height: '100%',
                overflow: 'auto',
-               // 레이어 색깔은 여기서 바꾸면 됨
                backgroundColor: 'rgba(0,0,0,0.4)'
            });
            document.body.append(bg);
 
-           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
            modal.querySelector('.modal_close_btn').addEventListener('click', function() {
                bg.remove();
                    modal.style.display = 'none';
-                   //자식 노드 초기화
            });
 		
            modal.setStyle({
@@ -1012,32 +425,17 @@ body > div.mainContainer > div.right.menu {
                display: 'block',
                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-               // 시꺼먼 레이어 보다 한칸 위에 보이기
                zIndex: zIndex + 1,
 
-               // div center 정렬
                top: '50%',
                left: '50%',
                transform: 'translate(-50%, -50%)',
                msTransform: 'translate(-50%, -50%)',
                webkitTransform: 'translate(-50%, -50%)'
            });
-    	   
        }
        
        function insertSchedule() {
-    	     /*  // 유빈 누나 코드
-              const formData = new FormData();
-              
-              const inputFile = $("input[name='uploadFile']");
-              
-              const file = inputFile[0].files[0];
-
-              if($(".uploadResult li").length==1){
-                 $(".uploadResult li")[0].remove();
-              }
-              formData.append("uploadFile",file);
-			  // 유빈누나 코드 end */
            let datePicker = document.getElementsByClassName("data-range-picker")[0];
            let dateList = datePicker.value.split(' - ');
            let fromDate = new Date(dateList[0]);
@@ -1057,9 +455,6 @@ body > div.mainContainer > div.right.menu {
         		   schTitle:title,
         		   fromDate:fromDate,
         		   toDate:toDate,
-        		   /* // 이미지 추가 멀티파일 부분
-        		   img:formData,
-        		   // 이미지 추가 멀티파일 부분 */
         		   schStatus:"BS003",
         		   memo:memo,	   
         		   schRegion:schRegion
@@ -1112,7 +507,7 @@ body > div.mainContainer > div.right.menu {
 			const setConNull = (pmarkCon) => {
 				for (let e of pmarkCon) {
 					e.setMap(null);
-					}
+				}
 			}
 			for (let eArr of polyArr) {
 				setConNull(eArr);
@@ -1121,8 +516,7 @@ body > div.mainContainer > div.right.menu {
 				setConNull(eArr);
 			}
 		}
-        
-        
+		
        function initSch(){
     	   let zIndex = 99;
     	   let modal = document.getElementById('show-schedule');
@@ -1130,7 +524,6 @@ body > div.mainContainer > div.right.menu {
            mapOption = {
               center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
               level : 8
-           // 지도의 확대 레벨
            };
            
            mapContainer.setStyle({
@@ -1142,9 +535,11 @@ body > div.mainContainer > div.right.menu {
            let listAll = document.getElementById('all-schedule');
            // 노드를 이어붙일 애들 target
            let dpList = document.getElementsByClassName('daily-place-list');
-           // 장소 추출할 친구 현재 2차원임;
+           // 장소 추출할 리스트 현재 2차원임;
            let dateList = document.querySelector("#left-date-list").cloneNode(true);
            let dailyBtn = dateList.children;
+           dailyBtn[0].innerText = "전체 일정 보기";
+           dailyBtn[0].setAttribute("class","showAllBtn");
            let len = dailyBtn.length;
 			for (let i = 0; i < len; i++) {
 				dailyBtn[i].addEventListener("click", (event) =>{
@@ -1174,7 +569,7 @@ body > div.mainContainer > div.right.menu {
              	dailyBtn[i].classList.remove("active");
 			  }
            dailyBtn[0].classList.add("active");
-           // 일정 추출할 친구
+           // 일정 추출할 리스트
            // 일정 생성 완료
            let dateLeng = dateList.children.length-1;
            
@@ -1201,7 +596,7 @@ body > div.mainContainer > div.right.menu {
 
               objs.setAttribute('class','daily-place-dt');
               objs.style.display = 'block';
-              objs.innerText=i+1+"일차";
+              objs.innerText="<"+(i+1)+"일차>";
               listAll.appendChild(objs);
 			  // 일차 리스트에 이어 붙여주기          
 			  
@@ -1220,7 +615,6 @@ body > div.mainContainer > div.right.menu {
         }
            dateAll.appendChild(dateList);  
            
-           // 모달 div 뒤에 희끄무레한 레이어
            let bg = document.createElement('div');
            bg.setAttribute("class", "modal-background");
            bg.setStyle({
@@ -1249,14 +643,12 @@ body > div.mainContainer > div.right.menu {
 
                zIndex: zIndex + 1,
 
-               // div center 정렬!!
                top: '50%',
                left: '50%',
                transform: 'translate(-50%, -50%)',
                msTransform: 'translate(-50%, -50%)',
                webkitTransform: 'translate(-50%, -50%)'
            });
-       
        
            const showCurrList = function (event){
          	 let idx = $(this).index()-1;
@@ -1356,7 +748,7 @@ body > div.mainContainer > div.right.menu {
                  mapContainer.style.width = '100%';
                  mapContainer.style.height = '100%';
                  inmap.relayout();
-         drawLineAll(); // 선언이 뒤에 있어서 부득이하게 라인이 일로 와버림..       
+         drawLineAll(); // 수정후 마지막에 라인그리기
          };   
          
        function drawLineAll(event) {
@@ -1430,8 +822,6 @@ body > div.mainContainer > div.right.menu {
 				   distArr.push(dist);  
     			   polyCon.push(polyline);
     			   polyArr.push(polyCon);
-    			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km"); */
-    			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
     			}
         	   
            }
@@ -1509,8 +899,6 @@ body > div.mainContainer > div.right.menu {
     	    		})
     			   polyCon.push(polyline);
     			   polyArr.push(polyCon);
-    			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km"); */
-    			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
     			}
         	   
            }
@@ -1595,7 +983,7 @@ body > div.mainContainer > div.right.menu {
                      liobj.setAttribute('class', 'left clearfix');
                      let objs1 = document.createElement("div");
                      objs1.setAttribute('class','hoverable-place');
-                     objs1.setAttribute('data-title',list[i].plcTitle);
+                     objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
                      objs1.setAttribute('data-region-no',list[i].regionNo);
                      objs1.setAttribute('data-address-dt',list[i].addressDt);
                      objs1.setAttribute('data-plc-no',list[i].plcNo);
@@ -1605,7 +993,8 @@ body > div.mainContainer > div.right.menu {
                      objs1.setAttribute('data-opening-h',list[i].openingH);
                      objs1.setAttribute('data-p-cate',list[i].pCate);
                      let span = document.createElement("span");
-                     span.innerText=list[i].plcTitle + " ";
+                     console.log(list[i].plcTitle.replace(" ","\n"));
+                     span.innerText=list[i].plcTitle.replace(" ","\n");
                      objs1.addEventListener('mouseover',placeOver);
                      
                      

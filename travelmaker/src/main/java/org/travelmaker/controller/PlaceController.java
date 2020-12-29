@@ -57,15 +57,18 @@ public class PlaceController {
 	@PostMapping(value = "/")
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO, @RequestParam("places") String[] plcNoArr,
 			Model model) {
-		List<PlaceVO> list = service.get(plcNoArr);
-		model.addAttribute("places", list);
+		
+		if(plcNoArr.length!=0) {
+			List<PlaceVO> list = service.get(plcNoArr);
+			model.addAttribute("places", list);
+		}
 		return "/place/home";
 	}
 
-	@GetMapping(value = "/pages/{title}/{regionNo}/{pageNum}", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(value = "/pages/{regionNo}/{pageNum}/{title}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<Map<String, Object>> getList(@PathVariable String title, @PathVariable int regionNo,
-			@PathVariable int pageNum) {
+	public ResponseEntity<Map<String, Object>> getList(@PathVariable int regionNo,
+			@PathVariable int pageNum,@PathVariable String title) {
 		Criteria cri = new Criteria(pageNum, 10);
 		PagefDTO pageMaker = new PagefDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
 		Map<String, Object> map = new HashMap<String, Object>();
