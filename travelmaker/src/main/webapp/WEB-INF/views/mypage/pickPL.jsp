@@ -361,12 +361,13 @@
 }
 .pick_plan_content {
    width: 100%;
+   margin-bottom: 50px;
 }
 
 .coverBanner {
    width: 100%;
-   height: 20%;
-   background-image: url("https://free4kwallpapers.com/uploads/originals/2019/10/15/ocean-sunset-wallpaper.jpg");
+   height: 500px;
+   background-image: url("https://images7.alphacoders.com/472/thumb-1920-472347.jpg");
    background-size: cover;
    text-align: center;
    color: white;
@@ -526,7 +527,7 @@
 <body>
    <div class="pick_plan_content">
       <div class="coverBanner">
-         <b>찜한장소</b>
+       <!--   <b>찜한장소</b> -->
       </div>
       <div class="pickNav_bar">
          <div class="pickNav_mnu">
@@ -645,7 +646,7 @@
          value=<%= request.getParameter("selected") %>>
    </form>
 </body>
-
+<%@ include file="../includes/footer.jsp" %>
 <script type="text/javascript">
    $(document).ready(function() {
 

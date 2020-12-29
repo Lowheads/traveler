@@ -67,15 +67,16 @@ body {
 
 .pick_plan_content {
    width: 100%;
+   margin-bottom: 50px;
 }
 
 .coverBanner {
    width: 100%;
-   height: 20%;
+   height: 300px;
    background-image:
-      url("https://free4kwallpapers.com/uploads/originals/2019/10/15/ocean-sunset-wallpaper.jpg");
+      url("/resources/img/1408400.jpg");
    background-size: cover;
-   text-align: center;
+   text-align: right;
    color: white;
    padding-top: 100px;
    padding-bottom: 100px;
@@ -153,9 +154,10 @@ body {
 }
 
 .sch_Img {
-   width: 100%;
-   height: 80%;
-   background-color: black;
+       width: 100%;
+    height: 80%;
+    background-size: cover;
+    text-shadow: 2px 2px 2px grey;
 }
 
 .sch_Img_content {
@@ -185,7 +187,7 @@ body {
 <body>
    <div class="pick_plan_content">
       <div class="coverBanner">
-         <b>여행일정</b>
+         <!--  <b>마이페이지</b> --> 
       </div>
       <div class="pickNav_bar">
          <div class="pickNav_mnu">
@@ -254,6 +256,7 @@ body {
    <input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 </form>
 </body>
+<%@ include file="../includes/footer.jsp" %>
 <script type="text/javascript">
    let actionForm = $("#actionForm");
 

@@ -233,7 +233,7 @@
 }   
 .dt_box_footer{
    display:flex;
-   background-color: #e6e6e6;
+   background-color: #faf3ea;
    border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
@@ -502,6 +502,7 @@
       <button class="remove_btn">삭제</button>
    </div>
 </body>
+<%@ include file="../../includes/footer.jsp" %>
 <!-- /.col-lg-9 -->
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
@@ -513,12 +514,14 @@ var header = document.getElementById("planNav");
 var mapWrapper = document.getElementById("map_wrapper");
 var sticky = header.offsetTop;
 function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-    header.style.width = "100%";
-    
-    mapWrapper.classList.add("stickyMap");
-  } 
+	 if (window.pageYOffset > sticky) {
+  header.classList.add("sticky");
+  header.style.width = "100%";
+  mapWrapper.classList.add("stickyMap");
+			    if(window.pageYOffset >= 3950){
+			    mapWrapper.classList.remove("stickyMap");
+			    }
+} 
 
   else{
     header.classList.remove("sticky");
