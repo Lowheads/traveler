@@ -94,7 +94,8 @@
 				</div>
 				
 				<div class="delete-wrap-api">
-					<div class="del-div" style="font-weight: bold;">회원 이메일 &nbsp; : &nbsp;</div>
+					<div class="del-div" style="font-weight: bold; margin-left: 8%;">
+					회원 이메일 &nbsp; : &nbsp;</div>
 					<input style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px"
 						id="deleteEmail" name="email" value="<%=session.getAttribute("email")%>">  
 					<button class="button" type="button" id="sendEmailBtn">인증메일 보내기</button>

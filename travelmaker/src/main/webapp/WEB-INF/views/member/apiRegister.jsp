@@ -124,7 +124,7 @@ img.ui-datepicker-trigger {
                 <div class="tag-wrap">
                   <div class="reg-font">생일&nbsp;&nbsp;</div>
                   <div class="div-reg">
-                  	<input type="text" name="birth" id="apiBirth" placeholder="내 생년월일! Click me!">
+                  	<input type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
                   </div>
                 </div>
                   

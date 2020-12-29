@@ -492,6 +492,12 @@ body {
    padding: 10px;
    margin-top: 40px;
 }
+
+.wrap-pwdSearch-main{
+	margin-top: 30px;
+	padding: 10px;
+}
+
 .center {
    text-align: center;
    /* padding: 4px; */
@@ -560,7 +566,6 @@ text-align: center;
 	font-weight: bold;
 	font-size: 17px;
 	padding-left: 8%;
-	margin-bottom: 1%;
 	}
 	
 <!-- theme페이지 이미지 슬라이드쇼-->
@@ -735,6 +740,17 @@ cursor: pointer;
 	border: 1px solid black;
 }
 
+/* 웹 폰트 */
+@font-face {
+    font-family: 'Bazzi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	font-family: 'Bazzi';
+}
 </style>
 
 
@@ -843,7 +859,7 @@ cursor: pointer;
         </div>
             <p style="padding-bottom: 10px"></p>
             
-         <div class="wrap-main">
+         <div class="wrap-pwdSearch-main">
             
            <form action="/search/sendPwd" method="post">
            
@@ -855,7 +871,10 @@ cursor: pointer;
 			<p class="pwdPTag">계정으로 사용하시는 이메일 주소를 입력하시면</p>
 			<p class="pwdPTag">임시 비밀번호를 전송해드리겠습니다.</p></div>
 			
-			<div class="center"><input type="submit" id="searchPwdBtn" onclick="return inputCheck()" value="메일 보내기"></div>
+			<div class="center" style="margin-top: 10%;">
+				<input type="submit" id="searchPwdBtn" onclick="return inputCheck()" value="메일 보내기">
+			</div>
+			
 			</form>
 			
          </div>
@@ -888,7 +907,7 @@ cursor: pointer;
             <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
-                  <div class="reg-font">이메일</div>
+                  <div class="reg-font" style="margin-bottom: -1%;">이메일</div>
                   <div class="div-reg">
                   	 <input class="reg-input" type="text" name="email" id="email" placeholder="이메일주소" size="30">
                      <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
@@ -911,12 +930,12 @@ cursor: pointer;
                      
                   
                   <!-- 닉네임 -->
-                  <div class="reg-font">닉네임</div>
+                  <div class="reg-font" style="margin-bottom: -1%;">닉네임</div>
                   <div class="div-reg">
                    	 <input class="reg-input"  type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
                      닉네임은 2~8내로 입력해주세요
-                  <div class="div-reg"><span id="spanNickname"></span></div></div>
+                  <div><span id="spanNickname"></span></div></div>
                   
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
@@ -1176,7 +1195,7 @@ cursor: pointer;
     
     // 이메일 정규식
      if(false === jEmail.test(myEmail)) {     
-        alert('이메일 형식이 잘못되었습니다. \n@앞에 3글자 이상은 넣으셨나요? 공백은 없으시죠?');
+        alert('이메일 형식이 잘못되었습니다. \n@앞에 3글자 이상은 넣으셨나요?');
           return false;         
      }                            
     

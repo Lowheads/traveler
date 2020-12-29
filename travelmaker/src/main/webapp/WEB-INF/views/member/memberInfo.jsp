@@ -6,6 +6,21 @@
 
 <%@ include file="../includes/header.jsp" %>
 
+<!-- URL 직접접근 막기 -->
+<%
+	String strReferer = request.getHeader("referer");
+	
+		if (strReferer == null) {
+		%>
+		<script>
+			alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
+			history.go(-1);
+		</script>
+		<%
+			return;
+		}
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -27,8 +42,6 @@
 		<!-- 내정보 div -->
 		<div class="info-head">내 정보</div>
 
-			<%-- <p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p> --%>
-		
 			<!-- 정보 출력 div  -->
 			<div class="main-wrap">
 				<!-- 이메일 -->
@@ -158,7 +171,7 @@
 		</div>
 	</div>
 	<!-- end main-wrap-->
-			
+	
 			<div class="info-foot">
 				<!-- 탈퇴 버튼 -->
 		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
@@ -170,7 +183,7 @@
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
 	        	  <!-- 취소 버튼 -->
-					<!-- <button type="button" class="back-btn" onclick="history.back()'">홈으로</button> -->
+					 <!-- <button type="button" class="back-btn" value="cancel" onclick="movePrevPage()">취소</button> -->
 	        	  <!-- 취소 버튼 끝 -->
 	        	 
 			</div>
@@ -366,7 +379,6 @@
 		
 		return true;
 	}
-
 	
  	// 탈퇴 전 한번 더 묻기
 	function deleteAsk() {
@@ -376,6 +388,7 @@
 			return false;
 		}
 	} 
+
 </script>
 
 </html>
