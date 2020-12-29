@@ -121,9 +121,9 @@ position: absolute;
     border-radius: 20px;
     padding: 18px;
 } 
-.opensright{
+/* .opensright{
 	width:42%;
-}
+} */
 .daterangepicker .calendar-table table{
 	border-collapse: inherit;
 	font-size:12px;
@@ -339,11 +339,11 @@ a{text-decoration: none}
 .selectRegionBox{
    position: absolute;
    display:none;
-   bottom:260px;
    width: 500px;
    height: 200px;
    background-color: white;
    border-radius: 40px;
+   margin-top: 1.3%;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
    padding: 30px;
    flex-wrap: wrap;
@@ -358,7 +358,8 @@ a{text-decoration: none}
    margin-top:20px;
 }
 .region:hover{
-   border:5px double black;
+   color: white;
+    background-color: #ff8b3d;
 }
 .datepickerBox{
    position:absolute;
