@@ -335,6 +335,7 @@
       <!-- schDate -->
       <h4><b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
       <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></h4></div>
+     <!--  <button id="gotoBoardRg">공유하기</button> -->
    </div>
       <!-- nav -->
       <div class="plan_mnu_box" id="planNav">
@@ -494,7 +495,8 @@
    <a id="gotoTop">▲</a>
 
    </div>
-
+<input type='hidden' id='sch_no' name='sch_no' value="${schedule[0].SCH_NO}">
+      <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 
 
    <div id="remove_modal">
@@ -754,5 +756,9 @@ function myFunction() {
      $('#gotoTop').on('click',function(){
 	 	document.documentElement.scrollTop = 0;  
    })
+   
+ /*   $('#gotoBoardRg').on('click',function(){
+	   location.href = "/board/register?schNo="+$('input[name=sch_no]').val();
+   }) */
 </script>
 </html>

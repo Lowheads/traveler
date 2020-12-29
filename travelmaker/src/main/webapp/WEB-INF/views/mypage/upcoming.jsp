@@ -227,7 +227,7 @@ body {
                      <div class="sch_content">
                         <div class="sch_title">
                           <!-- SCHFROMDATE -->
-                        <c:out value="${sch.fromDate }"/>
+                         <c:out value="${sch.fromDate }"/> ~ <c:out value="${sch.toDate }"/>
                         <!-- SCH_TITLE --><br>
                         <b><c:out value="${sch.schTitle }"/></b>
                         </div>

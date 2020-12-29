@@ -295,7 +295,7 @@
       
       .sch_title_text{
          font-weight:bold;
-         font-size: 23px;
+         font-size: 20px;
       }
 
    </style>
@@ -359,7 +359,7 @@
                         <!-- USER_NICKNAME -->
                      
                      <div class="sch_title">
-                  <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.SCH_NO}" class="sch_title_text"><c:out value="${sch.SCH_TITLE }"/></a><br>
+                  <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.SCH_NO}" class="sch_title_text"><c:out value="${sch.BOARD_TITLE }"/></a><br>
                         <i class="fa fa-user-o" aria-hidden="true" style="color: black;"></i> <c:out value="${sch.NICKNAME }"/>
                         <span style="float:right; margin-right: 10px;"><i class="fa fa-heart-o" aria-hidden="true"></i>
                          <span style="font-size: 12px;">${sch.PICK_CNT}</span></span><br> 
