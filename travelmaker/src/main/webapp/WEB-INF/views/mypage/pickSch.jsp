@@ -159,15 +159,15 @@
       }
 
       .coverBanner {
-         width: 100%;
-         height: 500px;
-         background-image: url("https://images7.alphacoders.com/426/thumb-1920-426992.jpg");
-         background-size: cover;
-         text-align: center;
-         color:white;
-         padding-top:100px;
-         padding-bottom: 100px;
-         font-size: 50px;
+        width: 100%;
+   height: 300px;
+   background-image: url("/resources/img/mypagebanner.png");
+   background-size: cover;
+   text-align: center;
+   color: white;
+   padding-top: 100px;
+   padding-bottom: 100px;
+   font-size: 50px;
       }
 
       .pickNav_bar {

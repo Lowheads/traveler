@@ -366,8 +366,8 @@
 
 .coverBanner {
    width: 100%;
-   height: 500px;
-   background-image: url("https://images7.alphacoders.com/472/thumb-1920-472347.jpg");
+   height: 300px;
+   background-image: url("/resources/img/mypagebanner.png");
    background-size: cover;
    text-align: center;
    color: white;
@@ -440,6 +440,7 @@
    width: 100%;
    display: flex;
    justify-content: space-between;
+   
 }
 
 #viewMap_btn{
@@ -453,6 +454,7 @@
 
 #viewMap_btn:hover{
    background-color: #ff8b3d;
+   border: 1px solid #ff8b3d;
    color: white;   
 }
 

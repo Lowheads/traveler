@@ -52,12 +52,14 @@
 .plan_content {
    margin-left: auto;
    margin-right: auto;
+       margin-bottom: 50px;
 }
 .contentTitle{
    width:100%;
    height: 200px;
    color:black;
  	padding:15px 10% 15px 10%;
+ 	background-color: antiquewhite;
 }
 
 .plan_mnu_box {
@@ -192,6 +194,7 @@
    border-radius: 10px;
    padding-left: 10px;
    padding-right: 10px;
+   cursor: pointer;
 }
 .showMap:hover{
    background-color: rgb(128,128,128,0.2);
@@ -520,9 +523,9 @@ function myFunction() {
    header.classList.add("sticky");
    header.style.width = "100%";
    mapWrapper.classList.add("stickyMap");
-			    if(window.pageYOffset >= 3950){
-			    mapWrapper.classList.remove("stickyMap");
-			    }
+   if(window.pageYOffset >= document.getElementsByTagName('footer')[0].offsetTop - 800){
+	    mapWrapper.classList.remove("stickyMap");
+	    }
  } 
   else{
     header.classList.remove("sticky");

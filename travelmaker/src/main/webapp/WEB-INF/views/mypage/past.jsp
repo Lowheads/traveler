@@ -71,12 +71,11 @@ body {
 }
 
 .coverBanner {
-   width: 100%;
+  width: 100%;
    height: 300px;
-   background-image:
-      url("/resources/img/1408400.jpg");
+   background-image: url("/resources/img/mypagebanner.png");
    background-size: cover;
-   text-align: right;
+   text-align: center;
    color: white;
    padding-top: 100px;
    padding-bottom: 100px;
