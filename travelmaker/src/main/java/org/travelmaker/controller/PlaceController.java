@@ -65,10 +65,10 @@ public class PlaceController {
 		return "/place/home";
 	}
 
-	@GetMapping(value = "/pages/{title}/{regionNo}/{pageNum}", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(value = "/pages/{regionNo}/{pageNum}/{title}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<Map<String, Object>> getList(@PathVariable String title, @PathVariable int regionNo,
-			@PathVariable int pageNum) {
+	public ResponseEntity<Map<String, Object>> getList(@PathVariable int regionNo,
+			@PathVariable int pageNum,@PathVariable String title) {
 		Criteria cri = new Criteria(pageNum, 10);
 		PagefDTO pageMaker = new PagefDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
 		Map<String, Object> map = new HashMap<String, Object>();
