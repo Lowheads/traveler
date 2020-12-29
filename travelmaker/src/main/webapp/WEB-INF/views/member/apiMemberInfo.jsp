@@ -20,7 +20,6 @@
 <body>
 	
 	
-		<%-- <p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p> --%>
 <!-- 전체 div -->
 <div class="container-info">
 	<!-- 정보 div -->
@@ -45,7 +44,7 @@
 						<input type="text" id="apiInfoNickname" name="nickname" value="${member.nickname }">
 						<input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 						<button type="button" class="dupl-btn" id="apiInfoNicknameCheck">중복 체크</button>
-						<p style="margin-top: 3%;"><span id="infoSpanNickname"></span></p>
+						<div style="margin-top: 3%; text-align: left;"><span id="infoSpanNickname"></span></div>
 					</form>
 			 	</div>
 			 	<!-- end proper -->
@@ -62,7 +61,6 @@
 		<div class="info-content"> 
 			<div class="content-name">생일</div>
 			<div class="content-proper">${member.birth }</div> 
-		<%-- <fmt:formatDate value="${member.birth }" type="both" pattern="yyyy-MM-dd"/> --%>
 		</div>
 		
 		<div class="info-content">
@@ -117,7 +115,7 @@
 		<!-- end 탈퇴모달 -->
 		
       
-      <div class="info-foot">
+      <div class="apiInfo-foot">
 		<!-- 탈퇴 버튼 -->
 		    <button class="delete-btn" id="apiDeleteBtn" type='button'>회원탈퇴</button>
 	    <!-- 탈퇴 버튼 끝 -->
@@ -128,7 +126,7 @@
 	
 		
 		 <!-- 취소 버튼 -->
-		<button type="button" class="back-btn" onclick="history.back()">취소</button>
+		<!-- <button type="button" class="back-btn" onclick="history.back()">취소</button> -->
 	     <!-- 취소 버튼 끝 -->
        
        	</div>     
@@ -193,7 +191,7 @@
 						url : "/member/hasNickname",
 						success : function(data) {
 						if ($.trim(data) == 1) {
-							document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다. 다른 닉네임을 선택해주세요";
+							document.getElementById("infoSpanNickname").innerHTML = "중복된 닉네임입니다.";
 							infoSpanNickname.style.color = 'red';
 							return false;
 						} else {

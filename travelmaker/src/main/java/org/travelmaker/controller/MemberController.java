@@ -135,7 +135,6 @@ public class MemberController {
 	public String hasNickname(@RequestParam("nickname") String nickname) {
 
 		String cnt = "" + service.hasNickname(nickname); // 닉네임 있으면 1, 없으면 0을 반환한다.
-		System.out.println("닉네임 중복 ? : " + cnt);
 			
 		return cnt;
 	}
