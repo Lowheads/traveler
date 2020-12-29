@@ -15,10 +15,20 @@
 				<div class="w100 input-group custom-search-form" style="padding-right: 10px"> -->
 				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
-						<option selected disabled hidden><c:out value="${criteria.type}"/></option>
-						<option value="회원번호">회원번호</option>
-						<option value="이메일">이메일</option>
-						<option value="닉네임">닉네임</option>
+						<option selected disabled hidden>
+						<c:if test="${criteria.type eq 'NO'}">
+						회원번호
+						</c:if>
+						<c:if test="${criteria.type eq 'E'}">
+						이메일
+						</c:if>
+						<c:if test="${criteria.type eq 'N'}">
+						닉네임
+						</c:if>
+						</option>
+						<option value="NO">회원번호</option>
+						<option value="E">이메일</option>
+						<option value="N">닉네임</option>
 					</select>
  					<input type="text" class="form-control form-control-sm" placeholder="키워드를 입력하시오"
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
@@ -29,12 +39,7 @@
 				</div>
 				</form>
 				</div>
-				
-				<!-- <div>
-				<button id = "searchBtn" class="btn btn-sm- btn-primary">검색</button>
-				</div>
-				 -->
-
+	
 				<div class="table-responsive">
 					<br><button type="button" class="btn btn-primary float-right"
 						onClick="deleteUser()">강제 탈퇴</button>
@@ -217,7 +222,7 @@
 			return false;
 		}
 		
-		if(type =="회원번호"){
+		if(type =="NO"){
 			if(isNaN(keyword)){
 				msg = "회원번호는 숫자만 입력해주세요"
 				showModal(msg);

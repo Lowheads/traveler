@@ -34,10 +34,7 @@ public class AdminMemberContorller {
 
 	@RequestMapping(value= {"/userInfo","/withdraw"}, method=RequestMethod.GET)
 	public String user(Criteria cri, Model model,  HttpServletRequest req) {
-
-		String type = cri.getType();
-		String keyword =cri.getKeyword();
-		
+				
 		StringBuffer path = req.getRequestURL();
 		
 		String destinationUrl = "";

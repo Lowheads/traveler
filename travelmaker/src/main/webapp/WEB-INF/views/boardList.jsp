@@ -13,10 +13,20 @@
 				<form id='searchForm' action="/admin/boardList" method='get'>
 				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
-						<option selected disabled hidden><c:out value="${criteria.type}" /></option>
-						<option value="회원번호">회원번호</option>
-						<option value="닉네임">닉네임</option>
-						<option value="제목">제목</option>
+						<option selected disabled hidden>
+						<c:if test="${criteria.type eq 'NO'}">
+						회원번호
+						</c:if>
+						<c:if test="${criteria.type eq 'T'}">
+						제목
+						</c:if>
+						<c:if test="${criteria.type eq 'N'}">
+						닉네임
+						</c:if>
+						</option>
+						<option value="NO">회원번호</option>
+						<option value="N">닉네임</option>
+						<option value="T">제목</option>
 					</select>
 					<input type="text" class="form-control form-control-sm"
 						name="keyword" id="keyword" placeholder="키워드를 입력하시오"
@@ -110,7 +120,6 @@
 		const timer = async () => {
 		    await _sleep(2000);
 		    $("#dataTable_filter")[0].hidden=true;
-		    console.log("gg");
 		};
 		
 		timer();
@@ -151,7 +160,7 @@
 			return false;
 		}
 		
-		if(type =="회원번호"){
+		if(type =="NO"){
 			if(isNaN(keyword)){
 				msg = "회원번호는 숫자만 입력해주세요"
 				showModal(msg);
@@ -210,8 +219,8 @@
 			for (let i = 0; i < list.length; i++) {
 				
 				str+="내용	:	"+list[i].boardCon	+"<br>";
+				
 			}
-			
 			showModal(str);
 		})
 		

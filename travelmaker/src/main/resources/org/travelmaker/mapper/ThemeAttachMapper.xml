@@ -16,11 +16,15 @@
 </insert>
 
 <delete id="delete">
-	DELETE FROM THEME_ATTACH WHERE THEME_NO = #{themeNo}
+	DELETE 
+	FROM THEME_ATTACH 
+	WHERE THEME_NO = #{themeNo}
 </delete>
 
 <select id="findByThemeNo" resultMap="attachment">
-	SELECT * FROM THEME_ATTACH WHERE THEME_NO = #{themeNo}
+	SELECT * 
+	FROM THEME_ATTACH 
+	WHERE THEME_NO = #{themeNo}
 </select>
 
 </mapper>

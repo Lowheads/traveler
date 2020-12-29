@@ -37,7 +37,7 @@
 
 <select id = "getDaily" resultMap="VOResult" >
  <![CDATA[
-	SELECT to_char(daily_log,'mm-dd') AS "targetDate", cnt_user, cnt_post, cnt_withdrawal_user, cnt_traffic
+	SELECT TO_CHAR(DAILY_LOG,'mm-dd') AS "targetDate", CNT_USER, CNT_POST, CNT_WITHDRAWAL_USER, CNT_TRAFFIC
 	FROM (SELECT *
 	FROM STATISTIC
 	ORDER BY DAILY_LOG DESC)
@@ -46,8 +46,8 @@
 
 
 <select id="getMonthly" resultMap="VOResult">
-	SELECT extract(month from daily_log) AS "targetDate", SUM(cnt_user) as "cnt_user", 
-	sum(cnt_post) as "cnt_post", sum(cnt_withdrawal_user) as "cnt_withdrawal_user", sum(cnt_traffic) as "cnt_traffic"
+	SELECT EXTRACT(MONTH FROM DAILY_LOG) AS "targetDate", SUM(CNT_USER) as "cnt_user", 
+	SUM(CNT_POST) as "cnt_post", SUM(CNT_WITHDRAWAL_USER) as "cnt_withdrawal_user", SUM(CNT_TRAFFIC) as "cnt_traffic"
 	FROM STATISTIC 
 	GROUP BY extract(month from daily_log) 
 	ORDER BY extract(month from daily_log)
@@ -55,39 +55,46 @@
 
 
 <select id="getPopularPostsByView" resultMap="post">
- <![CDATA[
-select * from(select * 
-from board
-where w_date between to_char(sysdate-7,'yyyy/mm/dd') and to_char(sysdate,'yyyy/mm/dd')
-order by v_cnt desc)
-where rownum<=10]]>
+<![CDATA[
+	SELECT * 
+	FROM(
+		SELECT * 
+		FROM BOARD
+		WHERE W_DATE BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
+		AND TO_CHAR(SYSDATE,'YYYY/MM/DD')
+		ORDER BY V_CNT DESC)
+	WHERE ROWNUM<=10]]>
 </select>
 
 <select id="getPopularPostsByPick" resultMap="post">
- <![CDATA[
-select * 
-from (select * 
-from board
-where w_date between to_char(sysdate-7,'yyyy/mm/dd') and to_char(sysdate,'yyyy/mm/dd')
-order by pick_cnt desc)
-where rownum<=10]]>
+	 <![CDATA[
+	SELECT * 
+	FROM (
+		SELECT * 
+		FROM BOARD
+		WHERE W_DATE BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
+		AND TO_CHAR(SYSDATE,'YYYY/MM/DD')
+		ORDER BY PICK_CNT DESC)
+	WHERE ROWNUM<=10]]>
 </select>
 
 <select id="cntQnaPost" resultType="Integer">
-select count(*)
-from qna_board
-where replycnt=0
+	SELECT COUNT(*)
+	FROM QNA_BOARD
+	WHERE REPLYCNT=0
 </select>
 
 <select id="getQnaPost" resultMap="qna">
- <![CDATA[
-select b.bno, b.title, b.reg_date
-from (select b.bno, b.title, b.content, b.nickname, b.reg_date
-from qna_board b left outer join qna_reply r
-on b.bno = r.bno
-where r.rno is null and to_char(b.reg_date,'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')
-order by b.bno desc) b
-where rownum<=5]]>
+	 <![CDATA[
+	SELECT B.BNO, B.TITLE, B.REG_DATE
+	FROM (
+		SELECT B.BNO, B.TITLE, B.CONTENT, B.NICKNAME, B.REG_DATE
+		FROM QNA_BOARD B LEFT OUTER JOIN QNA_REPLY R
+		ON B.BNO = R.BNO
+		WHERE R.RNO IS NULL 
+		AND TO_CHAR(B.REG_DATE,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD')
+		ORDER BY B.BNO DESC) B
+	WHERE ROWNUM<=5]]>
 </select>
 
 

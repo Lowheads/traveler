@@ -28,17 +28,18 @@
 	<select id="getThemeList" resultType="map">
  		SELECT T.THEME_NO, T.REGION_NO, C.CODE_NAME AS THEME_CODE, T.REG_DATE, T.MOD_DATE
 		FROM THEME T, CODE_TABLE C
-		WHERE CONCAT(C.CODE_TYPE_ID,C.CODE) = t.theme_code
+		WHERE CONCAT(C.CODE_TYPE_ID,C.CODE) = T.THEME_CODE
 		ORDER BY THEME_NO 
 	</select>
 
 	<select id="getThemeInfo" resultMap = "searchResult">
 		SELECT V.PLC_NO , V.PLC_TITLE, V.ADDRESS_DT, V.region_no, V.CODE_NAME AS P_CATE, V.LIKECNT , V.HOLIDAY, V.OPENING_H
 		FROM THEME_PLC,
-		(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESS_DT,C.CODE_NAME, LIKECNT, HOLIDAY, OPENING_H
-		FROM CODE_TABLE C, PLACE P
-		WHERE C.CODE = P.P_CATE) V
+			(SELECT PLC_NO, PLC_TITLE, REGION_NO, ADDRESS_DT,C.CODE_NAME, LIKECNT, HOLIDAY, OPENING_H
+			FROM CODE_TABLE C, PLACE P
+			WHERE C.CODE = P.P_CATE) V
 		WHERE THEME_PLC.PLC_NO = V.PLC_NO AND THEME_PLC.THEME_NO=#{themeNo}
+		ORDER BY V.PLC_TITLE
 	</select>
 
 	<delete id="deleteTheme" parameterType="int[]">
@@ -68,24 +69,23 @@
   	<select id="getPlaceList" resultMap="searchResult" parameterType="map">
  	<![CDATA[
  	SELECT PLC_NO, PLC_TITLE, P_CATE, REGION_NO, LAT,LNG, ADDRESS_DT,HOLIDAY, OPENING_H,LIKECNT
- 	FROM (SELECT ROWNUM RN, PLC_NO, P_CATE, REGION_NO, PLC_TITLE, LAT,LNG, ADDRESS_DT,HOLIDAY, OPENING_H,LIKECNT
+ 	FROM (
+ 		SELECT ROWNUM RN, PLC_NO, P_CATE, REGION_NO, PLC_TITLE, LAT,LNG, ADDRESS_DT,HOLIDAY, OPENING_H,LIKECNT
 		FROM PLACE
-		WHERE PLC_TITLE LIKE
-		'%'||#{keyword}||'%'
+		WHERE PLC_TITLE LIKE '%'||#{keyword}||'%'
+		AND REGION_NO = #{regionNo} 
 		AND ROWNUM <= #{pageNum} * 10
 		ORDER BY PLC_TITLE)
  	WHERE RN > (#{pageNum} -1) *10
-	
 		]]>
 	</select>
 	 
 	
 	<select id="getTotalCount" resultType="int">
-	SELECT count(*)
+		SELECT count(*)
 		FROM PLACE
-		WHERE PLC_TITLE LIKE
-		'%'||#{keyword}||'%'
-</select>
+		WHERE PLC_TITLE LIKE '%'||#{keyword}||'%'
+	</select>
 
 	
 
