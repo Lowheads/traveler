@@ -2,39 +2,49 @@ package org.travelmaker.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.MemberVO;
+import org.travelmaker.domain.PlaceDTO;
+import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
-import org.travelmaker.service.SocialLoginService;
+import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.service.BoardService;
 import org.travelmaker.service.MemberService;
 import org.travelmaker.service.PlaceService;
 import org.travelmaker.service.RegionService;
+import org.travelmaker.service.SocialLoginService;
+import org.travelmaker.service.ThemeService;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -48,6 +58,7 @@ public class MainController {
 	private BoardService boardservice;
 	private SocialLoginService socialLoginService;
 	private MemberService memberService;
+	private ThemeService themeService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -56,10 +67,40 @@ public class MainController {
 	}
 	@PostMapping(value="/theme", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE}) 
 	public void getInitSch(@ModelAttribute("schDto") ScheduleDTO schDTO, Model model) {
-		for (int i = 1; i <= 6; i++) {
-			model.addAttribute("theme"+i,placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
+
+		Map<Integer, List<PlaceDTO>> theme = new HashMap<Integer, List<PlaceDTO>>();
+		
+		for(int i =1; i<6;i++) {
+			
+			theme.put(i-1, placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
 		}
+		
+		model.addAttribute("themeList", theme);
+
+		List<PlaceVO> rainyDay=new ArrayList<PlaceVO>();
+		
+		//만약 비가 온다면
+		if(false) {
+			rainyDay =  placeService.getPlaceByWeather(schDTO.getSchRegion());
+		}
+		
+		model.addAttribute("rainydayRec", placeService.getPlaceByWeather(schDTO.getSchRegion()));
+	
 	}
+	
+	@GetMapping(value ="/getWeatherRec/{regionNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<PlaceVO>> getWeatherRec(@PathVariable("regionNo") int RegionNo){
+		
+		return new ResponseEntity<>(placeService.getPlaceByWeather(RegionNo), HttpStatus.OK);
+	}
+	
+	@GetMapping(value ="/getAttachment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<ThemeAttachVO> getAttachment(int themeNo){
+		
+		return new ResponseEntity<>(themeService.getAttachment(themeNo), HttpStatus.OK);
+	}
+	
 	
 	@GetMapping("/index")
 	public ModelAndView main(Model model, HttpSession session){

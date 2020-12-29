@@ -173,7 +173,7 @@
 					
 					theme.deleteFile(targetFile,type);
 					
-				})
+				});
 				
 				$("input[type='file']").change(function(e){
 					
@@ -197,7 +197,7 @@
 					
 					theme.uploadFile(${themeNo},formData);
 
-				})
+				});
 
   				$("button[id=deleteBtn]").click(function() {
 
@@ -208,31 +208,17 @@
 
 					$(this).parent().parent().remove()
 			
-				})   
+				});   
 				
 
-
-/*  				var target = $("button[id=deleteBtn]")
 				
-				for(let i =0;i<target.length;i++){
-   					 target[i].addEventListener('click',function(){
-   						 
-   						let num = $(this).attr("value")
-   						let idx = list.indexOf(num);
-   						
-   						newlist[idx] = ""
-
-   						$(this).parent().parent().remove()
-   						 
-   					 })}  */
-				
-				$("button[id=appendNewPlaces]")`.click(
+				$("button[id=appendNewPlaces]").click(
 			        function() {
 			        	$("input[id='keyword']")[0].value=""
 			        	$("div[id=resultPage] *").remove()
 			        	$("#pagination").empty()
 			        	$("#myModal").modal("show")
-			        })
+			        });
 						
 				$("button[id=searchBtn]").click(function(){
 			        let keyword = $("input[id=keyword]").val();
@@ -254,13 +240,13 @@
 			        
 			        paginate(keyword,pageNum);
 			       
-					})
+					});
 							
 				$("#modalInBtn").click(function(e){
 					
 					e.preventDefault();
 					
-				})
+				});
 				
 				$("form[id=sendData]").click(function(e){
 					
@@ -299,7 +285,7 @@
 					$("#sendData").append(img);
 					
 					$("#sendData").submit();
-				})
+				});
 				
 				function paginate(keyword, pageNum){
 					
@@ -457,7 +443,7 @@
 														console.log("fail");
 											});
 					
-				}
+				};
 				
 				function added(){
 
@@ -493,12 +479,12 @@
  						}
  						
  						let btn = document.createElement("button");
- 						btn.setAttribute("class","btn btn-default")
- 						btn.setAttribute("id","deleteBtn")
- 						btn.setAttribute("value",data.id)
+ 						btn.setAttribute("class","btn btn-default");
+ 						btn.setAttribute("id","deleteBtn");
+ 						btn.setAttribute("value",data.id);
  						
  						let icon = document.createElement("i");
- 						icon.setAttribute("class","fas fa-times")
+ 						icon.setAttribute("class","fas fa-times");
  						
  						btn.append(icon);
  						str.append(btn); 
@@ -514,7 +500,7 @@
 						return;
 					}
 				 
-				}
+				};
 	
 			})
 </script>
