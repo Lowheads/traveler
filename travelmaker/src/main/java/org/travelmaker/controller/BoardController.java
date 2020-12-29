@@ -258,6 +258,8 @@ public class BoardController {
 			
 			rttr.addAttribute("pageNum",cri.getPageNum());
 			rttr.addAttribute("amount",cri.getAmount());
+			rttr.addAttribute("type",cri.getType());
+			rttr.addAttribute("keyword",cri.getKeyword());
 		}
 		return "redirect:/board/get?boardNo="+board.getBoardNo();
 	}
@@ -293,6 +295,8 @@ public class BoardController {
 		}
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
 		
 		return "redirect:/board/list";
 	}
@@ -359,6 +363,8 @@ public class BoardController {
 		rttr.addFlashAttribute("dtmodifymsg","게시글이 수정되었습니다.");
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
 		
 		return "redirect:/board/get?boardNo="+boarddt.getBoardNo();
 	}

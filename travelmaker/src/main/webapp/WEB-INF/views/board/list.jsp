@@ -104,24 +104,31 @@ input:checked+.slider:before {
 }
 #hiddenlist_open_btn{
 	font-size:15px;
-	margin-right:3%;
+	margin-left: 5px;
+	margin-right:4%;
 	margin-bottom: 50px;
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
-	padding: 5px 20px 5px 20px;
+	background-color: #e9e9e9;
+	border: 1px solid #e9e9e9;
+	color: gray;
+	border-radius: 7px;
+	padding: 5px 10px 5px 10px;
 	float: right;
-	text-decoration: none;
+	outline: 0;
 }
-#schedulelist_open_btn{
+
+ #schedulelist_open_btn{
 	font-size:15px;
 	margin-bottom: 50px;
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
+	background-color: #ff8b3d;
+	border: 1px solid #ff8b3d;
+	color:white;
+	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
 	text-decoration: none;
-}
+	float: right;
+	outline: 0;
+} 
+
 #schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
 	background-color: #ff8b3d;
    	color:white;
@@ -169,7 +176,7 @@ input:checked+.slider:before {
 	border-radius: 10px;
 	background-position: center; 
 	background-repeat: no-repeat; 
-	background-size: cover;
+
 	
 }
 /* .img-cover{
@@ -246,6 +253,33 @@ input:checked+.slider:before {
 .pagination_bar .active a{
    color: #f60;
 }
+
+
+/* 검색 */
+
+.search{
+	margin-right : 3%;
+	margin-bottom: 30px;
+	float:right;
+}
+
+#searchKeyword{
+	height:25px;
+}
+
+.searchBtn{
+	width:50px;
+	color:white;
+	background-color: #ff8b3d;
+	text-align: center;
+	text-decoration: none;
+	padding: 3px 0;
+	border:1px solid #ff8b3d;
+	cursor: pointer;
+	font-size: 13px;
+	
+}
+
 </style>
 
 </head>
@@ -256,9 +290,9 @@ input:checked+.slider:before {
 	<!-- 상단  -->
 	<div class="ct_body">
 		<div class="mainMsg">
-		<b>일정 게시판</b>	
-		<br><br>	
-		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn">내 일정 공유</a>
+		<b>일정 게시판</b>		
+		<br><br>
+		
 		<!--mainMsg끝 -->
 		</div>
 		
@@ -287,9 +321,8 @@ input:checked+.slider:before {
       </div>
 	
 	
-	
-	
-    	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn">공개/비공개 설정</a>
+    	<a href='/board/hiddenlist' target='hiddenlist' id="hiddenlist_open_btn"><i class="fa fa-lock"></i>&nbsp/&nbsp<i class="fa fa-unlock"></i></a>
+		<a href='/board/schedulelist' target="schedulelist" id="schedulelist_open_btn">내 일정 공유</a>
 
 		<!--게시판 리스트 출력 -->
 		<div class="boardContents">
@@ -331,12 +364,42 @@ input:checked+.slider:before {
 			</div>
 			</c:forEach>
 			</div>
+
+	<!-- 검색기능 -->
+		<div class='search'>
+			<div class="serach-wrap">
+				
+				<form id='searchForm' action="/board/list" method="get">
+					<select name='type'>
+						<option value="" 
+						<c:out value="${pageMaker.cri.type == null ? 'selected' : '' }"/>>검색조건</option>
+						<option value="T" 
+						<c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
+
+						<option value="W" 
+						<c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
+
+						<option value="TW" 
+						<c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>제목 or 작성자</option>
+
+					</select>
+						<input type='text' name='keyword' id="searchKeyword" value='<c:out value="${pageMaker.cri.keyword }"/>' />
+						<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum }"/>' />
+						<input type='hidden' name='amount' value='<c:out value ="${pageMaker.cri.amount }"/>' />
+						<button class="searchBtn">검색</button>
+				</form>
+			</div>
+		</div>
 		</div>
 <!--contents끝 -->
 </div>
-		<form id='actionForm' action="/board/list" method='get'>
-			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
-			<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+
+
+		<form id="actionForm" action="/board/list" method="get">
+			<input type="hidden" name='pageNum' value='${pageMaker.cri.pageNum }'>
+			<input type="hidden" name='amount' value='${pageMaker.cri.amount }'>
+			<input type="hidden" name='type' value='${pageMaker.cri.type }'>
+			<input type="hidden" name='keyword' value='${pageMaker.cri.keyword }'>
 		</form>
 
 
@@ -502,8 +565,36 @@ input:checked+.slider:before {
 		
 	});
 	
+	
+	// 검색
+	let	searchForm = $("#searchForm");
+	
+	$('#searchForm button').on("click", function(e){
+		
+		let searchLenVal = $("#searchKeyword").val(); // 검색어 길이
+		
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 조건을 선택해주세요");
+			return false;
+		}
+		
+		if(!searchForm.find("input[name='keyword']").val()){
+			alert("검색키워드를 입력하세요");
+			return false;
+		}
+		
+		if(!(2 <= searchLenVal.length && searchLenVal.length <= 8)){
+			alert("검색어 길이는 2~8자리 입니다.");
+			return false;
+		}
+		
+		// 검색 버튼을 클릭하면 페이지의 번호는 1이 된다. 즉 5페이지에서 검색해도 1페이지로 돌아간다.
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();
+		searchForm.submit();
+	});
+	
 </script>
 
 </body>
-
-</html>
+<%@ include file="../includes/footer.jsp" %>

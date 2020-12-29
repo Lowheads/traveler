@@ -225,23 +225,43 @@
     border-radius: 14px;
     padding: 5px 10px 5px 10px;
     float:right;
-    margin-top:10px;
+    outline: 0;
 }
 
-.btn:hover, .cancel_btn:hover, .update_btn:hover , .fileAdd_btn:hover , #fileDel:hover{
+.btn:hover, .update_btn:hover , .fileAdd_btn:hover{
    background-color: #ff8b3d;
    color:white;
    border: 1px solid #ff8b3d;	
 }
 
-.cancel_btn, .update_btn{
+.cancel_btn:hover, #fileDel:hover, #fileDelBtn:hover{
+   background-color: #A9A9A9;
+   color:balck;
+   border: 1px solid #A9A9A9;	
+}
+
+
+.cancel_btn{
 	font-size:15px;
 	margin-bottom: 10px;
-	background-color:white;
-	border: 1px solid gray;
-	/* border-radius: 14px; */
+	background-color:#e9e9e9;
+	border: 1px solid #e9e9e9;
+	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: right;
+	outline: 0;
+}
+
+.update_btn{
+	font-size:15px;
+	margin-bottom: 10px;
+	background-color:#ff8b3d;
+	color: white;
+	border: 1px solid #ff8b3d;
+	border-radius: 7px; 
+	padding: 5px 20px 5px 20px;
+	float: right;
+	outline: 0;
 }
 
 
@@ -299,13 +319,26 @@
 	margin-bottom:10px;
 } */
 
-#fileDel{
+#fileDel {
 	font-size: 15px;
     color: black;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 14px;
+    background-color: #e9e9e9;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px;
     padding: 5px 10px 5px 10px;
+    outline: 0;
+}
+
+.fileDelBtn{
+	font-size: 15px;
+    color: black;
+    background-color: #e9e9e9;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px;
+    padding: 5px 10px 5px 10px;
+    margin-top:10px;
+    float:right;
+    outline: 0;
 
 }
 
@@ -322,16 +355,7 @@
 	
 }
 
-.fileDelBtn{
-	font-size:15px;
-	color: black;
-	background-color:white;
-	border: 1px solid gray;
-	border-radius: 14px;
-	padding: 5px 20px 5px 20px;
-	float: right;
-	margin-top:10px;
-}
+
 
 </style>
 
@@ -347,7 +371,9 @@
 					
 					<input type='hidden' id='boardNo' name='boardNo' value='<c:out value="${boarddt.boardNo }"/>'>
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'> 
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+					<input type="hidden" name='keyword' value='<c:out value="${cri.keyword }"/>'>
+					<input type="hidden" name="type" value='<c:out value="${cri.type }"/>'>
 
 					<input type="hidden" id="fileNoDel" name="fileNoDel[]" value="">
 					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value="">
@@ -466,6 +492,7 @@
 </div>
 
 </div>
+<%@ include file="../includes/footer.jsp" %>
 
 <script type="text/javascript">
 		$(document).ready(function(){
