@@ -447,12 +447,11 @@ label {
 	font-weight: lighter;
     margin: 4px 0 0 4px;
 }
-
 </style>
 
 <div class="main">
 	<div class="wrapper"
-		style="display: grid; grid-template-columns: 15% auto auto 15%; grid-template-rows: 20px auto; grid-gap: 1em; justify-items: stretch; justify-content: center;">
+		style="display: grid; grid-template-columns: 15% 590px auto 15%; grid-template-rows: 20px 100%; grid-gap: 1em; justify-items: stretch; justify-content: center;">
 
 		<div class="allocation"
 			style="margin-right: 20px; grid-column: 2/3; grid-row: 2/2;">
@@ -462,29 +461,28 @@ label {
 				<div
 					style="display: flex; flex-direction: row; justify-content: space-between; width: auto;">
 					<div>
-						<h3>모든 지출 내역</h3>
+						<h3>
+							<c:out value="${paydate }" />
+							지출 내역
+						</h3>
 					</div>
 					<div style="display: flex; align-items: center;">
 						<div>
 							<button class="add-expense-button" type="button" id="rg-button"
 								style="outline: none;">
-								<%-- <c:out value="${paydate }" /> --%>
 								내역 추가
 							</button>
 						</div>
-						<!-- <select onchange="window.open(value,'iframe')">
-							<option selected value="">&nbsp;&nbsp;&nbsp;&nbsp;날짜 선택
-								&#9662;</option>
-							<option value="2020-11-03">&nbsp;&nbsp;2020-11-032</option>
-						</select> -->
-						<!-- 방금 추가 -->
 						<select class="use-select date" id="select" onchange="location.href=value">
+							
 							<option selected value="">날짜 선택 &#9662;</option>
+							<option value="/buddt/listAll?schno=<c:out value="${schno }"/>">모든
+								내역</option>
 							<c:forEach items="${daybud}" var="daybud">
 								<option
 									value="/buddt/list?paydate=<c:out value="${daybud.paydate}"/>
-			&schno=<c:out value="${daybud.schno }"/>"><c:out
-										value="${daybud.paydate}" />
+			&schno=<c:out value="${daybud.schno }"/>">
+									<c:out value="${daybud.paydate}" />
 								</option>
 							</c:forEach>
 						</select>
@@ -496,9 +494,9 @@ label {
 				<table class="board">
 					<thead>
 						<tr>
-							
-							<th>날짜</th>
-							<!-- <th>일정 번호</th> -->
+
+							<!-- <th>결제한 날짜</th>
+						<th>일정 번호</th> -->
 							<th>상호명</th>
 							<th>금액</th>
 							<th>카테고리</th>
@@ -507,24 +505,28 @@ label {
 					</thead>
 
 					<tbody>
-						<c:forEach items="${listAll}" var="listAll">
-							<tr>
-								
-								<td><c:out value="${listAll.paydate}" /></td>
-								<%-- <td><c:out value="${listAll.schno}" /></td> --%>
-								<td><c:out value="${listAll.store}" /></td>
+						<c:forEach items="${buddt}" var="buddt">
+							<tr id = <c:out value="${buddt.no}" />>
+								<%-- <td><a
+									href='/buddt/modify?no=<c:out value="${buddt.no}"/>&paydate=<c:out value="${buddt.paydate}"/>
+							&schno=<c:out value="${buddt.schno}"/>'><c:out
+											value="${buddt.no}" /></a></td> --%>
+
+								<%-- <td><c:out value="${buddt.paydate}" /></td>
+							<td><c:out value="${buddt.schno}" /></td> --%>
+								<td style=""><c:out value="${buddt.store}" /></td>
 								<td style="display:flex; justify-content:space-around;">
 								<div>₩&nbsp;</div> 
-								<div><c:out value="${listAll.expense}" /></div>
+								<div><c:out value="${buddt.expense}" /></div>
 								</td>
-								<td><c:out value="${listAll.budcate}" /></td>
+								<td><c:out value="${buddt.budcate}" /></td>
 								<td>
-								<%-- <a href='/buddt/modify?no=<c:out value="${listAll.no}"/>&paydate=
-								<c:out value="${listAll.paydate}"/>&schno=<c:out value="${listAll.schno}"/>'>
+								<%-- <a href='/buddt/modify?no=<c:out value="${buddt.no}"/>&paydate=
+								<c:out value="${buddt.paydate}"/>&schno=<c:out value="${buddt.schno}"/>'>
 									&#9998;
 								</a> --%>
 								<!-- <button id="md-button">&#9998;</button> -->
-								<button class="md-button" id = <c:out value="${listAll.no}" />>&#9998;</button>
+								<button class="md-button" id = <c:out value="${buddt.no}" />>&#9998;</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -534,10 +536,10 @@ label {
 		</div>
 
 
-		<div class="budget-progress">
+		<div class="budget-progress" style="grid-column: 3/4; grid-row: 2; margin-top:65px;">
 
 			<div class="chart-wrapper"
-				style="display: flex; flex-direction: column; position: sticky; top: 20px;">
+				style="display: flex; flex-direction: column; position: sticky; top: 30px;">
 				<div>
 					<p>차트</p>
 				</div>
@@ -559,9 +561,7 @@ label {
 							</div>
 							<div class="row-row-row">
 								<div class="chart-div-margin">
-									<c:out value="${dateBox.minDate }" />
-									~
-									<c:out value="${dateBox.maxDate }" />
+									<c:out value="${paydate }" />
 								</div>
 								<div id="unallocated"></div>
 							</div>
@@ -575,7 +575,7 @@ label {
 								<div></div>
 								<div id="totalSpent" class="chart-div-margin">
 									￦
-									<c:out value="${chartTextByListAll.daypay}" />
+									<c:out value="${chartText.daypay}" />
 								</div>
 							</div>
 							<!--                        <input type="text" id="totalSpent" value="￦ 0" readonly>-->
@@ -586,7 +586,7 @@ label {
 							<div class="row-row-row">
 								<div id="totalRemaining"></div>
 								<div class="chart-div-margin">
-									<c:out value="${chartTextByListAll.daycnt}" />
+									<c:out value="${chartText.daycnt}" />
 									건
 								</div>
 							</div>
@@ -597,7 +597,51 @@ label {
 			</div>
 		</div>
 	</div>
-	
+
+	<%-- <div class="bg-modal">
+    <div class="modal-content">
+        <div class="close">+</div>
+
+        <div class="wrapper">
+
+            <span style='font-size:60px;'>&#128184;</span>
+
+            <!-- 테이블 -->
+            <div class="container-2">
+                <table class="board">
+			<thead>
+				<tr>
+					<!-- <th>번호</th> -->
+					<th>일정</th>
+					<th>지출</th>
+					<th>결제 횟수</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<c:forEach items="${list}" var="budget">
+					<tr>
+						<td><a
+							href='/daybud/get?schno=<c:out value="${budget.schno}"/>'> <c:out
+									value="${budget.schtitle}" /></a>
+									<div style="display:flex; flex-direction:column;">
+							<div>
+							<c:out value="${budget.fromdate}" /> ~ <c:out value="${budget.todate}" />
+							</div>
+									</div>
+									</td>
+						<td>₩ <c:out value="${budget.totalpay}" /></td>
+						<td><c:out value="${budget.totalcnt}" /> 건</td>
+					</tr>
+				</c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> --%>
+
 	<div class="rg-modal">
 		<div class="rg-modal-content">
 			<div class="rg-modal-header">
@@ -624,7 +668,7 @@ label {
 									<input class="placeholder" value='<c:out value="${schtitle.schtitle }" />'>
 								</div>
 							</div>
-							<div style="display: hidden; align-self: center;">
+							<div style="display: flex; align-self: center;">
 								<select class="hidden-select" name="schno" onChange="schnocheck()">
 									<%-- <c:forEach items="${schnoBox}" var="schnoBox"> --%>
 										<option value="<c:out value="${schno}" />">
@@ -662,7 +706,7 @@ label {
 							</div>
 							<div>
 								<input class="md-form-input" name='expense' type="text"
-									onkeyup="getExpenseNum(this)" maxlength="7" required>
+									onkeyup="onlyInsertNum(this)" maxlength="7" required>
 							</div>
 						</div>
 
@@ -692,11 +736,10 @@ label {
 					</div>
 				</form>
 			</div>
-
 		</div>
 	</div>
-	
-	
+
+
 	<div class="md-modal">
 		<div class="rg-modal-content">
 			<div class="rg-modal-header">
@@ -722,11 +765,12 @@ label {
 									<label>일정</label>
 								</div>
 								<div class="instead-Hidden">
-									<input class="placeholder" value='<c:out value="${schtitle.schtitle }" />'>
-									
+									<input class="placeholder" value='<c:out value="${schtitle.schtitle }" />'
+									readonly>
 								</div>
 							</div>
-							<div style="display: flex; align-self: center;">
+							
+							<div style="display: none; align-self: center;">
 								<input class="form-control dtInput" name='no'
 									value='<c:out value="${loadVO.no }"/>' readonly="readonly" type="hidden">
 							</div>
@@ -738,6 +782,10 @@ label {
 								<div>
 									<label>날짜</label>
 								</div>
+								<%-- <div class="instead-Hidden">
+									<input class="placeholder" value='<c:out value="${paydate }" />' 
+									readonly="readonly">
+								</div> --%>
 							</div>
 							<div>
 							<%-- 	<input class="form-control dtInput" name='paydate' type="Date"
@@ -749,12 +797,18 @@ label {
 						</div>
 
 						<div class="rg-form-group" style="display:none;">
-							<div>
-								<label>일정</label>
+							<div style="width:100%; display:flex; flex-direction:row; 
+								justify-content:space-between;">
+								<div>
+									<label>일정 번호</label>
+								</div>
+								<div class="instead-Hidden">
+									<c:out value="${schno }" />
+								</div>
 							</div>
 							<div>
 								<input class="form-control dtInput" name='schno'
-									value='<c:out value="${loadVO.schno }"/>' readonly="readonly">
+									value='<c:out value="${loadVO.schno }"/>' readonly="readonly" type="hidden">
 							</div>
 						</div>
 
@@ -816,15 +870,32 @@ label {
 						<button type="button" data-oper='remove' class="btn btn-3"
 							id="subbutton" onclick="remove(event);">삭제</button>
 
-						<!-- <button type="button" onclick="goBack();">목록</button> -->
+						<!-- <button type="button" onclick="goBack();"></button> -->
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-<!-- wrapper end -->
+
+<script type="text/javascript">
+	
+$(document).ready(
+
+			$("button[data-oper='list']").on("click", function(e){
+				//operForm.find("#bno").remove();
+				operForm.attr("action", "/buddt/list")
+				operForm.submit()
+			});
+
+			$("#buddtRegBtn").on("click", function(){
+				self.location = "/buddt/register";
+			});
+
+		});
+		
+</script>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -832,203 +903,266 @@ label {
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 <script>
-	let myChartOne = document.getElementById('myChartOne').getContext('2d');
+let myChartOne = document.getElementById('myChartOne').getContext('2d');
 
-	let barChart = new Chart(myChartOne, {
-		type : 'bar',
-		data : {
-
-			labels : [ '음식', '카페', '숙박', '교통', '쇼핑', '활동', '주점', '기타' ],
-			datasets : [ {
-				label : '매출액',
-				data : [ '${restaurantBudget}', '${cafeBudget}',
-						'${lodgingBudget}', '${transBudget}',
-						'${shoppingBudget}', '${activityBudget}',
-						'${entertainmentBudget}', '${etcBudget}'
-
-				],
-				backgroundColor : [ "rgba(255, 99, 132, 0.4)",
-						"rgba(54, 162, 235, 0.4)", "rgba(255, 206, 86, 0.4)",
-						"rgba(75, 192, 192, 0.4)", "rgba(153, 102, 255, 0.4)",
-						"rgba(255, 159, 64, 0.4)", "rgba(255, 102, 255, 0.4)",
-						"rgba(204,204,204,0.4)" ],
-				borderColor : [ "rgba(255, 99, 132, 1)",
-						"rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)",
-						"rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)",
-						"rgba(255, 159, 64, 1)", "rgba(255, 102, 255, 1)",
-						"rgba(204,204,204, 0.7)" ],
-				borderWidth : 1
-			} ]
-		},
-		options : {
-			responsive : false,
-			legend : {
-				display : false,
-				position : 'top' // right, left, bottom, top
-			},
-			tooltips : {
-				enabled : true
-			},
-			layout : {
-				padding : {
-					left : 10,
-					right : 10,
-					top : 10,
-					bottom : 0
-				}
-			}
-		}
-	});
+let barChart = new Chart(myChartOne, {
+    type: 'bar',
+    data: {
+    	
+        labels: ['음식', '카페', '숙박', '교통', '쇼핑', '활동', '주점', '기타'],
+        datasets: [{
+            label: '매출액',
+            data: [
+            	'${restaurantBudget}',
+            	'${cafeBudget}',
+            	'${lodgingBudget}',
+            	'${transBudget}',
+            	'${shoppingBudget}',
+            	'${activityBudget}',
+            	'${entertainmentBudget}',
+            	'${etcBudget}'
+                
+            ],
+            backgroundColor: [
+                "rgba(255, 99, 132, 0.4)",
+                "rgba(54, 162, 235, 0.4)",
+                "rgba(255, 206, 86, 0.4)",
+                "rgba(75, 192, 192, 0.4)",
+                "rgba(153, 102, 255, 0.4)",
+                "rgba(255, 159, 64, 0.4)",
+                "rgba(255, 102, 255, 0.4)",
+                "rgba(204,204,204,0.4)"
+            ],
+            borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+                "rgba(255, 102, 255, 1)",
+                "rgba(204,204,204, 0.7)"
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        legend: {
+            display: false,
+            position: 'top' // right, left, bottom, top
+        },
+        tooltips: {
+            enabled: true
+        },
+        layout: {
+            padding: {
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: 0
+            }
+        }
+    }
+});
 </script>
 
 <script>
-	document.getElementById('rg-button').addEventListener('click', function() {
-		document.querySelector('.rg-modal').style.display = 'flex';
-	});
+    document.getElementById('rg-button').addEventListener('click',
+        function () {
+            document.querySelector('.rg-modal').style.display = 'flex';
+        });
 
-	document.querySelector('.rg-close').addEventListener('click', function() {
-		document.querySelector('.rg-modal').style.display = 'none';
-	})
- 
-let btn = document.getElementsByClassName('md-button');
+    document.querySelector('.rg-close').addEventListener('click',
+    function () {
+        document.querySelector('.rg-modal').style.display = 'none';
+    })
+    
+    let btn = document.getElementsByClassName('md-button');
+    
+    $("button[class=md-button]").click(function(){
+    	
+    	const id = $(this).attr("id");
+    	
+    			
+    			$.getJSON("/buddt/getDetail/"+id+".json",
+    					function(data){
+    				
+    				let form = $("form[id=modiremoveform]")[0];
+    				
+    				let target = form.children[0].children;
+    				
+    				let date = new Date(data.paydate);
+    				let dateStr = date.getFullYear()+"년 "+(date.getMonth()+1)+"월 "+date.getDate()+"일";
+    				
+    				target[0].children[1].children[0].setAttribute("placeholder", data.no)
+    				target[1].children[1].children[0].setAttribute("placeholder",dateStr)
+    				target[2].children[1].children[0].setAttribute("placeholder",data.schno)
+    				target[3].children[1].children[0].setAttribute("placeholder",data.store)
+    				target[4].children[1].children[0].setAttribute("placeholder",data.expense)
+    				target[6].children[1].children[0].setAttribute("placeholder",data.budcate)
+    				
+    				
+    				target[0].children[1].children[0].val = data.no
+    				target[1].children[1].children[0].val = data.paydate
+    				target[2].children[1].children[0].val = data.schno
+    				target[3].children[1].children[0].val = data.store
+    				target[4].children[1].children[0].val = data.expense
+    				target[6].children[1].children[0].val = data.budcate
+    				
+    				
+    				
+    				
+    				 document.querySelector('.md-modal').style.display = 'flex';
+    				document.querySelector('.md-close').addEventListener('click',
+    					    function () {
+    					        document.querySelector('.md-modal').style.display = 'none';
+    					    })
+    					    
+    					    
+    			}).fail(function(){
+    				
+    				alert("fail")
+    			})
 
-$("button[class=md-button]").click(function(){
-	
-	const id = $(this).attr("id");
-	
-			
-			$.getJSON("/buddt/getDetail/"+id+".json",
-					function(data){
-				
-				let form = $("form[id=modiremoveform]")[0];
-				
-				let target = form.children[0].children;
-				
-				let date = new Date(data.paydate);
-				let dateStr = date.getFullYear()+"년 "+(date.getMonth()+1)+"월 "+date.getDate()+"일";
-				
-				target[0].children[1].children[0].setAttribute("placeholder", data.no)
-				target[1].children[1].children[0].setAttribute("placeholder",dateStr)
-				target[2].children[1].children[0].setAttribute("placeholder",data.schno)
-				target[3].children[1].children[0].setAttribute("placeholder",data.store)
-				target[4].children[1].children[0].setAttribute("placeholder",data.expense)
-				target[6].children[1].children[0].setAttribute("placeholder",data.budcate)
-				
-				
-				target[0].children[1].children[0].val = data.no
-				target[1].children[1].children[0].val = data.paydate
-				target[2].children[1].children[0].val = data.schno
-				target[3].children[1].children[0].val = data.store
-				target[4].children[1].children[0].val = data.expense
-				target[6].children[1].children[0].val = data.budcate
-				
-				
-				
-				
-				 document.querySelector('.md-modal').style.display = 'flex';
-				document.querySelector('.md-close').addEventListener('click',
-					    function () {
-					        document.querySelector('.md-modal').style.display = 'none';
-					    })
-					    
-					    
-			}).fail(function(){
-				
-				alert("fail")
-			})
-
-})
-
-function send(event){
-	
-	var operForm = $("#modiremoveform");
-	
-	let form = $("form[id=modiremoveform]")[0];
+    })
+    
+    
+  /*  
+    		 document.querySelector('.md-modal').style.display = 'flex';
+    		 
+    		 
+    	})
+    	
+    	    document.querySelector('.md-close').addEventListener('click',
+			    function () {
+			        document.querySelector('.md-modal').style.display = 'none';
+			    })
+    } */
+    
+    function send(event){
 		
+		var operForm = $("#modiremoveform");
+		
+		let form = $("form[id=modiremoveform]")[0];
+			
+			let target = $(".dtInput");
+			
+			 for(let i =0;i<6;i++){
+				
+				if((target[i].val!=target[i].value)&&(target[i].value !="")){
+					
+					target[i].val = target[i].value;
+				}
+			} 
+	
+			 let buddt = {};
+			 buddt = {
+					 no : target[0].val,
+					 paydate : new Date(target[1].val),
+					 schno : target[2].val,
+					 store : target[3].val,
+					 expense : target[4].val.replace(/\,/g, ""),
+					 budcate : target[5].val 
+			 };
+				 
+			
+			  var jsonData = JSON.stringify(buddt);
+
+			event.preventDefault();
+			
+			 $.ajax({url:"/buddt/modify", 
+					data: jsonData,
+					type:'POST',
+					contentType:"application/json;charset=utf-8",
+					success:function(data){
+						location.reload(true); 
+					}
+			})
+			 
+			
+	}
+    
+    function remove(event){
+    	
+    	event.preventDefault();
+    	
 		let target = $(".dtInput");
 		
-		 for(let i =0;i<6;i++){
-			
-			if((target[i].val!=target[i].value)&&(target[i].value !="")){
-				
-				target[i].val = target[i].value;
-			}
-		} 
-
 		 let buddt = {};
 		 buddt = {
 				 no : target[0].val,
-				 paydate : new Date(target[1].val),
 				 schno : target[2].val,
-				 store : target[3].val,
-				 expense : target[4].val.replace(/\,/g, ""),
-				 budcate : target[5].val 
+				 expense : target[4].val
 		 };
-			 
-		
+		 
 		  var jsonData = JSON.stringify(buddt);
 
-		event.preventDefault();
-		
-		 $.ajax({url:"/buddt/modify", 
+		 $.ajax({url:"/buddt/remove", 
 				data: jsonData,
 				type:'POST',
 				contentType:"application/json;charset=utf-8",
 				success:function(data){
-					location.reload(true); 
+					
+					location.href= "/buddt/listAll?schno="+target[2].val;
 				}
 		})
-		 
-		
-}
-
-function remove(event){
-	
-	event.preventDefault();
-	
-	let target = $(".dtInput");
-	
-	 let buddt = {};
-	 buddt = {
-			 no : target[0].val,
-			 schno : target[2].val,
-			 expense : target[4].val
-	 };
-	 
-	  var jsonData = JSON.stringify(buddt);
-
-	 $.ajax({url:"/buddt/remove", 
-			data: jsonData,
-			type:'POST',
-			contentType:"application/json;charset=utf-8",
-			success:function(data){
-				
-				location.href= "/buddt/listAll?schno="+target[2].val;
-			}
-	})
-	
-}
-
-/* 2-1 숫자 입력 시에 3번째 자리마다 콤마가 실시간으로 입력되도록. */
-function getExpenseNum(obj) {
-	var n1;
-	var n2;
-	n1 = obj.value;
-	n2 = n1.replace(/\D/g, "");
-
-	n1 = setComma(n2);
-	obj.value = n1;
-}
-
-/* 2-2 */
-function setComma(n) {
-	var reg = /(^[+-]?\d+)(\d{3})/;
-	n += '';
-	while (reg.test(n)) {
-		n = n.replace(reg, '$1' + ',' + '$2');
+    	
+    }
+    
+	function onlyInsertNum(obj) { // 숫자만 허용
+		var valcom;
+		var val = obj.value;
+		var pattern = /[^(0-9)]/gi;
+		if (pattern.test(val)) {
+			obj.value = val.replace(pattern, "");
+		}
 	}
-	return n;
-}
+    
+	function specialCharRemove(obj) { // 특수문자 제외 (한글 허용)
+		var val = obj.value;
+		var pattern = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9)]/gi;
+		if (pattern.test(val)) {
+			obj.value = val.replace(pattern, "");
+		}
+	}
+    
+	function goBack() {
+		window.history.back();
+	}
+    
+	/* 2-1 숫자 입력 시에 3번째 자리마다 콤마가 실시간으로 입력되도록. */
+	function getExpenseNum(obj) {
+		var n1;
+		var n2;
+		n1 = obj.value;
+		n2 = n1.replace(/\D/g, "");
 
+		n1 = setComma(n2);
+		obj.value = n1;
+	}
+
+	/* 2-2 */
+	function setComma(n) {
+		var reg = /(^[+-]?\d+)(\d{3})/;
+		n += '';
+		while (reg.test(n)) {
+			n = n.replace(reg, '$1' + ',' + '$2');
+		}
+		return n;
+	}
+    
+/*         document.getElementById('md-button').addEventListener('click',
+        function () {
+        	
+            document.querySelector('.md-modal').style.display = 'flex';
+        }); */
+
+/*     document.querySelector('.md-close').addEventListener('click',
+    function () {
+        document.querySelector('.md-modal').style.display = 'none';
+    }) */
 </script>
+
+
 <%@include file="../includes/footer.jsp"%>

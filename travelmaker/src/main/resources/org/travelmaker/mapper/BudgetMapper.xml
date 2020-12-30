@@ -8,13 +8,19 @@
 	<result property="schno" column="sch_no"/>
 	<result property="totalpay" column="total_pay"/>
 	<result property="totalcnt" column="total_cnt"/>
+	<result property="schno" column="b.sch_no"/>
+	<result property="schtitle" column="sch_title"/>
+	<result property="fromdate" column="from_date"/>
+	<result property="todate" column="to_date"/>
 </resultMap>
 
 <!-- list.jsp - DB의 모든 일정과 지출 내역 출력 -->
-<select id="getList" resultMap="UserResult">
+<select id="getBudgetByUser" resultMap="UserResult">
 <![CDATA[
-select sch_no, trim(TO_CHAR(sum(expense), '999,999,999')) as total_pay, 
-count(rownum) as total_cnt from bud_dt group by sch_no
+SELECT sch_title, b.sch_no, from_date, to_date, trim(TO_CHAR(total_pay, '999,999,999')) as total_pay, total_cnt
+FROM budget b, schedule s
+where s.sch_no= b.sch_no
+ORDER BY b.sch_no asc
 ]]>
 </select>
 
