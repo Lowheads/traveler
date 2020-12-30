@@ -72,9 +72,9 @@ public class ThemeServiceImpl implements ThemeService {
 	
 	
 	@Override
-	public List<PlaceVO> getPlaceList(String keyword, int pageNum ) {
+	public List<PlaceVO> getPlaceList(String keyword, int pageNum, int regionNo) {
 		
-		return mapper.getPlaceList(keyword, pageNum);
+		return mapper.getPlaceList(keyword, pageNum, regionNo);
 	}
 
 	@Override

@@ -114,6 +114,7 @@ input:checked+.slider:before {
 	padding: 5px 10px 5px 10px;
 	float: right;
 	outline: 0;
+	text-decoration: none;
 }
 
  #schedulelist_open_btn{
@@ -137,10 +138,11 @@ input:checked+.slider:before {
 .ct_body{
 	padding: 30px;
 	background-image: url('/resources/img/boardimg.jpg');
-	height: 300px;
+	height: 400px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	margin-bottom:50px; 
+  	box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
 }
 .boardContents{
 	width: 100%;
@@ -210,12 +212,20 @@ input:checked+.slider:before {
 	 font-size : 12px;
 }
 .mainMsg{
-	margin-left: 5%;
+	margin-left: 7%;
+	margin-top:8%;
+	text-shadow: 2px 2px grey;
 }
 .mainMsg b{
-	font-size:30px;
+	font-size:35px;
 	color:white;
 }
+
+.mainMsg strong{
+	font-size:43px;
+	color:white;
+}
+
 /* 페이징 */
 .pagination_bar{
    font-size: 8pt;
@@ -290,8 +300,9 @@ input:checked+.slider:before {
 	<!-- 상단  -->
 	<div class="ct_body">
 		<div class="mainMsg">
-		<b>일정 게시판</b>		
-		<br><br>
+		<b>당신의 일정을</b><br>
+		<strong>공유하세요</strong>
+	
 		
 		<!--mainMsg끝 -->
 		</div>

@@ -29,8 +29,6 @@ import oracle.jdbc.proxy.annotation.Post;
 @RequestMapping("/admin/*")
 @AllArgsConstructor
 public class AdminBoardController {
-	//테스트
-	//테스트2222
 private AdminBoardService service;
 		
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberContorller.class);
@@ -38,10 +36,12 @@ private AdminBoardService service;
 	@GetMapping("/boardList")
 	public String getPost(Criteria cri, Model model) {
 		
+		
 		if (cri.getKeyword() == null||cri.getType()==null) {
 			model.addAttribute("board", service.getBoardList());
 			
 		}else {
+
 			model.addAttribute("board", service.searchPost(cri));
 		}
 		return "/boardList";
@@ -62,8 +62,6 @@ private AdminBoardService service;
 	
 	@GetMapping(value = "/getDetail/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<BoarddtVO>> getDetail(@PathVariable("boardNo") int boardNo) {
-		
-		System.out.println("controller");
 		
 		ResponseEntity<List<BoarddtVO>> result = null;
 		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostDetail(boardNo));

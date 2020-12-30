@@ -60,17 +60,18 @@ public class ThemeController {
 		
 		List<PlaceVO> list = service.getThemeInfo(themeNo);
 		
-		System.out.println(list.toString());
-		
-		model.addAttribute("list", service.getThemeInfo(themeNo));
+		model.addAttribute("list", list);
 		
 		StringBuffer path = req.getRequestURL();
 		
-		String destinationUrl = "modifyTheme";
-
-		if(path.indexOf("themeInfo")!=-1) {
-
-			destinationUrl = "themeInfo";
+		String destinationUrl = "themeInfo";
+		
+		if(path.indexOf(destinationUrl)==-1) {
+			
+			destinationUrl = "modifyTheme";
+			if(list.size()!=0) {
+				model.addAttribute("region", list.get(0).getRegionNo());
+			}
 		}
 		
 		return destinationUrl;
@@ -144,13 +145,11 @@ public class ThemeController {
 
 	}
 
-	@GetMapping(value = "/getPlaceList/{keyword}/{pageNum}", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(value = "/getPlaceList/{keyword}/{pageNum}/{regionNo}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-		public ResponseEntity<Map<String, Object>> getPlaceList(@PathVariable("keyword") String keyword, @PathVariable("pageNum") int pageNum, Model model) {
+		public ResponseEntity<Map<String, Object>> getPlaceList(@PathVariable("keyword") String keyword, @PathVariable("pageNum") int pageNum, @PathVariable("regionNo") int regionNo, Model model) {
 				
-		Criteria cri = new Criteria();
-		
-		cri.setPageNum(pageNum);
+		Criteria cri = new Criteria(pageNum,10);
 		cri.setKeyword(keyword);
 
 		int total= service.getTotal(keyword);
@@ -159,7 +158,7 @@ public class ThemeController {
 		
 		Map<String, Object> res = new HashMap<String, Object>();
 		
-		List<PlaceVO> placeList = service.getPlaceList(cri.getKeyword(),cri.getPageNum());
+		List<PlaceVO> placeList = service.getPlaceList(cri.getKeyword(),cri.getPageNum(),regionNo);
 		
 		res.put("pageMaker", dto);
 		res.put("list", placeList);

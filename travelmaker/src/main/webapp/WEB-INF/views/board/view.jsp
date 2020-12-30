@@ -246,12 +246,12 @@ overflow-y: auto;
    color:white;
     text-align: center;
    line-height: 70px;    
-   border-right: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
 }
 
 .dt_top_right{
-   border-top: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-left: 10px;
    width: 85%;
    display: flex;
@@ -282,9 +282,9 @@ overflow-y: auto;
 .dt_bottom_left{
    width: 15%;
    text-align: center;
-   border-top: 1px solid gray;
-   border-left: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-left: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-top: 40px;
 }
 
@@ -304,8 +304,8 @@ overflow-y: auto;
    padding-left: 10px;
    width: 85%;
    line-height: 100px;  
-   border-right: 1px solid gray;
-   border-top: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
+   border-top: 1px solid rgb(128,128,128,0.2);
    
 }
 .dt_bottom_right img{
@@ -314,8 +314,8 @@ overflow-y: auto;
 }   
 .dt_box_footer{
    display:flex;
-   background-color: #e6e6e6;
-   border:1px solid gray;
+   background-color:#faf3ea;
+   border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
    width: 15%;
@@ -782,7 +782,7 @@ overflow-y: auto;
                         
                         <!-- 마지막 -->
                         <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid rgb(128,128,128,0.2);">
                                 <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
                                 </div>

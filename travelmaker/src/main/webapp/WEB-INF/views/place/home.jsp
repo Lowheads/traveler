@@ -9,16 +9,50 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="/resources/css/home.css" rel="stylesheet">
    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-   <style>
+   <link href="/resources/css/home.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  var dnd = $.noConflict(true);
+  </script>
+  <style>
+
 * {
-outline:0;
+	outline:0;
+	font-family:Spoqa Han Sans Neo,sans-serif;
+}
+.submit-btn {
+	background-color: #ff8b3d;
+    color: white;
+    z-index: 10;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+.submit-btn:hover {
+	background-color:#B59C88;
+}
+
+#right-container > .modal_close_btn {
+	top:10px;
+	position:absolute;
+	right:30px;
+	z-index:110;
+    text-align: center;
+    border-radius: 3px;
+    font-size:15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 img {
 	width:80px;
@@ -28,6 +62,10 @@ img {
    list-style-type: none;
    margin: 10px;
    width: 80%;
+}
+
+#map > button.make-button:hover {
+	background-color:#DB8E5A;
 }
 
 .daily-place-list li {
@@ -63,7 +101,7 @@ img {
 }
 
 .left-date {
-   background-color:#203341;
+   background-color:#373737;
    flex: 0 0 25%;
    
 }
@@ -103,13 +141,11 @@ ul {
    border: 1px solid #888;
    border-radius: 3px;
 }
-
-
 #all-date {
 	display: flex;
     flex-direction: column;
     flex: 0 0 30%;
-    background-color: #203341;
+    background-color: #373737;
 }
 #all-schedule {
 	display: flex;
@@ -118,9 +154,11 @@ ul {
 	flex: 0 0 70%;
 }
 .daily-place-dt {
-	width:100%;
+	width:90%;
     padding: 10px 0 0;
     text-align: center;
+    font-weight:700;
+    align-self:center;
 }
 #left-container {
 	display:flex;
@@ -163,7 +201,13 @@ ul {
 	display:inline;
 }
 .search-button:hover {
-	 background-color:#1a7ad9;
+	 background-color:#373737ab;
+}
+#map > button.transit-btn-car:hover {
+	background-color:#939393;
+}
+#map > button.transit-btn-transit:hover {
+	background-color:#939393;
 }
 
 button {
@@ -184,7 +228,7 @@ div.hoverable-place > span {
     line-height: 1.2em;
     width: 200px;
     grid-area: text;
-    overflow: auto;
+    overflow: none;
 }
 div.hoverable-place > button.add-button {
     grid-area:btn1;
@@ -238,13 +282,13 @@ div.hoverable-place > button.detail-button {
 .left-date-list>button {
 	border:1px #263846 solid;
 	box-sizing:border-box;
-	background-color:#203341;
+	background-color:#373737;
 	width:100%;
 	color:white;
 	height:72px;
 }
 .left-date-list>button:hover {
-	background-color:rgb(22,76,136);
+	background-color:#6b472f;
 }
 
 .selected-place {
@@ -261,7 +305,7 @@ div.hoverable-place > button.detail-button {
 	padding:0 10px;
 }
 #left-date-list > button.daily-place-btn.active{
-	background-color:#1a7ad9;
+	background-color:#ff8b3d;
 }
 
 #rec-place {
@@ -306,7 +350,6 @@ div.hoverable-place > button.detail-button {
 	position:absolute;
 	right: 120px;
 	bottom:10px;
-	background-color:#ffffff;
 	width:100px;
 	height:42px;
 	text-align: center;
@@ -318,7 +361,6 @@ div.hoverable-place > button.detail-button {
 	position:absolute;
 	right:20px;
 	bottom:10px;
-	background-color:#ffffff;
 	width:100px;
 	height:42px;
 	text-align: center;
@@ -326,7 +368,7 @@ div.hoverable-place > button.detail-button {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 #map>.make-button {
-	background-color:#ff9320;
+	background-color:#ff8b3d;
 	color:white;
 	z-index:10;
 	position:absolute;
@@ -362,24 +404,26 @@ body > div.mainContainer > div.right.menu {
 	border:0;
 	padding:10px 10px;
 	font-size:16px;
+	width:100%;
 }
 #show > button {
 	background-color: #373737;
     color: #d3d3d3;
     font-weight: 400;
-    font-size: 30px;
+    font-size: 22px;
 }
 #hide {
 	background-color: #373737;
     color: #d3d3d3;
     font-weight: 400;
-    font-size: 30px;
+    font-size: 22px;
     top: 200px;
     right: -40px;
     position:absolute;
     z-index: 2;
     width: 40px;
     height: 40px;
+    vertical-align:middle;
 }
 #show {
 	display:none;
@@ -394,12 +438,13 @@ body > div.mainContainer > div.right.menu {
 .date-wrapper {
 	text-align:center;
 	size:20px;
+	width:100%;
 }
 #left-place-list > div > div {
 	background-color:#707070;
 	padding: 10px 20px;
+	text-align:center;
 }
-
 
 #left-place-list > div > div > span:nth-child(1) {
 	color:white;
@@ -415,7 +460,7 @@ body > div.mainContainer > div.right.menu {
 }
 .search-button {
 	flex:0 0 13%;
- 	background-color:#1a7ad9;
+ 	background-color:#373737;
 }
 #search-value {
 	flex:0 0 87%;
@@ -424,18 +469,19 @@ body > div.mainContainer > div.right.menu {
 	flex:0 0 20%;
 }
 #left-date-list > button.showAllBtn.active{
-	background-color:#1a7ad9;
+	background-color:#ff8b3d;
 }
 .place-perday-list {
 	display: flex;
-	position:relative;
+	padding: 10px 0px;
+    cursor: move;
+    border-bottom: solid #a7a7a7 1px;
 	/* display:grid;
     grid-template-areas: 'img text btn'
     					 'memo memo memo'; */
     justify-content:space-between;
 	align-items:center;
 	position:relative;
-	padding:10px 10px 0;
 }
 #all-schedule > div > ul > div > button {
 	width:100%;
@@ -451,6 +497,8 @@ body > div.mainContainer > div.right.menu {
 #all-schedule > ul > div > span {
 	grid-area:text;
 	flex: 4 4 50%;
+	font-weight:400;
+	line-height:1.2em;
 }
 /* #all-schedule > ul > div > button:hover {
 } */
@@ -458,6 +506,7 @@ body > div.mainContainer > div.right.menu {
 	background-color:#2196f3;
 }
 .outplcdt-wrap-div {
+	padding-top:10px;
     text-align: center;
 }
 
@@ -467,6 +516,7 @@ body > div.mainContainer > div.right.menu {
 }
 
 .plcdt-wrap-div > span {
+	font-weight: 600;
 	color: #ff9100;
 }
 {
@@ -475,6 +525,7 @@ body > div.mainContainer > div.right.menu {
 
 #all-schedule > div > span {
 	margin-top:10px;
+	font-weight:700;
 }
 
 .dotOverlay {
@@ -581,26 +632,65 @@ body > div.mainContainer > div.right.menu {
 .savebtn:hover{
    background-color: #203341;
       color:white;
-   
 }
-
 /*지은 수정 끝 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #ced4da;
 
+  :hover {
+    background-color: #adb5bd;
+  }
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+  /* daterangepicker 디자인 수정 */
+.opensright{
+	width:42%;
+}
+.daterangepicker .calendar-table table{
+	border-collapse: inherit;
+	font-size:12px;
+	text-align:center;
+}
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
+	font-size:13px;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #ff8b3d;
+    border-color: transparent;
+    color: #fff;
+}
+.daterangepicker .calendar-table {
+	padding: 10px;
+	}
+	
+.table-condensed{
+	border-spacing:10px;
+}
+.daterangepicker .drp-buttons .btn {
+	margin-left: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    width: 60px;
+    height: 40px;
+    border-radius:5px;
+    background-color:#ff8b3d;
+	color:white;    
+}
+/* daterangepicker 디자인 끝 */
 
-</style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  var dnd = $.noConflict(true);
-  </script>
+  </style>
 </head>
 <body>
    <!-- /.panel-heading -->
-   <!-- 전체보기 모달 -->
-    <div id="showAll">
-    <div id="Allschedule"></div>
-               <button class="modal_close_btn" style="float:right;">닫기</button>
-        </div>
    <!-- 일정생성 모달 -->
     <div id="show-schedule">
       	  <div id="left-container">
@@ -612,7 +702,7 @@ body > div.mainContainer > div.right.menu {
 			  	<div id="in-map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
 			  </div>
 		  </div> 
-		  <div id="right-container"><button class="modal_close_btn" style="position: absolute;right:30px;z-index:110;">X</button></div>
+		  <div id="right-container"><button class="modal_close_btn">X</button></div>
       	<button class="submit-btn" style="position: absolute;right:80px;z-index:110;">저장</button>
       </div>    
       <!-- 일정등록 inner 모달 -->
@@ -620,7 +710,6 @@ body > div.mainContainer > div.right.menu {
                <div>
                <button class="modal_close_btn">X</button></div>
                <h1>일정 저장</h1><br>
-            
                <div class="form-group">
                일정명을 입력하세요<br>
                <input type="text" class="title-box" required />      
@@ -632,29 +721,24 @@ body > div.mainContainer > div.right.menu {
                   </div>
                <button class="savebtn" onclick="insertSchedule()" >저장</button>
             </div>
-        
-      <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
+      <!-- start place List -->
 <div class="mainContainer">
-
       <div class="left-menu">
-      
       	<button id="hide"><</button>
-      
       <div class="left-date">
       
       <ul class="left-date-list" id="left-date-list">
-      
-      <!-- 일자별 모든 녀석들 출력하는 리스트 -->
+      <!-- 일자별 모든 버튼을 출력하는 리스트 -->
       </ul> 
+      
       </div>
       
       <div class="left-place-list">
       <div class="date-wrapper">
             <input type="text" name="daterange" class="data-range-picker" data-region-no='<c:out value="${schDto.schRegion}" />' data-init-todate='<c:out value="${schDto.toDate}" />' data-init-fromdate='<c:out value="${schDto.fromDate}" />' />
       </div>
-      
       <div class="left-place-list" id="left-place-list">
-            
+     <!-- 일자별 모든 장소를 출력하는 리스트 -->
       </div>
    </div>
    </div>
@@ -666,7 +750,9 @@ body > div.mainContainer > div.right.menu {
 	         <div class="left clearfix" id="rec-place">
 	         <c:forEach items="${places}" var="list">
 	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
+	                  <div class="img-wrap-div" style="border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);">
 	                  <img src='<c:out value="${list.plcImg}"></c:out>'>
+	                  </div>
 	                  <span><c:out value="${list.plcTitle}"></c:out></span>
 	                  <button class="rec-add-button" type="button">
 	                  <i class="fas fa-plus"></i>
@@ -694,7 +780,7 @@ body > div.mainContainer > div.right.menu {
       <!-- 검색 창의 끝 -->
    <!-- /.panel-heading -->
    <div class="panel-body">
-      <!-- start place List 지금은 굳이 상관안해도 되고 나중에 이름 바꿀때 right side bar nav -->
+      <!-- start place List -->
       <ul class="right-place-list">
       </ul>
    </div>
@@ -713,6 +799,7 @@ body > div.mainContainer > div.right.menu {
       var marker;
       var overlay;
       var markArr = [];
+      var recMarks = [];
       var polyArr = [];
       var resultset = [];
 	  var distArr = [];
@@ -754,7 +841,6 @@ body > div.mainContainer > div.right.menu {
             objs.setAttribute('class','daily-place-all');
             objs.style.display = 'inline';
              objs.innerText="DAY"+(1+i);
-             
              listAll.appendChild(objs);
 
              for (let j = 0; j < dpList[i].getElementsByTagName('li').length; j++) {
@@ -776,16 +862,13 @@ body > div.mainContainer > div.right.menu {
               width: '100%',
               height: '100%',
               overflow: 'auto',
-              // 레이어 색깔은 여기서 바꾸면 됨
               backgroundColor: 'rgba(0,0,0,0.4)'
           });
           document.body.append(bg);
 
-          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           modal.querySelector('.modal_close_btn').addEventListener('click', function() {
               bg.remove();
                   modal.style.display = 'none';
-                  //자식 노드 초기화
          $("#Allschedule").empty();
           });
 
@@ -794,10 +877,8 @@ body > div.mainContainer > div.right.menu {
               display: 'block',
               boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-              // 시꺼먼 레이어 보다 한칸 위에 보이기
               zIndex: zIndex + 1,
-
-              // div center 정렬
+              
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
@@ -919,10 +1000,12 @@ body > div.mainContainer > div.right.menu {
           totalPlace.innerHTML = null; // 수정되면 초기화 작업
           
           let objs = document.createElement('button');
-          objs.setAttribute('class', 'showAllBtn');
-          objs.innerText="전체 일정 보기";
-          //전체보기 이벤트생성
-          objs.addEventListener('click', showAll);
+          objs.setAttribute('class', 'home-btn');
+          objs.innerText="홈으로";
+          objs.addEventListener('click', function(){
+        	  location.href = "/main/index";
+          })
+          
           
           totalDate.appendChild(objs);
             
@@ -995,16 +1078,13 @@ body > div.mainContainer > div.right.menu {
                width: '100%',
                height: '100%',
                overflow: 'auto',
-               // 레이어 색깔은 여기서 바꾸면 됨
                backgroundColor: 'rgba(0,0,0,0.4)'
            });
            document.body.append(bg);
 
-           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
            modal.querySelector('.modal_close_btn').addEventListener('click', function() {
                bg.remove();
                    modal.style.display = 'none';
-                   //자식 노드 초기화
            });
 		
            modal.setStyle({
@@ -1012,32 +1092,17 @@ body > div.mainContainer > div.right.menu {
                display: 'block',
                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-               // 시꺼먼 레이어 보다 한칸 위에 보이기
                zIndex: zIndex + 1,
 
-               // div center 정렬
                top: '50%',
                left: '50%',
                transform: 'translate(-50%, -50%)',
                msTransform: 'translate(-50%, -50%)',
                webkitTransform: 'translate(-50%, -50%)'
            });
-    	   
        }
        
        function insertSchedule() {
-    	     /*  // 유빈 누나 코드
-              const formData = new FormData();
-              
-              const inputFile = $("input[name='uploadFile']");
-              
-              const file = inputFile[0].files[0];
-
-              if($(".uploadResult li").length==1){
-                 $(".uploadResult li")[0].remove();
-              }
-              formData.append("uploadFile",file);
-			  // 유빈누나 코드 end */
            let datePicker = document.getElementsByClassName("data-range-picker")[0];
            let dateList = datePicker.value.split(' - ');
            let fromDate = new Date(dateList[0]);
@@ -1057,9 +1122,6 @@ body > div.mainContainer > div.right.menu {
         		   schTitle:title,
         		   fromDate:fromDate,
         		   toDate:toDate,
-        		   /* // 이미지 추가 멀티파일 부분
-        		   img:formData,
-        		   // 이미지 추가 멀티파일 부분 */
         		   schStatus:"BS003",
         		   memo:memo,	   
         		   schRegion:schRegion
@@ -1112,7 +1174,7 @@ body > div.mainContainer > div.right.menu {
 			const setConNull = (pmarkCon) => {
 				for (let e of pmarkCon) {
 					e.setMap(null);
-					}
+				}
 			}
 			for (let eArr of polyArr) {
 				setConNull(eArr);
@@ -1121,8 +1183,7 @@ body > div.mainContainer > div.right.menu {
 				setConNull(eArr);
 			}
 		}
-        
-        
+		
        function initSch(){
     	   let zIndex = 99;
     	   let modal = document.getElementById('show-schedule');
@@ -1130,7 +1191,6 @@ body > div.mainContainer > div.right.menu {
            mapOption = {
               center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
               level : 8
-           // 지도의 확대 레벨
            };
            
            mapContainer.setStyle({
@@ -1142,9 +1202,11 @@ body > div.mainContainer > div.right.menu {
            let listAll = document.getElementById('all-schedule');
            // 노드를 이어붙일 애들 target
            let dpList = document.getElementsByClassName('daily-place-list');
-           // 장소 추출할 친구 현재 2차원임;
+           // 장소 추출할 리스트 현재 2차원임;
            let dateList = document.querySelector("#left-date-list").cloneNode(true);
            let dailyBtn = dateList.children;
+           dailyBtn[0].innerText = "전체 일정 보기";
+           dailyBtn[0].setAttribute("class","showAllBtn");
            let len = dailyBtn.length;
 			for (let i = 0; i < len; i++) {
 				dailyBtn[i].addEventListener("click", (event) =>{
@@ -1174,7 +1236,7 @@ body > div.mainContainer > div.right.menu {
              	dailyBtn[i].classList.remove("active");
 			  }
            dailyBtn[0].classList.add("active");
-           // 일정 추출할 친구
+           // 일정 추출할 리스트
            // 일정 생성 완료
            let dateLeng = dateList.children.length-1;
            
@@ -1201,7 +1263,7 @@ body > div.mainContainer > div.right.menu {
 
               objs.setAttribute('class','daily-place-dt');
               objs.style.display = 'block';
-              objs.innerText=i+1+"일차";
+              objs.innerText="<"+(i+1)+"일차>";
               listAll.appendChild(objs);
 			  // 일차 리스트에 이어 붙여주기          
 			  
@@ -1220,7 +1282,6 @@ body > div.mainContainer > div.right.menu {
         }
            dateAll.appendChild(dateList);  
            
-           // 모달 div 뒤에 희끄무레한 레이어
            let bg = document.createElement('div');
            bg.setAttribute("class", "modal-background");
            bg.setStyle({
@@ -1249,14 +1310,12 @@ body > div.mainContainer > div.right.menu {
 
                zIndex: zIndex + 1,
 
-               // div center 정렬!!
                top: '50%',
                left: '50%',
                transform: 'translate(-50%, -50%)',
                msTransform: 'translate(-50%, -50%)',
                webkitTransform: 'translate(-50%, -50%)'
            });
-       
        
            const showCurrList = function (event){
          	 let idx = $(this).index()-1;
@@ -1356,7 +1415,7 @@ body > div.mainContainer > div.right.menu {
                  mapContainer.style.width = '100%';
                  mapContainer.style.height = '100%';
                  inmap.relayout();
-         drawLineAll(); // 선언이 뒤에 있어서 부득이하게 라인이 일로 와버림..       
+         drawLineAll(); // 수정후 마지막에 라인그리기
          };   
          
        function drawLineAll(event) {
@@ -1430,8 +1489,6 @@ body > div.mainContainer > div.right.menu {
 				   distArr.push(dist);  
     			   polyCon.push(polyline);
     			   polyArr.push(polyCon);
-    			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km"); */
-    			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
     			}
         	   
            }
@@ -1509,8 +1566,6 @@ body > div.mainContainer > div.right.menu {
     	    		})
     			   polyCon.push(polyline);
     			   polyArr.push(polyCon);
-    			   /* console.log((polyline.getLength()/1000).toFixed("2")+"km"); */
-    			   // 이 메소드 사용해서 보여주기만 전체보기 marker 컨트롤도.. 신경쓰자..
     			}
         	   
            }
@@ -1595,7 +1650,7 @@ body > div.mainContainer > div.right.menu {
                      liobj.setAttribute('class', 'left clearfix');
                      let objs1 = document.createElement("div");
                      objs1.setAttribute('class','hoverable-place');
-                     objs1.setAttribute('data-title',list[i].plcTitle);
+                     objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
                      objs1.setAttribute('data-region-no',list[i].regionNo);
                      objs1.setAttribute('data-address-dt',list[i].addressDt);
                      objs1.setAttribute('data-plc-no',list[i].plcNo);
@@ -1605,7 +1660,7 @@ body > div.mainContainer > div.right.menu {
                      objs1.setAttribute('data-opening-h',list[i].openingH);
                      objs1.setAttribute('data-p-cate',list[i].pCate);
                      let span = document.createElement("span");
-                     span.innerText=list[i].plcTitle + " ";
+                     span.innerText=list[i].plcTitle.replace(" ","\n");
                      objs1.addEventListener('mouseover',placeOver);
                      
                      
