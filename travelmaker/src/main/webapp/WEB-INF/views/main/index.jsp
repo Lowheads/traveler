@@ -1034,27 +1034,14 @@ a{text-decoration: none}
       type: "GET",
       async: "false",
       success: function(resp) {
-        console.log(resp);
-        console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-        console.log("위도 : " + resp.lat + "  경도 : " + resp.lon);
-        console.log("==================================================================================");
         for (let idx in resp.daily) {
           let tmp = '<div class="weatherContent">';
           let days = new Date();
           days.setTime(resp.daily[idx].dt * 1000);
           const today = moment(days);
-          console.log("날짜 : " + today.format('YYYY-MM-DD'));
           tmp += '<div class="day">' + today.format('MM / DD') + '<div>';
-          console.log("최고 기온 : " + resp.daily[idx].temp.max);
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].temp.min) + '&ordm/' + Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].pop*100.0) + '%<div>';
-          console.log("최저 기온 : " + resp.daily[idx].temp.min);
-          console.log("강수 확률 : " + resp.daily[idx].pop);
-          console.log("자외선 지수 : " + resp.daily[idx].uvi);
-          console.log("날씨 : " + resp.daily[idx].weather[0].main);
-          console.log("상세날씨설명 : " + resp.daily[idx].weather[0].description);
-          console.log("바람   : " + resp.daily[idx].wind_speed);
-          console.log(resp.daily[idx].weather[0].icon);
           //맑음
           if(resp.daily[idx].weather[0].icon=='01d' || resp.daily[idx].weather[0].icon=='01n'){
             imgURL = '/resources/design/line/animation-ready/clear-day.svg';
@@ -1095,17 +1082,12 @@ a{text-decoration: none}
           tmp += '<div class="Icon">' + "<img src=" + imgURL + ">" + '<div>';
           tmp += "</div>"
           $('.weather').append(tmp);
-          console.log("=====================================================================================");
         }
       }
     })
     
     $(".navContent").on('click',function(){
        
-       /* 블러처리 */
-    /*    $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2)");
-       $(this).css("background-color","white");
-       $(this).css("border-radius","40px"); */
        $(".selectRegionBox").css("display","flex");
     })
     
@@ -1123,20 +1105,6 @@ a{text-decoration: none}
           if(!event.target.matches('.dateNodeList'))
              $(".datepickerBox").hide();
         } 
-    
-    
-    
-     /* 의미없는듯 달력디자인을 바꿔야함$(".navDateBtn").on('click',function(){ */
-       /* let mNavNode = document.querySelector("#mainNav").childNodes; */
-       /* $(this).css("box-shadow","5px 0px 5px rgba(128, 128, 128, .2),-5px 0px 5px rgba(128, 128, 128, .2)");
-       $(this).children(".selectContent").css("border","none");
-       $(this).css("background-color","white");
-       $(this).css("border-radius","40px");
-        */
-        
-    /*     $(".datepickerBox").show();
-    }) */
-    
     $(".region").on("click",function(){
        document.getElementsByClassName("navBtnNodeList")[3].innerHTML = "<b class='navBtnNodeList' data-regionNo="+$(this).data('regionNo')+" style=color:black;font-size:15px;>"+$(this).text()+"</b>"
        $(".navDateBtn").first().click();
