@@ -77,6 +77,18 @@ img.ui-datepicker-trigger {
 .apiSpanNickname{
 	margin-left: 12%;
 }
+
+.reg-fonts{
+	font-weight: bold;
+    font-size: 17px;
+    margin-left: 6%;
+}
+
+.div-regs{
+	padding: 5px;
+    padding-top: 2px;
+    margin-left: 3%;
+}
 </style>
 
 
@@ -122,9 +134,9 @@ img.ui-datepicker-trigger {
                   
                   <!-- 생년월일 -->
                 <div class="tag-wrap">
-                  <div class="reg-font">생일&nbsp;&nbsp;</div>
-                  <div class="div-reg">
-                  	<input type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
+                  <div class="reg-fonts" style="margin-left: 6%;">생년월일&nbsp;&nbsp;</div>
+                  <div class="div-regs">
+                  	<input style="margin-left: 4%;" type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
                   </div>
                 </div>
                   

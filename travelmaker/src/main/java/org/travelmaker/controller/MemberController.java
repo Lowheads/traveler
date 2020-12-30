@@ -59,22 +59,20 @@ public class MemberController {
 	public String login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
 		
 		String referer = request.getHeader("Referer");
-		final String CURRENT_PAGE = "redirect:" + referer; 
-		final String ADMIN_PAGE = "redirect:/admin/main";
 		
 		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
 		if(service.isMemberStatus(mVO, rttr, session)) {
-			return CURRENT_PAGE;
+			return "redirect:" + referer; 
 		}
 		// email 저장하기 여부
 		service.rememberEmail(mVO.getEmail(), request, response);	
 		
 		// 로그인 하자
 		if(service.isAdminLogin(mVO, session)) {
-			return ADMIN_PAGE;
+			return "redirect:/admin/main";
 		}
 		
-		return CURRENT_PAGE;
+		return "redirect:" + referer; 
 	}
 	
 	// 로그아웃
