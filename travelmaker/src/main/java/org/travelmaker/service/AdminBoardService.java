@@ -17,5 +17,5 @@ public interface AdminBoardService {
 	
 	public List<BoarddtVO> getPostDetail(int boardNo);
 	
-
+	public List<String> getPostImages(int boardNo);
 }

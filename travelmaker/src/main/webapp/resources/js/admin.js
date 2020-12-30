@@ -16,8 +16,26 @@ var user=(function(){
 					error();
 				}
 			});
-		}	
-			return {detail:detail};
+			
+			}
+		
+	function getImage(boardNo, callback,error){
+		
+		$.getJSON("/admin/getPostImages/"+boardNo+".json"
+			,function(data){
+				if(callback){
+					callback(data)}}
+					).fail(
+				function(xhr, status,err){
+					if(error){
+						error();
+					}
+				});
+			}
+		
+			return {detail:detail,
+			getImage:getImage};
+			
 })();
 
 var theme = (function(){

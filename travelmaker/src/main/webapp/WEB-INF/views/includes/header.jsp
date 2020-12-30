@@ -573,23 +573,25 @@ text-align: center;
 }
 .button-btn-submit{
 	position:absolute;
-	right:7%;
-	bottom:0px; 
-	background-color:rgba(168, 168, 168, 0.2);
+	right:2vh;
+	top:60vh; 
+/* 	background-color:rgba(168, 168, 168, 0.6); */
+	background-color: rgba(0,0,0,0.6);
     margin : 3px;
-    padding: 4px 7px;
+    padding: 7px 14px;
     border-radius: 7px;
     display:inline-block;
-    float:right;
-    
+    /* float:right; */
+    z-index:1;
+    font-weight: bold;
+    color:rgba(255, 255, 255, 0.9);
 }
 
 .button-btn-submit:hover{
  
-	/* background-color:rgba(255, 51, 0, 0.8); */
 	background-color: #ff8b3d;
-    border:solid 2px rgba(255,255,255,1);
-
+	color:rgba(255, 255, 255, 0.9);
+	font-weight: bold;
 }
 
 
@@ -646,6 +648,7 @@ text-align: center;
    /*  border:solid 1.5px rgb(167, 168, 168);   */
      border-radius: 25px;
      margin:0 auto;
+     padding-bottom:15px;
       text-align: center;
       position:relative;
      background:rgb(255, 255, 255);
@@ -654,7 +657,7 @@ text-align: center;
         
  .themeImage{
      width:100%;
-     height:75vh;
+     height:65vh;
      overflow:hidden;
      border-radius:25px 25px 0px 0px;
      margin: 0px;
@@ -675,6 +678,7 @@ text-align: center;
     padding: 15px 30px 10px;
     box-sizing: border-box;
     text-align: left;
+     font-size: larger;
 }
 
 .placeList{
@@ -688,31 +692,27 @@ text-align: center;
     float: left;
     border:solid 2px rgba(213, 213, 213, 0.9);
     margin : 3px;
-    padding: 4px 7px;
+    padding: 5px 14px;
     border-radius: 7px;
-    
 }
 
 .recPlace:hover{
 
     color:rgba(255, 255, 255, 0.9);
-    /* background-color:rgba(122, 161, 206, 0.9);
-     */
-    background-color: rgba(255,139,61, 0.75);
+    background-color: #ff8b3d;
+    
 
 }
 
 .clicked{
-	color:rgba(0,0,0,0.8);
-    /* color:rgba(255, 255, 255, 0.9); */
-/*     background-color:rgba(78, 110, 146, 0.9); */
-		background-color: #ff8b3d;
+	 color:rgba(255, 255, 255, 0.9);
+	background-color: #ff8b3d;
 }
 
 .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 40%;
+    top: 35vh;
     margin-top: -22px;
     padding: 16px;
     color: white; 
@@ -722,6 +722,7 @@ text-align: center;
     border-radius: 0 3px 3px 0;
     user-select: none;
     z-index:1;
+    background-color: rgba(0,0,0,0.3);
     }
     
 .next {

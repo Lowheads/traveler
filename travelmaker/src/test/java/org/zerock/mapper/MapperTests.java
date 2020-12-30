@@ -369,7 +369,7 @@ public class MapperTests {
 		
 	}
 	
-	@Test
+//	@Test
 	public void getPlaceList() {
 		
 		Criteria cri = new Criteria();
@@ -381,6 +381,17 @@ public class MapperTests {
 		
 		List<PlaceVO> list = mapper3.getPlaceList(cri.getKeyword(), cri.getPageNum(),regionNo);
 		list.forEach(theme->log.info(theme.toString()));
+	}
+	
+	@Test
+	public void getImage() {
+		
+		int boardNo = 184;
+		List<String> images = mapper2.getPostImages(boardNo);
+		
+		images.forEach(theme->log.info(theme.toString()));
+		
+		
 	}
 	
 

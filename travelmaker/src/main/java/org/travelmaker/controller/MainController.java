@@ -70,7 +70,7 @@ public class MainController {
 
 		Map<Integer, List<PlaceDTO>> theme = new HashMap<Integer, List<PlaceDTO>>();
 		
-		for(int i =1; i<6;i++) {
+		for(int i =1; i<7;i++) {
 			
 			theme.put(i-1, placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
 		}

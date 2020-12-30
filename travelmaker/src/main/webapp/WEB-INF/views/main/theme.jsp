@@ -23,8 +23,7 @@
 	<!-- image slide -->	
 	<div class="slideWrapper">
  	<!-- 비오는날 보이는 테마 -->
- 	<!-- <button class="button-btn-submit submitResult">선택완료</button> -->
- 	 <div class="button-btn-submit">선택완료</div> 
+ <!-- 	 <div class="button-btn-submit">선택완료</div>  -->
   		<div class="dots">
             <span class="dot" id = "1" onclick="currentSlide(1)"></span> 
             <span class="dot" id = "2" onclick="currentSlide(2)"></span> 
@@ -32,10 +31,11 @@
             <span class="dot" id = "4" onclick="currentSlide(4)"></span> 
             <span class="dot" id = "5" onclick="currentSlide(5)"></span> 
             <span class="dot" id = "6" onclick="currentSlide(6)"></span>
+            <span class="dot" id = "6" onclick="currentSlide(7)"></span>
         </div> 
 	 <div class="mySlides" id="rainydayRec" >
-	 <!-- 	<div class="button-btn-submit">선택완료</div> -->
 				<div class='themeImage'>
+					 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
 				</div>
@@ -48,8 +48,8 @@
 		</div><!-- end of myslides --> 
   		<c:forEach items="${themeList}" var="themeList" varStatus="status">
   		<div class="mySlides" id="theme_place_list<c:out value='${themeList.key}' />">
-  			 	<!-- <div class="button-btn-submit">선택완료</div> -->
   		<div class='themeImage'>
+  			 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
   		</div>
@@ -89,7 +89,6 @@
 	  
 	  if (n > x.length) {slideIndex = 1}
 	  if (n < 1) {slideIndex = x.length}
-	  
 	  
 	  for (i = 0; i < x.length; i++) {
 	    x[i].style.display = "none";  
@@ -152,7 +151,7 @@
 
 			
 			//테마이미지 가져와서 띄워주기
-			for(let i =1;i<6;i++){(function() {
+			for(let i =1;i<7;i++){(function() {
 							
 				$.getJSON("/admin/getAttachment", {
 							themeNo : $("div .travel-theme")[i].id}, 
@@ -212,7 +211,10 @@
   			function init() {
 			let submitBtn = document
 					.getElementsByClassName("button-btn-submit");
-			submitBtn[0].addEventListener("click", submitPlace);
+			for(let i =0; i<submitBtn.length;i++){
+				submitBtn[i].addEventListener("click", submitPlace);
+			}
+			
 		}  
 
 		function submitPlace() {

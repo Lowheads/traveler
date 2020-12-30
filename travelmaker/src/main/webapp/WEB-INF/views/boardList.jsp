@@ -23,10 +23,14 @@
 						<c:if test="${criteria.type eq 'N'}">
 						닉네임
 						</c:if>
+						<c:if test="${criteria.type eq 'C'}">
+						내용
+						</c:if>
 						</option>
 						<option value="NO">회원번호</option>
 						<option value="N">닉네임</option>
 						<option value="T">제목</option>
+						<option value="C">내용</option>
 					</select>
 					<input type="text" class="form-control form-control-sm"
 						name="keyword" id="keyword" placeholder="키워드를 입력하시오"
@@ -62,7 +66,7 @@
 								<td><input type="checkbox" name="ChkBox"
 									id="${board.boardNo}"></td>
 								<td><c:out value="${board.boardNo}" /></td>
-								<td><c:out value="${board.boardTitle}" /></td>
+								<td name="title"><c:out value="${board.boardTitle}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${board.WDate}" /></td>
 								<td id=""><c:out value="${board.pickCnt}" /></td>
@@ -87,7 +91,10 @@
 									aria-hidden="true">&times;</button>
 								<h4 class="modal-title" id="myModalLabel"></h4>
 							</div>
-							<div class="modal-body">처리가 완료되었습니다</div>
+							<div class="modal-body">처리가 완료되었습니다
+							
+							<div class="img-card"></div>
+							</div>
 							<div class="modal-footer">
 								<button id="modalInBtn" type="button" class="btn btn-primary"
 									data-dismiss="modal">확인</button>
@@ -213,17 +220,44 @@
 		
 		const boardNo = $(this).attr("id");
 		
+		const target = $(this).children();
+		
+		const title = target[2].innerText;
+		
+		let str = "";
+		
 		user.detail(boardNo,function(list){
 			
-			let str = boardNo+"번 게시글 상세정보 <br>";
-			for (let i = 0; i < list.length; i++) {
+			str = boardNo+"번 게시글 상세정보 <br>"+"제목	:	"+title+"<br>";
+			
+			if(list.length!=0&&list[0].boardCon!=null){
+				for (let i = 0; i < list.length; i++) {
+					
+					str+="내용	:	"+list[i].boardCon	+"<br>";
+				}
 				
-				str+="내용	:	"+list[i].boardCon	+"<br>";
+			}else{
+				str+="내용 없음<br>"}
+			
+			user.getImage(boardNo,function(list){
 				
-			}
+				for(let i =0; i<list.length;i++){
+
+					let img = document.createElement("img")
+					img.setAttribute("src","/imgUpload/boarddtFile/"+list[i])
+					
+					let tag = document.createElement("div");
+					tag.setAttribute("class","img-card")
+					tag.append(img)
+					$(".modal-body").append(tag);
+					
+				}
+				
+			},function(fail){console.log(fail); console.log("ㅜㅜ")})
+			
 			showModal(str);
 		})
-		
+
 	})	
 	
 	function showModal(msg){

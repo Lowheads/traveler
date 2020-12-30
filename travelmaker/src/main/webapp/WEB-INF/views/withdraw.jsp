@@ -14,10 +14,20 @@
 				<div class="w100 input-group custom-search-form" style="padding-right: 10px"> -->
 				<div class="w100 input-group custom-search-form">
 					<select class="form-control form-control-sm" name="type" id="type">
-						<option selected disabled hidden><c:out value="${criteria.type}"/></option>
-						<option value="회원번호">회원번호</option>
-						<option value="이메일">이메일</option>
-						<option value="닉네임">닉네임</option>
+						<option selected disabled hidden>
+						<c:if test="${criteria.type eq 'NO'}">
+						회원번호
+						</c:if>
+						<c:if test="${criteria.type eq 'E'}">
+						이메일
+						</c:if>
+						<c:if test="${criteria.type eq 'N'}">
+						닉네임
+						</c:if>
+						</option>
+						<option value="NO">회원번호</option>
+						<option value="E">이메일</option>
+						<option value="N">닉네임</option>
 					</select>
  							<input type="text" class="form-control form-control-sm" placeholder="키워드를 입력하시오"
 							name="keyword" id="keyword" value = '<c:out value="${criteria.keyword}"/>'>
@@ -153,7 +163,7 @@ $(document).ready(function() {
 		
 		$("#moveBtn").on('click',function(){
 			
-			location.href = "/admin/boardList?type=mem_no&keyword="	+ id;
+			location.href = "/admin/boardList?type=NO&keyword="	+ id;
 		})
 	})
 	

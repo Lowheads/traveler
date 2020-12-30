@@ -116,8 +116,6 @@
 </div>
 </div>
 
-<!-- <div id="dailyChart" style="width: 900px; height: 200px;"></div>
-<div id="monthlyChart" style="width: 900px; height: 200px;"></div> -->
 <div class="row">
 <div class="col-xl-6 col-lg-7">
 <div class="card shadow mb-4">
@@ -184,6 +182,7 @@
 <script type="text/javascript" src="/resources/js/admin.js"></script>
  <script type="text/javascript">
  $(document).ready(function() {
+	 
 	 
 		 makeChart("daily");
 		 getPost("view");

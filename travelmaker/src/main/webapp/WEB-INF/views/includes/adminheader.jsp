@@ -10,6 +10,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <style>
 
+.img-card{
+	height:100px;
+	weight:150px;
+	margin:10px;
+	display:inline-block;
+}
+
+.img-card img{
+	height:100%;
+	border-radius:4px;
+}
+
+
 .table{
 	margin-top:10px;
 	font-size: small;
@@ -24,7 +37,7 @@
 	height:100vh;
 	background-color:gray;
 	z-index:100;
-	background:rgba(255,255,255,0.5); 
+	background:rgba(0,0,0,0.8); 
 }
 
 .bigPicture{
@@ -35,6 +48,17 @@
  	justify-content:center;
 	align-items:center; 
 	
+}
+
+.bigPicture img{
+	max-width:120vh;
+	
+}
+
+
+#resultPage li{
+
+	margin:3px 10px;
 }
 
 
