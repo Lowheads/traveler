@@ -122,8 +122,6 @@ public class MainController {
         	}
 	}
 	
-	//네이버 로그인 성공시 callback호출 메소드
-	  // 'id'값은 각 애플리케이션마다 회원 별로 유니크한 값
    @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rttr, HttpServletRequest request) throws IOException, ParseException {
 	    

@@ -39,48 +39,46 @@ public class MemberController {
 
 	// 회원가입
 	@RequestMapping(value = "/joinMember", method = RequestMethod.POST)
-	public ModelAndView joinMember(MemberVO mVO, HttpSession session, RedirectAttributes rttr) {
-		ModelAndView mav = new ModelAndView("redirect:/main/index");
+	public String joinMember(MemberVO mVO, HttpSession session, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		String referer = request.getHeader("Referer");
 		
 		// 이메일, 닉네임 한번 더 검사하자
 		if(service.isDuplicateCheck(mVO, rttr)) {
-			return mav;
+			return "redirect:" + referer;
 		}
 		
 		// 중복이 없다면.. 가입 시키자
 		service.join(mVO); // 내용을 저장한다.
 		rttr.addFlashAttribute("msg", "여행의정석 가족이 되신걸 환영합니다. 로그인 해주세요");
-		return mav; // 회원가입 후, main으로 이동
+		return "redirect:/main/index"; // 회원가입 후, main으로 이동
 	}
 
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
+	public String login(MemberVO mVO, HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
 		
-		String referer = request.getHeader("Referer"); // 로그인 하는 페이지의 주소를 referer 변수에 저장한다.
-		ModelAndView mav = new ModelAndView("redirect:" + referer); 
+		String referer = request.getHeader("Referer");
 		
 		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
 		if(service.isMemberStatus(mVO, rttr, session)) {
-			return mav;
+			return "redirect:" + referer; 
 		}
 		// email 저장하기 여부
 		service.rememberEmail(mVO.getEmail(), request, response);	
 		
-		log.info("로그인한 회원의 번호 : " + mVO.getMemNo());
-		
 		// 로그인 하자
 		if(service.isAdminLogin(mVO, session)) {
-			// 관리자는 관리자 페이지로 가주세요
-			return mav = new ModelAndView("redirect:/admin/main"); 
+			return "redirect:/admin/main";
 		}
 		
-		return mav;
+		return "redirect:" + referer; 
 	}
 	
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) throws Exception{
+		
 		session.invalidate(); // 세션 삭제
 		
 		// 로그아웃은 메인으로 이동시키자
@@ -91,14 +89,18 @@ public class MemberController {
 	@RequestMapping(value = "/getMember", method = RequestMethod.GET)
 	public String getMember(String email, Model model, HttpSession session) {
 		
+		final String MEMBER_INFO_PAGE = "/member/memberInfo";			// 일반회원정보 조회 페이지
+		final String SOCIAL_MEMBER_INFO_PAGE = "/member/apiMemberInfo"; // 소셜회원정보 조회 페이지
+
 		model.addAttribute("member", service.getMember(email));
 		
+		// 소셜회원은 소셜정보조회페이지로 이동
 		if(service.isApiLoginCheck(email, session)) {
-			return "/member/apiMemberInfo";
+			return SOCIAL_MEMBER_INFO_PAGE;
 		}
 		
 		// 조회페이지로 이동한다.
-		return "/member/memberInfo";
+		return MEMBER_INFO_PAGE;
 	}
 	
 	// 비밀번호 변경
@@ -124,9 +126,9 @@ public class MemberController {
     @ResponseBody
     public String hasEmail(@RequestParam("email") String email) {
         
-        String count = ""+service.hasEmail(email); // 중복되면 1 반환
+        String cnt = ""+service.hasEmail(email); // 중복되면 1 반환
         
-        return count;
+        return cnt;
     }
 	
 	// Ajax 닉네임 체크(memberInfo)
@@ -139,31 +141,36 @@ public class MemberController {
 		return cnt;
 	}
 	
-	// 닉네임 수정(회원정보에서 저장하기 버튼 누르면 실행)
+	// 정보수정 -> 저장하기 누르면 실행
 	@RequestMapping(value = "/modifyNickname", method = RequestMethod.POST)
 	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
 		
+		try {
+
 		// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
 		service.isNicknameTouch(nickname, email, rttr);
 		
 		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
 		return "redirect:/member/getMember?email=" + session.getAttribute("email");
+
+		}catch (Exception e) {
+			e.getStackTrace();
+			rttr.addFlashAttribute("msg", "세션이 만료되었습니다.");
+			return "redirect:/main/index";
+		}
 	}
 	
 	
 	// 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
-	public ModelAndView deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
-		ModelAndView mav;
+	public String deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
 			
 		// 회원이 일치하는지 확인
 		// 일치하면 탈퇴, 아니면 탈퇴 못함
 		if(service.isMemberValid(pwd, email, rttr, session)) {
-			mav = new ModelAndView("redirect:/member/getMember?email=" + session.getAttribute("email"));
-			return mav;
+			return "redirect:/member/getMember?email=" + session.getAttribute("email");
 		}
-		mav = new ModelAndView("redirect:/member/main");
-		return mav;
+		return "redirect:/member/main";
 	}
 	
 	// api 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
@@ -178,10 +185,11 @@ public class MemberController {
 	// 카카오 로그인 시작
 	 @RequestMapping(value="/kakao",method= RequestMethod.GET)
 	 public String kakaoConnect(HttpServletRequest request, HttpSession session) {
+		 
 		 String referer = request.getHeader("Referer"); // 로그인하는 페이지의 주소를 저장한다.
 		 session.setAttribute("referer", referer);		// 현재 주소를 세션에 저장하자
-		 
-		  StringBuffer url = socialLoginService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
+		 StringBuffer url = socialLoginService.getKakaoConnect();  // 카카오 소셜로그인 url 얻어오기
+		  
 		  return "redirect:" + url.toString();
 	 }
 	 
@@ -192,9 +200,9 @@ public class MemberController {
 		 String referer = (String)session.getAttribute("referer"); // 세션에 저장한 주소를 변수에 저장한다.
 		 System.out.println("kakao code:"+code);
 		  
-	  JsonNode access_token = socialLoginService.getKakaoToken(code); // 카카오 토큰을 얻어온다
-	  JsonNode userProfile = socialLoginService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
-	  String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일를 가져온다.
+		 JsonNode access_token = socialLoginService.getKakaoToken(code); // 카카오 토큰을 얻어온다
+		 JsonNode userProfile = socialLoginService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.
+		 String email = userProfile.path("kakao_account").get("email").textValue(); // 프로필에서 이메일을 가져온다.
 		         
 	  		// 회원이 아니면 회원가입해주세요
 	  		if(service.isKakaoApiJoinCheck(userProfile, model)) {
