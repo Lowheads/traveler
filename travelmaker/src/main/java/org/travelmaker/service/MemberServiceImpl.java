@@ -107,13 +107,13 @@ public class MemberServiceImpl implements MemberService {
    // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
    public boolean isMemberStatus(MemberVO mVO, RedirectAttributes rttr, HttpSession session) { 
       
-      // 로그인에 실패하면 메인 페이지로
+      // 로그인에 실패
       if(emailAndPwdInputCheck(mVO)==null) {
          rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
          return true;
       }
    
-      // 탈퇴한 회원은 접속 못함
+      // 탈퇴한 회원은 접속 불가
       if(deleteNoAccess(mVO.getEmail())) {
          rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
          return true;
@@ -124,7 +124,7 @@ public class MemberServiceImpl implements MemberService {
 
    
    @Override
-   public int getMemNo(String email) { // 로그인하면 success창에 내 회원번호 띄어주기
+   public int getMemNo(String email) { 
       return mapper.getMemNo(email).getMemNo();
    }
 
@@ -189,7 +189,7 @@ public class MemberServiceImpl implements MemberService {
 		mapper.modifyBoardReplyer(nickname, replyer);
 	}
 	
-	@Transactional // 트랜잰션
+	@Transactional // 트랜잭션
 	@Override
 	public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr) { // 닉네임 수정했어?
       
@@ -214,29 +214,24 @@ public class MemberServiceImpl implements MemberService {
 		return false;
    }
 
+	// 삭제 전 유효성 체크
    @Override
-   public boolean isMemberValid(String pwd, String email, RedirectAttributes rttr, HttpSession session) { // 삭제 전 유효성 체크
-      
-      // 비밀번호가 다르면 다시 입력하세요
+   @Transactional
+   public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session) { 
+     
+	  // 비밀번호가 다르면 다시 입력하세요
       if(mapper.memberValidCnt(pwd, email) == 0) {
          rttr.addFlashAttribute("msg", "비밀번호가 달라요!");
          return true;
       }
       
-      // 비밀번호가 일치하면
-      // 회원 상태를 "탈퇴"로 변경한다.
-      deleteMember(pwd, email);
+      mapper.deleteMember(pwd, email);	
       // 세션을 제거한다.
       session.invalidate();
                
       // 정상적으로 탈퇴 되었다는 메세지를 보낸다.
       rttr.addFlashAttribute("msg", "여행의정석을 이용해주셔서 감사했습니다.");
       return false;
-   }
-   
-   @Override
-   public void deleteMember(String pwd, String email) { // 회원탈퇴
-      mapper.deleteMember(pwd, email);
    }
    
    @Override

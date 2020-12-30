@@ -111,7 +111,7 @@
       and pwd = #{pwd}
    </select>
    
-   <!-- 계정삭제 -->
+   <!-- 회원탈퇴 -->
    <update id="deleteMember">
       update member set 
    	  status = 'MS002'
@@ -119,7 +119,7 @@
       and pwd = #{pwd}
    </update>
    
-   <!-- api 계정삭제 -->
+   <!-- api 회원탈퇴 -->
    <update id="deleteApiMember">
       update member set 
       status = 'MS002'

@@ -50,9 +50,7 @@ public interface MemberService {
    
    public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr); // 닉네임 수정 여부 확인 // 닉네임 수정 여부 확인
    
-   public boolean isMemberValid(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
-   
-   public void deleteMember(String pwd, String email); // 회원 탈퇴
+   public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
    
    public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session); // api 회원 탈퇴
    

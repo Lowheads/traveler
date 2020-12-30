@@ -51,7 +51,6 @@
 				
 				<!-- 비밀글이라면 자물쇠 표시 -->
 				<c:if test="${board.secret eq 'Y' }">
-						<!-- 비밀글이면 자물쇠 표시 -->
 						<img src="/resources/img/lock.png" style="height: 15px" width="15px">
 				</c:if>
 				

@@ -108,23 +108,21 @@ public class MainController {
 		model.addAttribute("list", service.getList());
 		
 		model.addAttribute("adminlist",boardservice.getAdminList());
-		
-    	try {
+	
     		
             /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
             String naverAuthUrl = socialLoginService.getNaverAuthUrl(session);
             
             /* 생성한 인증 URL을 View로 전달 */
             return new ModelAndView("/main/index", "url", naverAuthUrl); // header에 로그인 경로로 잡힌다
-        	}catch(Exception e) {
-        		e.getMessage();
-        		return new ModelAndView("/main/index");
-        	}
+        
 	}
 	
    @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rttr, HttpServletRequest request) throws IOException, ParseException {
 	    
+		
+   	try {
 	    OAuth2AccessToken oauthToken = socialLoginService.getNaverToken(code, state, session); // 네이버 토큰을 얻는다.
 	    String userInfo = socialLoginService.getNaverUserProfile(oauthToken); // // 로그인한 사용자 정보를 읽어온다.
 	    
@@ -150,6 +148,12 @@ public class MainController {
 	    System.out.println("네이버 로그인한 회원의 번호 : " + memberService.getMemNo(email));
 	    return "redirect:/main/index";
 	    
+	}catch(Exception e) {
+		e.getStackTrace();
+		rttr.addFlashAttribute("msg", "예상치못한 에러가 발생했습니다. 메인 홈페이지로 이동합니다");
+		return "redirect:/main/index";
+	}
+   	
    }
 	
 }

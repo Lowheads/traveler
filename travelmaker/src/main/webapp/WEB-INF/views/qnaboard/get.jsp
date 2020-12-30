@@ -71,7 +71,7 @@
                         	</div>
                         	
             <div class="getBtn-wrap" style="text-align: right; margin-top: 20px;">
-                <c:if test="${board.memNo == loginMemNo }">	
+                <c:if test="${board.memNo == loginMemNo || myGrade == 'MG002' }">	
             	<button data-oper='modify' class="reg-btn">수정하기</button>
             	</c:if>
 				<button data-oper='list' class="list-btn">목록</button>
@@ -97,20 +97,19 @@
 		<img alt="speechbubble" src="/resources/img/speechbubble.png" width="20px" height="20px"> comment</i></div><hr>
 		
 			<ui class="chat">
-			
-			<li class="comment-li" data-rno="">
-			   <!-- <div class="comment-wrap">
-				<div class ="comment-list">
-					<strong class="comment-writer"></strong>
-					<samll class="small"></samll>
-					<div class="textContent">
-						<textarea class='modiText' rows='3' cols='100' style='display: none;'></textarea>
-						<button type='button' class='replyModBtn' style='display: none;'>수정완료</button>
-					</div>
-				</div>
-					<p class="comment-reply">아직 등록된 댓글이 없습니다.</p>
-			</div>  -->
-			</li>
+				<li class="comment-li" data-rno="">
+					   <!-- <div class="comment-wrap">
+						<div class ="comment-list">
+							<strong class="comment-writer"></strong>
+							<samll class="small"></samll>
+							<div class="textContent">
+								<textarea class='modiText' rows='3' cols='100' style='display: none;'></textarea>
+								<button type='button' class='replyModBtn' style='display: none;'>수정완료</button>
+							</div>
+						</div>
+							<p class="comment-reply">아직 등록된 댓글이 없습니다.</p>
+					</div>  -->
+				</li>
 			</ui>
 			
 				<!-- paging -->
@@ -244,7 +243,7 @@
 	}
 
 	
-	// 댓글 수정 후 조회
+	// 댓글 조회
 	function showList(page){
 		
 		console.log("page : " + page);
@@ -253,6 +252,7 @@
 		let replyUrl = $(".chat");
 	
 		let myNickname = '<%=(String)session.getAttribute("myNickname") %>';
+		let myGrade = '${myGrade}';
 		console.log("로그인 중인 닉네임 : " + myNickname);
 		
 		
@@ -283,16 +283,16 @@
 			str += "<small class='small'>" + replyService.displayTime(list[i].updateDate) + "</small>";
 			
 			// 내가 작성한 댓글만 수정 가능
-			if(myNickname == list[i].replyer){
+			if(myNickname == list[i].replyer || myGrade == 'MG002'){
 				str += "<button class='replyBtn_modify' onclick='replyModify(this)' data-rno='" + list[i].rno + "'>수정</button>";
 				str += "<button class='replyBtn_delete' onclick='replyDelete(this)' data-rno='" + list[i].rno + "'>삭제</button></div>";
 			}
 			
 			str += "<div class='textContent' style='display : none; margin-top:4%; margin-left:2%;'>";
-			str += "<textarea class='modiText' rows='3' cols='90' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
+			str += "<textarea class='modiText' rows='3' cols='120' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
 			str += "<button class='replyRegiBtn' type='button' class='replyModBtn' style='display: none; margin-bottom : 1%' onclick='replyModiSuccess(this)'>수정완료</button>";
 			str += "</div>";
-			str += "<p class='comment-reply' style='margin-bottom : 2%;'>" + list[i].reply+ "</p></div></li>";
+			str += "<p class='comment-reply' style='margin-bottom : 2%; white-space:pre;'>" + list[i].reply+ "</p></div></li>";
 			str += "<hr>";
 		}
 		replyUrl.html(str); // 댓글창 출력

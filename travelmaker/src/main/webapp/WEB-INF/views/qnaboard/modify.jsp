@@ -78,7 +78,7 @@
                         	
                 
 	                <div class="btn-wrap">
-		                <c:if test="${board.memNo == loginMemNo }">		                	
+		                <c:if test="${board.memNo == loginMemNo || myGrade == 'MG002'}">		                	
 		            	<button type="submit" data-oper='modify' class="mod-btn" 
 		            	onclick="return boardModifyValid()">수정완료</button>
 		            	<button type="submit" data-oper='remove' class="del-btn">게시글 삭제</button>

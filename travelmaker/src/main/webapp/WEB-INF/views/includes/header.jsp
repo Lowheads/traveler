@@ -915,7 +915,7 @@ body{
                   <div class="div-reg">
                   	 <input class="reg-input" type="text" name="email" id="email" placeholder="이메일주소" size="30">
                      <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
-                  <span id="spanEmail"></span></div>
+                  <div><span id="spanEmail"></span></div></div>
                   
                   <!-- 비밀번호 -->
                   <div class="reg-font">비밀번호</div>
