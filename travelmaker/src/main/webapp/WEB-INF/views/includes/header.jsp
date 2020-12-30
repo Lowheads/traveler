@@ -709,25 +709,6 @@ text-align: center;
 		background-color: #ff8b3d;
 }
 
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 40%;
-    margin-top: -22px;
-    padding: 16px;
-    color: white; 
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    z-index:1;
-    }
-    
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
  
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);

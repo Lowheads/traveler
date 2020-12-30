@@ -135,6 +135,15 @@ position: absolute;
 }
 
 
+.daterangepicker:before, .daterangepicker:after{
+	  all: unset;
+}
+
+.daterangepicker:before, .daterangepicker:after{
+	 position: absolute;
+  display: inline-block;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+}
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
     background-color: #ff8b3d;
@@ -507,7 +516,7 @@ a{text-decoration: none}
                </div>
 
             </div>
-            <div class="navDateBtn dateNodeList">
+            <div class="navDateBtn dateNodeList dateSelectBox">
                <!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
                <div class="selectContent dateNodeList"
                   style="margin-left: 30px; padding-left: 30px;">
@@ -521,7 +530,7 @@ a{text-decoration: none}
             
             </div>
 
-            <div class="navDateBtn">
+            <div class="navDateBtn datedateBtn">
                <div class="selectContent dateNodeList" 
                   style="margin-left: 30px; padding-left: 30px;">
                   <div class="dateNodeList">
@@ -620,7 +629,7 @@ a{text-decoration: none}
    var startDate;
    var endDate;
    $(function() {
-      $('.navDateBtn').daterangepicker({
+      $('.dateSelectBox').daterangepicker({
          startDate : moment(),
          endDate : moment(),
          minDate : moment(),
@@ -1109,6 +1118,10 @@ a{text-decoration: none}
        document.getElementsByClassName("navBtnNodeList")[3].innerHTML = "<b class='navBtnNodeList' data-regionNo="+$(this).data('regionNo')+" style=color:black;font-size:15px;>"+$(this).text()+"</b>"
        $(".navDateBtn").first().click();
        $(".datepickerBox").show();
+    })
+    
+    $(".datedateBtn").on("click",function(){
+    	$(".dateSelectBox").click();
     })
     
 </script>
