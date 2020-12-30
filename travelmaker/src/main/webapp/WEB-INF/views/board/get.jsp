@@ -25,7 +25,7 @@
 .ct_body{
 	padding: 30px;
 	/* background-image: url('/resources/imgUpload/2020/12/10/ff752342-efbc-4691-b3f5-7d6d5ef9c2fe_다운로드.jpg');  */
-	height: 270px;
+	height: 400px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	background-position:center center;
@@ -100,6 +100,7 @@
 
 .mainMsg{
 	margin-left: 5%;
+	
 }
 
 .mainMsg a{
@@ -107,8 +108,9 @@
 }
 
 .mainMsg b{
-	font-size:22px;
+	font-size:40px;
 	color:white;
+	text-shadow: 2px 2px grey;
 
 }
 

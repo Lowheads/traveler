@@ -17,14 +17,25 @@
 overflow-y: initial !important
 }
 .modal-body{
-height: 85%;
-overflow-y: auto;
+height: 90%;
+}
+
+.modal-head{
+height: 10%;
+
+}
+
+
+.form-group{
+
+margin-top:40px;
+
 }
 #register_modal{
 	display: none;
 	width: 600px;
 	height: 600px;
-	padding: 10px;
+	padding: 20px;
 	background-color: #fefefe;
 	border: 1px solid #888;
 	border-radius: 3px;
@@ -42,13 +53,14 @@ overflow-y: auto;
 }
 /* 닫는버튼 */
 #hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
-	background-color: white;
-	color: black;
-	border: none;
-	border-radius: 5px;
-	text-align : right;
-	float:right;
-	font-size: 25px;
+	position:absolute;
+   right:15px;
+   background-color: white;
+   color: black;
+   border: none;
+   border-radius: 5px;
+   font-size: 25px;
+    outline: none;
 }
 /* toggle */
 .switch {
@@ -137,8 +149,15 @@ input:checked+.slider:before {
 }
 .ct_body{
 	padding: 30px;
-	background-image: url('/resources/img/boardimg.jpg');
-	height: 400px;
+	background-image: url('/resources/img/boardmain.jpg');
+	background: linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.9) 1%,
+            rgba(20, 20, 20, 0.4) 25%,
+            rgba(20, 20, 20, 0.1) 50%,
+            rgba(20, 20, 20, 0) 100%
+          ), url('/resources/img/boardmain.jpg');
+	height: 465px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	margin-bottom:50px; 
@@ -213,16 +232,16 @@ input:checked+.slider:before {
 }
 .mainMsg{
 	margin-left: 7%;
-	margin-top:8%;
+	margin-top:12%;
 	text-shadow: 2px 2px grey;
 }
 .mainMsg b{
-	font-size:35px;
+	font-size:45px;
 	color:white;
 }
 
 .mainMsg strong{
-	font-size:43px;
+	font-size:50px;
 	color:white;
 }
 
@@ -434,8 +453,10 @@ input:checked+.slider:before {
 
 <!-- Schedulelist Modal -->
 	<div id="schedulelist_modal" class="modal-content">
+	
+	
 	<button class="modal_close_btn"> X </button>
-	<h3>내일정 공유 </h3><br>
+	<div class="modal_head"><h3>내일정 공유 </h3></div>
 	<div class="modal-body">
 		<iframe name="schedulelist" title="schedulelist" width=100% height=100% frameBorder="0">
 		</iframe>

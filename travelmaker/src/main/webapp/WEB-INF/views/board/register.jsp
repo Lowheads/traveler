@@ -9,13 +9,14 @@
 				</div>
 				<div>
 				<div style="text-align:center">
+				<label class='filecontent'>
 					<input type="file" id="boardImg" name="file" class="boardImg" accept='image/jpg, image/png, image/jpeg, image/gif' />
 					
-					<label for = 'boardImg' style="display:inline-block"><i class="far fa-file-image"></i>대표사진 선택</label>
+					<!-- <label for = 'boardImg' style="display:inline-block"><i class="far fa-file-image"></i>대표사진 선택</label> -->
+					<div class="select_img" style="text-align:center"><img src='/resources/img/plusimg.png' border="1px dotted gray" width="420px" height="300px"></div></label>
 				</div>
 							
 				<br>
-					<div class="select_img" style="text-align:center"><img src=""/></div>
 						
 						<script>
 						$("[name=boardTitle]").attr("required",true);
@@ -26,6 +27,7 @@
 							$(".select_img img").attr("src", data.target.result)
 								.width(420)
 								.height(300);
+							$(".select_img img").css("border","none");
 							}
 							reader.readAsDataURL(this.files[0]);
 							}
@@ -49,6 +51,10 @@
 			</form>
 
 <style>
+
+body{
+ margin : 0;
+}
 #boardImg{
     width: 0.1px;
 	height: 0.1px;
@@ -99,6 +105,10 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+}
+
+.select_img img{
+border: 1px dashed gray; 
 }
 </style>
 <script type="text/javascript">
