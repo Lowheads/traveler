@@ -33,7 +33,15 @@ public class BudgetController {
 		log.info("list");
 
 		// DB 모든 일정, 지출 내역
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", service.getBudgetByUser());
 	}
 
+	@GetMapping("/list2")
+	public void list2(Model model) {
+
+		log.info("list");
+
+		// DB 모든 일정, 지출 내역
+		model.addAttribute("list", service.getBudgetByUser());
+	}
 }
