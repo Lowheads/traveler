@@ -19,9 +19,9 @@ public class BudgetServiceImpl implements BudgetService { // mapper(+xml) 에서
 
 	// list.jsp - 모든 일정, 지출 내역
 	@Override
-	public List<BudgetVO> getList() {
+	public List<BudgetVO> getBudgetByUser() {
 		log.info("getList......");
-		return mapper.getList();
+		return mapper.getBudgetByUser();
 	}
 	
 }

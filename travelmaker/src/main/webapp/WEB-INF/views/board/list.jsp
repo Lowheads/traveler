@@ -17,14 +17,25 @@
 overflow-y: initial !important
 }
 .modal-body{
-height: 85%;
-overflow-y: auto;
+height: 90%;
+}
+
+.modal-head{
+height: 10%;
+
+}
+
+
+.form-group{
+
+margin-top:40px;
+
 }
 #register_modal{
 	display: none;
 	width: 600px;
 	height: 600px;
-	padding: 10px;
+	padding: 20px;
 	background-color: #fefefe;
 	border: 1px solid #888;
 	border-radius: 3px;
@@ -42,13 +53,14 @@ overflow-y: auto;
 }
 /* 닫는버튼 */
 #hiddenlist_modal .modal_close_btn , #schedulelist_modal .modal_close_btn ,#register_modal .modal_close_btn {
-	background-color: white;
-	color: black;
-	border: none;
-	border-radius: 5px;
-	text-align : right;
-	float:right;
-	font-size: 25px;
+	position:absolute;
+   right:15px;
+   background-color: white;
+   color: black;
+   border: none;
+   border-radius: 5px;
+   font-size: 25px;
+    outline: none;
 }
 /* toggle */
 .switch {
@@ -114,6 +126,7 @@ input:checked+.slider:before {
 	padding: 5px 10px 5px 10px;
 	float: right;
 	outline: 0;
+	text-decoration: none;
 }
 
  #schedulelist_open_btn{
@@ -136,11 +149,19 @@ input:checked+.slider:before {
 }
 .ct_body{
 	padding: 30px;
-	background-image: url('/resources/img/boardimg.jpg');
-	height: 300px;
+	background-image: url('/resources/img/boardmain.jpg');
+	background: linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.9) 1%,
+            rgba(20, 20, 20, 0.4) 25%,
+            rgba(20, 20, 20, 0.1) 50%,
+            rgba(20, 20, 20, 0) 100%
+          ), url('/resources/img/boardmain.jpg');
+	height: 465px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	margin-bottom:50px; 
+  	box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
 }
 .boardContents{
 	width: 100%;
@@ -210,12 +231,20 @@ input:checked+.slider:before {
 	 font-size : 12px;
 }
 .mainMsg{
-	margin-left: 5%;
+	margin-left: 7%;
+	margin-top:12%;
+	text-shadow: 2px 2px grey;
 }
 .mainMsg b{
-	font-size:30px;
+	font-size:45px;
 	color:white;
 }
+
+.mainMsg strong{
+	font-size:50px;
+	color:white;
+}
+
 /* 페이징 */
 .pagination_bar{
    font-size: 8pt;
@@ -290,8 +319,9 @@ input:checked+.slider:before {
 	<!-- 상단  -->
 	<div class="ct_body">
 		<div class="mainMsg">
-		<b>일정 게시판</b>		
-		<br><br>
+		<b>당신의 일정을</b><br>
+		<strong>공유하세요</strong>
+	
 		
 		<!--mainMsg끝 -->
 		</div>
@@ -423,8 +453,10 @@ input:checked+.slider:before {
 
 <!-- Schedulelist Modal -->
 	<div id="schedulelist_modal" class="modal-content">
+	
+	
 	<button class="modal_close_btn"> X </button>
-	<h3>내일정 공유 </h3><br>
+	<div class="modal_head"><h3>내일정 공유 </h3></div>
 	<div class="modal-body">
 		<iframe name="schedulelist" title="schedulelist" width=100% height=100% frameBorder="0">
 		</iframe>

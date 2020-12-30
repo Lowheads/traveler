@@ -9,7 +9,7 @@ import org.travelmaker.domain.DaybudVO;
 public interface BudgetMapper { 
 	
 	// list.jsp - 모든 일정, 지출 내역 출력
-	public List<BudgetVO> getList();
+	public List<BudgetVO> getBudgetByUser();
 
 	//
 //	public BudgetVO read(Long no);

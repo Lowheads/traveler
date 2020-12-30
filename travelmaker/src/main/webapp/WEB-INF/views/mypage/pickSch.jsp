@@ -154,19 +154,20 @@
 
       .pick_plan_content {
          width: 100%;
+         margin-bottom: 50px;
 
       }
 
       .coverBanner {
-         width: 100%;
-         height: 20%;
-         background-image: url("https://free4kwallpapers.com/uploads/originals/2019/10/15/ocean-sunset-wallpaper.jpg");
-         background-size: cover;
-         text-align: center;
-         color:white;
-         padding-top:100px;
-         padding-bottom: 100px;
-         font-size: 50px;
+        width: 100%;
+   height: 300px;
+   background-image: url("/resources/img/mypagebanner.png");
+   background-size: cover;
+   text-align: center;
+   color: white;
+   padding-top: 100px;
+   padding-bottom: 100px;
+   font-size: 50px;
       }
 
       .pickNav_bar {
@@ -294,7 +295,7 @@
       
       .sch_title_text{
          font-weight:bold;
-         font-size: 23px;
+         font-size: 20px;
       }
 
    </style>
@@ -303,7 +304,7 @@
 <body>
    <div class="pick_plan_content">
       <div class="coverBanner">
-         <b>여행일정</b>
+         <!-- <b>여행일정</b> -->
       </div>
       <div class="pickNav_bar">
          <div class="pickNav_mnu">
@@ -358,7 +359,7 @@
                         <!-- USER_NICKNAME -->
                      
                      <div class="sch_title">
-                  <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.SCH_NO}" class="sch_title_text"><c:out value="${sch.SCH_TITLE }"/></a><br>
+                  <a href="/mypage/pickSch/get?pageNum=${pageMaker.cri.pageNum }&schNo=${sch.SCH_NO}" class="sch_title_text"><c:out value="${sch.BOARD_TITLE }"/></a><br>
                         <i class="fa fa-user-o" aria-hidden="true" style="color: black;"></i> <c:out value="${sch.NICKNAME }"/>
                         <span style="float:right; margin-right: 10px;"><i class="fa fa-heart-o" aria-hidden="true"></i>
                          <span style="font-size: 12px;">${sch.PICK_CNT}</span></span><br> 
@@ -399,6 +400,7 @@
 
 
 </body>
+<%@ include file="../includes/footer.jsp" %>
 <script type="text/javascript">
    $(document).ready(function() {
 

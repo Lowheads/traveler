@@ -729,7 +729,7 @@ text-align: center;
   right: 0;
   border-radius: 3px 0 0 3px;
 }
- 
+
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
   

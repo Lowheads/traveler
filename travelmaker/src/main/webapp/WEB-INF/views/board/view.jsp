@@ -24,7 +24,7 @@
 .ct_body{
 	padding: 30px;
 	/* background-image: url('/resources/imgUpload/2020/12/10/ff752342-efbc-4691-b3f5-7d6d5ef9c2fe_다운로드.jpg');  */
-	height: 270px;
+	height: 400px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	background-position:center center;
@@ -108,12 +108,11 @@
 .mainMsg b{
 	font-size:22px;
 	color:white;
-
+	text-shadow: 2px 2px grey;
 }
 
 .col-25{
   float: left;
-
   margin-top: 6px;
 
 }
@@ -171,10 +170,11 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 	background-color:white;
-	border: 1px solid gray;
-	/* border-radius: 14px; */
+	border: 1px solid rgb(128,128,128,0.2);
+	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: left;
+	outline: 0;
 
 }
 
@@ -246,12 +246,12 @@ overflow-y: auto;
    color:white;
     text-align: center;
    line-height: 70px;    
-   border-right: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
 }
 
 .dt_top_right{
-   border-top: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-left: 10px;
    width: 85%;
    display: flex;
@@ -263,7 +263,7 @@ overflow-y: auto;
 }
 .showMap{
    margin-right: 15px;
-   border: 1px solid gray;
+   border: 1px solid rgb(128,128,128,0.2);
    margin-top: auto;
    margin-bottom: auto;
    border-radius: 10px;
@@ -282,9 +282,9 @@ overflow-y: auto;
 .dt_bottom_left{
    width: 15%;
    text-align: center;
-   border-top: 1px solid gray;
-   border-left: 1px solid gray;
-   border-right: 1px solid gray;
+   border-top: 1px solid rgb(128,128,128,0.2);
+   border-left: 1px solid rgb(128,128,128,0.2);
+   border-right: 1px solid rgb(128,128,128,0.2);
    padding-top: 40px;
 }
 
@@ -304,8 +304,8 @@ overflow-y: auto;
    padding-left: 10px;
    width: 85%;
    line-height: 100px;  
-   border-right: 1px solid gray;
-   border-top: 1px solid gray;
+   border-right: 1px solid rgb(128,128,128,0.2);
+   border-top: 1px solid rgb(128,128,128,0.2);
    
 }
 .dt_bottom_right img{
@@ -314,8 +314,8 @@ overflow-y: auto;
 }   
 .dt_box_footer{
    display:flex;
-   background-color: #e6e6e6;
-   border:1px solid gray;
+   background-color:#faf3ea;
+   border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
    width: 15%;
@@ -782,7 +782,7 @@ overflow-y: auto;
                         
                         <!-- 마지막 -->
                         <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                        <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid rgb(128,128,128,0.2);">
                                 <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
                                 </div>
