@@ -51,7 +51,7 @@
 .plan_content {
    margin-left: auto;
    margin-right: auto;
-    margin-bottom: 50px;
+       margin-bottom: 50px;
 }
 .contentTitle{
    width:100%;
@@ -236,7 +236,7 @@
 }   
 .dt_box_footer{
    display:flex;
-   background-color:#faf3ea;
+   background-color: #faf3ea;
    border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
@@ -294,7 +294,9 @@
    color: black;
    border: 1px solid gray;
    border-radius: 5px;
+   outline: none;
 }
+
 
 #remove_modal .remove_btn {
    width: 40%;
@@ -318,11 +320,59 @@
   border-radius: 4px;
   border: 1px solid rgb(128,128,128,0.2);
 }
+.modal-content{
+overflow-y: initial !important
+}
 
+.modal-header{
+	height: 10%;
+}
+.modal-body{
+height: 90%;
+}
+#schedulelist_modal{
+   display: none;
+   width: 35%;
+   height: 90%;
+   padding: 20px;
+   background-color: #fefefe;
+   border: 1px solid #888;
+   border-radius: 3px;
+   text-align : center;
+}
+/* 닫는버튼 */
+#schedulelist_modal .modal_close_btn{
+	position:absolute;
+	right:15px;
+   background-color: white;
+   color: black;
+   border: none;
+   border-radius: 5px;
+   font-size: 25px;
+    outline: none;
+}
 
 #gotoTop:hover {
    background-color: black;
    color:white;
+}
+.sharebtnbox{
+	border-radius: 50%;
+	background-color: white;
+	width: 47px;
+	height: 47px;
+	text-align: center;
+	padding-top: 8px;
+	position: absolute;
+	right: 10%;
+	top:100px;
+}
+
+.register_open_btn:hover .sharebtnbox{
+	background-color: rgb(200,200,200);
+}
+.register_open_btn:hover .sharebtnbox img{
+	opacity: 0.7;
 }
 </style>
 </head>
@@ -335,7 +385,10 @@
       <!-- schDate -->
       <h4><b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
       <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></h4></div>
-            <!-- <button id="gotoBoardRg">공유하기</button> -->
+      <c:if test="${schedule[0].SCH_STATUS == 'BS003'}">
+  <a href='/board/register?schNo=${schedule[0].SCH_NO }' target="schedulelist" class="register_open_btn">
+  <div class="sharebtnbox"> <img src="/resources/img/shareboardbtn.png"></div></a>
+  </c:if>
    </div>
       <!-- nav -->
       <div class="plan_mnu_box" id="planNav">
@@ -417,7 +470,7 @@
                                     <a href="http://place.map.kakao.com/${dt.FROM_PLC }" style="float:right; margin-right: 30px;" target="_blank">
                                     <i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>
                                     </a>
-                                   <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.TOADT }"/></b>
+                                    <b style="float:right; font-size: 8px; margin-right: 10px;"><c:out value="${dt.TOADT }"/></b>
                                  </div>
                               </div>
                            </c:if>
@@ -489,15 +542,23 @@
 </table>
 
 </div>
-
+<!-- Schedulelist Modal -->
+   <div id="schedulelist_modal" class="modal-content">
+   <button class="modal_close_btn"> X </button>
+   <div class="modal-header"><h3>내일정 공유 </h3></div>
+   <div class="modal-body">
+      <iframe name="schedulelist" title="schedulelist" width=100% height=100% frameBorder="0">
+      </iframe>
+   </div>
+</div>
   
    <!-- gotop -->
    <a id="gotoTop">▲</a>
 
    </div>
-
 <input type='hidden' id='sch_no' name='sch_no' value="${schedule[0].SCH_NO}">
       <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+
 
    <div id="remove_modal">
       <h4>정말 삭제하시겠습니까?</h4>
@@ -523,10 +584,11 @@ function myFunction() {
   header.classList.add("sticky");
   header.style.width = "100%";
   mapWrapper.classList.add("stickyMap");
-  if(window.pageYOffset >= document.getElementsByTagName('footer')[0].offsetTop - 800){
-	    mapWrapper.classList.remove("stickyMap");
-	    }
-}  
+			    if(window.pageYOffset >= document.getElementsByTagName('footer')[0].offsetTop - 800){
+			    mapWrapper.classList.remove("stickyMap");
+			    }
+} 
+
   else{
     header.classList.remove("sticky");
     header.style.width = "auto";
@@ -552,7 +614,8 @@ function myFunction() {
    let operForm = $("#operForm");
 
    $("#gotoList").on("click", function(e) {
-      window.history.back();
+	   location.href = "/mypage/past?pageNum="
+           + $('input[name=pageNum]').val();
    });
 
    $(".remove_btn").on(
@@ -755,8 +818,11 @@ function myFunction() {
      $('#gotoTop').on('click',function(){
 	 	document.documentElement.scrollTop = 0;  
    })
-    /*   $('#gotoBoardRg').on('click',function(){
-	   location.href = "/board/register?schNo="+$('input[name=sch_no]').val();
-   }) */
+   
+      //register 모달 띄우기
+   $('.register_open_btn').on("click", function() {
+            $('.schedulelistbg').hide();
+            modal('schedulelist_modal');
+         });
 </script>
 </html>
