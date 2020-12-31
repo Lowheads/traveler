@@ -19,6 +19,7 @@
 </head>
 <body>
 	
+	 <div class="black_bg_social"></div>
 	
 <!-- 전체 div -->
 <div class="container-info">
@@ -125,11 +126,6 @@
 		<button type="submit" class="save-btn" onclick="return apiInfoNickSaveCheck()">저장하기</button>
 	     <!-- 저장하기 버튼 끝 -->
 	
-		
-		 <!-- 취소 버튼 -->
-		<!-- <button type="button" class="back-btn" onclick="history.back()">취소</button> -->
-	     <!-- 취소 버튼 끝 -->
-       
        	</div>     
       </div>
 	<!-- end info-wrap -->
@@ -150,13 +146,13 @@
 		// 모달 오픈
 		function apiDeleteOnClick() {
 			document.querySelector('.apiMember_delete_modal').style.display = 'block';
-			document.querySelector('.black_bg').style.display = 'block';
+			document.querySelector('.black_bg_social').style.display = 'block';
 		}
 		
 		// 모달 닫기
 		function apiDeleteOffClick() {
 			document.querySelector('.apiMember_delete_modal').style.display = 'none';
-			document.querySelector('.black_bg').style.display = 'none';
+			document.querySelector('.black_bg_social').style.display = 'none';
 		}
 		
 	}; // end Modal
@@ -286,5 +282,6 @@
 
 </script>
 
-
 </html>
+
+<%@ include file="../includes/footer.jsp" %>

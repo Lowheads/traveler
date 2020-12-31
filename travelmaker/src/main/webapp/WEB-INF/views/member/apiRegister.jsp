@@ -321,3 +321,5 @@ img.ui-datepicker-trigger {
 </script>
 
 </html>
+
+<%@ include file="../includes/footer.jsp" %>

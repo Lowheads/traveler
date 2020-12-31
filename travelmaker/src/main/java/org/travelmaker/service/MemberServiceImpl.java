@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.mapper.MemberMapper;
+import org.travelmaker.mapper.QnABoardMapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -29,9 +30,11 @@ import lombok.extern.log4j.Log4j;
 public class MemberServiceImpl implements MemberService {
    
    private final MemberMapper mapper; 
+   private final QnABoardMapper qnaBoardMapper;
    
-   public MemberServiceImpl(MemberMapper memberMapper) {
+   public MemberServiceImpl(MemberMapper memberMapper, QnABoardMapper qnaBoardMapper) {
 	   this.mapper = memberMapper;
+	   this.qnaBoardMapper = qnaBoardMapper;
    }
    
    
@@ -94,9 +97,11 @@ public class MemberServiceImpl implements MemberService {
 		setLoginDateToToday(mVO.getEmail()); // 최종 로그인을 현재로 변경..
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
 		session.setAttribute("memNo",getMemNo(mVO.getEmail()));
+		session.setAttribute("myGrade", memberGrade);
 		
 		// 관리자면 관리자 페이지로 가주세요!
 		if(memberGrade.equals("MG002")) {
+			System.out.println(memberGrade);
 			return true;
 		}
 		
@@ -142,6 +147,10 @@ public class MemberServiceImpl implements MemberService {
    public MemberVO getMember(String email) { // 내 정보 조회
 	   
 	   MemberVO vo = mapper.getMember(email);
+	   
+	   if(vo == null) {
+		   return vo;
+	   }
 	   
 	   // 내 성별이 "M"이면 "남"
 	   if(vo.getGender().equals("M")) {
@@ -398,6 +407,24 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 		return false;
+	}
+
+
+	@Override
+	public boolean isEamilChack(String email, RedirectAttributes rttr) {
+		
+		// Travel 회원의 이메일이 아니라면..
+        if(isNotTravelMember(email, rttr)) {
+        	rttr.addFlashAttribute("msg", "여행의정석 회원이 아닙니다.");
+        	return true;
+        }
+        // api 회원이면 비밀번호 찾을 필요 없이 로그인 해주세요
+        if(isApiMember(email,rttr)) {
+        	rttr.addFlashAttribute("msg", "소셜회원입니다. 소셜로그인 부탁드립니다.");
+        	return true;
+        }
+		
+        return false;
 	}
 
 

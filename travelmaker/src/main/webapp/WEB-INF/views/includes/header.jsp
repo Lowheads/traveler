@@ -286,7 +286,7 @@ a:visited{text-decoration: none;}
    position: fixed;
    left:30%;
    background: white;
-   margin-left: 3.5%;
+   margin-left: 4.5%;
    z-index: 99;
 }
 .modal-dialog{
@@ -395,7 +395,7 @@ a:visited{text-decoration: none;}
    border: 1px solid black;
    left:30%;
    background: white;
-   margin-left: 3.5%;
+   margin-left: 4.5%;
    z-index: 99;
 }
 .pwdPTag{ /* 비밀번호 찾기 P태그 */
@@ -829,7 +829,7 @@ body{
 			<div class="hr-sect">또는</div> 
 				   
 			<!-- 네이버 로그인 -->
-            <div id="naverIdLogin" style="text-align:center; margin-bottom: 0.5%;"><a href="${url}">
+            <div id="naverIdLogin" style="text-align:center; margin-bottom: 4.5%;"><a href="${url}">
             <img src="/resources/img/naverLogin.PNG" style="height: 50px" width="260px"></a>
             <br>
             
@@ -884,7 +884,7 @@ body{
          </div>
          
          <div style="text-align: center;">
-         	<img src="/resources/img/searchPwd.png" alt="search" style="width: 180px; margin-bottom: 8px;">
+         	<img src="/resources/img/searchPwd.png" alt="search" style="width: 180px; margin-bottom: 5%;">
          </div>
          
           <div class="findInfo">

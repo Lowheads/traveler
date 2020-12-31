@@ -182,10 +182,6 @@
 					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
-	        	  <!-- 취소 버튼 -->
-					 <!-- <button type="button" class="back-btn" value="cancel" onclick="movePrevPage()">취소</button> -->
-	        	  <!-- 취소 버튼 끝 -->
-	        	 
 			</div>
 			<!-- end foot -->
 			
@@ -238,7 +234,6 @@
 
 		let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
 		let inputPwd = $("#inputPwd").val() // 현재 비밀번호 입력 태그
-		/* let realPwdCfm = $("#realPwdCfm").val(); // 현재 비밀번호 히든 값  */
 		let myPwd = $("#infoPwd").val(); // 비밀번호
 		let myPwdCfmm = $("#infoPwdCfm").val(); // 비밀번호 확인
 
@@ -368,12 +363,14 @@
 		if(pwdChk.length == 0){
 			//입력 안하면
 			alert("비밀번호를 입력해주세요");
+		
 			return false;
 		}
 		
 		if(pwdChk != pwdCfm){
 			// 비밀번호가 일치하지 않으면...
 			alert("비밀번호가 일치하지 않습니다.");
+			
 			return false;
 		}
 		
@@ -392,4 +389,6 @@
 </script>
 
 </html>
+
+<%@ include file="../includes/footer.jsp" %>
 

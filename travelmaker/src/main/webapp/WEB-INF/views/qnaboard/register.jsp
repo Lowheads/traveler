@@ -73,17 +73,6 @@ $(document).ready(function(){
     	return true;
     } 
     
-	
-	// rttr 메시지
-	$(function(){ 
-		
-		var responseMessage = '<c:out value="${msg}" />';
-		
-		if(responseMessage != "")
-	    	alert(responseMessage);
-
-	});
-	
     
 </script>
     
@@ -143,3 +132,5 @@ $(document).ready(function(){
 
 </body>
 </html>
+
+<%@ include file="../includes/footer.jsp" %>

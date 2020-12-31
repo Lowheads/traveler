@@ -76,6 +76,8 @@ public interface MemberService {
    
    public boolean isDeleteAlready(String email, RedirectAttributes rttr); // 소셜계정 탈퇴여부 확인
    
+   public boolean isEamilChack(String email, RedirectAttributes rttr); // 비밀번호 찾기(이메일 체크)
+   
    public boolean updateTT(String yourType,int memNo);
 
 }
