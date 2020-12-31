@@ -45,4 +45,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return mapper.getPostDetail(boardNo);
 	}
 
+	@Override
+	public List<String> getPostImages(int boardNo) {
+
+		return mapper.getPostImages(boardNo);
+	}
+
 }

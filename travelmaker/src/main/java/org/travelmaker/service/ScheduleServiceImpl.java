@@ -170,4 +170,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 		else return false;
 	}
 
+
+	@Override
+	public List<Map<String, Object>> checkBudgetList(int memNo) {
+		return mapper.checkBudget(memNo);
+	}
+	
+	
+
 }

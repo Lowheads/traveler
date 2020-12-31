@@ -440,7 +440,7 @@
 
 											}).fail(function(result){
 														
-														console.log("fail");
+														console.log(result);
 											});
 					
 				};
