@@ -31,10 +31,11 @@
             <span class="dot" id = "4" onclick="currentSlide(4)"></span> 
             <span class="dot" id = "5" onclick="currentSlide(5)"></span> 
             <span class="dot" id = "6" onclick="currentSlide(6)"></span>
-           <span class="dot" id = "7" onclick="currentSlide(7)"></span>
+            <span class="dot" id = "7" onclick="currentSlide(7)"></span>
         </div> 
 	 <div class="mySlides" id="rainydayRec" >
-				<div class='themeImage'>
+		<div class='themeImage'>
+		<img src = "/resources/themeImg/rainyday<c:out value="${schDto.schRegion }" />.jpg">
 					 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
@@ -49,6 +50,7 @@
   		<c:forEach items="${themeList}" var="themeList" varStatus="status">
   		<div class="mySlides" id="theme_place_list<c:out value='${themeList.key}' />">
   		<div class='themeImage'>
+  		<img src = /resources/themeImg/img<c:out value="${schDto.schRegion }" />_<c:out value='${themeList.key}' />.jpg>
   			 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
@@ -165,12 +167,12 @@
 									str += "<img src='/admin/display?fileName="
 											+ fileCallPath + "'>";
 								}
-								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
+								//$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 								
 							}).fail(function(result){
 								let str = "<img src='/resources/img/default.jpg'>";
 								//$("#theme_place_list" + i + " ul").html(str);
-								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
+								//$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 							})
 						})();
 				}
@@ -196,15 +198,11 @@
 					let fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
 					str += "<img src='/admin/display?fileName="
 							+ fileCallPath + "'>";
-					$("#rainydayRec .themeImage").append(str);
+//					$("#rainydayRec .themeImage").append(str);
 					}).fail(function(result){
-						console.log("fail TT");
-					console.log(result);
-					let str = "<img src='/resources/img/default.jpg'>";
-					
-					console.log(str)
-					
-					$("#rainydayRec .themeImage").append(str);
+						console.log(result);
+						let str = "<img src='/resources/img/default.jpg'>";
+//						$("#rainydayRec .themeImage").append(str);
 				})
 			
 		

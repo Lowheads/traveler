@@ -575,13 +575,11 @@ text-align: center;
 	position:absolute;
 	right:2vh;
 	top:60vh; 
-/* 	background-color:rgba(168, 168, 168, 0.6); */
 	background-color: rgba(0,0,0,0.6);
     margin : 3px;
     padding: 7px 14px;
     border-radius: 7px;
     display:inline-block;
-    /* float:right; */
     z-index:1;
     font-weight: bold;
     color:rgba(255, 255, 255, 0.9);
@@ -645,7 +643,6 @@ text-align: center;
  .mySlides {
 		width:70%;
      height:auto;
-   /*  border:solid 1.5px rgb(167, 168, 168);   */
      border-radius: 25px;
      margin:0 auto;
      padding-bottom:15px;
@@ -724,6 +721,10 @@ text-align: center;
     z-index:1;
     background-color: rgba(0,0,0,0.3);
     }
+
+.prev{
+    left:0;
+}
     
 .next {
   right: 0;
