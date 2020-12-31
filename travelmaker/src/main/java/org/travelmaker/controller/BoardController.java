@@ -278,8 +278,7 @@ public class BoardController {
 		pick.setSchNo(schNo);
 
 	    
-		//게시물 상세부터 remove
-		boarddtservice.remove(boardNo);
+
 		if(boardservice.remove(boardNo)) {
 
 			
