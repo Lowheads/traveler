@@ -31,7 +31,7 @@
             <span class="dot" id = "4" onclick="currentSlide(4)"></span> 
             <span class="dot" id = "5" onclick="currentSlide(5)"></span> 
             <span class="dot" id = "6" onclick="currentSlide(6)"></span>
-            <span class="dot" id = "6" onclick="currentSlide(7)"></span>
+           <span class="dot" id = "7" onclick="currentSlide(7)"></span>
         </div> 
 	 <div class="mySlides" id="rainydayRec" >
 				<div class='themeImage'>
@@ -87,7 +87,7 @@
 	  let x = document.getElementsByClassName("mySlides");
 	  let placeList = document.getElementsByClassName("placeList");	
 	  
-	  if (n > x.length) {slideIndex = 1}
+	  if (n > x.length) {slideIndex = 1; n =1}
 	  if (n < 1) {slideIndex = x.length}
 	  
 	  for (i = 0; i < x.length; i++) {
@@ -98,7 +98,7 @@
 	  x[slideIndex-1].style.display = "block";  
 	  placeList[slideIndex-1].style.display = "inline-block";
 	  
-	  for(let i =0;i<7;i++){
+	  for(let i =1;i<=7;i++){
 		  $(".dot[id="+i+"]").removeClass("current");
 	  }
 	  

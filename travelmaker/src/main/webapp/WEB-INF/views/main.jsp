@@ -159,11 +159,13 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel"></h4>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel"></h4>
 							</div>
-							<div class="modal-body"></div>
+							<div class="modal-body">
+							<div class="img-card"></div>
+							</div>
 							<div class="modal-footer">
 								<button id="modalInBtn" type="button" class="btn btn-primary"
 									data-dismiss="modal">확인</button>
@@ -201,15 +203,37 @@
 			
 			const boardNo = $(this).attr("id")
 			
-			user.detail(boardNo,function(list){
+			let title = $("td[id="+boardNo+"]")[0].innerText;
 			
-				let str = boardNo+"번 게시글 상세정보 <br>";
+			user.detail(boardNo,function(list){
+				
+				$(".modal-title").empty();
+				$(".modal-title").append(boardNo+"번 게시글 상세정보 ")
+							
+				let str = "제목	:	"+title+"<br>";
+				
 				for (let i = 0; i < list.length; i++) {
 					if(list[i].boardCon!=null){
 						str+="내용	:	"+list[i].boardCon	+"<br>";
 					}else{
-						str+="내용없음"
+						str+="내용없음<br>"
 					}
+					
+					user.getImage(boardNo,function(list){
+						
+						for(let i =0; i<list.length;i++){
+
+							let img = document.createElement("img")
+							img.setAttribute("src","/imgUpload/boarddtFile/"+list[i])
+							
+							let tag = document.createElement("div");
+							tag.setAttribute("class","img-card")
+							tag.append(img)
+							$(".modal-body").append(tag);
+							
+						}
+						
+					},function(fail){console.log(fail);})
 			}
 			
 			showModal(str);
@@ -341,8 +365,8 @@
 				
 				
 							for(let i =0; i<Object.keys(data).length; i++){
-								str+='<tr id= '+data[i].boardNo+'><td>'+data[i].boardTitle+'</td>'
-								str+='<td>'+data[i].vcnt+'</td>'
+								str+='<tr id= '+data[i].boardNo+'><td id= '+data[i].boardNo+'>'+data[i].boardTitle+'</td>'
+								str+='<td >'+data[i].vcnt+'</td>'
 								str+='<td>'+data[i].pickCnt+'</td>'
 								str+='<td>'+data[i].modDate+'</td></tr>'
 							}

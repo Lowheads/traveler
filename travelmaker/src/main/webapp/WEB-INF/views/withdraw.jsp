@@ -186,7 +186,7 @@ function search(){
 		
 		let msg="";
 		
-		if (type == "") {
+		if (type == ""||type==null) {
 			msg = "검색할 대상을 선택하세요";
 			showModal(msg);
 			return false;

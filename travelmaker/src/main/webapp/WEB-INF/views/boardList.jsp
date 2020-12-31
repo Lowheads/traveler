@@ -87,9 +87,9 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel"></h4>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel"></h4>
 							</div>
 							<div class="modal-body">처리가 완료되었습니다
 							
@@ -155,7 +155,7 @@
 		
 		let msg="";
 		
-		if (type == "") {
+		if (type == ""||type==null) {
 			msg = "검색할 대상을 선택하세요";
 			showModal(msg);
 			return false;
@@ -228,7 +228,10 @@
 		
 		user.detail(boardNo,function(list){
 			
-			str = boardNo+"번 게시글 상세정보 <br>"+"제목	:	"+title+"<br>";
+			$(".modal-title").empty();
+			$(".modal-title").append(boardNo+"번 게시글 상세정보 ")
+			
+			str = "제목	:	"+title+"<br>";
 			
 			if(list.length!=0&&list[0].boardCon!=null){
 				for (let i = 0; i < list.length; i++) {
@@ -253,7 +256,7 @@
 					
 				}
 				
-			},function(fail){console.log(fail); console.log("ㅜㅜ")})
+			},function(fail){console.log(fail);})
 			
 			showModal(str);
 		})
