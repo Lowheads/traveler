@@ -633,6 +633,9 @@ a{text-decoration: none}
          startDate : moment(),
          endDate : moment(),
          minDate : moment(),
+         maxSpan: {
+        	 "days": 9
+         },
          locale : {
             format : 'YYYY-MM-DD'
          },

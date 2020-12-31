@@ -482,9 +482,8 @@ label {
 							<option selected value="">날짜 선택 &#9662;</option>
 							<c:forEach items="${daybud}" var="daybud">
 								<option
-									value="/buddt/list?paydate=<c:out value="${daybud.paydate}"/>
-			&schno=<c:out value="${daybud.schno }"/>"><c:out
-										value="${daybud.paydate}" />
+									value="/buddt/list?paydate=<fmt:formatDate value="${daybud.SCH_DATE}" pattern="yyyy-MM-dd"/>
+			&schno=<c:out value="${daybud.SCH_NO }"/>"><fmt:formatDate value="${daybud.SCH_DATE}" pattern="yyyy-MM-dd"/>
 								</option>
 							</c:forEach>
 						</select>

@@ -16,12 +16,18 @@
 
 <!-- list.jsp - DB의 모든 일정과 지출 내역 출력 -->
 <select id="getBudgetByUser" resultMap="UserResult">
-<![CDATA[
+
 SELECT sch_title, b.sch_no, from_date, to_date, trim(TO_CHAR(total_pay, '999,999,999')) as total_pay, total_cnt
 FROM budget b, schedule s
 where s.sch_no= b.sch_no
+and s.mem_no = #{memNo}
 ORDER BY b.sch_no asc
-]]>
+
 </select>
+
+<insert id="insertBudget">
+	insert into BUDGET (SCH_NO)
+	values (#{schNo})
+</insert>
 
 </mapper>

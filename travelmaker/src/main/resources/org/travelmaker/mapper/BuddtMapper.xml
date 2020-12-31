@@ -102,8 +102,8 @@ SELECT distinct sch_no from bud_dt
 
 <!-- register.jsp - 날짜 선택 제한 -->
 <select id="setBoxByDate" resultMap="UserResult">
-SELECT max(pay_date) as maxDate, min(pay_date) as minDate
-FROM bud_dt
+SELECT schedule.to_date as maxDate, schedule.from_date as minDate
+FROM schedule
 WHERE sch_no = #{schno}
 </select>
 
@@ -286,6 +286,13 @@ FROM bud_dt
 WHERE sch_no = #{schno} 
 GROUP BY pay_date, sch_no 
 ORDER BY pay_date ASC
+</select>
+
+<select id="getDateBySchedule" resultType="hashMap">
+	select sch_date , sch_no from sch_dt
+	where sch_no = #{schno}
+	group by sch_date, sch_no
+	order by sch_date asc
 </select>
 
 </mapper>

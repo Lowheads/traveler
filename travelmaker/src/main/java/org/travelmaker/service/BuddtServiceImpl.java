@@ -2,6 +2,7 @@ package org.travelmaker.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -227,4 +228,12 @@ public class BuddtServiceImpl implements BuddtService {
 	public BuddtVO getTitleBySchno(Long schno) {		
 		return mapper.getTitleBySchno(schno);
 	}
+
+	@Override
+	public List<Map<String, Object>> getDateBySchedule(Long schno) {
+		// TODO Auto-generated method stub
+		return mapper.getDateBySchedule(schno);
+	}
+	
+	
 }
