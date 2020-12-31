@@ -2,6 +2,7 @@ package org.travelmaker.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.travelmaker.domain.BuddtVO;
 import org.travelmaker.domain.DaybudVO;
@@ -68,5 +69,5 @@ public interface BuddtService {
 	public BuddtVO getChartTextByListAll(Long schno);
 	//
 	public List<BuddtVO> getBudgetBySch(long schno);
-	
+	public List<Map<String,Object>> getDateBySchedule(Long schno);
 }

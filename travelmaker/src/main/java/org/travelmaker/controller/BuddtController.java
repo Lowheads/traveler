@@ -109,8 +109,8 @@ public class BuddtController {
 		//
 		model.addAttribute("chartTextByListAll", service.getChartTextByListAll(schno));
 		// 일정 셀렉박스 
-		model.addAttribute("daybud", service.getBudgetBySch(schno));
-		
+		model.addAttribute("daybud", service.getDateBySchedule(schno));
+		System.out.println(service.getDateBySchedule(schno));
 		// 셀렉트 박스 - 일정 선택 (distinct sch_no)
 		model.addAttribute("schnoBox", service.setBoxBySch());
 		// 선택 된 일정의 최소, 최대 날짜
@@ -136,6 +136,9 @@ public class BuddtController {
 		System.out.println(service.setBoxByDate(schno)); // print schno == 1
 		
 		model.addAttribute("paydate", paydate); 
+		
+		System.out.println(buddt);
+		System.out.println(paydate);
 	}
 	
 	@GetMapping("/register2")
@@ -161,6 +164,10 @@ public class BuddtController {
 		log.info("register" + buddt);
 
 //		try-catch()
+		String expense=buddt.getExpense();
+		expense= expense.replace(",","");
+		buddt.setExpense(expense);
+		System.out.println(expense);
 		service.register(buddt);
 
 		rttr.addFlashAttribute("result", buddt.getNo());

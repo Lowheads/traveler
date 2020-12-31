@@ -2,6 +2,7 @@ package org.travelmaker.mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 import org.travelmaker.domain.BuddtVO;
@@ -81,5 +82,7 @@ public interface BuddtMapper {
  	public List<BuddtVO> getDateBySchno(Long schno);
  	
  	public BuddtVO getTitleBySchno(Long schno);
+ 	
+ 	public List<Map<String,Object>> getDateBySchedule(Long schno);
  	
 }
