@@ -73,7 +73,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
-  margin-top: 40px;
 }
 
 
@@ -355,7 +354,7 @@
 
 .select_img img{
 	width:100%;
-	height:200px;
+	height:250px;
 	margin-top:10px;
 	margin-bottom:10px;
 	border: 1px dashed gray;
@@ -544,7 +543,7 @@
 			$(".fileAdd_btn").on("click", function(){
 				$("#fileIndex").append("<div class='filebox'><label class='filecontent'><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"
 				+"<div class='select_img'>&nbsp<img id=errorimg src='' style='display:none'></div></label>"			
-				+"<input type='text' class='form-control' name='newContent'/>"
+				+"<input type='text' class='form-control' name='newContent' style='margin-top:100px;'/>"
 				+"<button type='button' class='fileDelBtn' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 			});
 			
