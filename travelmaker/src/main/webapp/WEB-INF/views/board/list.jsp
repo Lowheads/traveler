@@ -11,8 +11,17 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <head>
 <style>
+
+/* alert */
+.swal-button, .swal-button--confrim{
+	background-color: #ff8b3d;
+}
+
+.swal-button:not([disabled]):hover{background-color:#ff8b3d}.swal-button:active{background-color:#70bce0}
+
 .modal-content{
 overflow-y: initial !important
 }
@@ -554,7 +563,7 @@ input:checked+.slider:before {
 		function() {
 			var mem= <%=mem%>
 			if(mem==null){
-				alert('로그인 후 이용가능합니다');
+				swal("","로그인 후 이용가능합니다.","warning");
 			}
 			else{
 			 	modal('hiddenlist_modal');
@@ -567,7 +576,7 @@ input:checked+.slider:before {
 			function() {
 				var mem= <%=mem%>
 				if(mem==null){
-				alert('로그인 후 이용가능합니다');
+					swal("","로그인 후 이용가능합니다.","warning");
 				}
 				else{
 				modal('schedulelist_modal');
@@ -584,14 +593,14 @@ input:checked+.slider:before {
 		
 		var responseMsg = '<c:out value="${removemsg}"/>';
 		if (responseMsg != "") {
-			alert(responseMsg);
+			swal("",responseMsg,"success");
 		}
 		return false;
 	});
 	$(function(){
 		var responseMsg = '<c:out value="${registermsg}"/>';
 		if (responseMsg != "") {
-			alert(responseMsg);
+			swal("",responseMsg,"success");
 		}
 		return false;
 		
@@ -606,17 +615,17 @@ input:checked+.slider:before {
 		let searchLenVal = $("#searchKeyword").val(); // 검색어 길이
 		
 		if(!searchForm.find("option:selected").val()){
-			alert("검색 조건을 선택해주세요");
+			swal("","검색 조건을 선택해주세요","info");
 			return false;
 		}
 		
 		if(!searchForm.find("input[name='keyword']").val()){
-			alert("검색키워드를 입력하세요");
+			swal("","검색키워드를 입력하세요","info");
 			return false;
 		}
 		
 		if(!(2 <= searchLenVal.length && searchLenVal.length <= 8)){
-			alert("검색어 길이는 2~8자리 입니다.");
+			swal("","검색어 길이는 2~8자리 입니다.","info");
 			return false;
 		}
 		
