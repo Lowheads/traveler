@@ -694,7 +694,16 @@ body > div.mainContainer > div.right.menu {
 	color:white;    
 }
 /* daterangepicker 디자인 끝 */
+/* alert */
+.swal2-button, .swal-button--confrim{
+   background-color: #ff8b3d;
+}
 
+.swal2-button:not([disabled]):hover{background-color:#ff8b3d}.swal2-button:active{background-color:#70bce0}
+
+.swal2-confirm.swal2-styled {
+	background-color: #ff8b3d;
+}
   </style>
 </head>
 <body>
@@ -1179,24 +1188,6 @@ body > div.mainContainer > div.right.menu {
            
         };
         
-		function setArrNull() {
-			const setConNull = (pmarkCon) => {
-				for (let e of pmarkCon) {
-					e.setMap(null);
-				}
-			}
-			for (let eArr of polyArr) {
-				setConNull(eArr);
-			}
-			for (let eArr of markArr) {
-				setConNull(eArr);
-			}
-			markArr = [];
-		    polyArr = [];
-			distArr = [];
-			
-		}
-		
        function initSch(){
     	   let zIndex = 99;
     	   let modal = document.getElementById('show-schedule');
@@ -1429,179 +1420,216 @@ body > div.mainContainer > div.right.menu {
                  mapContainer.style.height = '100%';
                  inmap.relayout();
          drawLineAll(); // 수정후 마지막에 라인그리기
-         };   
+         }; 
          
-       function drawLineAll(event) {
-    	   distArr = [];
-    	   let latlngList = document.getElementsByClassName("daily-place-dt");
-    	   let len = latlngList.length;
-    	   const draw = (idx) => {
-        	   
-        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
-    		   let posArr = [];
-    		   let markCon = [];
-    		   let polyCon = [];
-        	   let latlngList = document.getElementsByClassName("daily-place-dt");
-    		   let latlngData = latlngList[idx].children
-    		   let leng = latlngData.length||0;
+         var markers =[];
+         var marker;
+         var overlay;
+         var drawMarks = [];
+         var markArr = [];
+         var polyArr = [];
+         var distArr = [];
+         var resultset = [];
+         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+             mapOption = {
+                center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
+                level : 8
+             // 지도의 확대 레벨
+             };
+         
+            var map = new kakao.maps.Map(mapContainer,
+                      mapOption); // 지도를 생성합니다
+                      mapContainer.style.width = '100%';
+                      mapContainer.style.height = '100%';
+                      map.relayout();
+   		function setArrNull() {
+   			const setConNull = (pmarkCon) => {
+   				for (let e of pmarkCon) {
+   					e.setMap(null);
+   				}
+   			}
+   			for (let eArr of polyArr) {
+   				setConNull(eArr);
+   			}
+   			for (let eArr of markArr) {
+   				setConNull(eArr);
+   			}
+   			markArr = [];
+   		    polyArr = [];
+   			
+   		}
+            
+   		function drawLineAll(event) {
+     	   distArr = [];
+     	   let latlngList = document.getElementsByClassName("daily-place-dt");
+     	   let len = latlngList.length;
+     	   const draw = (idx) => {
+         	   
+         	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
+     		   let posArr = [];
+     		   let markCon = [];
+     		   let polyCon = [];
+         	   let latlngList = document.getElementsByClassName("daily-place-dt");
+     		   let latlngData = latlngList[idx].children
+     		   let leng = latlngData.length||0;
+      	   
+      	  	   const makeContent = (iidx) => {
+      	  		const getInfo = () => {
+     	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
+     	  		      let URL = "https://place.map.kakao.com/"+placeNo;
+     	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+     	  		}
+      	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A"; 
+      	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+      	  	   
+      		   let content = document.createElement("img");
+      		   content.setAttribute("class", "marker-img");
+      		   content.setAttribute("src", con);
+      		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
+      		   content.setAttribute("draggable","false");
+      		   
+      	  	   /* content.addEventListener("click", getInfo); */
+      	  	   content.addEventListener("click", () => {
+      	  		Swal.fire({
+    				   title: latlngData[iidx].dataset["plc_title"],
+    				   text: latlngData[iidx].dataset["addressDt"],
+    				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
+    				   imageWidth: 400,
+    				   imageHeight: 200,
+    				   imageAlt: 'Custom image',
+    				 })
+      	  	   });
+      	  	   content.addEventListener("mouseenter", (event) => {
+      	  		   let currTarget = event.currentTarget;
+      	  		   currTarget.setAttribute("src", hcon);
+      	  	   });
+      	  	   content.addEventListener("mouseleave", (event) => {
+      	  		   let currTarget = event.currentTarget;
+      	  		   currTarget.setAttribute("src", con);
+      	  	   });
+      	  	   return content;
+      	  	   }
+      	  	   
+      	  	   let hovContent = document.createElement("div");
+      	  	   let hovul = document.createElement("ul");
+      	  	   let hovli = document.createElement("li");
+ 			   /* img.src(currentTarget.dataset["img"]); */
+ 			  
+      	  	   
+         	   for (let i = 0; i < leng; i++) {
+         		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
+         		posArr.push(pos);
+         		let mark = new kakao.maps.CustomOverlay({
+         			clickable: true,
+                     content: makeContent(i),
+                     position: pos
+                 });
+         		
+      			mark.setMap(inmap);
+      			
+      			markCon.push(mark);
+      			markArr.push(markCon);
+      			
+         	   }
+         	   let plen = posArr.length-1;
+     		   for (let i = 0; i < plen; i++) {
+     			   let polyline = new kakao.maps.Polyline({
+     	    		    map: inmap,
+     	    		    path:[posArr[i],posArr[i+1]],
+     	    		    endArrow: true,
+     	    		    strokeWeight: 3,
+     	    		    strokeColor: "#"+colors[idx],
+     	    		    strokeOpacity: 1,
+     	    		    strokeStyle: 'solid'
+     	    		    
+     	    		})
+     			   let dist = (polyline.getLength()/1000).toFixed("2")+"km";
+ 				   distArr.push(dist);  
+     			   polyCon.push(polyline);
+     			   polyArr.push(polyCon);
+     			}
+         	   
+            }
      	   
-     	  	   const makeContent = (iidx) => {
-     	  		const getInfo = () => {
-    	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
-    	  		      let URL = "https://place.map.kakao.com/"+placeNo;
-    	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-    	  		}
-     	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A"; 
-     	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-     	  	   
-     		   let content = document.createElement("img");
-     		   content.setAttribute("class", "marker-img");
-     		   content.setAttribute("src", con);
-     		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
-     		   content.setAttribute("draggable","false");
+     	   
+     	   for (let idx = 0; idx < len; idx++) {
+     		   draw(idx);
+     		   }
+        }
+        
+        function drawLine(event) {
+     	   let idx = $(this).index()-1;
+     	   
+ 		   const draw = (idx) => {
+         	   
+         	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
+     		   let posArr = [];
+     		   let markCon = [];
+     		   let polyCon = [];
+         	   let latlngList = document.getElementsByClassName("daily-place-dt");
+     		   let latlngData = latlngList[idx].children
+     		   let leng = latlngData.length||0;
+      	   
+      	  	   const makeContent = (iidx) => {
+      	  		const getInfo = () => {
+     	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
+     	  		      let URL = "https://place.map.kakao.com/"+placeNo;
+     	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+     	  		}
+      	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+      	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+      		   let content = document.createElement("img");
+      		   content.setAttribute("class", "marker-img");
+      		   content.setAttribute("src", con);
+      		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
+      		   content.setAttribute("draggable","false");
+      	  	   content.addEventListener("click", getInfo);
+      	  	   content.addEventListener("mouseenter", (event) => {
+      	  		   let currTarget = event.currentTarget;
+      	  		   currTarget.setAttribute("src", hcon);
+      	  	   });
+      	  	   content.addEventListener("mouseleave", (event) => {
+      	  		   let currTarget = event.currentTarget;
+      	  		   currTarget.setAttribute("src", con);
+      	  	   });
+      	  	   return content;
+      	  	   }
      		   
-     	  	   content.addEventListener("click", getInfo);
-     	  	   content.addEventListener("click", () => {
-     	  		Swal.fire({
-   				   title: latlngData[iidx].dataset["plc_title"],
-   				   text: latlngData[iidx].dataset["addressDt"],
-   				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
-   				   imageWidth: 400,
-   				   imageHeight: 200,
-   				   imageAlt: 'Custom image',
-   				 })
-     	  	   });
-     	  	   content.addEventListener("mouseenter", (event) => {
-     	  		   let currTarget = event.currentTarget;
-     	  		   currTarget.setAttribute("src", hcon);
-     	  	   });
-     	  	   content.addEventListener("mouseleave", (event) => {
-     	  		   let currTarget = event.currentTarget;
-     	  		   currTarget.setAttribute("src", con);
-     	  	   });
-     	  	   return content;
-     	  	   }
-     	  	   
-     	  	   let hovContent = document.createElement("div");
-     	  	   let hovul = document.createElement("ul");
-     	  	   let hovli = document.createElement("li");
-			   /* img.src(currentTarget.dataset["img"]); */
-			  
-     	  	   
-        	   for (let i = 0; i < leng; i++) {
-        		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
-        		posArr.push(pos);
-        		let mark = new kakao.maps.CustomOverlay({
-        			clickable: true,
-                    content: makeContent(i),
-                    position: pos
-                });
-        		
-     			mark.setMap(inmap);
-     			
-     			markCon.push(mark);
-     			markArr.push(markCon);
-     			
-        	   }
-        	   let plen = posArr.length-1;
-    		   for (let i = 0; i < plen; i++) {
-    			   let polyline = new kakao.maps.Polyline({
-    	    		    map: inmap,
-    	    		    path:[posArr[i],posArr[i+1]],
-    	    		    endArrow: true,
-    	    		    strokeWeight: 3,
-    	    		    strokeColor: "#"+colors[idx],
-    	    		    strokeOpacity: 1,
-    	    		    strokeStyle: 'solid'
-    	    		    
-    	    		})
-    			   let dist = (polyline.getLength()/1000).toFixed("2")+"km";
-				   distArr.push(dist);  
-    			   polyCon.push(polyline);
-    			   polyArr.push(polyCon);
-    			}
-        	   
-           }
-    	   
-    	   
-    	   for (let idx = 0; idx < len; idx++) {
-    		   draw(idx);
-    		   }
-       }
-       
-       function drawLine(event) {
-    	   let idx = $(this).index()-1;
-    	   
-		   const draw = (idx) => {
-        	   
-        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
-    		   let posArr = [];
-    		   let markCon = [];
-    		   let polyCon = [];
-        	   let latlngList = document.getElementsByClassName("daily-place-dt");
-    		   let latlngData = latlngList[idx].children
-    		   let leng = latlngData.length||0;
-     	   
-     	  	   const makeContent = (iidx) => {
-     	  		const getInfo = () => {
-    	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
-    	  		      let URL = "https://place.map.kakao.com/"+placeNo;
-    	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-    	  		}
-     	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-     	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-     		   let content = document.createElement("img");
-     		   content.setAttribute("class", "marker-img");
-     		   content.setAttribute("src", con);
-     		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
-     		   content.setAttribute("draggable","false");
-     	  	   content.addEventListener("click", getInfo);
-     	  	   content.addEventListener("mouseenter", (event) => {
-     	  		   let currTarget = event.currentTarget;
-     	  		   currTarget.setAttribute("src", hcon);
-     	  	   });
-     	  	   content.addEventListener("mouseleave", (event) => {
-     	  		   let currTarget = event.currentTarget;
-     	  		   currTarget.setAttribute("src", con);
-     	  	   });
-     	  	   return content;
-     	  	   }
-    		   
-        	   for (let i = 0; i < leng; i++) {
-        		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
-        		posArr.push(pos);
-        		let mark = new kakao.maps.CustomOverlay({
-        			clickable: true,
-                    content: makeContent(i),
-                    position: pos
-                });
-        		
-     			mark.setMap(inmap);
-     			
-     			markCon.push(mark);
-     			markArr.push(markCon);
-     			
-        	   }
-        	   
-        	   let plen = posArr.length-1;
-    		   for (let i = 0; i < plen; i++) {
-    			   let polyline = new kakao.maps.Polyline({
-    	    		    map: inmap,
-    	    		    path:posArr,
-    	    		    endArrow: true,
-    	    		    strokeWeight: 3,
-    	    		    strokeColor: "#"+colors[idx],
-    	    		    strokeOpacity: 1,
-    	    		    strokeStyle: 'solid'
-    	    		    
-    	    		})
-    			   polyCon.push(polyline);
-    			   polyArr.push(polyCon);
-    			}
-        	   
-           }
-    	   draw(idx);
-       }
+         	   for (let i = 0; i < leng; i++) {
+         		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
+         		posArr.push(pos);
+         		let mark = new kakao.maps.CustomOverlay({
+         			clickable: true,
+                     content: makeContent(i),
+                     position: pos
+                 });
+         		
+      			mark.setMap(inmap);
+      			
+      			markCon.push(mark);
+      			markArr.push(markCon);
+      			
+         	   }
+         	   
+         	   let plen = posArr.length-1;
+     		   for (let i = 0; i < plen; i++) {
+     			   let polyline = new kakao.maps.Polyline({
+     	    		    map: inmap,
+     	    		    path:posArr,
+     	    		    endArrow: true,
+     	    		    strokeWeight: 3,
+     	    		    strokeColor: "#"+colors[idx],
+     	    		    strokeOpacity: 1,
+     	    		    strokeStyle: 'solid'
+     	    		    
+     	    		})
+     			   polyCon.push(polyline);
+     			   polyArr.push(polyCon);
+     			}
+         	   
+            }
+     	   draw(idx);
+        }
        
        function searchAction(event) {
          let placeValue = $("#search-value").val();
