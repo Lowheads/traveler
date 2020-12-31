@@ -202,4 +202,11 @@
 <select id="checkPicked" resultType="int">
    select count(*) from pick_sch where sch_no=#{schNo} and mem_no=#{memNo}
 </select>
+
+
+<select id="checkBudget" resultType="hashMap">
+	select s.*,(case when (select count(*) from budget where budget.sch_no = s.sch_no)=1 then 'BS001'
+else 'BS003' END) as checked FROM schedule s
+WHERE s.mem_no = #{memNo}
+</select>
 </mapper>

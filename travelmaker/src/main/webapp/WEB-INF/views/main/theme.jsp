@@ -254,7 +254,7 @@
 			form.appendChild(objs4);
 
 			form.setAttribute('method', 'post');
-			form.setAttribute('action', "/place/"); // URL
+			form.setAttribute('action', "/place/home"); // URL
 
 			document.body.appendChild(form);
 
