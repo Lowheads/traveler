@@ -54,7 +54,7 @@ public class PlaceController {
 		binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, false));
 	}
 
-	@PostMapping(value = "/")
+	@PostMapping(value = "/home")
 	public String main(@ModelAttribute("schDto") ScheduleDTO schDTO, @RequestParam("places") String[] plcNoArr,
 			Model model) {
 		
@@ -69,11 +69,15 @@ public class PlaceController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable int regionNo,
 			@PathVariable int pageNum,@PathVariable String title) {
-		Criteria cri = new Criteria(pageNum, 10);
-		PagefDTO pageMaker = new PagefDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", service.getList(title, regionNo, cri));
-		map.put("pageMaker", pageMaker);
+		try {
+			Criteria cri = new Criteria(pageNum, 10);
+			PagefDTO pageMaker = new PagefDTO(cri, service.getSearchResultTotalCnt(title, regionNo));
+			map.put("list", service.getList(title, regionNo, cri));
+			map.put("pageMaker", pageMaker);
+		} catch (Exception e) {
+			
+		}		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 
@@ -99,31 +103,9 @@ public class PlaceController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
-//	@PostMapping(value="/test/sch",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-//	@ResponseBody
-//	@Transactional
-//	public String putInitSchedule(@RequestBody ScheduleVO scheduleVO,@RequestBody SchdtVO[][] schdtVOsl) {
-//		System.out.println(scheduleVO);
-//		for (SchdtVO[] schdtVOs2 : schdtVOs) {
-//			for (SchdtVO schdtVOs3 : schdtVOs2) {
-//				System.out.println(schdtVOs3);
-//			}
-//		}
-////		schService.register(scheduleVO);
-//		//여기서 schDate를 설정을 해주거나 아니면 js 에서 넘길때 처리를 해줘야한다.
-//		//ScheduleVO
-//		schDtService.setAll(scheduleVO.getSchNo(), schdtVOs);
-//		for (int i = 0; i < schdtVOs.length; i++) {
-////			schDtService.insertSchDt(schdtVOs[i]);
-//		}
-//		return "/place/test";
-//	}
-
 	@PostMapping(value = "/put/sch", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	public ResponseEntity<String> putInitSchedule(@RequestBody SchWrapDTO schwrapDTO) {
-//		MultipartFile mf = schwrapDTO.getUploadFile();
-//		System.out.println(mf.toString());
 		ScheduleVO scheduleVO = schwrapDTO.getScheduleVO();
 		SchdtVO[][] schdtVOs = schwrapDTO.getSchdtVOs();
 			schService.register(scheduleVO);

@@ -31,7 +31,7 @@
 	background-color: #ff8b3d;
     color: white;
     z-index: 10;
-    position: absolute;
+    position:absolute;
     right: 20px;
     top: 10px;
     width: 100px;
@@ -45,6 +45,8 @@
 }
 
 #right-container > .modal_close_btn {
+	width:42px;
+	height:42px;
 	top:10px;
 	position:absolute;
 	right:30px;
@@ -60,8 +62,8 @@ img {
 }
 .daily-place-list {
    list-style-type: none;
-   margin: 10px;
-   width: 80%;
+   margin: auto;
+   width: 90%;
 }
 
 #map > button.make-button:hover {
@@ -95,7 +97,7 @@ img {
    position:relative;
    height:100%;
    background-color:#ffffff;
-   flex: 0 0 18%;
+   flex: 0 0 23%;
    margin : 0 0 10px;
    display: flex;
 }
@@ -112,10 +114,10 @@ img {
 
 .left-place-list {
 	flex: 0 0 75%;
+	overflow:auto;	
 }
-
 .container {
-   flex: 64 64 64%;
+   flex: 57 57 57%;
 }
 
 .daily-place-all {
@@ -183,16 +185,6 @@ ul {
 	flex:70 70 70%
 }
 
-#registerForm {
-   display: none;
-   width: 50%;
-   height: 50%;
-   padding: 20px 30px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
-}
-
 #searchForm {
 	display:flex;
     border-bottom: solid #a7a7a7 1px;
@@ -212,35 +204,41 @@ ul {
 
 button {
 	border:0;
-	width: 40px;
-	height: 40px;
+	
 }
 button:hover {
 	background-color:#939393;
 }
+button.add-button, button.detail-button,button.rec-add-button,button.delete-button,.modal_close_btn, button.search-button {
+	width: 35px;
+	height: 35px;
+}
 div.hoverable-place > img {
     grid-area:img;
-    width:10rem;
-    height:10rem;
+    flex:0 0 20%;
 }
 div.hoverable-place > span {
 	text-align: left;
     line-height: 1.2em;
-    width: 200px;
     grid-area: text;
     overflow: none;
+    width:150px;
 }
 div.hoverable-place > button.add-button {
     grid-area:btn1;
+    width:40px;
+	height:40px;
 }
 div.hoverable-place > button.detail-button {
     grid-area:btn2;
+	width:40px;
+	height:40px;
 }
 .hoverable-place {
 	width:95%;
-	height:6rem;
+	height:6em;
 	display: grid;
-	grid-gap:0.1rem;
+	grid-gap:1px;
   	grid-template-areas:
     'img text text text'
     'img . btn1 btn2';
@@ -285,7 +283,10 @@ div.hoverable-place > button.detail-button {
 	background-color:#373737;
 	width:100%;
 	color:white;
-	height:72px;
+	height:9%;
+}
+.left-date-list {
+	height:100%;
 }
 .left-date-list>button:hover {
 	background-color:#6b472f;
@@ -301,8 +302,11 @@ div.hoverable-place > button.detail-button {
 	justify-content:space-between;
 }
 .selected-place > span {
+	flex: 0 0 36%;
+	padding:0 2%;
+}
+#left-place-list > div > ul > div > div > img {
 	flex: 0 0 40%;
-	padding:0 10px;
 }
 #left-date-list > button.daily-place-btn.active{
 	background-color:#ff8b3d;
@@ -394,10 +398,11 @@ div.hoverable-place > button.detail-button {
 
 body > div.mainContainer > div.right.menu {
 	overflow:auto;
-	flex:18 18 18%;
+	flex:0 0 20%;
 	flex-direction:column;
 	height:100%;
 	display:flex;
+	overflow-x:hidden;
 }
 .data-range-picker {
 	text-align: center;
@@ -411,6 +416,8 @@ body > div.mainContainer > div.right.menu {
     color: #d3d3d3;
     font-weight: 400;
     font-size: 22px;
+    width:40px;
+    height:40px;
 }
 #hide {
 	background-color: #373737;
@@ -503,7 +510,7 @@ body > div.mainContainer > div.right.menu {
 /* #all-schedule > ul > div > button:hover {
 } */
 #all-schedule > div > ul > div > button:hover {
-	background-color:#2196f3;
+	background-color:#ffae77;
 }
 .outplcdt-wrap-div {
 	padding-top:10px;
@@ -570,14 +577,14 @@ body > div.mainContainer > div.right.menu {
    display: none;
    width: 20%;
    height: 50%;
-   padding: 20px 80px;
+   padding: 20px 70px;
    background-color: #fefefe;
    border: 1px solid #888;
    border-radius: 3px;
 }
 
 #registerForm h1{
-    margin: 40px 40px;
+    margin: 20px 0;
     font-size:30px;
     text-align: center;
 }
@@ -619,7 +626,7 @@ body > div.mainContainer > div.right.menu {
 
 .savebtn{
    position: absolute;
-   bottom:30px;
+   bottom:15px;
    right:80px;
    width:80px;
    font-size:15px;
@@ -632,6 +639,7 @@ body > div.mainContainer > div.right.menu {
 .savebtn:hover{
    background-color: #203341;
       color:white;
+   
 }
 /*지은 수정 끝 */
 ::-webkit-scrollbar {
@@ -652,7 +660,7 @@ body > div.mainContainer > div.right.menu {
 }
   /* daterangepicker 디자인 수정 */
 .opensright{
-	width:42%;
+	white-space:nowrap;
 }
 .daterangepicker .calendar-table table{
 	border-collapse: inherit;
@@ -750,8 +758,8 @@ body > div.mainContainer > div.right.menu {
 	         <div class="left clearfix" id="rec-place">
 	         <c:forEach items="${places}" var="list">
 	         <div class="rec-place" data-title="${list.plcTitle}" data-plc-no="${list.plcNo}" data-lat="${list.lat }" data-lng="${list.lng}" data-opening-h="${list.openingH }" data-holiday="${list.holiday}" data-address-dt="${list.addressDt}" data-region-no="${list.regionNo}">
-	                  <div class="img-wrap-div" style="border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);">
-	                  <img src='<c:out value="${list.plcImg}"></c:out>'>
+	                  <div class="img-wrap-div" style="overflow: hidden;backface-visibility: hidden;transform: translateZ(0);">
+	                  <img style="border-radius:4px;" src='<c:out value="${list.plcImg}" ></c:out>'>
 	                  </div>
 	                  <span><c:out value="${list.plcTitle}"></c:out></span>
 	                  <button class="rec-add-button" type="button">
@@ -793,16 +801,18 @@ body > div.mainContainer > div.right.menu {
    <script type="text/javascript" src="/resources/js/place.js"></script>
    <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341&libraries=services"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
    <script type="text/javascript">
    
       var markers =[];
       var marker;
       var overlay;
-      var markArr = [];
       var recMarks = [];
+      var markArr = [];
       var polyArr = [];
-      var resultset = [];
 	  var distArr = [];
+      var resultset = [];
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
           mapOption = {
              center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
@@ -817,15 +827,13 @@ body > div.mainContainer > div.right.menu {
                    map.relayout();
       
       function hide() {
-    	  dnd(".left-menu").hide("slide", { direction: "left" }, 100);
+    	  dnd(".left-menu").hide();
           document.querySelector('#show').style.display = 'block';
-         /*  document.querySelector('.container').style.flex = '0 0 88%'; */
           map.relayout();
       }              
       function show() {
-                	   dnd(".left-menu").show("slide", { direction: "left" }, 100);
+                	   dnd(".left-menu").show();
                        document.querySelector('#show').style.display = 'none';
-                      /*  document.querySelector('.container').style.flex = '0 0 70%'; */
                        map.relayout();   
       }
                  //전체보기
@@ -926,12 +934,13 @@ body > div.mainContainer > div.right.menu {
        //모달보는 버튼에 이벤트 추가
          document.querySelector('.transit-btn-car').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","car");     
-        	 alert("차로 변경되었습니다.")
+        	 Swal.fire({icon: 'success', text: "차로 변경되었습니다."});
+        	 
          });
          document.querySelector('.transit-btn-transit').addEventListener('click', ()=>{
         	 sessionStorage.setItem("transit","traffic"); 
-        	 alert("대중교통으로 변경되었습니다.")
-         }); 
+        	 Swal.fire({icon: 'success',text: "대중교통으로 변경되었습니다."});
+         });
          document.querySelector('.submit-btn').addEventListener('click', register); 
          
          document.querySelector('.search-button').addEventListener('click', searchAction);
@@ -957,7 +966,7 @@ body > div.mainContainer > div.right.menu {
                 let activePlaceList = leftPlaceList[index];
                 let compPlaceList = activePlaceList.children
                 if(compPlaceList.length>5) { //span wrap div
-                	alert("하루에 장소는 6개까지만 가능합니다.")
+                	Swal.fire({icon: 'error',text:"하루에 장소는 6개까지만 가능합니다."});
                	 return;
                 }
                 let currTarget = event.currentTarget.parentElement;
@@ -1164,7 +1173,7 @@ body > div.mainContainer > div.right.menu {
                 	location.href = data;
                 },
                 error: function(data){
-                	alert("error : "+data);
+                	Swal.fire({icon: 'error',text: data});
                 }
             });  
            
@@ -1182,6 +1191,10 @@ body > div.mainContainer > div.right.menu {
 			for (let eArr of markArr) {
 				setConNull(eArr);
 			}
+			markArr = [];
+		    polyArr = [];
+			distArr = [];
+			
 		}
 		
        function initSch(){
@@ -1446,7 +1459,18 @@ body > div.mainContainer > div.right.menu {
      		   content.setAttribute("src", con);
      		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
      		   content.setAttribute("draggable","false");
+     		   
      	  	   content.addEventListener("click", getInfo);
+     	  	   content.addEventListener("click", () => {
+     	  		Swal.fire({
+   				   title: latlngData[iidx].dataset["plc_title"],
+   				   text: latlngData[iidx].dataset["addressDt"],
+   				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
+   				   imageWidth: 400,
+   				   imageHeight: 200,
+   				   imageAlt: 'Custom image',
+   				 })
+     	  	   });
      	  	   content.addEventListener("mouseenter", (event) => {
      	  		   let currTarget = event.currentTarget;
      	  		   currTarget.setAttribute("src", hcon);
@@ -1457,7 +1481,13 @@ body > div.mainContainer > div.right.menu {
      	  	   });
      	  	   return content;
      	  	   }
-    		   
+     	  	   
+     	  	   let hovContent = document.createElement("div");
+     	  	   let hovul = document.createElement("ul");
+     	  	   let hovli = document.createElement("li");
+			   /* img.src(currentTarget.dataset["img"]); */
+			  
+     	  	   
         	   for (let i = 0; i < leng; i++) {
         		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
         		posArr.push(pos);
@@ -1552,6 +1582,7 @@ body > div.mainContainer > div.right.menu {
      			markArr.push(markCon);
      			
         	   }
+        	   
         	   let plen = posArr.length-1;
     		   for (let i = 0; i < plen; i++) {
     			   let polyline = new kakao.maps.Polyline({
@@ -1575,7 +1606,7 @@ body > div.mainContainer > div.right.menu {
        function searchAction(event) {
          let placeValue = $("#search-value").val();
          if(placeValue==""){
-            alert("검색어를 입력해주세요");
+            Swal.fire({icon: 'error',text: "검색어를 입력해주세요"});
             return;
          }
          let placeList = $(".right-place-list");
@@ -1670,7 +1701,7 @@ body > div.mainContainer > div.right.menu {
                      
                      let objs1img = document.createElement('img');
                      objs1img.setAttribute('src',list[i].plcImg);
-                     objs1img.setAttribute('style','width:5rem;height:5rem;');
+                     objs1img.setAttribute('style','width:80px;height:80px;border-radius:4px;');
                      
                      let btnobj1 = document.createElement("button");
                      btnobj1.setAttribute('class', 'add-button');
@@ -1686,7 +1717,8 @@ body > div.mainContainer > div.right.menu {
                          let currentList = dailyPlaceList[idx];
                          let currentPlaceList = currentList.children;
                          if(currentPlaceList.length>=6){
-                        	 alert("하루에 장소는 6개까지만 가능합니다.")
+                        	  Swal.fire({icon: 'error',
+            	  text: "하루에 장소는 6개까지만 가능합니다."})
                         	 return;
                          }
                          for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
