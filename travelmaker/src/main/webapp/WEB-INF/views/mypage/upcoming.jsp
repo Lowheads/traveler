@@ -136,10 +136,12 @@ body {
 }
 
 .content_tap {
-   width: 100%;
+   width: 90%;
    height: 100px;
    display: flex;
    font-size: 12px;
+   margin-left: auto;
+   margin-right:auto;
 }
 
 .sch_tap {
@@ -155,13 +157,14 @@ body {
    width: 100%;
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-around;
+   justify-content: start;
 }
 
 .card_sch {
    width: 330px;
    height: 270px;
    margin-bottom: 20px;
+   margin-left:15px;
    border: 1px solid gray;
 }
 
