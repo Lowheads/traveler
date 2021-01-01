@@ -6,6 +6,7 @@
 <%@ include file="../includes/header.jsp" %>
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +17,14 @@
     <link rel="stylesheet" href="/resources/css/qnaboard/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
 <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
+<style>
+.cancel-btn{
+	border:1px solid gray;
+}
+</style>
 <%	String secretCheck = ""; // 비밀글 on/off  %>
 
 <script type="text/javascript">

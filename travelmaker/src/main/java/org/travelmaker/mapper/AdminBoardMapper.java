@@ -16,4 +16,6 @@ public interface AdminBoardMapper{
 	public List<BoardVO> searchPost(Criteria cri);
 	
 	public List<BoarddtVO> getPostDetail(int boardNo);
+	
+	public List<String> getPostImages(int boardNo);
 }

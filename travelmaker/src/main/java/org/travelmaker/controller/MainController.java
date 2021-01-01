@@ -34,11 +34,14 @@ import org.travelmaker.domain.MemberVO;
 import org.travelmaker.domain.PlaceDTO;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.ScheduleDTO;
+import org.travelmaker.domain.ScheduleVO;
 import org.travelmaker.domain.ThemeAttachVO;
 import org.travelmaker.service.BoardService;
+import org.travelmaker.service.BudgetService;
 import org.travelmaker.service.MemberService;
 import org.travelmaker.service.PlaceService;
 import org.travelmaker.service.RegionService;
+import org.travelmaker.service.ScheduleService;
 import org.travelmaker.service.SocialLoginService;
 import org.travelmaker.service.ThemeService;
 
@@ -59,7 +62,8 @@ public class MainController {
 	private SocialLoginService socialLoginService;
 	private MemberService memberService;
 	private ThemeService themeService;
-	
+	private BudgetService budgetservice;
+	private ScheduleService scheduleservice;
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,7 +74,7 @@ public class MainController {
 
 		Map<Integer, List<PlaceDTO>> theme = new HashMap<Integer, List<PlaceDTO>>();
 		
-		for(int i =1; i<6;i++) {
+		for(int i =1; i<7;i++) {
 			
 			theme.put(i-1, placeService.getListWithTheme(schDTO.getSchRegion(),"TM00"+i));
 		}
@@ -106,13 +110,13 @@ public class MainController {
 	public ModelAndView main(Model model, HttpSession session){
 		log.info(service.getList());
 		model.addAttribute("list", service.getList());
-		
 		model.addAttribute("adminlist",boardservice.getAdminList());
 		
     	try {
     		
             /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
             String naverAuthUrl = socialLoginService.getNaverAuthUrl(session);
+            model.addAttribute("budList", budgetservice.getBudgetByUser(memberService.getMemNo(String.valueOf(session.getAttribute("email")))));
             
             /* 생성한 인증 URL을 View로 전달 */
             return new ModelAndView("/main/index", "url", naverAuthUrl); // header에 로그인 경로로 잡힌다
@@ -151,5 +155,12 @@ public class MainController {
 	    return "redirect:/main/index";
 	    
    }
+   
+	@RequestMapping(value = "/getSchedule", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public List<Map<String, Object>> getSchedule(String email ){
+		System.out.println(scheduleservice.checkBudgetList(memberService.getMemNo(email)));
+		return scheduleservice.checkBudgetList(memberService.getMemNo(email));
+	}
 	
 }

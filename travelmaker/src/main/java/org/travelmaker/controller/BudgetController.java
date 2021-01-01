@@ -33,7 +33,25 @@ public class BudgetController {
 		log.info("list");
 
 		// DB 모든 일정, 지출 내역
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", service.getBudgetByUser(1));
 	}
 
+	@GetMapping("/list2")
+	public void list2(Model model) {
+
+		log.info("list");
+
+		// DB 모든 일정, 지출 내역
+		model.addAttribute("list", service.getBudgetByUser(1));
+	}
+	
+	
+	//insert
+	@PostMapping("/list2")
+	public String list2(@RequestParam("schNo")int schNo) {
+		
+		service.register(schNo);
+		
+		return "redirect:/buddt/listAll?schno="+schNo;
+	}
 }

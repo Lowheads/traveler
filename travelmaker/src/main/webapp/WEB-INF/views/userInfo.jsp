@@ -113,7 +113,7 @@
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">회원정보</h4>
+									<h4 class="modal-title" id="myModalLabel"></h4>
 								</div>
 								<div class="modal-body">회원정보</div>
 								<div class="modal-footer">
@@ -210,7 +210,7 @@
 		
 		let msg="";
 		
-		if (type == "") {
+		if (type == ""||type==null) {
 			msg = "검색할 대상을 선택하세요";
 			showModal(msg);
 			return false;
@@ -275,7 +275,7 @@
 			})
 
 		$("#moveBtn").on('click',function() {
-			location.href = "/admin/boardList?type=회원번호&keyword="	+ id;})
+			location.href = "/admin/boardList?type=NO&keyword="	+ id;})
 
 	})
 

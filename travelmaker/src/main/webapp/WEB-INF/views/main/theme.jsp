@@ -23,8 +23,7 @@
 	<!-- image slide -->	
 	<div class="slideWrapper">
  	<!-- 비오는날 보이는 테마 -->
- 	<!-- <button class="button-btn-submit submitResult">선택완료</button> -->
- 	 <div class="button-btn-submit">선택완료</div> 
+ <!-- 	 <div class="button-btn-submit">선택완료</div>  -->
   		<div class="dots">
             <span class="dot" id = "1" onclick="currentSlide(1)"></span> 
             <span class="dot" id = "2" onclick="currentSlide(2)"></span> 
@@ -32,10 +31,12 @@
             <span class="dot" id = "4" onclick="currentSlide(4)"></span> 
             <span class="dot" id = "5" onclick="currentSlide(5)"></span> 
             <span class="dot" id = "6" onclick="currentSlide(6)"></span>
+            <span class="dot" id = "7" onclick="currentSlide(7)"></span>
         </div> 
 	 <div class="mySlides" id="rainydayRec" >
-	 <!-- 	<div class="button-btn-submit">선택완료</div> -->
-				<div class='themeImage'>
+		<div class='themeImage'>
+		<img src = "/resources/themeImg/rainyday<c:out value="${schDto.schRegion }" />.jpg">
+					 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
 				</div>
@@ -48,8 +49,9 @@
 		</div><!-- end of myslides --> 
   		<c:forEach items="${themeList}" var="themeList" varStatus="status">
   		<div class="mySlides" id="theme_place_list<c:out value='${themeList.key}' />">
-  			 	<!-- <div class="button-btn-submit">선택완료</div> -->
   		<div class='themeImage'>
+  		<img src = /resources/themeImg/img<c:out value="${schDto.schRegion }" />_<c:out value='${themeList.key}' />.jpg>
+  			 	 <div class="button-btn-submit">선택완료</div> 
 		<a class="prev" onclick="plusDivs(-1)">❮</a>
 		<a class="next" onclick="plusDivs(1)">&#10095;</a>
   		</div>
@@ -87,9 +89,8 @@
 	  let x = document.getElementsByClassName("mySlides");
 	  let placeList = document.getElementsByClassName("placeList");	
 	  
-	  if (n > x.length) {slideIndex = 1}
+	  if (n > x.length) {slideIndex = 1; n =1}
 	  if (n < 1) {slideIndex = x.length}
-	  
 	  
 	  for (i = 0; i < x.length; i++) {
 	    x[i].style.display = "none";  
@@ -99,7 +100,7 @@
 	  x[slideIndex-1].style.display = "block";  
 	  placeList[slideIndex-1].style.display = "inline-block";
 	  
-	  for(let i =0;i<7;i++){
+	  for(let i =1;i<=7;i++){
 		  $(".dot[id="+i+"]").removeClass("current");
 	  }
 	  
@@ -152,7 +153,7 @@
 
 			
 			//테마이미지 가져와서 띄워주기
-			for(let i =1;i<6;i++){(function() {
+			for(let i =1;i<7;i++){(function() {
 							
 				$.getJSON("/admin/getAttachment", {
 							themeNo : $("div .travel-theme")[i].id}, 
@@ -166,12 +167,12 @@
 									str += "<img src='/admin/display?fileName="
 											+ fileCallPath + "'>";
 								}
-								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
+								//$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 								
 							}).fail(function(result){
 								let str = "<img src='/resources/img/default.jpg'>";
 								//$("#theme_place_list" + i + " ul").html(str);
-								$("#theme_place_list" + (i-1)+" .themeImage").append(str);
+								//$("#theme_place_list" + (i-1)+" .themeImage").append(str);
 							})
 						})();
 				}
@@ -197,22 +198,21 @@
 					let fileCallPath = encodeURIComponent(data.uuid + "_" + data.fileName);
 					str += "<img src='/admin/display?fileName="
 							+ fileCallPath + "'>";
-					$("#rainydayRec .themeImage").append(str);
+//					$("#rainydayRec .themeImage").append(str);
 					}).fail(function(result){
-						console.log("fail TT");
-					console.log(result);
-					let str = "<img src='/resources/img/default.jpg'>";
-					
-					console.log(str)
-					
-					$("#rainydayRec .themeImage").append(str);
+						console.log(result);
+						let str = "<img src='/resources/img/default.jpg'>";
+//						$("#rainydayRec .themeImage").append(str);
 				})
 			
 		
   			function init() {
 			let submitBtn = document
 					.getElementsByClassName("button-btn-submit");
-			submitBtn[0].addEventListener("click", submitPlace);
+			for(let i =0; i<submitBtn.length;i++){
+				submitBtn[i].addEventListener("click", submitPlace);
+			}
+			
 		}  
 
 		function submitPlace() {
@@ -254,7 +254,7 @@
 			form.appendChild(objs4);
 
 			form.setAttribute('method', 'post');
-			form.setAttribute('action', "/place/"); // URL
+			form.setAttribute('action', "/place/home"); // URL
 
 			document.body.appendChild(form);
 

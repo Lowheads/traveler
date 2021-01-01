@@ -344,14 +344,20 @@
 
 .select_img{
 	text-align:center;
+	width:100%;
+	height:200px;
 	display:inline-block;
+	background-image: url('/resources/img/dtplusimg.png');
+	background-size: cover;
+	background-position: center center;
 }
 
 .select_img img{
 	width:100%;
-	height:200px;
+	height:250px;
 	margin-top:10px;
 	margin-bottom:10px;
+	border: 1px dashed gray;
 	
 }
 
@@ -536,8 +542,8 @@
 			var i=0;
 			$(".fileAdd_btn").on("click", function(){
 				$("#fileIndex").append("<div class='filebox'><label class='filecontent'><input type='file' id='boarddtImg' style='float:left;' name='file_"+(fileIndex++)+"'>"
-				+"<div class='select_img'><img src='/resources/img/plusimg.JPG'/></div></label>"	
-				+"<input type='text' class='form-control' name='newContent'/>"
+				+"<div class='select_img'>&nbsp<img id=errorimg src='' style='display:none'></div></label>"			
+				+"<input type='text' class='form-control' name='newContent' style='margin-top:100px;'/>"
 				+"<button type='button' class='fileDelBtn' id='fileDelBtn'>"+"삭제"+"</button></div><br>");
 			});
 			
@@ -550,6 +556,7 @@
 						reader.onload = function(data) {
 					tmp.next().children().attr("src", data.target.result);
 					}
+					tmp.next().children().css("display","inline-block").css("border","none");
 					reader.readAsDataURL(this.files[0]);
 					}
 				

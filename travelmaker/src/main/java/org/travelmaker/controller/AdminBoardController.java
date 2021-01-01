@@ -69,6 +69,14 @@ private AdminBoardService service;
 		return result;
 	} 
 	
-	
+
+	@GetMapping(value = "/getPostImages/{boardNo}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<String>> getPostImages(@PathVariable("boardNo") int boardNo) {
+		
+		ResponseEntity<List<String>> result = null;
+		result = ResponseEntity.status(HttpStatus.OK).body(service.getPostImages(boardNo));
+		
+		return result;
+	} 
 
 }

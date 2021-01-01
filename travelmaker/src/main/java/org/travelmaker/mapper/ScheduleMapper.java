@@ -56,5 +56,7 @@ public interface ScheduleMapper {
 	public List<Map<String, Object>> getSchedule(int schNo);
 	
 	public int checkPicked(ScheduleVO schedule);
+	
+	public List<Map<String, Object>> checkBudget(int memNo);
 }
 

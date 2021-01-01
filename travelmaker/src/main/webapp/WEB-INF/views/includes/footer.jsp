@@ -21,8 +21,9 @@ footer {
 .footercontainer {
   max-width: 1100px;
   display: flex;
-  margin: 0 50px;
   justify-content: space-between;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .footercontainer h4 {

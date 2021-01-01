@@ -27,7 +27,7 @@
 	</resultMap>
 
 	<select id="getBoardList" resultMap="BoardVO">
- <![CDATA[
+ 	<![CDATA[
 	SELECT /*+ INDEX_DESC(TBL_BOARD PK_BOARD) */ * 
 	FROM BOARD 
 	ORDER BY BOARD_NO DESC]]>
@@ -43,7 +43,7 @@
 
 	<select id="searchPost" resultMap="BoardVO">
 		SELECT /*+ INDEX_DESC(MEMBER PK_BOARD) */ *
-		FROM BOARD B, SCHEDULE S, MEMBER M
+		FROM BOARD B, SCHEDULE S, MEMBER M, BOARD_DT D
 		WHERE
 		<choose>
 			<when test='type == "NO"'>
@@ -53,16 +53,25 @@
 				(NICKNAME LIKE '%'||#{keyword}||'%')
 			</when>
 			<when test='type == "T"'>
-				(BOARD_TITLE LIKE '%'||#{keyword}||'%')
+				(B.BOARD_TITLE LIKE '%'||#{keyword}||'%')
+			</when>
+			<when test='type == "C"'>
+				(D.BOARD_CON LIKE '%'||#{keyword}||'%')
 			</when>
 		</choose>
-		AND B.SCH_NO = S.SCH_NO AND S.MEM_NO=M.MEM_NO
-		ORDER BY BOARD_NO DESC
+		AND B.SCH_NO = S.SCH_NO AND S.MEM_NO=M.MEM_NO AND B.BOARD_NO = D.BOARD_NO
+		ORDER BY B.BOARD_NO DESC
 	</select>
 	
 	<select id="getPostDetail" resultMap="Boarddt">
 		SELECT * FROM BOARD_DT WHERE BOARD_NO = #{boardNo}
 	</select>
+	
+	<select id="getPostImages" resultType="String">
+		SELECT STORED_FILE_NAME FROM MP_FILE WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	
 
 </mapper>
 	
