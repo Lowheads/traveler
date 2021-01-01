@@ -73,16 +73,30 @@ body {
 
 .coverBanner {
    width: 100%;
-   height: 300px;
-   background-image: url("/resources/img/mypagebanner.png");
+   height: 450px;
+   background: linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.8) 1%,
+            rgba(20, 20, 20, 0.4) 35%,
+            rgba(20, 20, 20, 0.1) 50%,
+            rgba(20, 20, 20, 0) 100%
+          ), url("/resources/img/mypagebg2.jpg");
    background-size: cover;
-   text-align: center;
    color: white;
-   padding-top: 100px;
+   padding-top: 200px;
    padding-bottom: 100px;
    font-size: 50px;
 }
-
+.coverBanner b{
+ text-shadow: 4px 2px 10px black;
+ margin-left:10%;
+}
+.coverBanner div{
+ text-shadow: 4px 2px 10px black;
+ margin-left:10%;
+ font-size: 18px;
+ padding-left: 4px;
+}
 .pickNav_bar {
    width: 100%;
    height: 50px;
@@ -185,31 +199,28 @@ body {
 <body>
    <div class="pick_plan_content">
       <div class="coverBanner">
-        <!--  <b>여행일정</b> -->
+      <b>여행일정</b>
+        <div>계획한 일정들을 확인해보세요</div>
       </div>
       <div class="pickNav_bar">
-         <div class="pickNav_mnu">
-         <div class="mnu_box" onclick="location.href='/mypage/pickPL'">
-               <b>찜한장소</b>
+      <div class="pickNav_mnu">
+            <div class="mnu_box " onclick="location.href='/mypage/pickPL'">
+               <b>찜한목록</b>
             </div>
 
-            <div class="mnu_box active" onclick="location.href='/mypage/pickSch'">
+            <div class="mnu_box active" onclick="location.href='/mypage/upcoming'">
                <b>여행일정</b>
             </div>
          </div>
       </div>
       <div class="content_wrap">
          <div class="content_tap">
-            <div class="sch_tap" style="margin-left: 20px">
-               <a href="/mypage/pickSch" style="color: black;">찜한 일정</a>
-            </div>
-            <div class="sch_tap">
-               <a href="/mypage/upcoming" style="color: #3099dd"><b>계획중인
-                     일정</b></a>
-            </div>
-            <div class="sch_tap">
-               <a href="/mypage/past" style="color: black;">지나간 일정</a>
-            </div>
+          <div class="sch_tap">
+                  <a href="/mypage/upcoming" style="color: #3099dd;"><b>계획중인 일정</b></a>
+               </div>
+               <div class="sch_tap">
+                  <a href="/mypage/past" style="color: black;">지나간 일정</a>
+               </div>
          </div>
          <div class="contents">
             <!-- 카드게시물 -->
