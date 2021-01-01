@@ -30,11 +30,9 @@ import lombok.extern.log4j.Log4j;
 public class MemberServiceImpl implements MemberService {
    
    private final MemberMapper mapper; 
-   private final QnABoardMapper qnaBoardMapper;
    
-   public MemberServiceImpl(MemberMapper memberMapper, QnABoardMapper qnaBoardMapper) {
+   public MemberServiceImpl(MemberMapper memberMapper) {
 	   this.mapper = memberMapper;
-	   this.qnaBoardMapper = qnaBoardMapper;
    }
    
    
@@ -101,7 +99,6 @@ public class MemberServiceImpl implements MemberService {
 		
 		// 관리자면 관리자 페이지로 가주세요!
 		if(memberGrade.equals("MG002")) {
-			System.out.println(memberGrade);
 			return true;
 		}
 		
