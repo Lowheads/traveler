@@ -61,7 +61,7 @@ public class MemberController {
 		String referer = request.getHeader("Referer");
 		
 		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
-		if(service.isMemberStatus(mVO, rttr, session)) {
+		if(service.isValidMember(mVO, rttr, session)) {
 			return "redirect:" + referer; 
 		}
 		// email 저장하기 여부
@@ -91,7 +91,7 @@ public class MemberController {
 		model.addAttribute("member", service.getMember(email));
 		
 		// 소셜회원은 소셜정보조회페이지로 이동
-		if(service.isApiLoginCheck(email, session)) {
+		if(service.isApiLoginCheck(email)) {
 			return "/member/apiMemberInfo";
 		}
 		
@@ -104,7 +104,7 @@ public class MemberController {
 	public String modifyPwd(String newPwd, String inputPwd, String email, HttpSession session, RedirectAttributes rttr) {
 		
 		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
-		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
+		if(service.isValidInputCheck(email, inputPwd, newPwd, session, rttr)) {
 			return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 		}
 
@@ -144,7 +144,7 @@ public class MemberController {
 		
 		try {
 			// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
-			service.isNicknameTouch(nickname, email, rttr);
+			service.isModifyNickname(nickname, email, rttr);
 			
 		}catch (NullPointerException npe) {
 			npe.getStackTrace();
@@ -216,7 +216,7 @@ public class MemberController {
 	  	// 이미 회원이면 로그인 처리
 	  	session.setAttribute("email", email);
 	  	service.setLoginDateToToday(email); // 최종 로그인은 오늘..
-	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMemNo(email));
+	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMember(email).getMemNo());
 	  	
 	  	return "redirect:" + referer;
 	  
