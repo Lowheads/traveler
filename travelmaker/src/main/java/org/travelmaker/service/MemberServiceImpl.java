@@ -31,7 +31,7 @@ import lombok.extern.log4j.Log4j;
 public class MemberServiceImpl implements MemberService {
    
 	private final MemberMapper mapper; 
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 	   
 	public MemberServiceImpl(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
 		this.mapper = memberMapper;
