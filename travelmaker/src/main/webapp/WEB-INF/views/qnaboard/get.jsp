@@ -13,7 +13,7 @@
 		if (strReferer == null) {
 		%>
 		<script>
-			alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
+			/* swal("비정상 접근", "URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.", "warning"); */
 			history.go(-1);
 		</script>
 		<%
@@ -70,7 +70,7 @@
                         	    rows="3" name='content' readonly="readonly"><c:out value="${board.content}" /></textarea>
                         	</div>
                         	
-            <div class="getBtn-wrap" style="text-align: right; margin-top: 20px;">
+            <div class="getBtn-wrap" style="text-align: right;">
                 <c:if test="${board.memNo == loginMemNo || myGrade == 'MG002' }">	
             	<button data-oper='modify' class="reg-btn">수정하기</button>
             	</c:if>
@@ -168,7 +168,7 @@
 			};
 			
 			replyService.add(reply, function(result){
-				alert(result);
+				swal( "" , result , "success" );
 				showList(-1); // 댓글 등록 후 마지막 페이지로 이동
 				$('#reply').val('');
 			});
@@ -183,7 +183,7 @@
 	function replyEmptyCheck(inputReply){
 		
 		if(inputReply.length == 0){
-			alert("내용을 입력해주세요.");
+			swal( "", "내용을 입력해주세요", "warning" );
 			return true;
 		}
 		return false;
@@ -215,7 +215,7 @@
 		let rno = event.dataset['rno']; // 내가 선택한 삭제버튼의 rno가 담긴다.
 		
 		replyService.remove(rno, function(result){
-			alert(result);
+			swal( "" , result , "success" );
 			showList(pageNum);
 			
 		});
@@ -229,14 +229,14 @@
 		let rnoVal = event.parentElement.previousSibling.parentElement.parentElement.dataset['rno'];
 		
 		if(modiTextArea.length == 0){
-			alert("빈칸일 수 없습니다.");
+			swal( "" , "내용을 입력해주세요" , "warning" );
 			return;
 		}
 		
 		let reply = {rno:rnoVal, reply:modiTextArea}  // 리플번호와 리플내용을 가진 reply 객체
 		
 		replyService.update(reply, function(result){
-			alert(result);
+			swal( "" , result , "success" );
 			showList(pageNum);
 		}) // 원래 댓글에 새로운 댓글내용으로 업데이트
 		

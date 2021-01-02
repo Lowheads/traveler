@@ -15,6 +15,7 @@
       <result property="lastDate" column="LAST_DATE" />
       <result property="status" column="STATUS" />
       <result property="memGrade" column="MEM_GRADE" />
+      <result property="travelType" column="TRAVEL_TYPE" />
    </resultMap>
 
    <!-- 현 유저 확인 -->
@@ -32,7 +33,7 @@
       #{pwd},
       #{birth},
       #{gender},
-       #{status},
+      #{status},
       #{memGrade}
       )
    </insert>   

@@ -13,7 +13,6 @@
 		if (strReferer == null) {
 		%>
 		<script>
-			alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
 			history.go(-1);
 		</script>
 		<%
@@ -117,6 +116,20 @@
 		</div>
 		<!-- end 변경모달 -->
 		
+		<!-- 회원여행성향 -->
+			<div class="info-content"> 
+				<div class="content-name">여행성향</div>
+				
+				<c:choose>
+				    <c:when test="${member.travelType == null}">
+				   		<div class="content-proper">테스트 해주세요</div> 
+				    </c:when>
+				    <c:when test="${member.travelType != null}">
+						<div class="content-proper">${member.travelType }</div> 
+				    </c:when>
+				</c:choose>
+			</div>
+		
 		
 		<!-- 회원탈퇴 모달 -->
 		<div class="member_delete_modal">
@@ -182,6 +195,10 @@
 					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
+	        	 <!-- 홈으로 -->
+	        	 <button type="button" class="home_btn" onclick="location.href='/main/index'">홈으로</button>
+	        	 <!-- 홈으로 버튼 끝 -->
+	        	 
 			</div>
 			<!-- end foot -->
 			
@@ -239,33 +256,33 @@
 
 		 // 현재 패스워드 입력
 		if (inputPwd.length == 0) {
-			alert("현재 비밀번호를 입력해 주세요");
+			swal("", "현재 비밀번호를 입력해 주세요.", "warning");
 			$("#inputPwd").focus();
 			return false;
 		}
 
 		// 패스워드 입력
 		if (myPwd.length == 0) {
-			alert("비밀번호를 입력해 주세요");
+			swal("", "비밀번호를 입력해 주세요.", "warning");
 			$("#infoPwd").focus();
 			return false;
 		}
 
 		// 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
 		if (false === jPwd.test(myPwd) || myPwd.length > 12) {
-			alert('비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.');
+			swal("", "비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.", "warning");
 			return false;
 		}
 
 		// 패스워드 확인
 		if (myPwd != myPwdCfmm) {
-			alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");
+			swal("", "비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.", "warning");
 			return false;
 		}
 
 		// 비밀번호는 공백없이!!
 		if (myPwd.search(/\s/) != -1) {
-			alert('비밀번호는 공백없이!!');
+			swal("", "비밀번호에는 공백이 포함될 수 없습니다.", "warning");
 			return false;
 		}
 
@@ -324,26 +341,26 @@
 
 		// 공백확인
 		if (myNickname.length == 0) {
-			alert("닉네임은 공백일 수 없습니다");
+			swal("", "닉네임을 입력해주세요.", "warning");
 			return false;
 		}
 
 		// 닉네임은 2~8자리까지만
 		if (!(myNickname.length >= 2 && myNickname.length <= 8)) {
-			alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+			swal("", "닉네임을 입력해주세요 2~8글자여야 합니다.", "warning");
 			$("#nickname").focus();
 			return false;
 		}
 
 		// 공백 포함 X
 		if (myNickname.search(/\s/) != -1) {
-			alert("닉네임에는 공백이 포함될 수 없어요!");
+			swal("", "닉네임에는 공백이 포함될 수 없습니다.", "warning");
 			return false;
 		}
 
 		// 닉네임은 한글/영문/숫자만!!
 		if (false === jNname.test(myNickname)) {
-			alert('닉네임은 한글/영문/숫자만!!');
+			swal("", "닉네임은 한글/영문/숫자만 입력가능합니다", "warning");
 			$("#nickname").focus();
 			return false;
 		}
@@ -361,16 +378,12 @@
 		let pwdCfm =  $("#deletePwdCfm").val(); // 비밀번호 확인
 		
 		if(pwdChk.length == 0){
-			//입력 안하면
-			alert("비밀번호를 입력해주세요");
-		
+			swal("", "비밀번호를 입력해주세요.", "warning");
 			return false;
 		}
 		
 		if(pwdChk != pwdCfm){
-			// 비밀번호가 일치하지 않으면...
-			alert("비밀번호가 일치하지 않습니다.");
-			
+			swal("", "비밀번호가 일치하지 않습니다.", "warning");
 			return false;
 		}
 		
@@ -384,8 +397,8 @@
 		} else { //취소
 			return false;
 		}
-	} 
-
+	}
+ 	
 </script>
 
 </html>

@@ -46,27 +46,22 @@ $(document).ready(function(){
     	let content = $("#content").val();
     	
     	if(title.length == 0){
-    		alert("제목은 빈칸일 수 없습니다");
+			swal( "" , "제목이 빈칸일 수는 없습니다" , "warning" );
     		return false;
     	}
     	
     	if(title.length > 30){
-    		alert("제목은 30자리까지 가능합니다");
+			swal( "" , "제목은 30자리까지 가능합니다." , "warning" );
     		return false;
     	}
     	
     	if(content.length == 0){
-    		alert("내용을 작성해주세요");
-    		return false;
-    	}
-    	
-    	if(content.length == 0){
-    		alert("내용을 작성해주세요");
+			swal( "" , "내용을 작성해주세요." , "warning" );
     		return false;
     	}
     	
     	if(content.length > 1000){
-    		alert("내용이 너무 많습니다..");
+    		swal( "" , "내용이 너무 많습니다." , "warning" );
     		return false;
     	}
     	
