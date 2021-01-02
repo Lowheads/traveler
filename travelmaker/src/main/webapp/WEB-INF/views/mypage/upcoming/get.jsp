@@ -569,7 +569,7 @@ height: 90%;
    </div>
 </body>
 <%@ include file="../../includes/footer.jsp" %>
-<!-- /.col-lg-9 -->
+<!-- /.col-lg-9 --><script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <script type="text/javascript">
@@ -632,7 +632,7 @@ function myFunction() {
                data : schNo,
                success : function(data) {
 
-                  alert("목록에서 삭제되었습니다.");
+            	   swal("정상적으로 삭제되었습니다.", "success");
                   location.href = "/mypage/upcoming?pageNum="
                         + $('input[name=pageNum]').val();
                },

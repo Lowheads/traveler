@@ -16,7 +16,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 /*지은스타일 */
 #customers {
@@ -630,7 +630,7 @@ function myFunction() {
                data : schNo,
                success : function(data) {
 
-                  alert("목록에서 삭제되었습니다.");
+            	   swal("정상적으로 삭제되었습니다.", "success");
                   location.href = "/mypage/past?pageNum="
                         + $('input[name=pageNum]').val();
                },
