@@ -38,7 +38,7 @@ public interface MemberMapper {
    
    public void deleteBoardByNickname(String nickname); // 회원탈퇴 전 해당 회원의 게시물 삭제
    
-   public void deleteMember(@Param("pwd") String pwd, @Param("email") String email); // 회원 탈퇴
+   public void deleteMember(@Param("email") String email); // 회원 탈퇴
    
    public void deleteApiMember(String email); // api 회원 탈퇴
    

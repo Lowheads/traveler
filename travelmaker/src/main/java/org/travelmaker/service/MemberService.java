@@ -58,8 +58,6 @@ public interface MemberService {
    
    public String findPwd(String email); // 비밀번호찾기
    
-   public void setNewPwd(String email); // 비밀번호 찾기(임시 비밀번호 생성)
-   
    public Email writerEmail(String email, Email emailObj); // 메일보내기
    
    public Email certEmail(String email, String certNum, Email emailObj); // 소셜 계정 회원탈퇴 인증메일 보내기

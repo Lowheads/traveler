@@ -117,7 +117,6 @@
       update member set 
    	  status = 'MS002'
       where email = #{email} 
-      and pwd = #{pwd}
    </update>
    
    <!-- api 회원탈퇴 -->
