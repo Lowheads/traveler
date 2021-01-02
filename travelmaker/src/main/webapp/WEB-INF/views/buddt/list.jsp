@@ -457,7 +457,6 @@ label {
     margin: 4px 0 0 4px;
 }
 
-
     .expense-position {
         display: flex;
         justify-content: space-around;
