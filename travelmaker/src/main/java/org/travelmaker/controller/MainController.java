@@ -113,10 +113,13 @@ public class MainController {
 		model.addAttribute("adminlist",boardservice.getAdminList());
 	
     		
+		
+		
             /* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
             String naverAuthUrl = socialLoginService.getNaverAuthUrl(session);
+            if(session.getAttribute("email")!=null) {
             model.addAttribute("budList", budgetservice.getBudgetByUser(memberService.getMemNo(String.valueOf(session.getAttribute("email")))));
-            
+            }
             /* 생성한 인증 URL을 View로 전달 */
             return new ModelAndView("/main/index", "url", naverAuthUrl); // header에 로그인 경로로 잡힌다
         
