@@ -212,6 +212,10 @@ public class BuddtController {
 		service.remove(buddt);
 		return "redirect:/buddt/listAll?schno=" + buddt.getSchno();
 	}
-
-
+	
+	@GetMapping("/chart")
+	public void chart(Model model) {
+		
+	}
+	
 }
