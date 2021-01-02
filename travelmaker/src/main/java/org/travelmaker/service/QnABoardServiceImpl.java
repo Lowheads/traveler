@@ -63,6 +63,23 @@ public class QnABoardServiceImpl implements QnABoardService {
 		viewCntUp(bno); // 조회수 증가
 		return mapper.read(bno);
 	}
+	
+
+	@Override
+	public void sendMyInfoByPage(QnABoardVO pageObj, Model model, HttpSession session) {
+			
+		// 선택한 페이지 조회 (게시글 목록 출력)
+		model.addAttribute("board", pageObj);
+		model.addAttribute("secret", pageObj.getSecret());
+		 model.addAttribute("myGrade", getMyGrade((String)session.getAttribute("email")));
+			
+		// 로그인한 회원의 번호를 넘겨준다.(글의 수정여부를 판별하기 위함)
+		model.addAttribute("loginMemNo", getMyMemNo((String)session.getAttribute("email")));
+					
+		// 로그인한 사용자의 닉네임을 넘겨준다.(댓글의 수정/삭제 여부 판단을 위함)
+		session.setAttribute("myNickname", getMyNickname((String)session.getAttribute("email")));		
+	}
+	
 
 	@Override
 	public void viewCntUp(int bno) { // 조회수 1증가
@@ -121,6 +138,8 @@ public class QnABoardServiceImpl implements QnABoardService {
 		model.addAttribute("myGrade", getMyGrade(email)); // admin 또는 member
 		
 	}
+
+
 
 
 

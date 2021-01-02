@@ -35,25 +35,35 @@
 }
 
 .reg-btn{ /* 등록 버튼 */
-	color: white;
-	background-color: #ff8b3d;
-	width: 60px;
-    height: 30px;
-    font-size: 13px;
+    background-color: #ff8b3d;
+    color: white;
     border: 1px solid #ff8b3d;
+    font-size: 15px;
+    float: right;
+    padding: 4px 13px 4px 13px;
+    border-radius: 7px;
+    outline: 0;
+    cursor: pointer;
+    	width: 60px;
+    height: 30px;
 }
 
 .cancel-btn{ /* 취소 버튼 */
-	color: black;
-	background-color: white;
-    width: 60px;
+   background-color: white;
+    font-size: 15px;
+    background-color: #e9e9e9;
+    border: 1px solid #e9e9e9;
+    padding: 4px 13px 4px 13px;
+    border-radius: 7px;
+    outline: 0;
+    cursor: pointer;
+ width: 60px;
     height: 30px;
-    font-size: 13px;
+    margin-right: 0.5%;
 }
 
 .btn-wrap{ /* 등록/ 삭제 버튼 div */
 	text-align: right;	
-	padding-top: 20px;
     padding-bottom: 10%;
 }
 

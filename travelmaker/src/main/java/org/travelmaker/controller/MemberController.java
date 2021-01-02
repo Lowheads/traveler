@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.service.SocialLoginService;
@@ -28,6 +27,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/member/*")
 public class MemberController {
 
+	private static String REDIRECT_MY_INFO_PAGE = "redirect:/member/getMember?email=";
 	private final MemberService service;
 	private final SocialLoginService socialLoginService;
 	
@@ -43,7 +43,7 @@ public class MemberController {
 		
 		String referer = request.getHeader("Referer");
 		
-		// 이메일, 닉네임 한번 더 검사하자
+		// 이메일, 닉네임 한번 더 중복체크
 		if(service.isDuplicateCheck(mVO, rttr)) {
 			return "redirect:" + referer;
 		}
@@ -71,7 +71,6 @@ public class MemberController {
 		if(service.isAdminLogin(mVO, session)) {
 			return "redirect:/admin/main";
 		}
-		
 		return "redirect:" + referer; 
 	}
 	
@@ -89,18 +88,15 @@ public class MemberController {
 	@RequestMapping(value = "/getMember", method = RequestMethod.GET)
 	public String getMember(String email, Model model, HttpSession session) {
 		
-		final String MEMBER_INFO_PAGE = "/member/memberInfo";			// 일반회원정보 조회 페이지
-		final String SOCIAL_MEMBER_INFO_PAGE = "/member/apiMemberInfo"; // 소셜회원정보 조회 페이지
-
 		model.addAttribute("member", service.getMember(email));
 		
 		// 소셜회원은 소셜정보조회페이지로 이동
 		if(service.isApiLoginCheck(email, session)) {
-			return SOCIAL_MEMBER_INFO_PAGE;
+			return "/member/apiMemberInfo";
 		}
 		
 		// 조회페이지로 이동한다.
-		return MEMBER_INFO_PAGE;
+		return "/member/memberInfo";
 	}
 	
 	// 비밀번호 변경
@@ -109,7 +105,7 @@ public class MemberController {
 		
 		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
 		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
-			return "redirect:/member/getMember?email=" + session.getAttribute("email");
+			return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 		}
 
 		// 비밀번호를 바꾼다.
@@ -118,8 +114,9 @@ public class MemberController {
 		// 바뀐 회원의 정보를 화면에 출력한다.
 		rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
 		rttr.addFlashAttribute("member", service.getMember(email));
-		return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 	}
+	
 	
 	// Ajax Email체크
 	@RequestMapping("/hasEmail")
@@ -146,18 +143,21 @@ public class MemberController {
 	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
 		
 		try {
-
-		// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
-		service.isNicknameTouch(nickname, email, rttr);
-		
-		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
-		return "redirect:/member/getMember?email=" + session.getAttribute("email");
-
-		}catch (Exception e) {
-			e.getStackTrace();
+			// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
+			service.isNicknameTouch(nickname, email, rttr);
+			
+		}catch (NullPointerException npe) {
+			npe.getStackTrace();
 			rttr.addFlashAttribute("msg", "세션이 만료되었습니다.");
 			return "redirect:/main/index";
+		}catch (Exception e) {
+			e.getStackTrace();
+			rttr.addFlashAttribute("msg", "예상치못한 에러가 발생했습니다. 메인 홈페이지로 이동합니다");
+			return "redirect:/main/index";
 		}
+		
+		// 중복이 없다면 정보가 정상적으로 저장되었습니다.
+		return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 	}
 	
 	
@@ -166,11 +166,10 @@ public class MemberController {
 	public String deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
 			
 		// 회원이 일치하는지 확인
-		// 일치하면 탈퇴, 아니면 탈퇴 못함
-		if(service.isMemberValid(pwd, email, rttr, session)) {
-			return "redirect:/member/getMember?email=" + session.getAttribute("email");
+		if(service.isDeleteMember(pwd, email, rttr, session)) {
+			return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 		}
-		return "redirect:/member/main";
+		return "redirect:/main/index";
 	}
 	
 	// api 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
@@ -178,7 +177,7 @@ public class MemberController {
 	public String deleteApiMember(String email, HttpSession session, RedirectAttributes rttr) {
 		
 		service.deleteApiMember(email, rttr, session);
-		return "redirect:/member/main";
+		return "redirect:/main/index";
 	}
 	
 
@@ -218,6 +217,7 @@ public class MemberController {
 	  	session.setAttribute("email", email);
 	  	service.setLoginDateToToday(email); // 최종 로그인은 오늘..
 	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMemNo(email));
+	  	
 	  	return "redirect:" + referer;
 	  
 	 }

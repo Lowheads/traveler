@@ -26,13 +26,17 @@ public interface MemberMapper {
    
    public void modifyNickname(@Param("nickname") String nickname, @Param("email") String email); //닉네임 수정
    
-    // QnA게시판의 작성자 변경(닉네임 변경시 적용) 
-	public void modifyBoardNickname(@Param("nickname") String nickname, @Param("memNo") int memNo);
+   // QnA게시판의 작성자 변경(닉네임 변경시 적용) 
+   public void modifyBoardNickname(@Param("nickname") String nickname, @Param("memNo") int memNo);
 
-	// QnA게시판의 게시글 닉네임 변경(닉네임 변경시 적용) 
-	public void modifyBoardReplyer(@Param("nickname") String nickname, @Param("replyer") String replyer);
+   // QnA게시판의 게시글 닉네임 변경(닉네임 변경시 적용) 
+   public void modifyBoardReplyer(@Param("nickname") String nickname, @Param("replyer") String replyer);
    
    public int memberValidCnt(@Param("pwd") String pwd, @Param("email") String email); // 탈퇴전 유효성 체크
+   
+   public void deleteReplyByReplyer(@Param("replyer")String nickname);  // 회원탈퇴 전 해당 회원의 댓글 삭제
+   
+   public void deleteBoardByNickname(String nickname); // 회원탈퇴 전 해당 회원의 게시물 삭제
    
    public void deleteMember(@Param("pwd") String pwd, @Param("email") String email); // 회원 탈퇴
    

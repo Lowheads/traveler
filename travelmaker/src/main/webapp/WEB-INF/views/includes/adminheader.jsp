@@ -107,9 +107,9 @@ li{
 
 </style>
 <script>
-	const ss = '<%=session.getAttribute("email")%>'
+	const ss = <%=session.getAttribute("myGrade")%>
 	
-	if(ss!="myadmin82@gmail.com"){
+	if(ss!="MG002"){
 		location.href="/main/index"
 	}
 	

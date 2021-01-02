@@ -21,6 +21,8 @@ public interface QnABoardService {
 	
 	public QnABoardVO get(int bno); // 게시물 조회
 	
+	public void sendMyInfoByPage(QnABoardVO pageObj, Model model, HttpSession session); // 조회페이지로 정보 보내자
+	
 	public void viewCntUp(int bno); // 조회수 1 증가
 	
 	public boolean modify(QnABoardVO qnaBoard); // 게시물 수정

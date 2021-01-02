@@ -50,9 +50,7 @@ public interface MemberService {
    
    public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr); // 닉네임 수정 여부 확인 // 닉네임 수정 여부 확인
    
-   public boolean isMemberValid(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
-   
-   public void deleteMember(String pwd, String email); // 회원 탈퇴
+   public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
    
    public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session); // api 회원 탈퇴
    
@@ -77,6 +75,8 @@ public interface MemberService {
    public boolean isKakaoApiJoinCheck(JsonNode userProfile, Model model); // 카카오 api 로그인할 경우 회원가입 되어 있는지 확인
    
    public boolean isDeleteAlready(String email, RedirectAttributes rttr); // 소셜계정 탈퇴여부 확인
+   
+   public boolean isEamilChack(String email, RedirectAttributes rttr); // 비밀번호 찾기(이메일 체크)
    
    public boolean updateTT(String yourType,int memNo);
 
