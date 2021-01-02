@@ -12,5 +12,9 @@ public class BudgetVO {
 	private Long schno; 
 	private String totalpay;
 	private Long totalcnt;
+	
+	private String schtitle;
+	private Date fromdate;
+	private Date todate;
 
 }

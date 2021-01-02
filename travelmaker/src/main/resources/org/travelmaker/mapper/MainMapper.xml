@@ -79,9 +79,14 @@
 </select>
 
 <select id="cntQnaPost" resultType="Integer">
-	SELECT COUNT(*)
+<!-- 	SELECT COUNT(*)
 	FROM QNA_BOARD
-	WHERE REPLYCNT=0
+	WHERE REPLYCNT=0 -->
+		SELECT COUNT(*)
+		FROM QNA_BOARD B LEFT OUTER JOIN QNA_REPLY R
+		ON B.BNO = R.BNO
+		WHERE R.RNO IS NULL 
+		AND TO_CHAR(B.REG_DATE,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD')
 </select>
 
 <select id="getQnaPost" resultMap="qna">

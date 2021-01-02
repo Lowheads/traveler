@@ -4,6 +4,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
+
+body{
+ margin : 0;
+}
 /* toggle */
 .switch {
 	position: relative;
@@ -118,7 +122,7 @@ input:checked+.slider:before {
 		<table class="hiddentable">
 			<thead>
 				<tr>
-					<th>일정번호</th>
+					<th>일정명</th>
 					<!-- <th>일정명</th> -->
 					<th>게시물제목</th>
 					<th>공개여부</th>

@@ -78,6 +78,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+  margin-top: 40px;
 }
 
 /* label {
@@ -264,7 +265,12 @@
 
 .select_img{
 	text-align:center;
+	width:100%;
+	height:200px;
 	display:inline-block;
+	background-image: url('/resources/img/dtplusimg.png');
+	background-size: cover;
+	background-position: center center;
 }
 
 .select_img img{
@@ -272,6 +278,8 @@
 	height:200px;
 	margin-top:10px;
 	margin-bottom:10px;
+	border: 1px dashed gray;
+	
 	
 }
 
@@ -435,11 +443,11 @@ $(document).ready(function(){
 		var contentIndex= 1;
 		$(".fileAdd_btn").on("click", function(){
 			$("#fileIndex").append("<div class='filebox'><label class='filecontent'><input type='file' id='boarddtImg' name='file_"+(fileIndex++)+"'>"
-			+"<div class='select_img'><img id='errorimg' src='/resources/img/plusimg.JPG' /></div></label>"		
+			+"<div class='select_img'>&nbsp<img id=errorimg src='' style='display:none'></div></label>"		
 			+"<div class='imgcontent'><input type='text' class='form-control' name='newContent'/></div>"
 			+"<button type='button' id='fileDelBtn' class='dtbtn' style='margin-top:10px;'>"+"삭제"+"</button></div><br>");
 		});
-		
+
 		
  		$(document).on("change","#boarddtImg",function(){
  			
@@ -450,6 +458,7 @@ $(document).ready(function(){
 					reader.onload = function(data) {
 				tmp.next().children().attr("src", data.target.result);
 				}
+				tmp.next().children().css("display","inline-block").css("border","none");
 				reader.readAsDataURL(this.files[0]);
 				}
 			

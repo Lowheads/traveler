@@ -153,7 +153,8 @@ select count(*) from place p, pick_pl pl
    AND TPLC.PLC_NO = P.PLC_NO
    AND CONCAT(CTB.CODE_TYPE_ID,CTB.CODE) = #{themeCode}
    ORDER BY DBMS_RANDOM.VALUE)
-   WHERE ROWNUM<16]]>
+   WHERE ROWNUM<16
+   ORDER BY PLC_TITLE]]>
 </select>
 <select id="getPlaceByWeather" resultMap="placeVO">
 <![CDATA[

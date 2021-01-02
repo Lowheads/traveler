@@ -6,9 +6,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
 <style>
+
+#pagination li{
+	margin:3px;
+}
+
+#pagination li:hover{
+	color:black;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+.img-card{
+	width:200px;
+	height:150px;
+	margin:10px;
+	display:inline-block;
+}
+
+.img-card img{
+	height:100%;
+	width:100%;
+	border-radius:4px;
+}
+
 
 .table{
 	margin-top:10px;
@@ -24,7 +46,7 @@
 	height:100vh;
 	background-color:gray;
 	z-index:100;
-	background:rgba(255,255,255,0.5); 
+	background:rgba(0,0,0,0.8); 
 }
 
 .bigPicture{
@@ -35,6 +57,17 @@
  	justify-content:center;
 	align-items:center; 
 	
+}
+
+.bigPicture img{
+	max-width:120vh;
+	
+}
+
+
+#resultPage li{
+
+	margin:3px 10px;
 }
 
 

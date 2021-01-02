@@ -12,9 +12,23 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <head>
 
 <style>
+
+/* alert */
+
+.swal-button--cancel{
+	background-color: white;
+
+}
+
+.swal-button--confirm{
+	background-color: #ff8b3d;
+}
+
+.swal-button:not([disabled]):hover{background-color:#ff8b3d }.swal-button:active{background-color:#70bce0}
 
 .contents{
 	width: 80%;
@@ -25,7 +39,7 @@
 .ct_body{
 	padding: 30px;
 	/* background-image: url('/resources/imgUpload/2020/12/10/ff752342-efbc-4691-b3f5-7d6d5ef9c2fe_다운로드.jpg');  */
-	height: 270px;
+	height: 400px;
 	background-repeat: no-repeat;
   	background-size: cover;
   	background-position:center center;
@@ -100,6 +114,7 @@
 
 .mainMsg{
 	margin-left: 5%;
+	
 }
 
 .mainMsg a{
@@ -107,8 +122,9 @@
 }
 
 .mainMsg b{
-	font-size:22px;
+	font-size:40px;
 	color:white;
+	text-shadow: 2px 2px grey;
 
 }
 
@@ -828,7 +844,7 @@ overflow-y: auto;
 
 	<c:choose>
   		<c:when test="${memNo eq schedule.memNo}">
-    	<button id="remove_btn" data-oper='remove'>삭제</button>
+    	<button id="remove_btn" data-oper='remove' type="button">삭제</button>
   		</c:when>
 	</c:choose>
 
@@ -964,25 +980,56 @@ overflow-y: auto;
 <script type="text/javascript">
 $(document).ready(function(){	
 		
+	//대표사진 수정 알림
+	$(function(){
+		
+		var responseMsg = '<c:out value="${modifymsg}"/>';
+		if (responseMsg != "") {
+			swal("",responseMsg,"success");
+		}
+		return false;
+		});
+
+	$(function(){
+		var responseMsg = '<c:out value="${dtmodifymsg}"/>';
+		if (responseMsg != "") {
+			swal("",responseMsg,"success");
+		}
+		return false;
+		});
 	
-		var actionForm = $("#actionForm");
-		$("button[data-oper='remove']").on("click",function(e){
-			if(confirm("삭제하시겠습니까?")){
-				actionForm.attr("action","/board/remove").submit();
+	
+	var actionForm = $("#actionForm");
+	$("button[data-oper='remove']").on("click",function(e){
+/* 		if(confirm("삭제하시겠습니까?")){
+			actionForm.attr("action","/board/remove").submit();
+		}
+		else{
+			return false;
+			}	 */
+		
+		swal({
+			title: "",
+			text:"게시글을 삭제하시겠습니까?",
+			icon:"info",
+			buttons:["취소","삭제"]		
+		}).then((YES) =>{
+			console.log(YES);
+			if(YES){
+				 actionForm.attr("action","/board/remove").submit(); 
 			}
 			else{
-				return false;
-				}			
-		});
+				return;
+			}
+		}); 
+	
+	});
 
 
 	
 	
 	var operForm = $("#operForm");
-	
-/* 	$("button[data-oper='modify']").on("click",function(e){
-		operForm.attr("action","/board/modify").submit();
-	}); */
+
 	
 	$("button[data-oper='dtmodify']").on("click",function(e){
 		operForm.attr("action","/board/dtmodify").submit();
@@ -1265,23 +1312,7 @@ span.onclick = function() {
   modal1.style.display = "none";
 }
 
-//대표사진 수정 알림
-$(function(){
-	
-	var responseMsg = '<c:out value="${modifymsg}"/>';
-	if (responseMsg != "") {
-		alert(responseMsg);
-	}
-	return false;
-	});
 
-$(function(){
-	var responseMsg = '<c:out value="${dtmodifymsg}"/>';
-	if (responseMsg != "") {
-		alert(responseMsg);
-	}
-	return false;
-	});
 	
 </script>
 

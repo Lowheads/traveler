@@ -48,5 +48,7 @@ public interface ScheduleService {
 	public void statusupdate(int schNo); 
 	
 	public boolean checkPick(ScheduleVO schedule); 
+	
+	public List<Map<String, Object>> checkBudgetList(int memNo);
 
 }

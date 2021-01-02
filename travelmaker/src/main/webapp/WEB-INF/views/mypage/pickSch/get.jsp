@@ -52,12 +52,14 @@
 .plan_content {
    margin-left: auto;
    margin-right: auto;
+       margin-bottom: 50px;
 }
 .contentTitle{
    width:100%;
    height: 200px;
    color:black;
  	padding:15px 10% 15px 10%;
+ 	background-color: antiquewhite;
 }
 
 .plan_mnu_box {
@@ -192,6 +194,7 @@
    border-radius: 10px;
    padding-left: 10px;
    padding-right: 10px;
+   cursor: pointer;
 }
 .showMap:hover{
    background-color: rgb(128,128,128,0.2);
@@ -234,7 +237,7 @@
 }   
 .dt_box_footer{
    display:flex;
-   background-color: #e6e6e6;
+   background-color: #faf3ea;
    border:1px solid rgb(128,128,128,0.2);
 }
 .dt_footer_left{
@@ -400,7 +403,7 @@
                            
                            <!-- 마지막 -->
                            <c:if test="${Schdt[status.index].SCH_DATE ne Schdt[vs.index+1].SCH_DATE}">
-                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid gray;">
+                           <div class="schdt_bottom" style="margin-bottom: 50px; border-bottom: 1px solid rgb(128,128,128,0.2);">
                                  <div class="dt_bottom_left">
                                     <div class="daily_count">${dtCnt+1}</div>
                                  </div>
@@ -504,6 +507,7 @@
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.pageNum}"/>'> 
    <input type='hidden' id='sch_no' name='sch_no' value='<c:out value="${schedule[0].SCH_NO}"/>'> 
 </body>
+
 <!-- /.col-lg-9 -->
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
@@ -515,13 +519,14 @@ var header = document.getElementById("planNav");
 var mapWrapper = document.getElementById("map_wrapper");
 var sticky = header.offsetTop;
 function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-    header.style.width = "100%";
-    
-    mapWrapper.classList.add("stickyMap");
-  } 
-
+	 if (window.pageYOffset > sticky) {
+   header.classList.add("sticky");
+   header.style.width = "100%";
+   mapWrapper.classList.add("stickyMap");
+   if(window.pageYOffset >= document.getElementsByTagName('footer')[0].offsetTop - 800){
+	    mapWrapper.classList.remove("stickyMap");
+	    }
+ } 
   else{
     header.classList.remove("sticky");
     header.style.width = "auto";
@@ -746,4 +751,5 @@ function myFunction() {
    })
    
 </script>
+<%@ include file="../../includes/footer.jsp" %>
 </html>
