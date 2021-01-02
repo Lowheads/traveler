@@ -385,8 +385,8 @@ option {
 
 .btn-1,
 .btn-3 {
-    width: auto !important;
-    height: auto !important;
+    width: auto;
+    height: auto;
     margin: 0 10px;
     padding: 10px;
 	text-align: center;
@@ -511,6 +511,11 @@ label {
 						</h3>
 					</div>
 					<div style="display: flex; align-items: center;">
+						<div>
+							<a href='/buddt/chart'>
+								예산
+							</a>
+						</div>
 						<div>
 							<button class="add-expense-button" type="button" id="rg-button"
 								style="outline: none;">
