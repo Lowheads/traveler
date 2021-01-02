@@ -673,7 +673,7 @@ a{text-decoration: none}
       endDate = dateList[1];
    }
    function submitData() {
-      let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionNo'];
+      let optionRegionNo =document.getElementsByClassName("navBtnNodeList")[4].dataset['regionno'];
       console.log(startDate);
       console.log(endDate);
       let form = document.createElement('form');

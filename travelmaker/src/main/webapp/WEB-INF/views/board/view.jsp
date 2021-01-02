@@ -722,10 +722,10 @@ overflow-y: auto;
 			<img id="myImg" alt="${file.FILE_CONTENT}" onclick="onClick(this)" src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
 		</div>
 		<div class="card-desc">
+			<a class="desc-bottom" href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;" style='float:right; margin:5px; font-size:17px; color:#A9A9A9'>
+			<i class="fa fa-arrow-circle-o-down"></i></a><br>
 			${file.FILE_CONTENT}
-			<a class="desc-bottom" href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">
-			<i class="fa fa-arrow-circle-o-down"></i>
-			${file.ORG_FILE_NAME}(${file.FILE_SIZE}kb)</a><br>
+			<%-- ${file.ORG_FILE_NAME}(${file.FILE_SIZE}kb) --%>
 		</div>
 		</div>
 		</c:forEach>
