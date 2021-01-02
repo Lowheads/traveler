@@ -188,7 +188,7 @@ input:checked+.slider:before {
 }
 .card-contents{
 	width: 15%;
-	height: 450px;
+	height: 500px;
 	margin-right:10px;
 	position: relative;
  	z-index: 1;
@@ -532,6 +532,7 @@ input:checked+.slider:before {
 		// 닫기 처리
 		modal.querySelector('.modal_close_btn').addEventListener('click',
 				function() {
+				
 					bg.remove();
 					modal.style.display = 'none';
 					window.location.reload();
