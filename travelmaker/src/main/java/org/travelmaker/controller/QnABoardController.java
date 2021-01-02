@@ -80,24 +80,16 @@ public class QnABoardController {
 	public void get(@RequestParam("bno") int bno, @ModelAttribute("cri") QnABoardCriteria cri, Model model,
 			HttpSession session, RedirectAttributes rttr) {
 		
-			// 게시물 정보
-			QnABoardVO pageObj = service.get(bno); 
-			
-			// 선택한 페이지 조회 (게시글 목록 출력)
-			model.addAttribute("board", pageObj);
-			model.addAttribute("secret", pageObj.getSecret());
-			
-			// 로그인한 회원의 번호를 넘겨준다.(글의 수정여부를 판별하기 위함)
-			model.addAttribute("loginMemNo", service.getMyMemNo((String)session.getAttribute("email")));
-			
-			// 로그인한 사용자의 닉네임을 넘겨준다.(댓글의 수정/삭제 여부 판단을 위함)
-			session.setAttribute("myNickname", service.getMyNickname((String)session.getAttribute("email")));
+		// 게시물 정보
+		QnABoardVO pageObj = service.get(bno); 
+		
+		service.sendMyInfoByPage(pageObj, model, session);
 			
 	}
 	
 	@PostMapping("/modify") // 게시물 수정
 	public String modify(QnABoardVO qnaBoard, @ModelAttribute("cri") QnABoardCriteria cri, RedirectAttributes rttr) {
-		log.info("여기는 게시글 수정 : " + qnaBoard);
+		log.info("수정된 게시물 : " + qnaBoard);
 		
 		if(service.modify(qnaBoard)) {
 			rttr.addFlashAttribute("msg", qnaBoard.getBno() + "번글이 수정되었습니다.");

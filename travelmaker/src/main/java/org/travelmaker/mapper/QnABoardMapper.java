@@ -9,7 +9,7 @@ public interface QnABoardMapper {
 
 	public List<QnABoardVO> getList(); // 게시물 목록
 	
-	public List<QnABoardVO> getListWithPaging(QnABoardCriteria cri); // 게시물 페이징
+	public List<QnABoardVO> getListWithPaging(QnABoardCriteria cri); 
 	
 	public void insertSelectKey(QnABoardVO qnaBoard); // 게시물 등록
 	

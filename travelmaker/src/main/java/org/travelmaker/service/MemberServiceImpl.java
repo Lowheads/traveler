@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.travelmaker.domain.Email;
 import org.travelmaker.domain.MemberVO;
 import org.travelmaker.mapper.MemberMapper;
+import org.travelmaker.mapper.QnABoardMapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -94,6 +95,7 @@ public class MemberServiceImpl implements MemberService {
 		setLoginDateToToday(mVO.getEmail()); // 최종 로그인을 현재로 변경..
 		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
 		session.setAttribute("memNo",getMemNo(mVO.getEmail()));
+		session.setAttribute("myGrade", memberGrade);
 		
 		// 관리자면 관리자 페이지로 가주세요!
 		if(memberGrade.equals("MG002")) {
@@ -107,13 +109,13 @@ public class MemberServiceImpl implements MemberService {
    // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
    public boolean isMemberStatus(MemberVO mVO, RedirectAttributes rttr, HttpSession session) { 
       
-      // 로그인에 실패하면 메인 페이지로
+      // 로그인에 실패
       if(emailAndPwdInputCheck(mVO)==null) {
          rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
          return true;
       }
    
-      // 탈퇴한 회원은 접속 못함
+      // 탈퇴한 회원은 접속 불가
       if(deleteNoAccess(mVO.getEmail())) {
          rttr.addFlashAttribute("msg", "이미 탈퇴한 회원입니다.");
          return true;
@@ -124,7 +126,7 @@ public class MemberServiceImpl implements MemberService {
 
    
    @Override
-   public int getMemNo(String email) { // 로그인하면 success창에 내 회원번호 띄어주기
+   public int getMemNo(String email) { 
       return mapper.getMemNo(email).getMemNo();
    }
 
@@ -142,6 +144,10 @@ public class MemberServiceImpl implements MemberService {
    public MemberVO getMember(String email) { // 내 정보 조회
 	   
 	   MemberVO vo = mapper.getMember(email);
+	   
+	   if(vo == null) {
+		   return vo;
+	   }
 	   
 	   // 내 성별이 "M"이면 "남"
 	   if(vo.getGender().equals("M")) {
@@ -189,7 +195,7 @@ public class MemberServiceImpl implements MemberService {
 		mapper.modifyBoardReplyer(nickname, replyer);
 	}
 	
-	@Transactional // 트랜잰션
+	@Transactional // 트랜잭션
 	@Override
 	public boolean isNicknameTouch(String nickname, String email, RedirectAttributes rttr) { // 닉네임 수정했어?
       
@@ -214,29 +220,24 @@ public class MemberServiceImpl implements MemberService {
 		return false;
    }
 
+	// 삭제 전 유효성 체크
    @Override
-   public boolean isMemberValid(String pwd, String email, RedirectAttributes rttr, HttpSession session) { // 삭제 전 유효성 체크
-      
-      // 비밀번호가 다르면 다시 입력하세요
+   @Transactional
+   public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session) { 
+     
+	  // 비밀번호가 다르면 다시 입력하세요
       if(mapper.memberValidCnt(pwd, email) == 0) {
          rttr.addFlashAttribute("msg", "비밀번호가 달라요!");
          return true;
       }
       
-      // 비밀번호가 일치하면
-      // 회원 상태를 "탈퇴"로 변경한다.
-      deleteMember(pwd, email);
+      mapper.deleteMember(pwd, email);	
       // 세션을 제거한다.
       session.invalidate();
                
       // 정상적으로 탈퇴 되었다는 메세지를 보낸다.
       rttr.addFlashAttribute("msg", "여행의정석을 이용해주셔서 감사했습니다.");
       return false;
-   }
-   
-   @Override
-   public void deleteMember(String pwd, String email) { // 회원탈퇴
-      mapper.deleteMember(pwd, email);
    }
    
    @Override
@@ -403,6 +404,24 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 		return false;
+	}
+
+
+	@Override
+	public boolean isEamilChack(String email, RedirectAttributes rttr) {
+		
+		// Travel 회원의 이메일이 아니라면..
+        if(isNotTravelMember(email, rttr)) {
+        	rttr.addFlashAttribute("msg", "여행의정석 회원이 아닙니다.");
+        	return true;
+        }
+        // api 회원이면 비밀번호 찾을 필요 없이 로그인 해주세요
+        if(isApiMember(email,rttr)) {
+        	rttr.addFlashAttribute("msg", "소셜회원입니다. 소셜로그인 부탁드립니다.");
+        	return true;
+        }
+		
+        return false;
 	}
 
 
