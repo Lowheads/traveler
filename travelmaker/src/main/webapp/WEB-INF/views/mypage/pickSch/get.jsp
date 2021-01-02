@@ -495,20 +495,12 @@
 
    </div>
 
-
-   <div id="remove_modal">
-      <h4>정말 삭제하시겠습니까?</h4>
-      <br>
-
-      <button class="modal_close_btn">취소</button>
-      <button class="remove_btn">찜 취소하기</button>
-   </div>
-   
-   <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.pageNum}"/>'> 
-   <input type='hidden' id='sch_no' name='sch_no' value='<c:out value="${schedule[0].SCH_NO}"/>'> 
+<input type='hidden' id='sch_no' name='sch_no' value="${schedule[0].SCH_NO}">
+      <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 </body>
 
 <!-- /.col-lg-9 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <script type="text/javascript">
@@ -552,28 +544,6 @@ function myFunction() {
    $("#gotoList").on("click", function(e) {
       window.history.back();
    });
-
-   $(".remove_btn").on(
-         "click",
-         function() {
-
-            let sendData = {
-               "schNo" : $('input[name=sch_no]').val()
-            };
-
-            $.ajax({
-               type : 'post',
-               url : '/mypage/deletePick',
-               data : sendData,
-               success : function(data) {
-                  alert("찜 목록에서 정상적으로 삭제되었습니다.")
-                  location.href = '/mypage/pickSch';
-               },
-               error : function(error){
-                  alert("에러발생!! 다시시도해주세요"+error);
-               }
-            });
-         });
 
    function modal(id) {
       var zIndex = 9999;
@@ -627,8 +597,46 @@ function myFunction() {
 
    document.getElementById('sch_remove_btn').addEventListener('click',
          function() {
-            // 모달창 띄우기
-            modal('remove_modal');
+	   /*  modal('remove_modal'); */
+ 	  swal({
+ 		   title: "정말 삭제하시겠습니까?",
+ 		   text: "일정이 삭제되면 복구할 수 없습니다. ",
+ 		   icon: "warning",
+ 		   buttons: ["취소","삭제"],
+ 		   dangerMode: true,
+ 		 })
+ 		 .then((willDelete) => {
+ 		   if (willDelete) {
+ 			   let schNo = {
+ 		               "schNo" : $('input[name=sch_no]').val()
+ 		            };
+
+ 		            $.ajax({
+ 		               type : 'post',
+ 		               url : '/mypage/deleteSchedule',
+ 		               data : schNo,
+ 		               success : function(data) {
+
+ 		            	   swal("일정이 정상적으로 삭제되었습니다.", {
+ 		        		       icon: "success",
+ 		        		     }).then((value)=>{
+ 		        		    	 location.href = "/mypage/pickSch?pageNum="
+ 		                             + $('input[name=pageNum]').val();
+ 		        		     });
+ 		               },
+ 		               error : function(xhr) {
+
+ 		            	   swal({
+ 		            		   title: "삭제 실패!",
+ 		            		   text: "잠시 후 다시 시도해 주세요",
+ 		            		   icon: "warning",
+ 		            		   button: "확인",
+ 		            		 });
+ 		               }
+
+ 		            });
+ 		   }
+ 		 });
          });
 
    
