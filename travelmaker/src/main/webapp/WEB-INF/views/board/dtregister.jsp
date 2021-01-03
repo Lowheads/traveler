@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
 .transit, .distance{
  font-size: 13px;
@@ -315,6 +316,7 @@
     padding: 5px 10px 5px 10px;
     float: right;
     text-decoration: none;
+    outline: 0;
 }
 
 .fileAdd_btn:hover{
