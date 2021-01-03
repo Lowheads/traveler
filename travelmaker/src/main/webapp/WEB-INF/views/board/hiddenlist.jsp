@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 <style>
+
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
 body{
  margin : 0;
@@ -96,7 +99,7 @@ input:checked+.slider:before {
 }
 
 .hiddentable th, .hiddentable td {
-	font-weight: lighter;
+	font-weight: 400;
 	text-align: center;
 	/* padding: 12px 23px */
 }

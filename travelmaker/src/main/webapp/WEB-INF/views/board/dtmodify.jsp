@@ -10,6 +10,8 @@
 <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
 
 <style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+
 .transit, .distance{
  font-size: 13px;
 }

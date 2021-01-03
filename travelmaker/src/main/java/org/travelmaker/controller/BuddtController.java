@@ -81,7 +81,7 @@ public class BuddtController {
 		model.addAttribute("paydate", paydate); 
 		
 //		model.addAttribute("dateBySch", service.getDateBySchno(schno));
-		model.addAttribute("daybud", service.getBudgetBySch(schno));
+		model.addAttribute("daybud", service.getDateBySchedule(schno));
 		
 		model.addAttribute("schtitle", service.getTitleBySchno(schno));
 	}
@@ -110,7 +110,6 @@ public class BuddtController {
 		model.addAttribute("chartTextByListAll", service.getChartTextByListAll(schno));
 		// 일정 셀렉박스 
 		model.addAttribute("daybud", service.getDateBySchedule(schno));
-		System.out.println(service.getDateBySchedule(schno));
 		// 셀렉트 박스 - 일정 선택 (distinct sch_no)
 		model.addAttribute("schnoBox", service.setBoxBySch());
 		// 선택 된 일정의 최소, 최대 날짜

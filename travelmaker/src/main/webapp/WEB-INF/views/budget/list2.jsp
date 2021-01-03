@@ -27,7 +27,7 @@ String paydate = request.getParameter("pay_date");
         }
 
         /* 폭 여기서 수정 */
-        .modal-content {
+        .bg-modal-content {
             width: 600px;
             height: 900px;
             background-color: white;
@@ -53,7 +53,7 @@ String paydate = request.getParameter("pay_date");
         }
         
         body::-webkit-scrollbar,
-        .modal-content::-webkit-scrollbar {
+        .bg-modal-content::-webkit-scrollbar {
             width: 0rem;
         }
 
@@ -63,7 +63,7 @@ String paydate = request.getParameter("pay_date");
             height: 60px;
         }
 
-        .close {
+        .bg-modal-close {
             position: absolute;
             top: 0;
             right: 14px;
@@ -73,12 +73,12 @@ String paydate = request.getParameter("pay_date");
             cursor: pointer;
         }
 
-        .close:hover {
+        .bg-modal-close:hover {
 
         }
 
         /* 테이블 */
-        .wrapper {
+        .bgwrapper {
             margin-top: 20px;
             display: flex;
             flex-direction: column;
@@ -86,7 +86,7 @@ String paydate = request.getParameter("pay_date");
             justify-content: center;
         }
 
-        .board {
+        .bgboard {
             width: 90%;
             /*margin: 0 50px 50px 0;*/
             margin: auto;
@@ -98,7 +98,7 @@ String paydate = request.getParameter("pay_date");
             border-radius: 0 0 0 0;
         }
 
-        .board thead tr {
+        .bgboard thead tr {
             color: black;
             text-align: left;
             font-size: 19px;
@@ -106,25 +106,25 @@ String paydate = request.getParameter("pay_date");
             border-bottom: 2px solid #dddddd;
         }
 
-        .board th,
-        .board td {
+        .bgboard th,
+        .bgboard td {
             font-weight: lighter;
             text-align: center;
             padding: 12px 23px
         }
 
-        .board tbody tr {
+        .bgboard tbody tr {
             font-size: 15px;
             border-bottom: 1px solid #dddddd;
             background-color: white;
             height: 70px;
         }
 
-        .board tbody tr:nth-of-type(even) {
+        .bgboard tbody tr:nth-of-type(even) {
             background-color: #fafafa;
         }
 
-        .board tbody tr:last-of-type {
+        .bgboard tbody tr:last-of-type {
             border-bottom: 1px #dddddd solid;
         }
 
@@ -142,21 +142,21 @@ String paydate = request.getParameter("pay_date");
     </style>
 
 
-<button id="button">내 일정 목록</button>
+<button id="budgetbutton">내 일정 목록</button>
 
 <div class="bg-modal">
     <!--  모달 안  -->
-    <div class="modal-content">
+    <div class="bg-modal-content">
         <!-- X 버튼 -->
-        <div class="close">+</div>
+        <div class="bg-modal-bg-modal-close">+</div>
 
-        <div class="wrapper">
+        <div class="bgwrapper">
 
             <span style='font-size:60px;'>&#128184;</span>
 
             <!-- 테이블 -->
             <div class="container-2">
-                <table class="board">
+                <table class="bgboard">
 			<thead>
 				<tr>
 					<!-- <th>번호</th> -->
@@ -193,12 +193,12 @@ String paydate = request.getParameter("pay_date");
 </div>
 
 <script>
-    document.getElementById('button').addEventListener('click',
+    document.getElementById('budgetbutton').addEventListener('click',
         function () {
             document.querySelector('.bg-modal').style.display = 'flex';
         });
 
-    document.querySelector('.close').addEventListener('click',
+    document.querySelector('.bg-modal-close').addEventListener('click',
     function () {
         document.querySelector('.bg-modal').style.display = 'none';
     })

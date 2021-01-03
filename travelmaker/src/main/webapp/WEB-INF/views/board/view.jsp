@@ -11,10 +11,12 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
+
 <head>
 
 <style>
 
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 .contents{
 	width: 80%;
 	margin-left: auto;
@@ -108,7 +110,7 @@
 .mainMsg b{
 	font-size:22px;
 	color:white;
-	text-shadow: 2px 2px grey;
+	text-shadow: 2px 2px 2px grey;
 }
 
 .col-25{
@@ -722,10 +724,10 @@ overflow-y: auto;
 			<img id="myImg" alt="${file.FILE_CONTENT}" onclick="onClick(this)" src="<c:url value="/img/${file.STORED_FILE_NAME}"/>"/>
 		</div>
 		<div class="card-desc">
+			<a class="desc-bottom" href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;" style='float:right; margin:5px; font-size:17px; color:#A9A9A9'>
+			<i class="fa fa-arrow-circle-o-down"></i></a><br>
 			${file.FILE_CONTENT}
-			<a class="desc-bottom" href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">
-			<i class="fa fa-arrow-circle-o-down"></i>
-			${file.ORG_FILE_NAME}(${file.FILE_SIZE}kb)</a><br>
+			<%-- ${file.ORG_FILE_NAME}(${file.FILE_SIZE}kb) --%>
 		</div>
 		</div>
 		</c:forEach>
