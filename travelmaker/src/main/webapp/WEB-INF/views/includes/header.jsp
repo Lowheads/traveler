@@ -31,7 +31,7 @@
    if(session.getAttribute("email") != null){
       sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
       modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
-        mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
+        mypage = "<li><a href='/mypage/pickPL'>위시리스트</a></li>";
         qnapage = "<li><a href='/qnaboard/list'>Q&A게시판</a></li>";
    }
    else{
@@ -45,7 +45,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
+    <title>여정 :: 개인 맞춤형 여행플래너</title>
 <head>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
