@@ -62,12 +62,6 @@ public class BoardController {
 	private BoarddtService boarddtservice;
 	
 	private PickService pickService;
-
-	//날씨 페이지 확인
-	@GetMapping("/weather2")
-	public void weather() {
-		
-	}
 	
 
 	@GetMapping("/list")
