@@ -67,7 +67,12 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <style>
+
+*{  
+	outline:0;
+}
 /*헤더 스타일 */
 a{text-decoration: none;
    color:black;}
@@ -172,8 +177,8 @@ a:visited{text-decoration: none;}
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 .header__nav__button-account img:first-child {
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
 }
 .header__nav__button-account img:last-child {
     width: 30px;
@@ -722,14 +727,27 @@ text-align: center;
         .bg-modal-content::-webkit-scrollbar {
             width: 0rem;
         }
-         .bg-modal-add {
-            position: absolute;
-            top: 0;
+
+       .bg-modal-add{
+  		    position: absolute;
+            margin-top:3%;
             left: 14px;
-            font-size: 52px;
-            font-weight: lighter;
-            cursor: pointer;
-        }
+  			font-size:15px;
+  			background-color:white;
+  			border: 1px solid gray;
+  			border-radius: 14px;
+  			padding: 5px 20px 5px 20px;
+  			cursor:pointer;
+		}
+		.bg-modal-add:hover{
+		 	background-color:#ff8b3d;
+  		 	color:white;
+  		 	border: 1px solid #ff8b3d;
+  		 	border-radius: 14px;
+		}
+        
+        
+        
         
        .bg-modal-close {
             position: absolute;
@@ -844,8 +862,8 @@ text-align: center;
         <button id="budgetbutton" class="header__nav__button
             header__nav__button-language
             header__nav__button-greyHover" style="margin-right: 7px;">
-            <img src="/resources/icons/internet.png" alt="Globe"/>
-            <img src="/resources/icons/chevron.png" alt="Globe"/>
+            <img src="/resources/icons/north-korea-won.png" alt="Globe"/>
+            <img src="/resources/icons/chevron.png" alt="Globe"/> 
         </button>
 
         <button class="header__nav__button header__nav__button-account" onclick="dropMenu()"> 
@@ -869,7 +887,7 @@ text-align: center;
     <!--  모달 안  -->
     <div class="bg-modal-content">
     <!-- BUDGET 추가버튼  -->
-    <div class="bg-modal-add">+</div>
+    <div class="bg-modal-add">일정추가</div>
         <!-- X 버튼 -->
         <div class="bg-modal-close">+</div>
 

@@ -11,10 +11,12 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
+
 <head>
 
 <style>
 
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 .contents{
 	width: 80%;
 	margin-left: auto;
@@ -108,7 +110,7 @@
 .mainMsg b{
 	font-size:22px;
 	color:white;
-	text-shadow: 2px 2px grey;
+	text-shadow: 2px 2px 2px grey;
 }
 
 .col-25{

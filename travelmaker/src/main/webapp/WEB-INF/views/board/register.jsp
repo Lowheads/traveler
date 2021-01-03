@@ -51,7 +51,7 @@
 			</form>
 
 <style>
-
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 body{
  margin : 0;
 }
