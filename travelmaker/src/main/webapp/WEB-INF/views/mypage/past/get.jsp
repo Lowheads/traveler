@@ -18,6 +18,7 @@
 <title>Document</title>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 /*지은스타일 */
 #customers {
   font-family: Arial, Helvetica, sans-serif;

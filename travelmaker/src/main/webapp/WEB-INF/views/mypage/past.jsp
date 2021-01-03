@@ -17,7 +17,7 @@
    <title>Document</title>
 
    <style>
-     
+     * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
    /* 페이징 */
 .pagination_bar{
 	font-size: 8pt;
