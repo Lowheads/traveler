@@ -601,7 +601,7 @@ function myFunction() {
 	   /*  modal('remove_modal'); */
  	  swal({
  		   title: "정말 삭제하시겠습니까?",
- 		   text: "일정이 삭제되면 복구할 수 없습니다. ",
+ 		   text: "찜한 목록에서 삭제됩니다. ",
  		   icon: "warning",
  		   buttons: ["취소","삭제"],
  		   dangerMode: true,
