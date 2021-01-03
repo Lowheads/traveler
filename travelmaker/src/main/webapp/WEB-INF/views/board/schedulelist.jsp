@@ -4,6 +4,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
+
+
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 body{
  margin : 0;
 }
@@ -49,7 +52,7 @@ body{
 }
 
 .schtable th, .schtable td {
-	font-weight: lighter;
+	font-weight: 400;
 	text-align: center;
 	padding: 12px 23px
 }

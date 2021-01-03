@@ -12,9 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <head>
 <style>
 
+* , h3{ font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 /* alert */
 .swal-button, .swal-button--confrim{
 	background-color: #ff8b3d;
@@ -236,13 +238,17 @@ input:checked+.slider:before {
 	height: auto;
 	font-size: 15px;
 }
+
+.card-desc b{
+	font-weight:500;
+}
 .desc_bottom{
 	 font-size : 12px;
 }
 .mainMsg{
 	margin-left: 7%;
 	margin-top:12%;
-	text-shadow: 2px 2px grey;
+	text-shadow: 2px 2px 1px grey;
 }
 .mainMsg b{
 	font-size:45px;

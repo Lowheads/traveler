@@ -13,9 +13,12 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <head>
 
 <style>
+
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
 /* alert */
 
@@ -124,7 +127,7 @@
 .mainMsg b{
 	font-size:40px;
 	color:white;
-	text-shadow: 2px 2px grey;
+	text-shadow: 2px 2px 2px grey;
 
 }
 
