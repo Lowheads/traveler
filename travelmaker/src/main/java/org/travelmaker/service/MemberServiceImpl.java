@@ -32,6 +32,7 @@ public class MemberServiceImpl implements MemberService {
    
 	private final MemberMapper mapper; 
 	private final PasswordEncoder passwordEncoder;
+	
 	   
 	public MemberServiceImpl(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
 		this.mapper = memberMapper;
@@ -48,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
 		return false;
 	}
 	
+	
 	@Override
 	public void join(MemberVO mVO) {    // 회원가입
 		   
@@ -58,52 +60,8 @@ public class MemberServiceImpl implements MemberService {
 		       
 		mapper.join(mVO);
 	}
-	   
-	public boolean isDuplicateCheck(MemberVO mVO, RedirectAttributes rttr) { // 회원가입(이메일, 닉네임 중복체크)
-	   if(hasEmail(mVO.getEmail()) > 0) { // 아이디가 중복이라면..
-	      rttr.addFlashAttribute("msg", "아이디가 중복됩니다.");
-	      return true;
-	   }
-	      
-	   if(hasNickname(mVO.getNickname()) > 0) { // 닉네임이 중복이라면..
-	      rttr.addFlashAttribute("msg", "닉네임이 중복됩니다.");
-	      return true;
-	   }
-	   return false;
-	}
-	   
-
-	public MemberVO emailAndPwdInputCheck(MemberVO mVO) { // 로그인 기능
-	   return mapper.login(mVO);
-	}
-	   
-	@Override
-	public void setLoginDateToToday(String email) { // 최종 로그인 날짜 수정
-	   mapper.lastLoginSetToday(email);
-	}
-	   
 	
-	// 로그인처리 (일반회원이면 main으로, 관리자면 관리자 페이지로 가자) 
-	@Override
-	public boolean isAdminLogin(MemberVO mVO, HttpSession session) {
-		
-		// 로그인 하는 회원의 등급을 memberGrade 변수에 저장
-		String memberGrade = mapper.getMember(mVO.getEmail()).getMemGrade();
-
-		setLoginDateToToday(mVO.getEmail()); // 최종 로그인을 현재로 변경..
-		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
-		session.setAttribute("memNo",getMemNo(mVO.getEmail()));
-		session.setAttribute("myGrade", memberGrade);
-			
-		// 관리자면 관리자 페이지로 가주세요!
-		if(memberGrade.equals("MG002")) {
-			return true;
-		}
-			
-		return false;
-	}
-	   
-
+	
 	// email 기억하기 여부
 	public boolean isChecked(String check) { 
 	   return check != null ? true : false; 
@@ -130,22 +88,46 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	   
+	public boolean isDuplicateCheck(MemberVO mVO, RedirectAttributes rttr) { // 회원가입(이메일, 닉네임 중복체크)
+	   if(hasEmail(mVO.getEmail()) > 0) { // 아이디가 중복이라면..
+	      rttr.addFlashAttribute("msg", "아이디가 중복됩니다.");
+	      return true;
+	   }
+	      
+	   if(hasNickname(mVO.getNickname()) > 0) { // 닉네임이 중복이라면..
+	      rttr.addFlashAttribute("msg", "닉네임이 중복됩니다.");
+	      return true;
+	   }
+	   return false;
+	}
+	   
+
+	public MemberVO login(MemberVO mVO) { // 로그인 기능
+		setLoginDateToToday(mVO.getEmail()); 
+	   return mapper.login(mVO);
+	}
+	   
+	@Override
+	public void setLoginDateToToday(String email) { // 최종 로그인 날짜 수정
+	   mapper.lastLoginSetToday(email);
+	}
+	   
+	
     // 로그인 (입력 정보가 틀리거나, 탈퇴한 회원은 안 돼요!)
-	public boolean isValidMember(MemberVO mVO, RedirectAttributes rttr, HttpSession session) { 
+	public boolean isValidMember(MemberVO mVO, RedirectAttributes rttr) { 
 		   
 	   try{
 			   
 		   // 암호화의 늦은 반영으로.. 기존 회원도 비밀번호가 맞다면 로그인 시키자.
 			String rawPwd = mVO.getPwd();
-			String encodePwd = getMember(mVO.getEmail()).getPwd();
+			String encodePwd = mapper.getMember(mVO.getEmail()).getPwd();
 			   
-		    if(!(isPwdMatch(rawPwd, encodePwd)) && emailAndPwdInputCheck(mVO)==null) {
+		    if(!(isPwdMatch(rawPwd, encodePwd)) && login(mVO)==null) {
 		    	rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
 		    	return true;
 		    }
 		    	mVO.setPwd(rawPwd);
 			   
-		      // 탈퇴한 회원은 접속 불가
 		    	MemberVO member = mapper.getMember(mVO.getEmail());
 		    	
 		      if(member.getStatus().equals("MS002")) {
@@ -160,6 +142,26 @@ public class MemberServiceImpl implements MemberService {
 	            
 	      return false;
 	   }
+	
+	
+	// 로그인처리 (일반회원이면 main으로, 관리자면 관리자 페이지로 가자) 
+	@Override
+	public boolean isAdminLogin(MemberVO mVO, HttpSession session) {
+		
+		// 로그인 하는 회원의 등급을 memberGrade 변수에 저장
+		String memberGrade = mapper.getMember(mVO.getEmail()).getMemGrade();
+
+		session.setAttribute("email", mVO.getEmail()); // 세션에 이메일 담자
+		session.setAttribute("memNo",getMemNo(mVO.getEmail()));
+		session.setAttribute("myGrade", memberGrade);
+		
+		// 관리자는 관리자 페이지로
+		if(memberGrade.equals("MG002")) {
+			return true;
+		}
+				
+		return false;
+	}
 
 	   
 	@Override
@@ -183,17 +185,14 @@ public class MemberServiceImpl implements MemberService {
 		if(vo == null) {
 		   return vo;
 		}
-		   
-		// 내 성별이 "M"이면 "남"
+		
 		if(vo.getGender().equals("M")) {
 			vo.setGender("남");
-			   
-	   }else if(vo.getGender().equals("F")) {
-		   // "F"면 "여" 저장
-		   vo.setGender("여");
-	   }
+		}else {
+			vo.setGender("여");
+		}
 
-		return vo;
+	return vo;
    }
 	   
 	public boolean isApiLoginCheck(String email) { // api로그인일경우 apimemberInfofo 페이지로 이동
@@ -230,14 +229,14 @@ public class MemberServiceImpl implements MemberService {
 		mapper.modifyBoardReplyer(nickname, replyer);
 	}
 		
-	@Transactional // 트랜잭션
 	@Override
+	@Transactional
 	public boolean isModifyNickname(String nickname, String email, RedirectAttributes rttr) {
 	     
 	   // nickNameResult : 닉네임 있으면 1, 없으면 0
 	   int nicknameResult = hasNickname(nickname);
 	      
-	   // 닉네임을 수정했는데 중복이라면..
+	   // 중복된 닉네임이면
 	   if(nicknameResult > 0) {
 	   	 rttr.addFlashAttribute("msg", "닉네임이 다른 회원과 중복됩니다.");
 		 rttr.addFlashAttribute("member", getMember(email));
@@ -245,35 +244,30 @@ public class MemberServiceImpl implements MemberService {
 	   }
 	    
 	   // 정보가 정상적으로 저장되었습니다.
-	   	 String changeBeforeNickname = mapper.getMember(email).getNickname(); // 변경 전 닉네임을 저장..
+	    String changeBeforeNickname = mapper.getMember(email).getNickname(); // 변경 전 닉네임을 저장..
 
-	   	 modifyNickname(nickname, email); // 닉네임 변경
-		 modifyBoardNickname(nickname, getMemNo(email)); // Q&A게시판 작성자를 바뀐 닉네임으로 수정
-		 modifyBoardReplyer(nickname, changeBeforeNickname); // 변경 전 닉네임을 전부 바뀐 닉네임으로 수정
-		 rttr.addFlashAttribute("msg", "정보가 저장되었습니다.");
-		 rttr.addFlashAttribute("member", getMember(email));
-		 return false;
+	    modifyNickname(nickname, email); // 닉네임 변경
+		modifyBoardNickname(nickname, getMemNo(email)); // Q&A게시판 작성자를 바뀐 닉네임으로 수정
+		modifyBoardReplyer(nickname, changeBeforeNickname); // 변경 전 닉네임을 전부 바뀐 닉네임으로 수정
+		rttr.addFlashAttribute("msg", "정보가 저장되었습니다.");
+		rttr.addFlashAttribute("member", getMember(email));
+		return false;
 	 }
 
 	// 탈퇴 전 유효성 체크
 	@Override
-	public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session) {
+	public boolean isDoubleCheckOnesPwd(String pwd, String email, RedirectAttributes rttr, HttpSession session) {
 		   
-	   String encodePwd = getMember(email).getPwd();
-	   String memberPwd = mapper.getMember(email).getPwd();
+	   String dbPwd = mapper.getMember(email).getPwd();
 	    
 	   // 암호화의 늦은 반영으로.. 기존 회원도 비밀번호가 맞다면 탈퇴시키자.
-	   if(!(isPwdMatch(pwd, encodePwd)) && (!(memberPwd.equals(pwd)))) {
+	   if(!(isPwdMatch(pwd, dbPwd)) && (!(dbPwd.equals(pwd)))) {
 	   	   rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
 	   	   return true;
 	   }
 	
 	   mapper.deleteMember(email);	
-	      
-	   // 세션을 제거한다.
 	   session.invalidate();
-	               
-	   // 정상적으로 탈퇴 되었다는 메세지를 보낸다.
 	   rttr.addFlashAttribute("msg", "여행의정석을 이용해주셔서 감사했습니다.");
 	   return false;
 	}
@@ -297,14 +291,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	   
 	@Override
-	public Email writerEmail(String email, Email emailObj) { // 임시 비밀번호 메일보내기
+	public Email writingEmail(String email, Email emailObj) { // 임시 비밀번호 메일보내기
 	      
 		String uuid = createUUID();
-		String encPassword = passwordEncoder.encode(uuid);
+		String encPassword = passwordEncoder.encode(uuid); // 임시 비밀번호를 암호화하여 변수에 저장한다.
+		String newPwd= uuid; // 이메일로 보낼 비밀번호는 암호화 되기 전이야 한다.
 
 		mapper.modifyPwd(encPassword, email);
-		   
-	    String newPwd= uuid; // 새로운 비밀번호를 변수 pw에 저장한다.
 	            
 	    emailObj.setReceiver(email); // 받는 사람
 	    emailObj.setSubject(email+"님 여행의정석에서 보내드리는 임시 비밀번호 메일입니다."); // 제목
@@ -316,7 +309,7 @@ public class MemberServiceImpl implements MemberService {
 	   
 	   
 	@Override
-	public Email certEmail(String email, String certNum, Email emailObj) { // 소셜 계정 회원탈퇴 인증메일 보내기
+	public Email writingCertEmail(String email, String certNum, Email emailObj) { // 소셜 계정 회원탈퇴 인증메일 보내기
 	      
 	     emailObj.setReceiver(email); // 받는 사람
 	     emailObj.setSubject(email+"님 여행의정석에서 보내드리는 회원탈퇴 인증번호입니다."); // 제목
@@ -408,7 +401,7 @@ public class MemberServiceImpl implements MemberService {
 			HttpSession session, RedirectAttributes rttr) {
 		
 		String sessionEmail = (String)session.getAttribute("email");
-		String presentPwd = getMember(sessionEmail).getPwd();
+		String presentPwd = mapper.getMember(sessionEmail).getPwd();
 
 		// 개발자 도구 email 바꾸기 막기(hidden)
 		if(!(email.equals(sessionEmail))) {
@@ -416,8 +409,8 @@ public class MemberServiceImpl implements MemberService {
 			return true;
 		}
 
-		 // 암호화의 늦은 반영으로.. 기존 회원도 비밀번호가 맞다면 변경시키자
 		if(!(isPwdMatch(inputPwd, presentPwd)) && !(inputPwd.equals(presentPwd))) {
+			rttr.addFlashAttribute("msg", "현재 비밀번호와 일치하지 않습니다.");
 			rttr.addFlashAttribute("member", getMember(email));
 			return true;
 		}

@@ -23,7 +23,9 @@ public interface MemberService {
    
    public void rememberEmail(String email, HttpServletRequest request, HttpServletResponse response); // email저장
    
-   public boolean isValidMember(MemberVO mVO, RedirectAttributes rttr, HttpSession session); // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
+   public boolean isValidMember(MemberVO mVO, RedirectAttributes rttr); // 정보가 틀리거나, 탈퇴한 회원은 안 돼요!
+   
+   public void setLoginDateToToday(String email); // 최종로그인
    
    public int getMemNo(String email); // 멤버번호 가져오기
    
@@ -42,15 +44,13 @@ public interface MemberService {
    
    public boolean isModifyNickname(String nickname, String email, RedirectAttributes rttr); // 닉네임 수정 여부 확인 // 닉네임 수정 여부 확인
    
-   public boolean isDeleteMember(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
+   public boolean isDoubleCheckOnesPwd(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크
    
    public void deleteApiMember(String email, RedirectAttributes rttr, HttpSession session); // 소셜 회원 탈퇴
    
-   public Email writerEmail(String email, Email emailObj); // 메일보내기
+   public Email writingEmail(String email, Email emailObj); // 메일보내기
    
-   public Email certEmail(String email, String certNum, Email emailObj); // 소셜 계정 회원탈퇴 인증메일 보내기
-   
-   public void setLoginDateToToday(String email); // 최종로그인
+   public Email writingCertEmail(String email, String certNum, Email emailObj); // 소셜 계정 회원탈퇴 인증메일 보내기
    
    public boolean isNaverApiJoinCheck(JSONObject responseObj, Model model); // 네이버 api 로그인할 경우 회원가입 되어 있는지 확인
 
