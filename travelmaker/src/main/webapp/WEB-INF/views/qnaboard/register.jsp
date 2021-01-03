@@ -78,6 +78,7 @@ $(document).ready(function(){
     
 </head>
 <body>
+<div class="full-wrap">
     <div class="wrapper">
         <div class="header_wrapper">
         
@@ -91,7 +92,7 @@ $(document).ready(function(){
             <div class="ct_body">
 	
 			 <div class="title-head">
-	        	<h4 style="font-family: 'Bazzi';">Q&A 질문 등록하기</h4>
+	        	<h4>Q&A 질문 등록하기</h4>
 	        </div>
 
             	 <form action="/qnaboard/register" method="post">
@@ -127,7 +128,8 @@ $(document).ready(function(){
         </div>
 		<!-- contents -->
     </div>
-    
+   </div>
+   <!-- end full-wrap -->
 
 </body>
 </html>

@@ -29,7 +29,7 @@ img.ui-datepicker-trigger {
 }
 
 .apiReg-input-wrap{
-    width: 46%;
+    width: 40%;
     margin-top: 5%;
     margin-bottom: 10%;
     justify-content: center;
@@ -58,13 +58,13 @@ img.ui-datepicker-trigger {
 
 .tag-wrap{
 	display: flex;
-	margin-bottom: 1%;
+	margin-bottom: 2%;
 	padding: 2%;
 }
 
 .text-div{
-	margin-left: 22%;
-	margin-top: -2%;
+	margin-left: 24%;
+	margin-top: -3%;
 	
 }
 
@@ -84,10 +84,16 @@ img.ui-datepicker-trigger {
     margin-left: 6%;
 }
 
-.div-regs{
+.div-birthReg{
 	padding: 5px;
     padding-top: 2px;
-    margin-left: 3%;
+    margin-left: 2%;
+}
+
+.div-genderhReg{
+	padding: 5px;
+    padding-top: 2px;
+    margin-left: 6%;
 }
 </style>
 
@@ -105,7 +111,7 @@ img.ui-datepicker-trigger {
 		<div class="api_reg_head">간편 회원가입</div>
 	
 	<!-- 정보 출력 div  -->
-	<div class="api-main-wrap" style="margin-left: 10%">
+	<div class="api-main-wrap">
 
 			
 			<form id="apiRegForm" action="/member/joinMember" method="post">
@@ -135,15 +141,15 @@ img.ui-datepicker-trigger {
                   <!-- 생년월일 -->
                 <div class="tag-wrap">
                   <div class="reg-fonts" style="margin-left: 6%;">생년월일&nbsp;&nbsp;</div>
-                  <div class="div-regs">
-                  	<input style="margin-left: 4%;" type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
+                  <div class="div-birthReg">
+                  	<input type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
                   </div>
                 </div>
                   
                   <!-- 성별 -->
                 <div class="tag-wrap">
                   <div class="reg-font">성별&nbsp;&nbsp;</div>
-                  <div class="div-reg">
+                  <div class="div-genderhReg">
                      <input type="radio" name="gender" id="api_man_gender" value="M" readonly="readonly">남 
                      <input type="radio" name="gender" id="api_woman_gender" value="F" readonly="readonly">여
                   </div>
@@ -159,7 +165,7 @@ img.ui-datepicker-trigger {
             </form>
             
             </div>
-               <div style="height: auto; border-top: 1px solid black; padding: 2%; text-align: center;">
+               <div style="height: auto; border-top: 1px solid black; padding: 2%; text-align: center; margin-bottom: 2%;">
                	<button style="font-size: 20px; text-align: center;"
                	type="submit" id="button" onclick="return snsValidCheck();">가입하기</button>
            
@@ -202,28 +208,28 @@ img.ui-datepicker-trigger {
 	    
 	    // 닉네임 입력
 	    if(myNickname.length == 0){
-	       alert("닉네임을 입력해주세요");
+			swal("", "닉네임을 입력해주세요.", "warning");
 	       $("#nickname").focus();
 	       return false;
 	    }
 	    
 	    // 닉네임은 2~8자리까지만
 	    if(!(myNickname.length >= 2 && myNickname.length <= 8)){
-		   	alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+			swal("", "닉네임은 2~8글자여야 합니다.", "warning");
 		   	$("#nickname").focus();
 		   	return false;
 	   }
 	    
 	    // 닉네임은 영문/한글/숫자만!!
 	    if(false === jNname.test(myNickname)){
-	       alert("닉네임은 영문/한글/숫자만 허용됩니다!!");
+	    	swal("", "닉네임은 영문/한글/숫자만 허용됩니다.", "warning");
 	       $("#nickname").focus();
 	       return false;
 	    }
 	    
 	     // 생년월일 입력
 	    if(myBirth.length == 0){
-	       alert("생년월일을 입력해주세요");
+	    	swal("", "생년월일을 입력해주세요.", "warning");
 	       $("#naverBirth").focus();
 	       return false;
 	    }

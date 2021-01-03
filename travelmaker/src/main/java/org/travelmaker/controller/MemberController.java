@@ -49,9 +49,9 @@ public class MemberController {
 		}
 		
 		// 중복이 없다면.. 가입 시키자
-		service.join(mVO); // 내용을 저장한다.
+		service.join(mVO); 
 		rttr.addFlashAttribute("msg", "여행의정석 가족이 되신걸 환영합니다. 로그인 해주세요");
-		return "redirect:/main/index"; // 회원가입 후, main으로 이동
+		return "redirect:/main/index";
 	}
 
 	// 로그인
@@ -60,13 +60,13 @@ public class MemberController {
 		
 		String referer = request.getHeader("Referer");
 		
-		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
-		if(service.isMemberStatus(mVO, rttr, session)) {
-			return "redirect:" + referer; 
-		}
 		// email 저장하기 여부
 		service.rememberEmail(mVO.getEmail(), request, response);	
 		
+		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
+		if(service.isValidMember(mVO, rttr)) {
+			return "redirect:" + referer; 
+		}
 		// 로그인 하자
 		if(service.isAdminLogin(mVO, session)) {
 			return "redirect:/admin/main";
@@ -77,10 +77,7 @@ public class MemberController {
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request) throws Exception{
-		
-		session.invalidate(); // 세션 삭제
-		
-		// 로그아웃은 메인으로 이동시키자
+		session.invalidate();
 		return "redirect:/main/index";
 	}
 	
@@ -91,11 +88,10 @@ public class MemberController {
 		model.addAttribute("member", service.getMember(email));
 		
 		// 소셜회원은 소셜정보조회페이지로 이동
-		if(service.isApiLoginCheck(email, session)) {
+		if(service.isApiLoginCheck(email)) {
 			return "/member/apiMemberInfo";
 		}
 		
-		// 조회페이지로 이동한다.
 		return "/member/memberInfo";
 	}
 	
@@ -103,17 +99,24 @@ public class MemberController {
 	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
 	public String modifyPwd(String newPwd, String inputPwd, String email, HttpSession session, RedirectAttributes rttr) {
 		
-		// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
-		if(service.isInputValidCheck(email, inputPwd, newPwd, session, rttr)) {
-			return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
+		try {
+			
+			// 정보변경 시, 입력한 내용이 유효한지 검사(이메일, 비밀번호 *개발자도구로 값바꾸는거 막자)
+			if(service.isValidInputCheck(email, inputPwd, newPwd, session, rttr)) {
+				return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
+			}
+	
+			service.modifyPwd(newPwd, email);
+			
+			// 바뀐 회원의 정보를 화면에 출력한다.
+			rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
+			rttr.addFlashAttribute("member", service.getMember(email));
+		}catch (NullPointerException npe) {
+			npe.getStackTrace();
+			rttr.addFlashAttribute("msg", "세션이 만료되었습니다.");
+			return "redirect:/main/index";
 		}
-
-		// 비밀번호를 바꾼다.
-		service.modifyPwd(newPwd, email);
 		
-		// 바뀐 회원의 정보를 화면에 출력한다.
-		rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
-		rttr.addFlashAttribute("member", service.getMember(email));
 		return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 	}
 	
@@ -122,9 +125,7 @@ public class MemberController {
 	@RequestMapping("/hasEmail")
     @ResponseBody
     public String hasEmail(@RequestParam("email") String email) {
-        
-        String cnt = ""+service.hasEmail(email); // 중복되면 1 반환
-        
+        String cnt = ""+service.hasEmail(email);
         return cnt;
     }
 	
@@ -132,9 +133,7 @@ public class MemberController {
 	@RequestMapping("/hasNickname")
 	@ResponseBody
 	public String hasNickname(@RequestParam("nickname") String nickname) {
-
-		String cnt = "" + service.hasNickname(nickname); // 닉네임 있으면 1, 없으면 0을 반환한다.
-			
+		String cnt = "" + service.hasNickname(nickname);
 		return cnt;
 	}
 	
@@ -144,7 +143,7 @@ public class MemberController {
 		
 		try {
 			// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
-			service.isNicknameTouch(nickname, email, rttr);
+			service.isModifyNickname(nickname, email, rttr);
 			
 		}catch (NullPointerException npe) {
 			npe.getStackTrace();
@@ -152,7 +151,7 @@ public class MemberController {
 			return "redirect:/main/index";
 		}catch (Exception e) {
 			e.getStackTrace();
-			rttr.addFlashAttribute("msg", "예상치못한 에러가 발생했습니다. 메인 홈페이지로 이동합니다");
+			rttr.addFlashAttribute("msg", "예상치못한 에러가 발생했습니다. 홈페이지로 이동합니다");
 			return "redirect:/main/index";
 		}
 		
@@ -161,18 +160,17 @@ public class MemberController {
 	}
 	
 	
-	// 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
+	// 회원탈퇴
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
 	public String deleteMember(String pwd, String email, HttpSession session, RedirectAttributes rttr) {
 			
-		// 회원이 일치하는지 확인
-		if(service.isDeleteMember(pwd, email, rttr, session)) {
+		if(service.isDoubleCheckOnesPwd(pwd, email, rttr, session)) {
 			return REDIRECT_MY_INFO_PAGE + session.getAttribute("email");
 		}
 		return "redirect:/main/index";
 	}
 	
-	// api 회원탈퇴(status를 탈퇴로 바꾼다.. 계정이 사라지는게 아님)
+	// api 회원탈퇴
 	@RequestMapping(value = "/deleteApiMember", method = RequestMethod.POST)
 	public String deleteApiMember(String email, HttpSession session, RedirectAttributes rttr) {
 		
@@ -216,7 +214,7 @@ public class MemberController {
 	  	// 이미 회원이면 로그인 처리
 	  	session.setAttribute("email", email);
 	  	service.setLoginDateToToday(email); // 최종 로그인은 오늘..
-	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMemNo(email));
+	  	log.info("카카오 로그인한 회원의 번호 : " + service.getMember(email).getMemNo());
 	  	
 	  	return "redirect:" + referer;
 	  

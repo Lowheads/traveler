@@ -38,10 +38,10 @@
             <div class="ct_body">
             				 <div class="header_wrapper">
             <div class="title-head">
-	        	<h4 style="font-family: 'Bazzi';">Q&A 게시글 조회</h4>
+	        	<h4>Q&A 게시글 조회</h4>
 	        </div>
         </div>
-            				<div class="form-group">
+            				<div class="form-group" style="margin-bottom: 1%;">
             					<img alt="eye" src="/resources/img/eye.png" width="18px" height="18px">
             					 : ${board.viewCnt }
             				</div>

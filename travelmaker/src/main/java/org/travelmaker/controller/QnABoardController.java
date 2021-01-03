@@ -60,7 +60,6 @@ public class QnABoardController {
 		}
 	}
 	
-	// 게시물을 서버에 올리면(저장)하면 포스트 방식
 	@PostMapping("/register")
 	public String register(QnABoardVO qnaBoard, RedirectAttributes rttr,HttpSession sessoin, HttpServletRequest request) {
 		// 현재 로그인 중인 회원의 닉네임을 nickname에 저장한다

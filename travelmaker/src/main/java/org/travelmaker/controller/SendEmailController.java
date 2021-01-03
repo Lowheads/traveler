@@ -26,33 +26,32 @@ public class SendEmailController {
 	}
 	
 	// 비밀번호 찾기
-	// ModelAndView : 데이터와 내가 이동할 페이지를 저장한다.
-	    @RequestMapping("/sendPwd")
-	    public String sendEmailAction (String email, RedirectAttributes rttr) throws Exception {
-	        Email emailObj = new Email();
+	@RequestMapping("/sendPwd")
+	public String sendEmailAction (String email, RedirectAttributes rttr) throws Exception {
+	    Email emailObj = new Email();
 	        
-	      if(service.isEamilChack(email, rttr)) {
-	    	  return "redirect:/main/index";
-	      }
+	    if(service.isEamilChack(email, rttr)) {
+	      return "redirect:/main/index";
+	     }
 
-	      // Travel 회원이니까 임시비밀번호 메일을 만들어서 보내주자
-          emailSender.SendEmail(service.writerEmail(email, emailObj));
-          rttr.addFlashAttribute("msg", "임시비밀번호를 보내드렸습니다. 이메일을 확인해주세요!");
+	    // Travel 회원이니까 임시비밀번호 메일을 만들어서 보내주자
+        emailSender.SendEmail(service.writingEmail(email, emailObj));
+        rttr.addFlashAttribute("msg", "임시비밀번호를 보내드렸습니다. 이메일을 확인해주세요!");
 	       
-	       return "redirect:/main/index";
-	    }
+	     return "redirect:/main/index";
+	}
 	    
-	    // 소셜 회원탈퇴(인증 이메일 보내기)
-	   @RequestMapping("/sendEmail")
-	   @ResponseBody
-	    public String sendEmail(@RequestParam("email") String email, @RequestParam("certNum") String certNum) throws Exception {
-		   Email emailObj = new Email();
+	// 소셜 회원탈퇴(인증 이메일 보내기)
+	@RequestMapping("/sendEmail")
+	@ResponseBody
+	public String sendEmail(@RequestParam("email") String email, @RequestParam("certNum") String certNum) throws Exception {
+	  Email emailObj = new Email();
 
-		   // 자바 스크립트에서 생성한 임시번호를 이메일에 넣어 보낸다.
-		   emailSender.SendEmail(service.certEmail(email, certNum, emailObj));
-		   
-		   return "1";
-	   }
+	  // 자바 스크립트에서 생성한 인증번호를 이메일에 넣어 보낸다.
+	  emailSender.SendEmail(service.writingCertEmail(email, certNum, emailObj));
+	  
+	  return "1";
+	}
 	   
 	    
 }
