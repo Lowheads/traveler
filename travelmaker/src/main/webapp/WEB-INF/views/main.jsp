@@ -283,35 +283,35 @@
 						type: 'line',
 						data: {
 							labels: targetDate,
-							datasets: [{
-								label: '신규 회원',
-								data:cntMember,
-							 	backgroundColor: [
-									'rgba(255, 99, 132, 0.2)'
-								],
-								borderColor: [
-				                  'rgba(255, 99, 132, 0.2)'
-								],
-								borderWidth: 1
-				            },
+							datasets: [
 				            {
 								label: '탈퇴 회원',
 								data:cntWithdrawUser,
 							 	backgroundColor: [
-									'rgba(30, 150, 255, 0.2)'
+							 		'rgba(255,153,102,0.7)'
 								],
 								borderColor: [
-									'rgba(30, 150, 255, 0.2)'
+									'rgba(255,153,102,0.7)'
+								],
+								borderWidth: 1
+				            },{
+								label: '신규 회원',
+								data:cntMember,
+							 	backgroundColor: [
+							 		'rgba(204,255,0,0.7)'
+								],
+								borderColor: [
+									'rgba(204,255,0,0.7)'
 								],
 								borderWidth: 1
 				            },{
 								label: '게시글 수 ',
 								data:cntPost,
 							 	backgroundColor: [
-									'rgba(255, 228, 0, 0.2)'
+							 		'rgba(102,204,255,0.7)'
 								],
 								borderColor: [
-									'rgba(255, 228, 0, 0.2)'
+									'rgba(102,204,255,0.7)'
 								],
 								borderWidth: 1
 				            },
@@ -319,10 +319,10 @@
 								label: '일일 접속자수',
 								data:cntTraffic,
 							 	backgroundColor: [
-									'rgba(71, 200, 62, 0.2)'
+							 		'rgba(153,153,255,0.7)'
 								],
 								borderColor: [
-									'rgba(71, 200, 62, 0.2)'
+									'rgba(153,153,255,0.7)'
 								],
 								borderWidth: 1
 				            }],
@@ -357,8 +357,8 @@
  				
 				for(let i =0; i<Object.keys(data).length; i++){
 					
-					const date = new Date(data[i].modDate)
-					data[i].modDate = date.getMonth()+"-"+date.getDate()
+					const date = new Date(data[i].wdate)
+					data[i].wdate = date.getMonth()+1+"월 "+date.getDate()+"일";
 				}
 				
 				let str = '<tr><th>제목</th><th>조회수</th><th>찜한갯수</th><th>등록일</th></tr>';
@@ -368,8 +368,10 @@
 								str+='<tr id= '+data[i].boardNo+'><td id= '+data[i].boardNo+'>'+data[i].boardTitle+'</td>'
 								str+='<td >'+data[i].vcnt+'</td>'
 								str+='<td>'+data[i].pickCnt+'</td>'
-								str+='<td>'+data[i].modDate+'</td></tr>'
+								str+='<td>'+data[i].wdate+'</td></tr>'
 							}
+							console.log(str)
+							
 							 $("tbody").append(str) 
 							 
 							 const tr = $("tr");

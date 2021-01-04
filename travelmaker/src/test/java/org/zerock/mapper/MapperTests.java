@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.travelmaker.domain.BoardVO;
 import org.travelmaker.domain.Criteria;
 import org.travelmaker.domain.PlaceVO;
 import org.travelmaker.domain.QnABoardVO;
@@ -401,6 +402,9 @@ public class MapperTests {
 		
 		list.forEach(theme->log.info(theme.toString()));
 		
+		//List<BoardVO> board = mainMapper.getPopularPostsByView();
+		
+		//board.forEach(theme->log.info(theme.toString()));
 	}
 	
 
