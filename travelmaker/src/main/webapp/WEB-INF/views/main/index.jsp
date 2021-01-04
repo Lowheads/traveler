@@ -310,14 +310,17 @@ a{text-decoration: none}
    width: 60%;
    height: 12%;
    background-color:white;
-   border-radius: 40px;
+   border-radius: 50px;
    display:flex;
    justify-content: flex-start;            
    flex-grow: 1;
+   
+   max-width:800px;
+   height:65px;
 }
 .navContent{
-   padding-top:15px;
-   height:100%;
+   /* padding-top:15px;
+   height:100%; */
    flex-basis: 35%;
 }
 .navContent:hover{
@@ -325,8 +328,8 @@ a{text-decoration: none}
    border-radius: 40px;
 }
 .navDateBtn{
-   padding-top:15px;
-   height:100%;
+   /* padding-top:15px; */
+   /* height:100%; */
    flex-basis: 30%;
 }
 .navDateBtn:hover{
@@ -340,8 +343,8 @@ a{text-decoration: none}
    border-left: 1px solid rgb(128,128,128,0.3);
 }
 .navSearchBtn{
-   padding-top:15px;
-   height:100%;
+   /* padding-top:15px;
+   height:100%; */
 }
 .selectContent{
    margin-top:auto;
@@ -422,13 +425,13 @@ a{text-decoration: none}
 
 
 #popup_open_btn{
-   font-size:12px;
+   font-size:14px;
    margin-right: 1%;
    margin-bottom: 50px;
    background-color:white;
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 7px 10px 7px 10px;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   padding: 4px 12px 4px 12px;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #goList{
@@ -505,9 +508,8 @@ a{text-decoration: none}
 
 
 <body>
+
       <div class="contents">
-      
-      
       <!-- 상단 -->
       <div class="ct_body">
       
@@ -515,7 +517,7 @@ a{text-decoration: none}
           <div class='weather'>
   </div>
          <div id="mainNav">
-            <div class="navContent navBtnNodeList"  style="text-align: center;">
+            <div class="navContent navBtnNodeList" style="display:flex;">
 
                <div class="selectContent navBtnNodeList" style="margin-left:40px;">
                   <div><b class="navBtnNodeList">위치</b></div>
@@ -533,7 +535,7 @@ a{text-decoration: none}
                </div>
 
             </div>
-            <div class="navDateBtn dateNodeList dateSelectBox">
+            <div class="navDateBtn dateNodeList dateSelectBox" style="display:flex;">
                <!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
                <div class="selectContent dateNodeList"
                   style="margin-left: 30px; padding-left: 30px;">
@@ -547,7 +549,7 @@ a{text-decoration: none}
             
             </div>
 
-            <div class="navDateBtn datedateBtn">
+            <div class="navDateBtn datedateBtn" style="display:flex;">
                <div class="selectContent dateNodeList" 
                   style="margin-left: 30px; padding-left: 30px;">
                   <div class="dateNodeList">
@@ -558,7 +560,7 @@ a{text-decoration: none}
             </div>
 
 
-            <div class="navSearchBtn" style="display:flex; justify-content: space-between;">
+            <div class="navSearchBtn" style="display:flex; align-items:center;">
             <div></div>
                <div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; cursor:pointer; " aria-hidden="true"></i>
             </div></div>
@@ -566,10 +568,20 @@ a{text-decoration: none}
          </div>
          
          <div class="mainMsg">
-         <b>이제, 여행은 <br>
-         가까운 곳에서</b>
-         <br><br>
-         <button id="popup_open_btn">여행성향검사</button>
+         <div style="padding:0; line-height: normal;">
+         <p style="margin: 0;padding: 0;font-size: 45px;color: white;font-weight: 800;">
+         이제, 여행은
+         </p>
+         </div>
+		<div style="padding:0; line-height: normal;">
+        <p style="margin: 0;padding: 0;font-size: 45px;color: white;font-weight: 800;">
+         가까운 곳에서
+         </p>
+         </div>
+         
+         <button id="popup_open_btn" style="margin-top:20px;">
+         여행 성향 검사
+         </button>
          
 <!--  test 모달창 -->
     <div id="modal">

@@ -221,7 +221,7 @@ h2 {
 .my-table thead tr {
 	color: black;
 	text-align: left;
-	font-size: 21px;
+	font-size: 18px;
 	font-weight: bold;
 	border-bottom: 2px solid #dddddd;
 }
@@ -231,7 +231,7 @@ h2 {
 }
 
 .my-table td {
-	font-weight: lighter;
+	font-weight: normal;
 }
 
 .my-table th, .my-table td {
@@ -442,10 +442,11 @@ input[type="text"] {
 
 					<div class="budget-box-a">
 						<div>
-							<h2>제주도 여행 경비 평균</h2>
+							<h2>예산 그래프 이용하기</h2>
 						</div>
 						<div>
-							<input type="text" id="average" value="￦ 900,000" readonly>
+							<!-- <input type="text" id="average" value="￦ 900,000" readonly> -->
+							<p>각 카테고리 항목별로 예산</p>
 						</div>
 						<div>
 							<button class="btn-recommend" onclick="divTest()">사용하기</button>

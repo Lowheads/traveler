@@ -16,7 +16,7 @@ import org.travelmaker.domain.BoarddtVO;
 
 @Component("fileUtils")
 public class FileUtils {
-	private static final String filePath = "C:\\Users\\Jeong Jieun\\git\\traveler\\travelmaker\\src\\main\\webapp\\resources\\imgUpload\\boarddtFile\\"; // 파일이 저장될 위치
+	private static final String filePath = "C:\\Users\\yubin\\Documents\\traveler\\travelmaker\\src\\main\\webapp\\resources\\imgUpload\\boarddtFile\\"; // 파일이 저장될 위치
 	
 	public List<Map<String, Object>> parseInsertFileInfo(BoarddtVO boarddt, 
 			MultipartHttpServletRequest mpRequest) throws Exception{

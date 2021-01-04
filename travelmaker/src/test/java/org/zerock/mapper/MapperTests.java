@@ -383,7 +383,7 @@ public class MapperTests {
 		list.forEach(theme->log.info(theme.toString()));
 	}
 	
-	@Test
+//	@Test
 	public void getImage() {
 		
 		int boardNo = 184;
@@ -391,6 +391,15 @@ public class MapperTests {
 		
 		images.forEach(theme->log.info(theme.toString()));
 		
+		
+	}
+	
+	@Test
+	public void mainMapperTest2() {
+	
+		List<StatisticVO> list= mainMapper.getMonthly();
+		
+		list.forEach(theme->log.info(theme.toString()));
 		
 	}
 	

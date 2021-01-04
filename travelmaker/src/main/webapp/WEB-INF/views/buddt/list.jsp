@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<div class="main">
 <%@include file="../includes/header.jsp"%>
 
 <style>
@@ -102,7 +103,8 @@ h3 {
 .budget-progress {
 	grid-column: 3/4; 
 	grid-row: 2; 
-	margin-top:65px;
+	margin-bottom:100px;
+	/* margin-top:65px; */
 }
 
 .budget-progress-box-2 {
@@ -116,7 +118,7 @@ h3 {
 .chart-wrapper {
 	/* height: 41rem; */
 	width: 336px;
-	padding: 2em 2.8em 2.9em 1.6em;
+	padding: 2em 2.8em 2.9em 1.9em;
 	border: 1px solid #d2d2d2;
 	border-radius: 1em;
 	box-shadow: /*0 1px 2px rgba(0, 0, 0, 0.07), */
@@ -491,9 +493,12 @@ label {
         color: #777777;
     }
     
+        .l_wrap{width:100vw;height:100vh;overflow:auto;}
+        .l_wrap.s_no-scroll{pointer-events:none;}
+        
 </style>
 
-<div class="main">
+
 	<div class="wrapper"
 		style="display: grid; grid-template-columns: 15% 590px auto 15%; grid-template-rows: 20px 100%; grid-gap: 1em; justify-items: stretch; justify-content: center;">
 
@@ -511,11 +516,7 @@ label {
 						</h3>
 					</div>
 					<div style="display: flex; align-items: center;">
-						<div>
-							<a href='/buddt/chart'>
-								예산
-							</a>
-						</div>
+						
 						<div>
 							<button class="add-expense-button" type="button" id="rg-button"
 								style="outline: none;">
@@ -584,8 +585,10 @@ label {
 		</div>
 
 
-		<div class="budget-progress" style="grid-column: 3/4; grid-row: 2; margin-top:65px;">
-
+		<div class="budget-progress">
+			<div style="display:flex; justify-content:flex-end; margin-right:14px; align-items:center; height:41px;">
+				<a style="text-decoration:underline; font-size:15px;" href='/buddt/chart'>예산 설정</a>
+			</div>	
 			<div class="chart-wrapper"
 				style="display: flex; flex-direction: column; position: sticky; top: 30px;">
 				<div>
@@ -928,7 +931,7 @@ label {
 		</div>
 	</div>
 
-</div>
+
 
 <script type="text/javascript">
 	
@@ -1217,3 +1220,4 @@ let barChart = new Chart(myChartOne, {
 
 
 <%@include file="../includes/footer.jsp"%>
+</div>
