@@ -152,7 +152,7 @@ public class MainController {
 	    memberService.isAdminLogin(naverMember, session);
 	    
 	    // 이미 회원이라면 세션주고 로그인
-	    System.out.println("네이버 로그인한 회원의 번호 : " + memberService.getMemNo(email));
+	    log.info("네이버 로그인한 회원의 번호 : " + memberService.getMemNo(email));
 	    return "redirect:/main/index";
 	    
 	}catch(Exception e) {

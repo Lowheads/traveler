@@ -59,7 +59,6 @@
    height: 200px;
    color:black;
  	padding:15px 10% 15px 10%;
- 	background-color: antiquewhite;
 }
 
 .plan_mnu_box {
@@ -383,9 +382,10 @@ height: 90%;
    <div class="contentTitle">
       <!-- schTitle -->
       <div><h1><b><c:out value="${schedule[0].SCH_TITLE}"/></b></h1>
+      <hr>
       <!-- schDate -->
-      <h4><b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
-      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></h4></div>
+      <b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
+      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></div>
   <a href='/board/register?schNo=${schedule[0].SCH_NO }' target="schedulelist" class="register_open_btn">
   <div class="sharebtnbox"> <img src="/resources/img/shareboardbtn.png"></div></a>
    </div>

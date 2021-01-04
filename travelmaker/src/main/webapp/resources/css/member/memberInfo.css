@@ -42,11 +42,11 @@
 }
 
 .api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
-	padding : 7%;
-	padding-top : 10%;
-	height: 400px;
-	padding-left: 0%;
-	margin-left: 16%
+	padding: 7%;
+    padding-top: 5%;
+    height: 450px;
+    padding-left: 0%;
+    margin-left: 7%;
 }
 
 .info-title{ /* title div */
