@@ -130,6 +130,10 @@
 	text-shadow: 2px 2px 2px grey;
 
 }
+.schmsg{
+	font-size: 17px;
+	color:white;
+}
 
 .col-25{
   float: left;
@@ -817,8 +821,8 @@ overflow-y: auto;
 			</c:choose>
 		</div>	
 		<div class="mainMsg">
-		<b>${board.boardTitle}</b>	
-		<br>
+		<b>${board.boardTitle}</b>
+		<div class="schmsg">${schedule.schTitle} ( ${schedule.fromDate}~${schedule.toDate})</div>
 		<br>
 		<c:choose>
 		  <c:when test="${memNo eq schedule.memNo}">
@@ -826,7 +830,7 @@ overflow-y: auto;
 		 id="modify_btn" target='modify' class='modify_open_btn'>대표사진 변경</a>
 		 </c:when>
 		 </c:choose>
-		 
+	
 		<!--mainMsg끝 -->
 		</div>
 	

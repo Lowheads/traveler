@@ -248,7 +248,7 @@ input:checked+.slider:before {
 .mainMsg{
 	margin-left: 7%;
 	margin-top:12%;
-	text-shadow: 2px 2px 1px grey;
+	text-shadow: 2px 2px 7px black;
 }
 .mainMsg b{
 	font-size:45px;

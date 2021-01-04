@@ -113,6 +113,11 @@
 	text-shadow: 2px 2px 2px grey;
 }
 
+.schmsg{
+	font-size: 17px;
+	color:white;
+	margin-top:10px;
+}
 .col-25{
   float: left;
   margin-top: 6px;
@@ -682,8 +687,7 @@ overflow-y: auto;
 
 		<div class="mainMsg">
 		<b>${board.boardTitle}</b>	
-		<br>
-		<br>
+		<div class="schmsg">${schedule.schTitle} ( ${schedule.fromDate}~${schedule.toDate})</div>
 		<!--mainMsg끝 -->
 		</div>
 	
