@@ -63,7 +63,6 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public ReplyPageDTO getListPage(QnABoardCriteria cri, int bno) { // 댓글 페이징처리
-		// 매개변수((게시물 번호), ((페이지번호, 출력개수), (게시물 번호)))
 		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
 	

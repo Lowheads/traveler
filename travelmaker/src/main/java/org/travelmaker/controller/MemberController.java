@@ -48,7 +48,6 @@ public class MemberController {
 			return "redirect:" + referer;
 		}
 		
-		// 중복이 없다면.. 가입 시키자
 		service.join(mVO); 
 		rttr.addFlashAttribute("msg", "여행의정석 가족이 되신걸 환영합니다. 로그인 해주세요");
 		return "redirect:/main/index";
@@ -67,7 +66,7 @@ public class MemberController {
 		if(service.isValidMember(mVO, rttr)) {
 			return "redirect:" + referer; 
 		}
-		// 로그인 하자
+
 		if(service.isAdminLogin(mVO, session)) {
 			return "redirect:/admin/main";
 		}
@@ -108,9 +107,10 @@ public class MemberController {
 	
 			service.modifyPwd(newPwd, email);
 			
-			// 바뀐 회원의 정보를 화면에 출력한다.
+			// 변경된 회원의 정보를 출력한다.
 			rttr.addFlashAttribute("msg", "정보를 정상적으로 변경하였습니다.");
 			rttr.addFlashAttribute("member", service.getMember(email));
+			
 		}catch (NullPointerException npe) {
 			npe.getStackTrace();
 			rttr.addFlashAttribute("msg", "세션이 만료되었습니다.");
@@ -138,12 +138,13 @@ public class MemberController {
 	}
 	
 	// 정보수정 -> 저장하기 누르면 실행
-	@RequestMapping(value = "/modifyNickname", method = RequestMethod.POST)
-	public String modifyNickname(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
+	@RequestMapping(value = "/saveMember", method = RequestMethod.POST)
+	public String saveMember(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
 		
 		try {
-			// 닉네임 한번 더 검사(중복이면 중복이란 메세지를 띄웁니다)
-			service.isModifyNickname(nickname, email, rttr);
+			MemberVO member = service.getMember(email);
+			
+			service.doubleCheckOnesNickname(nickname, member, rttr);
 			
 		}catch (NullPointerException npe) {
 			npe.getStackTrace();
@@ -195,7 +196,6 @@ public class MemberController {
 	 public String kakaoLogin(@RequestParam("code")String code, RedirectAttributes rttr, HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model)throws IOException {
 			 
 		 String referer = (String)session.getAttribute("referer"); // 세션에 저장한 주소를 변수에 저장한다.
-		 System.out.println("kakao code:"+code);
 		  
 		 JsonNode access_token = socialLoginService.getKakaoToken(code); // 카카오 토큰을 얻어온다
 		 JsonNode userProfile = socialLoginService.getKakaoUserProfile(access_token); // 카카오 로그인 정보를 가져온다.

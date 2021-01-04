@@ -53,7 +53,7 @@
 			 <div class="info-content">
 			 	<div class="content-name">닉네임</div>
 				<div class="content-proper">
-				 <form id="saveForm" action="/member/modifyNickname" method="post">
+				 <form id="saveForm" action="/member/saveMember" method="post">
 				 	<input type="text" id="infoNickname" name="nickname" value="${member.nickname }">	
 				 	<input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 				 	<button type="button" class="dupl-btn" id="infoNicknameCheck">중복 체크</button>
