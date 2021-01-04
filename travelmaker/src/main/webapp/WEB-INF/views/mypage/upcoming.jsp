@@ -157,14 +157,13 @@ body {
    width: 100%;
    display: flex;
    flex-wrap: wrap;
-   justify-content: start;
+   justify-content: space-between;
 }
 
 .card_sch {
    width: 330px;
    height: 270px;
    margin-bottom: 20px;
-   margin-left:15px;
    border: 1px solid gray;
 }
 

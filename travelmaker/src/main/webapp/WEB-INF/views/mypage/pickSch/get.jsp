@@ -60,7 +60,6 @@
    height: 200px;
    color:black;
  	padding:15px 10% 15px 10%;
- 	background-color: antiquewhite;
 }
 
 .plan_mnu_box {
@@ -334,9 +333,10 @@
    <div class="contentTitle">
       <!-- schTitle -->
       <div><h1><b><c:out value="${schedule[0].SCH_TITLE}"/></b></h1>
+      <hr>
       <!-- schDate -->
-      <h4><b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
-      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></h4></div>
+     <b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
+      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></div>
    </div>
       <!-- nav -->
       <div class="plan_mnu_box" id="planNav">
