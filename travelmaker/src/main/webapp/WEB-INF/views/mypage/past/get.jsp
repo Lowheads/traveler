@@ -76,6 +76,7 @@
    padding-right: 35px;
    padding-left: 35px;
    font-weight: bold;
+   cursor: pointer;
 }
 
 .plan_mnu:hover{
@@ -138,6 +139,7 @@
    padding: 3px 8px 0 8px;
    margin-right: 15px;
    text-align: center;
+    cursor:pointer;
 }
 
 #sch_remove_btn:hover{
