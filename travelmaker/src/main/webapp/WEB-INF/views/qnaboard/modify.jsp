@@ -24,7 +24,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-
+<div class="full-wrap">
 <div class="wrapper">
         <div class="header_wrapper">
         
@@ -35,7 +35,7 @@
             <div class="ct_body">
 
 			<div class="title-head">
-				<h4 style="font-family: 'Bazzi';">Q&A 게시글 수정</h4>
+				<h4>Q&A 게시글 수정</h4>
 			</div>
 
 			<form role="form" action="/qnaboard/modify" method="post">
@@ -78,10 +78,9 @@
                         	
                 
 	                <div class="btn-wrap">
-		                <c:if test="${board.memNo == loginMemNo }">		                	
-		            	<button type="submit" data-oper='modify' class="mod-btn" 
-		            	onclick="return boardModifyValid()">수정완료</button>
-		            	<button type="submit" data-oper='remove' class="del-btn">게시글 삭제</button>
+		                <c:if test="${board.memNo == loginMemNo || myGrade == 'MG002'}">		                	
+		            	<button type="submit" data-oper='modify' class="mod-btn">수정</button>
+		            	<button type="submit" data-oper='remove' class="del-btn">삭제</button>
 		            	</c:if>
 		            	<button type="submit" data-oper='list' class="list-btn">목록</button>
 	            	</div>
@@ -91,7 +90,9 @@
         </div>
 		<!-- contents -->
 	</div>
-	
+		
+</div>
+	<!-- end full-wrap -->
 
 	
 <script type="text/javascript">
@@ -129,8 +130,23 @@
 				formObj.append(typeTag);
 			}else if(operation === 'modify'){
 				
+				let title = $("#title").val();
+		    	let content = $("#content").val();
+		    	
+		    	if(title.length == 0){
+		    		swal( "" , "제목이 빈칸일 수는 없습니다" , "warning" );
+		    		$("#title").focus();
+		    		return;
+		    	}
+		    	
+		    	if(content.length == 0){
+		    		swal( "" , "내용이 빈칸일 수는 없습니다" , "warning" );
+		    		$("#content").focus();
+		    		return;
+		    	}
+				
 				if(titleLenVal.length > 30){
-					alert("제목은 30자리까지 가능합니다");
+					swal( "" , "제목은 30자리까지 가능합니다" , "warning" );
 					return;
 				}
 			}
@@ -155,22 +171,11 @@
     // 수정 유효성 검사
     function boardModifyValid(){
     	
-    	let title = $("#title").val();
-    	let content = $("#content").val();
-    	
-    	if(title.length == 0){
-    		alert("제목이 빈칸일 수는 없습니다");
-    		$("#title").focus();
-    		return false;
-    	}
-    	
-    	if(content.length == 0){
-    		alert("내용이 빈칸일 수는 없습니다.");
-    		$("#content").focus();
-    		return false;
-    	}
+    
     	return true;
     }
     
     
 </script>
+
+<%@ include file="../includes/footer.jsp" %>

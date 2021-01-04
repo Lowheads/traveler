@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 페이징 처리 -->
@@ -24,7 +25,6 @@
 </head>
 
 <body>
-
 <div class="full-wrap">
 	
 	<!-- 메인 타이틀 -->
@@ -51,7 +51,6 @@
 				
 				<!-- 비밀글이라면 자물쇠 표시 -->
 				<c:if test="${board.secret eq 'Y' }">
-						<!-- 비밀글이면 자물쇠 표시 -->
 						<img src="/resources/img/lock.png" style="height: 15px" width="15px">
 				</c:if>
 				
@@ -157,7 +156,7 @@
 	
 				if(secret == 'Y' && boardNickname != myNickname 
 						&& secret == 'Y' && grade != 'MG002'){ // 비밀글이면 본인 또는 관리자만 조회가능 
-					alert("권한이없습니다");
+					swal( "" , "권한이 없습니다." , "warning" );
 						
 				}else{ // 비밀글이 아니면 편하게 게시물 조회
 					actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
@@ -181,17 +180,17 @@
 			let searchLenVal = $("#searchKeyword").val(); // 검색어 길이
 			
 			if(!searchForm.find("option:selected").val()){
-				alert("검색 조건을 선택해주세요");
+				swal( "" , "검색조건을 선택해주세요." , "warning" );
 				return false;
 			}
 			
 			if(!searchForm.find("input[name='keyword']").val()){
-				alert("검색키워드를 입력하세요");
+				swal( "" , "검색키워드를 입력하세요" , "warning" );
 				return false;
 			}
 			
 			if(!(2 <= searchLenVal.length && searchLenVal.length <= 8)){
-				alert("검색어 길이는 2~8자리 입니다.");
+				swal( "" , "검색어 길이는 2~8자리 입니다." , "warning" );
 				return false;
 			}
 			
@@ -204,5 +203,5 @@
 </script>
 </html>
 
-
+<%@ include file="../includes/footer.jsp" %>
 

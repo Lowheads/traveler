@@ -50,50 +50,35 @@ $(document).ready(function(){
     	let content = $("#content").val();
     	
     	if(title.length == 0){
-    		alert("제목은 빈칸일 수 없습니다");
+			swal( "" , "제목이 빈칸일 수는 없습니다" , "warning" );
     		return false;
     	}
     	
     	if(title.length > 30){
-    		alert("제목은 30자리까지 가능합니다");
+			swal( "" , "제목은 30자리까지 가능합니다." , "warning" );
     		return false;
     	}
     	
     	if(content.length == 0){
-    		alert("내용을 작성해주세요");
-    		return false;
-    	}
-    	
-    	if(content.length == 0){
-    		alert("내용을 작성해주세요");
+			swal( "" , "내용을 작성해주세요." , "warning" );
     		return false;
     	}
     	
     	if(content.length > 1000){
-    		alert("내용이 너무 많습니다..");
+    		swal( "" , "내용이 너무 많습니다." , "warning" );
     		return false;
     	}
     	
     	return true;
     } 
     
-	
-	// rttr 메시지
-	$(function(){ 
-		
-		var responseMessage = '<c:out value="${msg}" />';
-		
-		if(responseMessage != "")
-	    	alert(responseMessage);
-
-	});
-	
     
 </script>
     
     
 </head>
 <body>
+<div class="full-wrap">
     <div class="wrapper">
         <div class="header_wrapper">
         
@@ -107,7 +92,7 @@ $(document).ready(function(){
             <div class="ct_body">
 	
 			 <div class="title-head">
-	        	<h4 style="font-family: 'Bazzi';">Q&A 질문 등록하기</h4>
+	        	<h4>Q&A 질문 등록하기</h4>
 	        </div>
 
             	 <form action="/qnaboard/register" method="post">
@@ -143,7 +128,10 @@ $(document).ready(function(){
         </div>
 		<!-- contents -->
     </div>
-    
+   </div>
+   <!-- end full-wrap -->
 
 </body>
 </html>
+
+<%@ include file="../includes/footer.jsp" %>

@@ -13,7 +13,7 @@
 		if (strReferer == null) {
 		%>
 		<script>
-			alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
+			/* swal("비정상 접근", "URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.", "warning"); */
 			history.go(-1);
 		</script>
 		<%
@@ -38,10 +38,10 @@
             <div class="ct_body">
             				 <div class="header_wrapper">
             <div class="title-head">
-	        	<h4 style="font-family: 'Bazzi';">Q&A 게시글 조회</h4>
+	        	<h4>Q&A 게시글 조회</h4>
 	        </div>
         </div>
-            				<div class="form-group">
+            				<div class="form-group" style="margin-bottom: 1%;">
             					<img alt="eye" src="/resources/img/eye.png" width="18px" height="18px">
             					 : ${board.viewCnt }
             				</div>
@@ -70,8 +70,8 @@
                         	    rows="3" name='content' readonly="readonly"><c:out value="${board.content}" /></textarea>
                         	</div>
                         	
-            <div class="getBtn-wrap" style="text-align: right; margin-top: 20px;">
-                <c:if test="${board.memNo == loginMemNo }">	
+            <div class="getBtn-wrap" style="text-align: right;">
+                <c:if test="${board.memNo == loginMemNo || myGrade == 'MG002' }">	
             	<button data-oper='modify' class="reg-btn">수정하기</button>
             	</c:if>
 				<button data-oper='list' class="list-btn">목록</button>
@@ -97,20 +97,19 @@
 		<img alt="speechbubble" src="/resources/img/speechbubble.png" width="20px" height="20px"> comment</i></div><hr>
 		
 			<ui class="chat">
-			
-			<li class="comment-li" data-rno="">
-			   <!-- <div class="comment-wrap">
-				<div class ="comment-list">
-					<strong class="comment-writer"></strong>
-					<samll class="small"></samll>
-					<div class="textContent">
-						<textarea class='modiText' rows='3' cols='100' style='display: none;'></textarea>
-						<button type='button' class='replyModBtn' style='display: none;'>수정완료</button>
-					</div>
-				</div>
-					<p class="comment-reply">아직 등록된 댓글이 없습니다.</p>
-			</div>  -->
-			</li>
+				<li class="comment-li" data-rno="">
+					   <!-- <div class="comment-wrap">
+						<div class ="comment-list">
+							<strong class="comment-writer"></strong>
+							<samll class="small"></samll>
+							<div class="textContent">
+								<textarea class='modiText' rows='3' cols='100' style='display: none;'></textarea>
+								<button type='button' class='replyModBtn' style='display: none;'>수정완료</button>
+							</div>
+						</div>
+							<p class="comment-reply">아직 등록된 댓글이 없습니다.</p>
+					</div>  -->
+				</li>
 			</ui>
 			
 				<!-- paging -->
@@ -169,7 +168,7 @@
 			};
 			
 			replyService.add(reply, function(result){
-				alert(result);
+				swal( "" , result , "success" );
 				showList(-1); // 댓글 등록 후 마지막 페이지로 이동
 				$('#reply').val('');
 			});
@@ -184,7 +183,7 @@
 	function replyEmptyCheck(inputReply){
 		
 		if(inputReply.length == 0){
-			alert("내용을 입력해주세요.");
+			swal( "", "내용을 입력해주세요", "warning" );
 			return true;
 		}
 		return false;
@@ -216,7 +215,7 @@
 		let rno = event.dataset['rno']; // 내가 선택한 삭제버튼의 rno가 담긴다.
 		
 		replyService.remove(rno, function(result){
-			alert(result);
+			swal( "" , result , "success" );
 			showList(pageNum);
 			
 		});
@@ -230,21 +229,21 @@
 		let rnoVal = event.parentElement.previousSibling.parentElement.parentElement.dataset['rno'];
 		
 		if(modiTextArea.length == 0){
-			alert("빈칸일 수 없습니다.");
+			swal( "" , "내용을 입력해주세요" , "warning" );
 			return;
 		}
 		
 		let reply = {rno:rnoVal, reply:modiTextArea}  // 리플번호와 리플내용을 가진 reply 객체
 		
 		replyService.update(reply, function(result){
-			alert(result);
+			swal( "" , result , "success" );
 			showList(pageNum);
 		}) // 원래 댓글에 새로운 댓글내용으로 업데이트
 		
 	}
 
 	
-	// 댓글 수정 후 조회
+	// 댓글 조회
 	function showList(page){
 		
 		console.log("page : " + page);
@@ -253,6 +252,7 @@
 		let replyUrl = $(".chat");
 	
 		let myNickname = '<%=(String)session.getAttribute("myNickname") %>';
+		let myGrade = '${myGrade}';
 		console.log("로그인 중인 닉네임 : " + myNickname);
 		
 		
@@ -283,16 +283,16 @@
 			str += "<small class='small'>" + replyService.displayTime(list[i].updateDate) + "</small>";
 			
 			// 내가 작성한 댓글만 수정 가능
-			if(myNickname == list[i].replyer){
+			if(myNickname == list[i].replyer || myGrade == 'MG002'){
 				str += "<button class='replyBtn_modify' onclick='replyModify(this)' data-rno='" + list[i].rno + "'>수정</button>";
 				str += "<button class='replyBtn_delete' onclick='replyDelete(this)' data-rno='" + list[i].rno + "'>삭제</button></div>";
 			}
 			
 			str += "<div class='textContent' style='display : none; margin-top:4%; margin-left:2%;'>";
-			str += "<textarea class='modiText' rows='3' cols='90' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
+			str += "<textarea class='modiText' rows='3' cols='120' style='display: none; margin-right: 2px; margin-left: -6%; margin-bottom: 1%;'></textarea>";
 			str += "<button class='replyRegiBtn' type='button' class='replyModBtn' style='display: none; margin-bottom : 1%' onclick='replyModiSuccess(this)'>수정완료</button>";
 			str += "</div>";
-			str += "<p class='comment-reply' style='margin-bottom : 2%;'>" + list[i].reply+ "</p></div></li>";
+			str += "<p class='comment-reply' style='margin-bottom : 2%; white-space:pre;'>" + list[i].reply+ "</p></div></li>";
 			str += "<hr>";
 		}
 		replyUrl.html(str); // 댓글창 출력
@@ -363,3 +363,5 @@
 		
 		
 </script>
+
+<%@ include file="../includes/footer.jsp" %>

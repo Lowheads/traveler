@@ -19,6 +19,7 @@
 </head>
 <body>
 	
+	 <div class="black_bg_social"></div>
 	
 <!-- 전체 div -->
 <div class="container-info">
@@ -63,6 +64,20 @@
 			<div class="content-proper">${member.birth }</div> 
 		</div>
 		
+			<!-- 회원여행성향 -->
+			<div class="info-content"> 
+				<div class="content-name">여행성향</div>
+				
+				<c:choose>
+				    <c:when test="${member.travelType == null}">
+				   		<div class="content-proper">테스트 해주세요!</div> 
+				    </c:when>
+				    <c:when test="${member.travelType != null}">
+						<div class="content-proper">${member.travelType }</div> 
+				    </c:when>
+				</c:choose>
+			</div>
+		
 		<div class="info-content">
 				<div class="content-name">가입일</div>
 				<div class="content-proper"><fmt:formatDate value="${member.regDate }" type="both" pattern="yyyy-MM-dd"/></div> 
@@ -94,7 +109,8 @@
 				</div>
 				
 				<div class="delete-wrap-api">
-					<div class="del-div" style="font-weight: bold;">회원 이메일 &nbsp; : &nbsp;</div>
+					<div class="del-div" style="font-weight: bold; margin-left: 8%;">
+					회원 이메일 &nbsp; : &nbsp;</div>
 					<input style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px"
 						id="deleteEmail" name="email" value="<%=session.getAttribute("email")%>">  
 					<button class="button" type="button" id="sendEmailBtn">인증메일 보내기</button>
@@ -123,12 +139,11 @@
 	    <!-- 저장하기 버튼 -->
 		<button type="submit" class="save-btn" onclick="return apiInfoNickSaveCheck()">저장하기</button>
 	     <!-- 저장하기 버튼 끝 -->
+	     
+	      <!-- 홈으로 -->
+	      <button type="button" class="home_btn" onclick="location.href='/main/index'">홈으로</button>
+	      <!-- 홈으로 버튼 끝 -->
 	
-		
-		 <!-- 취소 버튼 -->
-		<!-- <button type="button" class="back-btn" onclick="history.back()">취소</button> -->
-	     <!-- 취소 버튼 끝 -->
-       
        	</div>     
       </div>
 	<!-- end info-wrap -->
@@ -149,13 +164,13 @@
 		// 모달 오픈
 		function apiDeleteOnClick() {
 			document.querySelector('.apiMember_delete_modal').style.display = 'block';
-			document.querySelector('.black_bg').style.display = 'block';
+			document.querySelector('.black_bg_social').style.display = 'block';
 		}
 		
 		// 모달 닫기
 		function apiDeleteOffClick() {
 			document.querySelector('.apiMember_delete_modal').style.display = 'none';
-			document.querySelector('.black_bg').style.display = 'none';
+			document.querySelector('.black_bg_social').style.display = 'none';
 		}
 		
 	}; // end Modal
@@ -210,26 +225,26 @@
 
 		// 공백확인
 		if (myNickname.length == 0) {
-			alert("닉네임은 공백일 수 없습니다");
+			swal("", "닉네임을 입력해주세요.", "warning");
 			return false;
 		}
 
 		// 닉네임은 2~8자리까지만
 		if (!(myNickname.length >= 2 && myNickname.length <= 8)) {
-			alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+			swal("", "닉네임을 입력해주세요 2~8글자여야 합니다.", "warning");
 			$("#nickname").focus();
 			return false;
 		}
 
 		// 공백 포함 X
 		if (myNickname.search(/\s/) != -1) {
-			alert("닉네임에는 공백이 포함될 수 없어요!");
+			swal("", "닉네임에는 공백이 포함될 수 없습니다.", "warning");
 			return false;
 		}
 
 		// 닉네임은 한글/영문/숫자만!!
 		if (false === jNname.test(myNickname)) {
-			alert('닉네임은 한글/영문/숫자만!!');
+			swal("", "닉네임은 한글/영문/숫자만 입력가능합니다.", "warning");
 			$("#nickname").focus();
 			return false;
 		}
@@ -247,8 +262,8 @@
 
 		$("#sendEmailBtn").click(function() {
 			
-			alert("인증메일은 5초정도 소요됩니다. 잠시만 기다려주세요");
-			
+			swal("", "인증메일 발송은 5초정도 소요됩니다.", "warning");
+
 					let email = $("#deleteEmail").val();  // 내 이메일
 					let certNum = Math.floor(Math.random()*99999999); // 메일로 보낼 인증번호 생성(local변수)
 					let sendDate = {'email' : email, 'certNum' : certNum}
@@ -261,10 +276,10 @@
 						url : "/search/sendEmail",
 						success : function(data) {
 							if ($.trim(data) == 1) {
-								alert("메일로 인증번호가 발송되었습니다.");
+								swal("", "메일로 인증번호가 발송되었습니다.", "success");
 								return 
 							} else {
-								alert("다시 요청해주세요");
+								swal("", "다시 요청해주세요", "error");
 							}
 		 				}
 				});
@@ -275,7 +290,7 @@
 			let deleteForm = $("#apiDeleteForm");
 			
 			if(input != result){
-				alert("인증번호가 일치하지 않습니다.");
+				swal("", "인증번호가 일치하지 않습니다.", "warning");
 				return false;
 			}
 			deleteForm.submit();
@@ -285,5 +300,6 @@
 
 </script>
 
-
 </html>
+
+<%@ include file="../includes/footer.jsp" %>

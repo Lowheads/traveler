@@ -50,7 +50,6 @@
     	<property name="ps" ref="ps"></property>
     </bean> -->
     
-    <bean id="email" class="org.travelmaker.domain.Email"></bean>
     <bean id="emailSender" class="org.travelmaker.domain.EmailSender"></bean>
 
 	

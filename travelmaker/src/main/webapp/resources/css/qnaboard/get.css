@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-.full-wrap{
-	font-family: 'Bazzi';	
-}
-
 .comment{
 	width : 960px;
 	margin-top: 3%;
@@ -17,12 +13,18 @@ li {
 }
 
 .replyRegiBtn{ /*댓글 등록 버튼*/
-	background-color : #ff8b3d;	
-	color : white;
-	height : 70px;
+    background-color: #ff8b3d;
+    color: white;
+    border: 1px solid #ff8b3d;
+    font-size: 15px;
+    float: right;
+    padding: 4px 13px 4px 13px;
+    border-radius: 7px;
+    outline: 0;
+    cursor: pointer;
+    margin-left : 3px;
+    height : 70px;
 	width : 80px;
-	margin-left : 3px;
-	border: 1px solid #ff8b3d;
 }
 
 .replyRegi-wrap{ /*댓글 등록 텍스트*/
@@ -93,18 +95,21 @@ li {
 }
 
 .list-btn{ /* 목록 버튼 */
-	color: black;
-	background-color: white;
-    width: 60px;
-    height: 30px;
-    font-size: 13px;
-    border:1px solid gray;
+    background-color: white;
+    font-size: 15px;
+    background-color: #e9e9e9;
+    border: 1px solid #e9e9e9;
+    padding: 4px 13px 4px 13px;
+    border-radius: 7px;
+    outline: 0;
+    cursor: pointer;
+    margin-right: 0.5%;
 }
 
 .list-btn:hover{
-	background-color: #ff8b3d;
-	color: white;
-	border: 1px solid #ff8b3d;
+	background-color: #A9A9A9;
+   color:balck;
+   border: 1px solid #A9A9A9;
 }
 
 .replyArea{ /* 댓글 입력 폼 */

@@ -157,6 +157,11 @@ position: absolute;
 .table-condensed{
 	border-spacing:10px;
 }
+
+.prev, .next{
+ top:auto;
+ background-color:white;
+}
 /* daterangepicker 디자인 끝 */
 .btn{
 	width: 130px;
@@ -404,6 +409,18 @@ a{text-decoration: none}
    color:white;
    text-shadow: 2px 2px gray;
 }
+
+.boardmsg{
+ margin-left: 3%;
+}
+
+.boardmsg b{
+   font-size:20px;
+   color: #757073;
+   font-family:Spoqa Han Sans Neo,sans-serif;
+}
+
+
 #popup_open_btn{
    font-size:12px;
    margin-right: 1%;
@@ -418,7 +435,7 @@ a{text-decoration: none}
   float:right;
    font-size:15px;
    margin-right: 3%;
-   margin-bottom: 50px;
+   margin-bottom: 30px;
    background-color:white;
    border: 1px solid gray;
    border-radius: 14px;
@@ -446,7 +463,7 @@ a{text-decoration: none}
 }
 .card-contents{
    width: 15%;
-   height: 450px;
+   height: 500px;
    position: relative;
     z-index: 1;
      display: block;
@@ -578,10 +595,9 @@ a{text-decoration: none}
 
 
 
-
+	<div class="boardmsg"><img src="/resources/img/calendar.png" style='width:28px; margin-right:10px;'><b>인기 여행일정</b>
       <!-- 관리자 게시판리스트 출력 -->
-   
-         <button id="goList" onclick="location.href='/board/list'">더보기</button>
+         <button id="goList" onclick="location.href='/board/list'">더보기</button></div>
    
          <div class="boardContents">
             <div class="gallery">
@@ -623,6 +639,7 @@ a{text-decoration: none}
          <!-- 게시판끝 -->
       </div>
 </body>
+<%@ include file="../includes/footer.jsp" %>
 
 
 <script type="text/javascript">

@@ -31,7 +31,7 @@
    if(session.getAttribute("email") != null){
       sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
       modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
-        mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
+        mypage = "<li><a href='/mypage/pickPL'>위시리스트</a></li>";
         qnapage = "<li><a href='/qnaboard/list'>Q&A게시판</a></li>";
    }
    else{
@@ -45,12 +45,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
+    <title>여정 :: 개인 맞춤형 여행플래너</title>
 <head>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="utf-8">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<!-- alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- JavaScript 파일 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -64,9 +67,12 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- datepicker 하나 쓰시는 거니까여 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <style>
 
-
+*{  
+	outline:0;
+}
 /*헤더 스타일 */
 a{text-decoration: none;
    color:black;}
@@ -79,8 +85,6 @@ a:visited{text-decoration: none;}
     --grey-text-dark: #222;
     --pink: #ff385c;
 }
-
-
 .header {
     height: 80px;
     padding: 0 90px;
@@ -91,11 +95,9 @@ a:visited{text-decoration: none;}
     white-space: nowrap;
     z-index:1;
 }
-
 .header__logo, .header__nav {
     flex: 1 0 140px;
 }
-
 .header__search {
     display: inline-flex;
     border-radius: 24px;
@@ -104,11 +106,9 @@ a:visited{text-decoration: none;}
     border: 1px solid var(--grey-med);
     transition: box-shadow 0.2s ease;
 }
-
 .header__search:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
 }
-
 .header__search button {
     background: transparent;
     height: 40px;
@@ -119,21 +119,17 @@ a:visited{text-decoration: none;}
     font-family: 'AirbnbCereal-Medium';
     cursor: pointer;
 }
-
 .header__search button:first-of-type {
     padding-left: 24px;
 }
-
 .header__search button:last-of-type {
     padding-right: 24px;
 }
-
 .header__search span {
     width: 1px;
     height: 24px;
     background: var(--grey-med);
 }
-
 .header__searchIcon {
     width: 32px;
     height: 32px;
@@ -144,18 +140,15 @@ a:visited{text-decoration: none;}
     justify-content: center;
     margin-left: 16px;
 }
-
 .header__searchIcon img {
     width: 12px;
     height: 12px;
 }
-
 .header__nav {
     display: flex;
     justify-content: flex-end;
     position: relative;
 }
-
 .header__nav__button {
     font-weight: bold;
     background: transparent;
@@ -169,13 +162,10 @@ a:visited{text-decoration: none;}
     text-decoration: none;
     color: #222;
     height: 40px;
-
 }
-
 .header__nav__button-greyHover:hover {
     background: var(--grey-light);
 }
-
  .header__nav__button-account {
     border: 1px solid var(--grey-med);
     height: 42px;
@@ -183,27 +173,22 @@ a:visited{text-decoration: none;}
     padding: 5px 5px 5px 12px;
     transition: box-shadow 0.2s ease;
 } 
-
 .header__nav__button-account:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
-
 .header__nav__button-account img:first-child {
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
 }
-
 .header__nav__button-account img:last-child {
     width: 30px;
     height: 30px;
     margin-left: 12px;
 }
-
 .header__nav__button-language img:first-child {
     width: 16px;
     height: 16px;
 }
-
 .header__nav__button-language img:last-child {
     width: 9px;
     height: 6px;
@@ -212,11 +197,9 @@ a:visited{text-decoration: none;}
 .header__drop__menu {
    z-index: 97;
 }
-
 .header__nav .active{
    display:flex;
 }
-
 .header__nav ul {
     position: absolute;
     background: rgb(255, 255, 255);
@@ -236,7 +219,6 @@ a:visited{text-decoration: none;}
     box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
     
 }
-
 .header__nav a {
     padding-top: 6.5px;
     width: 100%;
@@ -246,7 +228,6 @@ a:visited{text-decoration: none;}
     height: 30px;
     margin-left: 14px;
 }
-
 .header__nav li {
     width: 100%;
     height: 30%;
@@ -255,7 +236,6 @@ a:visited{text-decoration: none;}
     justify-items: center;
     /*align-items: center;*/
 }
-
 .header__nav li:hover {
     background-color: rgb(248, 248, 248);
     cursor: pointer;
@@ -265,19 +245,15 @@ a:visited{text-decoration: none;}
     pointer-events: all;
     transform: translateY(0px);   
 } */
-
 .header__nav li:first-of-type {
     margin-top: 8px;
 }
-
 .header__nav li:last-of-type {
     margin-bottom: 18px;
 }
-
 .header__nav li:last-child {
     margin-bottom: 100px;
 }
-
 /*성현 style */
 .login_modal {
    display: none;
@@ -410,13 +386,11 @@ a:visited{text-decoration: none;}
     color: black;
     border: 1px solid #4e266d;
 }
-
 #searchPwdBtn:hover{
    background-color: #ff8b3d;
    color: white;
    border: 1px solid #ff8b3d;
 }
-
 #menu_wrap {
    position: absolute;
    top: 0;
@@ -431,7 +405,6 @@ a:visited{text-decoration: none;}
    font-size: 12px;
    border-radius: 10px;
 }
-
 #menu_wrap hr {
    display: block;
    height: 1px;
@@ -445,7 +418,6 @@ a:visited{text-decoration: none;}
 #menu_wrap .option button {
    margin-left: 5px;
 }
-
 #pagination {
    margin: 10px auto;
    text-align: center;
@@ -473,7 +445,6 @@ body {
    color: white;
    padding: 5px;
 }
-
 #button { /*로그인 버튼*/
    width: 260px;
    height: 50px;
@@ -481,16 +452,14 @@ body {
    background-color: white;
    border: 1px solid #4e266d;
 }
-
 #button:hover { /*로그인 버튼 hover*/
    color: white;
    background-color: #ff8b3d;
    border: 1px solid #ff8b3d;
 }
-
 .wrap-main{
-   padding: 10px;
-   margin-top: 40px;
+    padding: 5px;
+    margin-top: 10px
 }
 .center {
    text-align: center;
@@ -513,12 +482,14 @@ text-align: center;
    margin-left: 5%;
 }
 .btn{ /* 닉네임 중복체크 버튼 */
-   width: 130px;
-   height: 35px;
-   text-align: center;
-   background-color: #ff8b3d;
-   color: white;
-   border: 1px solid #ff8b3d;
+ 	width: 130px;
+    height: 35px;
+    text-align: center;
+    background-color: #ff8b3d;
+    color: white;
+    border: 1px solid white;
+    border-radius: 7px;
+
 }
 /* dropdown  */
 .dropbtn {
@@ -563,7 +534,6 @@ text-align: center;
    margin-bottom: 1%;
    }
    
-
 /* div > span{
             border:solid 3px rgb(62, 40, 192);  
 }
@@ -584,23 +554,17 @@ text-align: center;
     font-weight: bold;
     color:rgba(255, 255, 255, 0.9);
 }
-
 .button-btn-submit:hover{
 	background-color: #ff8b3d;
 	color:rgba(255, 255, 255, 0.9);
 	font-weight: bold;
 }
-
-
-
 .dots{
-
     position:absolute;
     top:5%;
     left:45%;
     z-index:1;
 }
-
 .dot {
       margin: 0 2px;
       background-color:rgba(218, 212, 212, 0.7);
@@ -613,32 +577,25 @@ text-align: center;
       width: 20px;
       z-index:1;
 }
-
 .dot:hover {
    background-color:rgba(82, 82, 82, 0.7);
 }
-
 .current{
    background-color:rgba(255, 255, 255, 0.9); 
 }
-
 @-webkit-keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
 }
-
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
 }
-
 .slideWrapper{
    position:relative;
     width:100%;
     height:80%;
 }
-
-
  .mySlides {
       width:70%;
      height:auto;
@@ -659,14 +616,10 @@ text-align: center;
      margin: 0px;
      box-sizing: border-box;
  }
-
-
 .themeImage img{
     width:100%;
     object-fit: cover;
 }
-
-
 .travel-theme{
    font-weight:bold;
     width:100%;
@@ -676,13 +629,11 @@ text-align: center;
     text-align: left;
      font-size: larger;
 }
-
 .placeList{
     width:100%;
     height:auto; 
     padding: 5px 25px 5px;   
 }
-
 .recPlace{
    height:35px;
     float: left;
@@ -691,20 +642,15 @@ text-align: center;
     padding: 5px 14px;
     border-radius: 7px;
 }
-
 .recPlace:hover{
-
     color:rgba(255, 255, 255, 0.9);
     background-color: #ff8b3d;
     
-
 }
-
 .clicked{
 	 color:rgba(255, 255, 255, 0.9);
 	background-color: #ff8b3d;
 }
-
 .prev, .next {
     cursor: pointer;
     position: absolute;
@@ -720,7 +666,6 @@ text-align: center;
     z-index:1;
     background-color: rgba(0,0,0,0.3);
     }
-
 .prev{
     left:0;
 }
@@ -729,17 +674,13 @@ text-align: center;
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
   
 }
-
 .reg-input{
    border: 1px solid black;
 }
-
-
 /* 경비스타일  */
         .bg-modal {
             width: 100%;
@@ -752,7 +693,6 @@ text-align: center;
             align-items: center;
             display: none;
         }
-
         /* 폭 여기서 수정 */
         .bg-modal-content {
             width: 600px;
@@ -772,13 +712,11 @@ text-align: center;
             msTransform: translate(-50%, -50%);
             webkitTransform: translate(-50%, -50%);
         }
-
         @keyframes modal-open {
             from {
                 transform: translate(0, 100px);
                 opacity: .5;
             }
-
             to {
                 transform: translate(0, 0);
                 opacity: 1;
@@ -789,14 +727,27 @@ text-align: center;
         .bg-modal-content::-webkit-scrollbar {
             width: 0rem;
         }
-         .bg-modal-add {
-            position: absolute;
-            top: 0;
+
+       .bg-modal-add{
+  		    position: absolute;
+            margin-top:3%;
             left: 14px;
-            font-size: 52px;
-            font-weight: lighter;
-            cursor: pointer;
-        }
+  			font-size:15px;
+  			background-color:white;
+  			border: 1px solid gray;
+  			border-radius: 14px;
+  			padding: 5px 20px 5px 20px;
+  			cursor:pointer;
+		}
+		.bg-modal-add:hover{
+		 	background-color:#ff8b3d;
+  		 	color:white;
+  		 	border: 1px solid #ff8b3d;
+  		 	border-radius: 14px;
+		}
+        
+        
+        
         
        .bg-modal-close {
             position: absolute;
@@ -807,11 +758,8 @@ text-align: center;
             transform: rotate(45deg);
             cursor: pointer;
         }
-
         .bg-modal-close:hover {
-
         }
-
         /* 테이블 */
         .bgwrapper {
             margin-top: 20px;
@@ -820,7 +768,6 @@ text-align: center;
             align-content: center;
             justify-content: center;
         }
-
         .bgboard {
             width: 90%;
             /*margin: 0 50px 50px 0;*/
@@ -832,7 +779,6 @@ text-align: center;
             overflow: hidden;
             border-radius: 0 0 0 0;
         }
-
         .bgboard thead tr {
             color: black;
             text-align: left;
@@ -840,29 +786,24 @@ text-align: center;
             font-weight: bold;
             border-bottom: 2px solid #dddddd;
         }
-
         .bgboard th,
         .bgboard td {
             font-weight: lighter;
             text-align: center;
             padding: 12px 23px
         }
-
         .bgboard tbody tr {
             font-size: 15px;
             border-bottom: 1px solid #dddddd;
             background-color: white;
             height: 70px;
         }
-
         .bgboard tbody tr:nth-of-type(even) {
             background-color: #fafafa;
         }
-
         .bgboard tbody tr:last-of-type {
             border-bottom: 1px #dddddd solid;
         }
-
 .budgetschtable {
 	 width: 90%;
             /*margin: 0 50px 50px 0;*/
@@ -874,7 +815,6 @@ text-align: center;
             overflow: hidden;
             border-radius: 0 0 0 0;
 }
-
 .budgetschtable thead tr {
 	  color: black;
             text-align: left;
@@ -882,30 +822,24 @@ text-align: center;
             font-weight: bold;
             border-bottom: 2px solid #dddddd;
 }
-
 .budgetschtable th, .budgetschtable td {
     font-weight: lighter;
             text-align: center;
             padding: 12px 23px
 }
-
 .budgetschtable tbody tr {
 	   font-size: 15px;
             border-bottom: 1px solid #dddddd;
             background-color: white;
             height: 70px;
 }
-
 .budgetschtable tbody tr:nth-of-type(even) {
 	  background-color: #fafafa;
 }
-
 .budgetschtable tbody tr:last-of-type {
 	border-bottom: 1px #dddddd solid;
 }
-
 /* 경비스타일 끝 */
-
 </style>
 
 
@@ -928,8 +862,8 @@ text-align: center;
         <button id="budgetbutton" class="header__nav__button
             header__nav__button-language
             header__nav__button-greyHover" style="margin-right: 7px;">
-            <img src="/resources/icons/internet.png" alt="Globe"/>
-            <img src="/resources/icons/chevron.png" alt="Globe"/>
+            <img src="/resources/icons/north-korea-won.png" alt="Globe"/>
+            <img src="/resources/icons/chevron.png" alt="Globe"/> 
         </button>
 
         <button class="header__nav__button header__nav__button-account" onclick="dropMenu()"> 
@@ -953,7 +887,7 @@ text-align: center;
     <!--  모달 안  -->
     <div class="bg-modal-content">
     <!-- BUDGET 추가버튼  -->
-    <div class="bg-modal-add">+</div>
+    <div class="bg-modal-add">일정추가</div>
         <!-- X 버튼 -->
         <div class="bg-modal-close">+</div>
 
@@ -1111,15 +1045,15 @@ text-align: center;
 
         <div class="modal-dialog" style="display: table;">
             <h4 style="text-align: center; font-size: 30px; margin-left: 4%; margin-top: -20px;">회원가입</h4>
-         <div class="wrap-main" style="margin-left: 15px;">
+         <div class="wrap-main">
             <form action="/member/joinMember" method="post">
                   
                   <!-- 이메일 -->
                   <div class="reg-font">이메일</div>
                   <div class="div-reg">
                       <input class="reg-input" type="text" name="email" id="email" placeholder="이메일주소" size="30">
-                     <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button>
-                  <span id="spanEmail"></span></div>
+                     <button class="btn" type="button" id="emailCheckBtn">이메일 중복체크</button></div>
+                 <div class="div-reg"> <span id="spanEmail"></span></div>
                   
                   <!-- 비밀번호 -->
                   <div class="reg-font">비밀번호</div>
@@ -1142,8 +1076,8 @@ text-align: center;
                   <div class="div-reg">
                        <input class="reg-input"  type="text" name="nickname" id="nickname" placeholder="닉네임" size="30">
                      <button class="btn" type="button" id="nicknameCheck">중복 체크</button>
-                     닉네임은 2~8내로 입력해주세요
-                  <div class="div-reg"><span id="spanNickname"></span></div></div>
+                     닉네임은 2~8내로 입력해주세요</div>
+                  <div class="div-reg"><span id="spanNickname"></span></div>
                   
                   <!-- 생년월일 -->
                   <div class="reg-font">생년월일</div>
@@ -1277,7 +1211,7 @@ text-align: center;
          }
          
           if(responseMessage.length > 0){ /* 이거 안 해주면 alert 아예 안 뜬다.. */
-            alert(responseMessage);
+            swal("", responseMessage);
          } 
       } 
     
@@ -1387,7 +1321,8 @@ text-align: center;
     let jEmail = /^[0-9a-zA-Z][0-9a-zA-Z\_\-\.\+]+[0-9a-zA-Z]@[0-9a-zA-Z][0-9a-zA-Z\_\-]*[0-9a-zA-Z](\.[a-zA-Z]{2,6}){1,2}$/;
      let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
      let jNname = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/; // 닉네임은 문자 제한없이 2~8자리
-    // 스크립트 태그 변수
+    
+     // 스크립트 태그 변수
     let myEmail = $("#email").val();    // 이메일
     let myPwd = $("#pwd").val();       // 비밀번호
     let myPwdCfm = $("#pwdCfm").val();  // 비밀번호 확인
@@ -1396,74 +1331,74 @@ text-align: center;
    
     // 이메일 입력
     if(myEmail.length == 0){
-       alert("이메일 입력 후, 중복체크를 눌러주세요");
+    	swal("", "이메일 입력 후, 중복체크를 눌러주세요.", "warning");
         $("#email").focus();
         return false;
     }
     
     // 이메일 정규식
      if(false === jEmail.test(myEmail)) {     
-        alert('이메일 형식이 잘못되었습니다. \n@앞에 3글자 이상은 넣으셨나요? 공백은 없으시죠?');
+     	swal("", "이메일 형식이 잘못되었습니다. \n이메일은 공백없이 3글자 이상입니다.", "warning");
           return false;         
      }                            
     
      // 패스워드 입력
     if(myPwd.length == 0){
-        alert("비밀번호를 입력해 주세요"); 
+     	swal("", "비밀번호를 입력해 주세요.", "warning");
         $("#pwd").focus();
         return false;
     }
      
     // 비밀번호 정규식
     if(false === jPwd.test(myPwd) || myPwd.length > 12) {     
-      alert('비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.');
+     	swal("", "비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.", "warning");
       $("#pwd").focus();
         return false;         
     }   
     
      // 패스워드 확인
      if(myPwd != myPwdCfm){
-        alert("비밀번호가 일치하지 않습니다.");
+      	swal("", "비밀번호가 일치하지 않습니다.", "warning");
         $("#pwdCfm").focus();
         return false;
      }
      
      // 비밀번호에 공백 포함 X
      if(myPwd.search(/\s/) != -1){
-          alert("비밀번호는 공백 없이 입력해주세요.");
+       	swal("", "비밀번호는 공백 없이 입력해주세요.", "warning");
           return false;
      }
     // 닉네임 입력
     if(myNickname.length == 0){
-       alert("닉네임을 입력해주세요");
+       	swal("", "닉네임을 입력해주세요.", "warning");
        $("#nickname").focus();
        return false;
     }
     
     // 닉네임은 2~8자리까지만
     if(!(2 <= myNickname.length && myNickname.length <= 8)){
-         alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+       	swal("", "닉네임은 2~8글자여야 합니다.", "warning");
          $("#nickname").focus();
          return false;
    }
     
     // 닉네임은 영문/한글/숫자만!!
     if(false === jNname.test(myNickname)){
-       alert("닉네임은 영문/한글/숫자만 허용됩니다!!");
+       	swal("", "닉네임은 영문/한글/숫자만 허용됩니다.", "warning");
        $("#nickname").focus();
        return false;
     }
     
      // 생년월일 입력
     if(myBirth.length == 0){
-       alert("생년월일을 입력해주세요");
+       	swal("", "생년월일을 선택해주세요", "warning");
        $("#birth").focus();
        return false;
     }
    
      // 성별 선택
     if($("input[name=gender]:radio:checked").length < 1){
-       alert("성별을 선택해주세요.");
+       	swal("", "성별을 선택해주세요.", "warning");
        return false;
     }
     
@@ -1532,14 +1467,14 @@ text-align: center;
     
     // 이메일 입력(로그인)
     if(loginInputEmail.length == 0){
-       alert("이메일을 입력해주세요");
+    	swal("", "이메일을 입력해주세요.", "warning");
        $("#login_inputEmail").focus();
        return false;
     }
     
     // 비밀번호 입력(로그인)
     if(loginPwd.length == 0){
-       alert("비밀번호를 입력해주세요");
+    	swal("", "비밀번호를 입력해주세요.", "warning");
        $("#login_pwd").focus();
        return false;
     }
@@ -1547,12 +1482,10 @@ text-align: center;
  
  //======================로그인 끝========================================== 
     
-    // 회원가입을 유도한다.. 안 됐다면 넘어갈 수 없음..
     function sessionCheck(){
     
-    /* travel, 네이버 둘 다 로그인 안했으면 회원가입하세요... */
     if('<%=session.getAttribute("email") %>' == null){
-       alert("travle 가족이 되셔야 이용 가능합니다\n회원가입 부탁드립니다.");
+    	swal("", "로그인 후 이용가능합니다.", "warning");
        document.getElementById('register').style.display='block';
        return false;
     };
@@ -1565,7 +1498,7 @@ text-align: center;
       
       // 이메일을 입력 안했다면..
       if(searchEmail.length == 0){
-         alert("이메일을 입력해주세요");
+      	swal("", "이메일을 입력해주세요.", "warning");
            return false;
       }
       return true;
@@ -1595,9 +1528,8 @@ text-align: center;
             document.querySelector('.bg-modal-content').style.display = 'block';
         	   }
         	   else{
-        		   alert("로그인 후 이용해주세요")
+        	    	swal("", "로그인 후 이용가능합니다.", "warning");
         		   return;
-
         	   }            
         });
            if(document.getElementsByClassName('bg-modal-close')[0]!=null){

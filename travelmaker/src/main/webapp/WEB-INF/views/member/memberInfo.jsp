@@ -6,6 +6,20 @@
 
 <%@ include file="../includes/header.jsp" %>
 
+<!-- URL 직접접근 막기 -->
+<%
+	String strReferer = request.getHeader("referer");
+	
+		if (strReferer == null) {
+		%>
+		<script>
+			history.go(-1);
+		</script>
+		<%
+			return;
+		}
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -27,8 +41,6 @@
 		<!-- 내정보 div -->
 		<div class="info-head">내 정보</div>
 
-			<%-- <p style="text-align: center; font-size: 30px"><%=session.getAttribute("email")%>님의 프로필</p> --%>
-		
 			<!-- 정보 출력 div  -->
 			<div class="main-wrap">
 				<!-- 이메일 -->
@@ -104,6 +116,20 @@
 		</div>
 		<!-- end 변경모달 -->
 		
+		<!-- 회원여행성향 -->
+			<div class="info-content"> 
+				<div class="content-name">여행성향</div>
+				
+				<c:choose>
+				    <c:when test="${member.travelType == null}">
+				   		<div class="content-proper">테스트 해주세요</div> 
+				    </c:when>
+				    <c:when test="${member.travelType != null}">
+						<div class="content-proper">${member.travelType }</div> 
+				    </c:when>
+				</c:choose>
+			</div>
+		
 		
 		<!-- 회원탈퇴 모달 -->
 		<div class="member_delete_modal">
@@ -158,7 +184,7 @@
 		</div>
 	</div>
 	<!-- end main-wrap-->
-			
+	
 			<div class="info-foot">
 				<!-- 탈퇴 버튼 -->
 		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
@@ -169,9 +195,9 @@
 					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
-	        	  <!-- 취소 버튼 -->
-					<!-- <button type="button" class="back-btn" onclick="history.back()'">홈으로</button> -->
-	        	  <!-- 취소 버튼 끝 -->
+	        	 <!-- 홈으로 -->
+	        	 <button type="button" class="home_btn" onclick="location.href='/main/index'">홈으로</button>
+	        	 <!-- 홈으로 버튼 끝 -->
 	        	 
 			</div>
 			<!-- end foot -->
@@ -225,39 +251,38 @@
 
 		let jPwd = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$%^&*-]).{8,}$/; // 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
 		let inputPwd = $("#inputPwd").val() // 현재 비밀번호 입력 태그
-		/* let realPwdCfm = $("#realPwdCfm").val(); // 현재 비밀번호 히든 값  */
 		let myPwd = $("#infoPwd").val(); // 비밀번호
 		let myPwdCfmm = $("#infoPwdCfm").val(); // 비밀번호 확인
 
 		 // 현재 패스워드 입력
 		if (inputPwd.length == 0) {
-			alert("현재 비밀번호를 입력해 주세요");
+			swal("", "현재 비밀번호를 입력해 주세요.", "warning");
 			$("#inputPwd").focus();
 			return false;
 		}
 
 		// 패스워드 입력
 		if (myPwd.length == 0) {
-			alert("비밀번호를 입력해 주세요");
+			swal("", "비밀번호를 입력해 주세요.", "warning");
 			$("#infoPwd").focus();
 			return false;
 		}
 
 		// 숫자/대문자/소문자/특수문자 1개씩은 포함해서 8자리
 		if (false === jPwd.test(myPwd) || myPwd.length > 12) {
-			alert('비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.');
+			swal("", "비밀번호는 8자리 ~ 12자리이며, \n영문/숫자/특수문자를 포함해야합니다.", "warning");
 			return false;
 		}
 
 		// 패스워드 확인
 		if (myPwd != myPwdCfmm) {
-			alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");
+			swal("", "비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.", "warning");
 			return false;
 		}
 
 		// 비밀번호는 공백없이!!
 		if (myPwd.search(/\s/) != -1) {
-			alert('비밀번호는 공백없이!!');
+			swal("", "비밀번호에는 공백이 포함될 수 없습니다.", "warning");
 			return false;
 		}
 
@@ -316,26 +341,26 @@
 
 		// 공백확인
 		if (myNickname.length == 0) {
-			alert("닉네임은 공백일 수 없습니다");
+			swal("", "닉네임을 입력해주세요.", "warning");
 			return false;
 		}
 
 		// 닉네임은 2~8자리까지만
 		if (!(myNickname.length >= 2 && myNickname.length <= 8)) {
-			alert("닉네임을 입력해주세요 2~8글자여야 합니다!");
+			swal("", "닉네임을 입력해주세요 2~8글자여야 합니다.", "warning");
 			$("#nickname").focus();
 			return false;
 		}
 
 		// 공백 포함 X
 		if (myNickname.search(/\s/) != -1) {
-			alert("닉네임에는 공백이 포함될 수 없어요!");
+			swal("", "닉네임에는 공백이 포함될 수 없습니다.", "warning");
 			return false;
 		}
 
 		// 닉네임은 한글/영문/숫자만!!
 		if (false === jNname.test(myNickname)) {
-			alert('닉네임은 한글/영문/숫자만!!');
+			swal("", "닉네임은 한글/영문/숫자만 입력가능합니다", "warning");
 			$("#nickname").focus();
 			return false;
 		}
@@ -353,20 +378,17 @@
 		let pwdCfm =  $("#deletePwdCfm").val(); // 비밀번호 확인
 		
 		if(pwdChk.length == 0){
-			//입력 안하면
-			alert("비밀번호를 입력해주세요");
+			swal("", "비밀번호를 입력해주세요.", "warning");
 			return false;
 		}
 		
 		if(pwdChk != pwdCfm){
-			// 비밀번호가 일치하지 않으면...
-			alert("비밀번호가 일치하지 않습니다.");
+			swal("", "비밀번호가 일치하지 않습니다.", "warning");
 			return false;
 		}
 		
 		return true;
 	}
-
 	
  	// 탈퇴 전 한번 더 묻기
 	function deleteAsk() {
@@ -375,8 +397,11 @@
 		} else { //취소
 			return false;
 		}
-	} 
+	}
+ 	
 </script>
 
 </html>
+
+<%@ include file="../includes/footer.jsp" %>
 

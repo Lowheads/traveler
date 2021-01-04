@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .full-wrap{
-	font-family: 'Bazzi';	
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
 .container {
@@ -61,15 +61,16 @@ table.board-wrap td {
 }
 
 .boardRegiBtn-wrap button{ /* 글 쓰기 버튼 div */
-	background-color: #ff8b3d;
-	color: white;
-	size: 4%;
-	font-size: 10px;
-	width : 5%;
-    height: 30px;
-    margin-right: 4%;
-    margin-top: 1%;
+    background-color: #ff8b3d;
+    color: white;
     border: 1px solid #ff8b3d;
+    padding: 4px 13px 4px 13px;
+    outline: 0;
+    font-size: 15px;
+    border-radius: 7px;
+    cursor: pointer;
+     margin-right: 4%;
+    margin-top: 1%;
 }
 
 .w3-bar{ /* 페이징 버튼 */

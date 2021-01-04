@@ -30,11 +30,7 @@ public class ReplyController {
 		this.service = replySevice;
 	}
 	
-	// consumes : 서버는 Content-Type이 일치해야 response를 준다.
-	// produces : 서버는 MediaType이 일치해야 response를 준다.
-
 	// 댓글 등록
-	// 	서버에 저장하기 떄문에 등록은 POST
 	@PostMapping(value = "/new", consumes = "application/json", produces = "application/text; charset=utf8")
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		log.info("ReplyVO : " + vo);

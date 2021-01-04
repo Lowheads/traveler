@@ -2,12 +2,23 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="../includes/header2.jsp"%>
+<%@include file="../includes/header.jsp"%>
 
 <style>
-/* html {
-	box-sizing: border-box;
-} */
+    * {
+        box-sizing: revert;
+    }
+
+    button, input, select, textarea, optgroup {
+        font: revert;
+        margin: 0;
+    }
+
+    html, body {
+        font-family: Verdana,sans-serif;
+        line-height: normal;
+    }
+
 
 body {
 	font-family: "Noto Sans KR", sans-serif;
@@ -104,7 +115,7 @@ h3 {
 
 .chart-wrapper {
 	/* height: 41rem; */
-	width: 21rem;
+	width: 336px;
 	padding: 2em 2.8em 2.9em 1.6em;
 	border: 1px solid #d2d2d2;
 	border-radius: 1em;
@@ -143,20 +154,6 @@ p {
 	/*background-color: #c8c8c8;*/
 	/*transition-duration: 1s;*/
 	/*font-weight: bold;*/
-}
-
-a {
-	color: #444;
-	background-color: #fff;
-	border: 1px solid #aaa;
-	border-radius: .5em;
-	box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
-	text-decoration: none;
-	padding: .2em .6em .2em .6em;
-}
-
-a:hover {
-	border-color: #888;
 }
 
 body::-webkit-scrollbar, .modal-content::-webkit-scrollbar {
@@ -373,7 +370,10 @@ option {
 	outline: none;
 }
 
-.btn {
+    .btn-1,
+    .btn-3 {
+    width: auto;
+    height: auto;
 	margin: 0 10px;
 	padding: 10px;
 	text-align: center;
@@ -389,10 +389,11 @@ option {
 	cursor: pointer;
 }
 
-.btn:hover {
-	background-position: right center;
-}
-
+    .btn-1:hover,
+    .btn-3:hover {
+        background-position: right center;
+    }
+    
 .btn-1 {
 	color: black;
 	background-color: #ffffff;
@@ -448,6 +449,39 @@ label {
     margin: 4px 0 0 4px;
 }
 
+    .expense-position {
+        display: flex;
+        justify-content: space-around;
+        /* width: 97px; */
+        height: 29px;
+        align-items: center;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #dddddd;
+        color: #333;
+        overflow: visible;
+        text-align: center;
+        height: 5px;
+        display: block;
+        unicode-bidi: isolate;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+
+    hr:after {
+        content: '또는';
+        background-color: #f3f3f3;
+        padding: 0 9px;
+        position: relative;
+        top: -10px;
+        font-size: 11px;
+        font-weight: 400;
+        color: #777777;
+    }
 </style>
 
 <div class="main">
@@ -465,6 +499,11 @@ label {
 						<h3>모든 지출 내역</h3>
 					</div>
 					<div style="display: flex; align-items: center;">
+					<div>
+							<a href='/buddt/chart'>
+								예산
+							</a>
+						</div>
 						<div>
 							<button class="add-expense-button" type="button" id="rg-button"
 								style="outline: none;">
@@ -512,7 +551,7 @@ label {
 								<td><c:out value="${listAll.paydate}" /></td>
 								<%-- <td><c:out value="${listAll.schno}" /></td> --%>
 								<td><c:out value="${listAll.store}" /></td>
-								<td style="display:flex; justify-content:space-around;">
+								<td class="expense-position">
 								<div>₩&nbsp;</div> 
 								<div><c:out value="${listAll.expense}" /></div>
 								</td>
@@ -812,6 +851,9 @@ label {
 							<!-- <button data-oper='modify' id = "sendForm" class="btn btn-1">수정</button> -->
 						<!-- 	<button data-oper='modify' id = "sendForm" class="btn btn-1" onclick="return send()" >수정</button>  -->
 							<button class="btn btn-1" type="button" id="sendForm" onclick="send(event);">수정</button>
+							<div style="margin-bottom:-4px;">
+                            <hr>
+                        </div>
 						<button type="button" data-oper='remove' class="btn btn-3"
 							id="subbutton" onclick="remove(event);">삭제</button>
 
