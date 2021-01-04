@@ -31,7 +31,7 @@
    if(session.getAttribute("email") != null){
       sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
       modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
-        mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
+        mypage = "<li><a href='/mypage/pickPL'>위시리스트</a></li>";
         qnapage = "<li><a href='/qnaboard/list'>Q&A게시판</a></li>";
    }
    else{
@@ -45,7 +45,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
+    <title>여정 :: 개인 맞춤형 여행플래너</title>
 <head>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -729,30 +729,27 @@ text-align: center;
         }
 
        .bg-modal-add{
-  		    position: absolute;
-            margin-top:3%;
+      		color:#222;
+  		    /* position: absolute; */
+            /* margin-top:3%; */
             left: 14px;
   			font-size:15px;
   			background-color:white;
-  			border: 1px solid gray;
-  			border-radius: 14px;
-  			padding: 5px 20px 5px 20px;
+  			border: none;
+  			/* border-radius: 14px; */
+  			/* padding: 5px 20px 5px 20px; */
   			cursor:pointer;
+  			text-decoration:underline;
 		}
+		
 		.bg-modal-add:hover{
-		 	background-color:#ff8b3d;
-  		 	color:white;
-  		 	border: 1px solid #ff8b3d;
-  		 	border-radius: 14px;
+		 	color:black;
 		}
-        
-        
-        
         
        .bg-modal-close {
             position: absolute;
             top: 0;
-            right: 14px;
+            right: 23px;
             font-size: 52px;
             font-weight: lighter;
             transform: rotate(45deg);
@@ -762,7 +759,7 @@ text-align: center;
         }
         /* 테이블 */
         .bgwrapper {
-            margin-top: 20px;
+            margin-top: 50px;
             display: flex;
             flex-direction: column;
             align-content: center;
@@ -783,14 +780,14 @@ text-align: center;
             color: black;
             text-align: left;
             font-size: 19px;
-            font-weight: bold;
+            font-weight: 600;
             border-bottom: 2px solid #dddddd;
         }
         .bgboard th,
         .bgboard td {
             font-weight: lighter;
             text-align: center;
-            padding: 12px 23px
+            padding: 12px 23px;
         }
         .bgboard tbody tr {
             font-size: 15px;
@@ -825,7 +822,7 @@ text-align: center;
 .budgetschtable th, .budgetschtable td {
     font-weight: lighter;
             text-align: center;
-            padding: 12px 23px
+            padding: 12px 23px;
 }
 .budgetschtable tbody tr {
 	   font-size: 15px;
@@ -838,6 +835,16 @@ text-align: center;
 }
 .budgetschtable tbody tr:last-of-type {
 	border-bottom: 1px #dddddd solid;
+}
+
+.budget-go-button {}
+.budget-go-button:hover {
+	text-decoration:underline;
+}
+
+.budget-go-button {}
+.budget-go-button:hover {
+	text-decoration:underline;
 }
 /* 경비스타일 끝 */
 </style>
@@ -862,7 +869,8 @@ text-align: center;
         <button id="budgetbutton" class="header__nav__button
             header__nav__button-language
             header__nav__button-greyHover" style="margin-right: 7px;">
-            <img src="/resources/icons/north-korea-won.png" alt="Globe"/>
+            <!-- <img src="/resources/icons/north-korea-won.png" alt="Globe"/> -->
+            <div>경비 관리</div>
             <img src="/resources/icons/chevron.png" alt="Globe"/> 
         </button>
 
@@ -887,19 +895,30 @@ text-align: center;
     <!--  모달 안  -->
     <div class="bg-modal-content">
     <!-- BUDGET 추가버튼  -->
-    <div class="bg-modal-add">일정추가</div>
+    <!-- <div class="bg-modal-add">일정추가</div> -->
         <!-- X 버튼 -->
         <div class="bg-modal-close">+</div>
 
         <div class="bgwrapper">
 
-            <span style='font-size:60px;'>&#128184;</span>
+			<div>
+				<div style="display: flex; justify-content: space-between;">
+					<div>&nbsp</div>
+					<div style="display:flex; padding-left:200px">
+            			<span style='font-size:30px; font-weight:500;'>지출 내역 관리</span>
+            		</div>
+            		<div class="bg-modal-add" 
+            		style="align-self:center;padding-right:130px;padding-top:7px;">
+            		또는 추가
+            		</div>
+            	</div>
+			</div>
 
             <!-- 테이블 -->
-            <div class="container-2">
-                <table class="bgboard">
+            <div class="container-2" style="margin-top:10px;">
+                <table class="bgboard" style="border-radius:5px;">
          <thead>
-            <tr>
+            <tr style="background-color:#f1f1f1;">
                <!-- <th>번호</th> -->
                <th>일정</th>
                <th>지출</th>
@@ -911,7 +930,7 @@ text-align: center;
 
             <c:forEach items="${budList}" var="budget">
                <tr>
-                  <td><a
+                  <td><a style="" class="budget-go-button"
                      href='/buddt/listAll?schno=<c:out value="${budget.schno}"/>'> <c:out
                            value="${budget.schtitle}" /></a>
                            <div style="display:flex; flex-direction:column;">
@@ -1558,9 +1577,9 @@ text-align: center;
             	  $('.container-2').append(schList)
             	  /* alert(data[0].SCH_NO) */
             	   for (let i = 0; i < data.length; i++) {
-            		   let img = "<img src='/resources/img/edit.png'>";
+            		   let img = "<img src='/resources/img/edit2.png'>";
             		   if(data[i].CHECKED == 'BS001' || data[i].CHECKED == 'BS002'){
-            			   img = "<img src='/resources/img/check.png'>";
+            			   img = "<img src='/resources/img/oval.png'>";
             		   }
             		   let result = "<tr><td>"+getDate(new Date(data[i].FROM_DATE))+" ~ "+getDate(new Date(data[i].TO_DATE))+"</td><td>"+data[i].SCH_TITLE+"</td><td><a href='#' class='gotoBudget' data-schno="+data[i].SCH_NO+" onclick=gotoBudget(this)>"+img+"</a></td></tr>"
 					$('.schresult').append(result)
@@ -1583,7 +1602,7 @@ text-align: center;
     }
     
   	function gotoBudget(atag){
-  		if(atag.firstChild.getAttribute('src')=="/resources/img/edit.png"){
+  		if(atag.firstChild.getAttribute('src')=="/resources/img/edit2.png"){
   			$('#budgetSchNo').attr("value",atag.dataset["schno"])
   	  		$('#insertBudget').submit();
   		}

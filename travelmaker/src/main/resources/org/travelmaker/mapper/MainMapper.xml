@@ -46,11 +46,11 @@
 
 
 <select id="getMonthly" resultMap="VOResult">
-	SELECT EXTRACT(MONTH FROM DAILY_LOG) AS "targetDate", SUM(CNT_USER) as "cnt_user", 
+	select to_char(daily_log,'yy-mm') AS "targetDate", SUM(CNT_USER) as "cnt_user", 
 	SUM(CNT_POST) as "cnt_post", SUM(CNT_WITHDRAWAL_USER) as "cnt_withdrawal_user", SUM(CNT_TRAFFIC) as "cnt_traffic"
-	FROM STATISTIC 
-	GROUP BY extract(month from daily_log) 
-	ORDER BY extract(month from daily_log)
+    from statistic 
+    group by to_char(daily_log,'yy-mm')
+    order by to_char(daily_log,'yy-mm')
 </select>
 
 
@@ -58,9 +58,9 @@
 <![CDATA[
 	SELECT * 
 	FROM(
-		SELECT * 
+		SELECT *
 		FROM BOARD
-		WHERE W_DATE BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
+		WHERE TO_CHAR(W_DATE,'YYYY/MM/DD') BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
 		AND TO_CHAR(SYSDATE,'YYYY/MM/DD')
 		ORDER BY V_CNT DESC)
 	WHERE ROWNUM<=10]]>
@@ -70,9 +70,9 @@
 	 <![CDATA[
 	SELECT * 
 	FROM (
-		SELECT * 
+		SELECT *
 		FROM BOARD
-		WHERE W_DATE BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
+		WHERE TO_CHAR(W_DATE,'YYYY/MM/DD') BETWEEN TO_CHAR(SYSDATE-7,'YYYY/MM/DD') 
 		AND TO_CHAR(SYSDATE,'YYYY/MM/DD')
 		ORDER BY PICK_CNT DESC)
 	WHERE ROWNUM<=10]]>

@@ -16,8 +16,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 /*지은스타일 */
 #customers {
   font-family: Arial, Helvetica, sans-serif;
@@ -58,7 +59,6 @@
    height: 200px;
    color:black;
  	padding:15px 10% 15px 10%;
- 	background-color: antiquewhite;
 }
 
 .plan_mnu_box {
@@ -382,9 +382,10 @@ height: 90%;
    <div class="contentTitle">
       <!-- schTitle -->
       <div><h1><b><c:out value="${schedule[0].SCH_TITLE}"/></b></h1>
+      <hr>
       <!-- schDate -->
-      <h4><b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
-      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></h4></div>
+      <b><fmt:formatDate value="${schedule[0].FROM_DATE}" type="date" dateStyle="full" /> ~ 
+      <fmt:formatDate value="${schedule[0].TO_DATE}" type="date" dateStyle="full" /></b></div>
   <a href='/board/register?schNo=${schedule[0].SCH_NO }' target="schedulelist" class="register_open_btn">
   <div class="sharebtnbox"> <img src="/resources/img/shareboardbtn.png"></div></a>
    </div>
@@ -557,14 +558,6 @@ height: 90%;
 <input type='hidden' id='sch_no' name='sch_no' value="${schedule[0].SCH_NO}">
       <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 
-
-   <div id="remove_modal">
-      <h4>정말 삭제하시겠습니까?</h4>
-      <br>
-
-      <button class="modal_close_btn">취소</button>
-      <button class="remove_btn">삭제</button>
-   </div>
 </body>
 <%@ include file="../../includes/footer.jsp" %>
 <!-- /.col-lg-9 -->
@@ -615,32 +608,6 @@ function myFunction() {
 	   location.href = "/mypage/past?pageNum="
            + $('input[name=pageNum]').val();
    });
-
-   $(".remove_btn").on(
-         "click",
-         function() {
-
-            let schNo = {
-               "schNo" : $('input[name=sch_no]').val()
-            };
-
-            $.ajax({
-               type : 'post',
-               url : '/mypage/deleteSchedule',
-               data : schNo,
-               success : function(data) {
-
-                  alert("목록에서 삭제되었습니다.");
-                  location.href = "/mypage/past?pageNum="
-                        + $('input[name=pageNum]').val();
-               },
-               error : function(xhr) {
-
-                  alert("삭제실패");
-               }
-
-            });
-         });
 
    function modal(id) {
       var zIndex = 9999;
@@ -695,7 +662,50 @@ function myFunction() {
    document.getElementById('sch_remove_btn').addEventListener('click',
          function() {
             // 모달창 띄우기
-            modal('remove_modal');
+           /*  modal('remove_modal'); */
+        	  swal({
+        		   title: "정말 삭제하시겠습니까?",
+        		   text: "일정이 삭제되면 복구할 수 없습니다. ",
+        		   icon: "warning",
+        		   buttons: ["취소","삭제"],
+        		   dangerMode: true,
+        		 })
+        		 .then((willDelete) => {
+        		   if (willDelete) {
+        			   let schNo = {
+        		               "schNo" : $('input[name=sch_no]').val()
+        		            };
+
+        		            $.ajax({
+        		               type : 'post',
+        		               url : '/mypage/deleteSchedule',
+        		               data : schNo,
+        		               success : function(data) {
+
+        		            	   swal("일정이 정상적으로 삭제되었습니다.", {
+        		        		       icon: "success",
+        		        		     }).then((value)=>{
+        		        		    	 location.href = "/mypage/past?pageNum="
+        		                             + $('input[name=pageNum]').val();
+        		        		     });
+        		               },
+        		               error : function(xhr) {
+
+        		            	   swal({
+        		            		   title: "삭제 실패!",
+        		            		   text: "잠시 후 다시 시도해 주세요",
+        		            		   icon: "warning",
+        		            		   button: "확인",
+        		            		 });
+        		               }
+
+        		            });
+        		    
+        		     
+        		   }
+        		 });
+        	   
+        	   
          });
 
    

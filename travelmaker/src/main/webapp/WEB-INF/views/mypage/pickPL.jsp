@@ -21,6 +21,7 @@
 <title>Document</title>
 
 <style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 /* 페이징 */
 .pagination_bar{
 	font-size: 8pt;
@@ -366,16 +367,30 @@
 
 .coverBanner {
    width: 100%;
-   height: 300px;
-   background-image: url("/resources/img/mypagebanner.png");
+   height: 450px;
+    background:linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.9) 1%,
+            rgba(20, 20, 20, 0.1) 40%,
+            rgba(20, 20, 20, 0) 100%
+          ), url("/resources/img/mypagebg4.jpg");
    background-size: cover;
-   text-align: center;
    color: white;
-   padding-top: 100px;
+   padding-top: 200px;
    padding-bottom: 100px;
    font-size: 50px;
+  
 }
-
+.coverBanner b{
+ text-shadow: 4px 2px 10px black;
+ margin-left:10%;
+}
+.coverBanner div{
+ text-shadow: 4px 2px 10px black;
+ margin-left:10%;
+ font-size: 18px;
+ padding-left: 4px;
+}
 .pickNav_bar {
    width: 100%;
    height: 50px;
@@ -417,11 +432,13 @@
 }
 
 .content_tap {
-   width: 100%;
+   width: 90%;
    height: 100px;
    display: flex;
    font-size: 12px;
    justify-content: space-between;
+   margin-left: auto;
+   margin-right:auto;
 }
 
 .tap_box {
@@ -463,7 +480,7 @@
    width: 100%;
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-around;
+   justify-content: space-between;
 }
 
 .card_sch {
@@ -521,7 +538,7 @@
 }
 .sch_title p{
 	margin: 0;
-   	font-size: 6px;
+   	font-size: 11px;
    }
 </style>
 </head>
@@ -529,23 +546,29 @@
 <body>
    <div class="pick_plan_content">
       <div class="coverBanner">
-       <!--   <b>찜한장소</b> -->
+       <b>위시리스트</b>
+         <div>찜한 목록을 확인해보세요</div>
       </div>
       <div class="pickNav_bar">
          <div class="pickNav_mnu">
             <div class="mnu_box active" onclick="location.href='/mypage/pickPL'">
-               <b>찜한장소</b>
+               <b>찜한목록</b>
             </div>
 
-            <div class="mnu_box" onclick="location.href='/mypage/pickSch'">
+            <div class="mnu_box" onclick="location.href='/mypage/upcoming'">
                <b>여행일정</b>
             </div>
          </div>
       </div>
       <div class="content_wrap">
-         <div class="content_tap">
+        <div class="content_tap">
             <div class="tap_box">
-            
+               <div class="sch_tap">
+                  <a href="/mypage/pickPL" style="color: #3099dd;"><b>찜한 장소</b></a>
+               </div>
+               <div class="sch_tap">
+                  <a href="/mypage/pickSch" style="color: black;">찜한 일정</a>
+               </div>
             </div>
             <select id="listSort" style="align-self: center;">
                <option hidden selected disabled></option>
