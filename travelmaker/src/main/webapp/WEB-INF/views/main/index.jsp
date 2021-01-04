@@ -504,6 +504,35 @@ a{text-decoration: none}
    font-size: 15px;
 } */
 /* selectbox */
+.card-contents-2{
+    z-index: 1;
+    display: block;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+}
+
+.card-desc-2{
+	display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
+    margin: 5px;
+    height: auto;
+    font-size: 15px;
+}
+
+.desc_bottom-2{
+	display:flex;
+    font-size : 12px;
+}
+
+.card-Img-2{
+   height: 320px;
+   border-radius: 10px;
+   background-position: center; 
+   background-repeat: no-repeat; 
+   background-size: cover;
+}
 </style>
 
 
@@ -607,11 +636,14 @@ a{text-decoration: none}
 
 
 
-	<div class="boardmsg"><img src="/resources/img/calendar.png" style='width:28px; margin-right:10px;'><b>인기 여행일정</b>
-      <!-- 관리자 게시판리스트 출력 -->
-         <button id="goList" onclick="location.href='/board/list'">더보기</button></div>
-   
-         <div class="boardContents">
+
+        
+        <!-- <div>
+        	<button id="goList" onclick="location.href='/board/list'">더보기</button>
+        </div> -->
+    </div>
+   		
+<%--          <div class="boardContents">
             <div class="gallery">
                <c:forEach items="${adminlist }" var="adminlist">
                   <div class="card-contents">
@@ -648,7 +680,68 @@ a{text-decoration: none}
             </div>
             <!-- 갤러리끝 -->
          </div>
+         <!-- 게시판끝 --> --%>
+         
+         <div>
+		<div style="display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 30px 0 30px;">
+			<div style="font-size:40px;">
+			외로움 달래는 여행
+			</div>
+      <!-- 관리자 게시판리스트 출력 -->
+      		<div style="display: flex;">
+        		<button style="border: none;
+    background-color: white;
+    text-decoration: underline;
+    font-size: 16px;
+    color: #222;"
+        		onclick="location.href='/board/list'">더보기</button>
+        	</div>
+        </div>
+            <div style="display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 270px));
+    grid-gap: 10px;
+    justify-self: center;
+    justify-content: center;">
+               <c:forEach items="${adminlist }" var="adminlist">
+                  <div class="card-contents-2">
+					<c:set var="mem" value="<%=mem %>"/>
+                     <c:set var="coverimg" value="${fn:replace(adminlist.boardImg, '\\\\', '/')}" />
+                     
+                    <c:choose>
+					<c:when test="${mem eq 'null'}">
+                     <a href='/board/view?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                     </c:when>
+     
+                     <c:otherwise>
+                     <a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                     </c:otherwise>
+                     </c:choose>
+                                   
+                     <div class="card-Img-2" style="background-image: url(/resources${coverimg});" >
+                     </div>
+                        </a>
+                        <div class="card-desc-2">
+                           <b style="display: flex;"><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                           <c:out value="${adminlist.boardTitle }" /></a></b>
+                           <div class="desc_bottom-2">
+                              <i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
+                              <i class="fa fa-heart-o" style="margin-left: 3px;"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
+                              <div style="margin-left:3px;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
+                           
+                           </div>
+                           
+                        </div>
+                  </div>
+               </c:forEach>
+
+            </div>
+            <!-- 갤러리끝 -->
+         </div>
          <!-- 게시판끝 -->
+         
       </div>
 </body>
 <%@ include file="../includes/footer.jsp" %>
