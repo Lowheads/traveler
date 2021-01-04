@@ -228,24 +228,37 @@ public class MemberServiceImpl implements MemberService {
 	public void modifyBoardReplyer(String nickname, String replyer) {
 		mapper.modifyBoardReplyer(nickname, replyer);
 	}
+	
+	public boolean isNotModifyNickname(String nickname, MemberVO member) {
+		if(nickname.equals(member.getNickname())) {
+			return true;
+		}
+		return false;
+	}
+
 		
 	@Override
 	@Transactional
-	public boolean isModifyNickname(String nickname, String email, RedirectAttributes rttr) {
-	     
-	   // nickNameResult : 닉네임 있으면 1, 없으면 0
+	public boolean doubleCheckOnesNickname(String nickname, MemberVO member, RedirectAttributes rttr) {
+		
+		if(isNotModifyNickname(nickname, member)) {
+			rttr.addFlashAttribute("msg", "정보가 저장되었습니다.");
+			return true;
+		}
+		
 	   int nicknameResult = hasNickname(nickname);
-	      
+	   
 	   // 중복된 닉네임이면
 	   if(nicknameResult > 0) {
-	   	 rttr.addFlashAttribute("msg", "닉네임이 다른 회원과 중복됩니다.");
-		 rttr.addFlashAttribute("member", getMember(email));
+		   rttr.addFlashAttribute("msg", "닉네임이 다른 회원과 중복됩니다.");
+		   rttr.addFlashAttribute("member", member);
 	     return true;
 	   }
 	    
 	   // 정보가 정상적으로 저장되었습니다.
-	    String changeBeforeNickname = mapper.getMember(email).getNickname(); // 변경 전 닉네임을 저장..
-
+	    String changeBeforeNickname = member.getNickname(); // 변경 전 닉네임을 저장..
+	    String email = member.getEmail();
+	    
 	    modifyNickname(nickname, email); // 닉네임 변경
 		modifyBoardNickname(nickname, getMemNo(email)); // Q&A게시판 작성자를 바뀐 닉네임으로 수정
 		modifyBoardReplyer(nickname, changeBeforeNickname); // 변경 전 닉네임을 전부 바뀐 닉네임으로 수정
@@ -253,6 +266,7 @@ public class MemberServiceImpl implements MemberService {
 		rttr.addFlashAttribute("member", getMember(email));
 		return false;
 	 }
+	
 
 	// 탈퇴 전 유효성 체크
 	@Override
@@ -417,6 +431,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return false;
 	}
+
 
 
 }// end ServiceImpl

@@ -82,6 +82,7 @@ img.ui-datepicker-trigger {
 	font-weight: bold;
     font-size: 17px;
     margin-left: 6%;
+    margin-top: 3px;
 }
 
 .div-birthReg{
@@ -93,7 +94,20 @@ img.ui-datepicker-trigger {
 .div-genderhReg{
 	padding: 5px;
     padding-top: 2px;
-    margin-left: 6%;
+    margin-left: 3%;
+}
+
+.api-reg-wrap{
+	margin-left: 18%;
+	padding-top: 2%;
+}
+
+.api-reg-font{
+	font-weight: bold;
+    font-size: 17px;
+    padding-left: 8%;
+    margin-bottom: 1%;
+    margin-top: 4px;
 }
 </style>
 
@@ -111,14 +125,14 @@ img.ui-datepicker-trigger {
 		<div class="api_reg_head">간편 회원가입</div>
 	
 	<!-- 정보 출력 div  -->
-	<div class="api-main-wrap">
+	<div class="api-reg-wrap">
 
 			
 			<form id="apiRegForm" action="/member/joinMember" method="post">
 			
 					<!-- 이메일 -->
 				<div class="tag-wrap">
-                  <div class="reg-font">이메일</div>
+                  <div class="api-reg-font">이메일</div>
                   	<div class="div-reg"><input type="email" name="email" id="apiEmail" readonly="readonly">
                   </div>
                 </div>
@@ -128,7 +142,7 @@ img.ui-datepicker-trigger {
                   
                   <!-- 닉네임 -->
                	<div class="tag-wrap">
-                  <div class="reg-font">닉네임</div>
+                  <div class="api-reg-font">닉네임</div>
                   <div class="div-reg"><input type="text" name="nickname" id="apiNickname">	</div>
                      <button class="btn" type="button" id="apiNicknameCheck">중복 체크</button>
                   </div>
@@ -140,7 +154,7 @@ img.ui-datepicker-trigger {
                   
                   <!-- 생년월일 -->
                 <div class="tag-wrap">
-                  <div class="reg-fonts" style="margin-left: 6%;">생년월일&nbsp;&nbsp;</div>
+                  <div class="reg-fonts">생년월일&nbsp;&nbsp;</div>
                   <div class="div-birthReg">
                   	<input type="text" name="birth" id="apiBirth" placeholder="누르면 달력이 나와요!">
                   </div>
@@ -148,7 +162,7 @@ img.ui-datepicker-trigger {
                   
                   <!-- 성별 -->
                 <div class="tag-wrap">
-                  <div class="reg-font">성별&nbsp;&nbsp;</div>
+                  <div style="font-weight: bold; font-size: 17px; margin-left: 11%;">성별&nbsp;&nbsp;</div>
                   <div class="div-genderhReg">
                      <input type="radio" name="gender" id="api_man_gender" value="M" readonly="readonly">남 
                      <input type="radio" name="gender" id="api_woman_gender" value="F" readonly="readonly">여

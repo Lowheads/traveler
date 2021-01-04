@@ -41,7 +41,7 @@
 			 <div class="info-content">
 			 	<div class="content-name">닉네임</div>
 				<div class="content-proper">
-					<form id="saveForm" action="/member/modifyNickname" method="post">
+					<form id="saveForm" action="/member/saveMember" method="post">
 						<input type="text" id="apiInfoNickname" name="nickname" value="${member.nickname }">
 						<input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>">
 						<button type="button" class="dupl-btn" id="apiInfoNicknameCheck">중복 체크</button>
@@ -262,8 +262,6 @@
 
 		$("#sendEmailBtn").click(function() {
 			
-			swal("", "인증메일 발송은 5초정도 소요됩니다.", "warning");
-
 					let email = $("#deleteEmail").val();  // 내 이메일
 					let certNum = Math.floor(Math.random()*99999999); // 메일로 보낼 인증번호 생성(local변수)
 					let sendDate = {'email' : email, 'certNum' : certNum}
