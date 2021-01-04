@@ -107,7 +107,7 @@ li{
 
 </style>
 <script>
-	const ss = <%=session.getAttribute("myGrade")%>
+	const ss = '<%=session.getAttribute("myGrade")%>';
 	
 	if(ss!="MG002"){
 		location.href="/main/index"

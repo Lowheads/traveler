@@ -152,7 +152,7 @@ String paydate = request.getParameter("pay_date");
 
         <div class="bgwrapper">
 
-            <span style='font-size:60px;'>&#128184;</span>
+            <span style='font-size:60px;'>일정 선택</span>
 
             <!-- 테이블 -->
             <div class="container-2">

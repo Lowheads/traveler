@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<div class="main">
 <%@include file="../includes/header.jsp"%>
 
 <style>
@@ -102,7 +103,8 @@ h3 {
 .budget-progress {
 	grid-column: 3/4; 
 	grid-row: 2; 
-	margin-top:65px;
+	margin-bottom:100px;
+	/* margin-top:65px; */
 }
 
 .budget-progress-box-2 {
@@ -116,7 +118,7 @@ h3 {
 .chart-wrapper {
 	/* height: 41rem; */
 	width: 336px;
-	padding: 2em 2.8em 2.9em 1.6em;
+	padding: 2em 2.8em 2.9em 1.9em;
 	border: 1px solid #d2d2d2;
 	border-radius: 1em;
 	box-shadow: /*0 1px 2px rgba(0, 0, 0, 0.07), */
@@ -125,6 +127,7 @@ h3 {
 	/*0 16px 32px rgba(0, 0, 0, 0.7);*/
 	/*0 32px 64px rgba(0, 0, 0, 0.07);*/
 	background-color: #fff;
+	/* margin-top:10px; */
 }
 
 p {
@@ -484,7 +487,7 @@ label {
     }
 </style>
 
-<div class="main">
+
 	<div class="wrapper"
 		style="display: grid; grid-template-columns: 15% auto auto 15%; grid-template-rows: 20px auto; grid-gap: 1em; justify-items: stretch; justify-content: center;">
 
@@ -499,11 +502,7 @@ label {
 						<h3>모든 지출 내역</h3>
 					</div>
 					<div style="display: flex; align-items: center;">
-					<div>
-							<a href='/buddt/chart'>
-								예산
-							</a>
-						</div>
+
 						<div>
 							<button class="add-expense-button" type="button" id="rg-button"
 								style="outline: none;">
@@ -573,7 +572,9 @@ label {
 
 
 		<div class="budget-progress">
-
+			<div style="display:flex; justify-content:flex-end; margin-right:14px; align-items:center; height:41px;">
+				<a style="text-decoration:underline; font-size:15px;" href='/buddt/chart'>예산 설정</a>
+			</div>	
 			<div class="chart-wrapper"
 				style="display: flex; flex-direction: column; position: sticky; top: 20px;">
 				<div>
@@ -709,8 +710,8 @@ label {
 								<label>카테고리</label>
 							</div>
 							<div>
-								<select class="use-select category" name="budcate" onChange="schnocheck()">
-
+								<select class="use-select category" name="budcate" onChange="schnocheck()" required>
+									<option value=''>선택 &#9662;</option>
 									<option value="음식점">음식점</option>
 									<option value="카페">카페</option>
 									<option value="숙박">숙박</option>
@@ -864,7 +865,7 @@ label {
 		</div>
 	</div>
 	
-</div>
+
 <!-- wrapper end -->
 
 <script
@@ -1073,3 +1074,4 @@ function setComma(n) {
 
 </script>
 <%@include file="../includes/footer.jsp"%>
+</div>
