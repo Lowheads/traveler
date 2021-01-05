@@ -820,7 +820,7 @@ body > div.mainContainer > div.right.menu {
       var markers =[];
       var marker;
       var overlay;
-      var recMarks = [];
+      var posArrSet = [];
       var markArr = [];
       var polyArr = [];
 	  var distArr = [];
@@ -1473,16 +1473,6 @@ body > div.mainContainer > div.right.menu {
      		   content.setAttribute("draggable","false");
      		   
      	  	   content.addEventListener("click", getInfo);
-     	  	  /*  content.addEventListener("click", () => {
-     	  		Swal.fire({
-   				   title: latlngData[iidx].dataset["plc_title"],
-   				   text: latlngData[iidx].dataset["addressDt"],
-   				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
-   				   imageWidth: 400,
-   				   imageHeight: 200,
-   				   imageAlt: 'Custom image',
-   				 })
-     	  	   }); */
      	  	   content.addEventListener("mouseenter", (event) => {
      	  		   let currTarget = event.currentTarget;
      	  		   currTarget.setAttribute("src", hcon);
@@ -1508,13 +1498,10 @@ body > div.mainContainer > div.right.menu {
                     content: makeContent(i),
                     position: pos
                 });
-        		
      			mark.setMap(inmap);
-     			
      			markCon.push(mark);
-     			markArr.push(markCon);
-     			
         	   }
+     			markArr.push(markCon);
         	   let plen = posArr.length-1;
     		   for (let i = 0; i < plen; i++) {
     			   let polyline = new kakao.maps.Polyline({
@@ -1530,8 +1517,9 @@ body > div.mainContainer > div.right.menu {
     			   let dist = (polyline.getLength()/1000).toFixed("2")+"km";
 				   distArr.push(dist);  
     			   polyCon.push(polyline);
-    			   polyArr.push(polyCon);
     			}
+    			   polyArr.push(polyCon);
+    			   posArrSet.push(posArr);
         	   
            }
     	   
@@ -1597,13 +1585,10 @@ body > div.mainContainer > div.right.menu {
                     content: makeContent(i),
                     position: pos
                 });
-        		
      			mark.setMap(inmap);
-     			
      			markCon.push(mark);
-     			markArr.push(markCon);
-     			
         	   }
+     			markArr.push(markCon);
         	   
         	   let plen = posArr.length-1;
     		   for (let i = 0; i < plen; i++) {
@@ -1618,8 +1603,8 @@ body > div.mainContainer > div.right.menu {
     	    		    
     	    		})
     			   polyCon.push(polyline);
-    			   polyArr.push(polyCon);
     			}
+    			   polyArr.push(polyCon);
         	   
            }
     	   draw(idx);
