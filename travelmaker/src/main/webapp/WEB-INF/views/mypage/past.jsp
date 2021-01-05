@@ -137,7 +137,7 @@ body {
 }
 
 .content_tap {
-  width: 90%;
+  width: 80%;
    height: 100px;
    display: flex;
    font-size: 12px;
@@ -155,7 +155,7 @@ body {
 
 .contents {
    padding: 20px;
-   width: 100%;
+   width: 1050px;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
@@ -225,6 +225,8 @@ body {
                   <a href="/mypage/past" style="color: #3099dd;"><b>지나간 일정</b></a>
                </div>
          </div>
+         
+         <div style="display: flex;justify-content: center;">
          <div class="contents">
             <!-- 카드게시물 -->
             <c:forEach items="${list }" var="sch">
@@ -249,6 +251,7 @@ body {
             </div>
          </a>
             </c:forEach>
+         </div>
          </div>
          
            <div style="text-align: center;">

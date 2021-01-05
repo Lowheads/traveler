@@ -228,7 +228,7 @@
       }
 
       .content_tap {
-         width: 90%;
+         width: 80%;
    height: 100px;
    display: flex;
    font-size: 12px;
@@ -251,7 +251,7 @@
 
       .contents {
          padding: 20px;
-         width: 100%;
+         width: 1050px;
          display:flex;
          flex-wrap: wrap;
          justify-content: space-between;
@@ -352,7 +352,7 @@
             </select>
          </div>
 
-
+		<div style="display: flex;justify-content: center;">
          <div class="contents">
             <!-- 카드게시물 -->
             <c:forEach items="${list }" var="sch">
@@ -382,6 +382,7 @@
                   </div>
                </div>
             </c:forEach>
+         </div>
          </div>
       </div>
    <div style="text-align: center;">

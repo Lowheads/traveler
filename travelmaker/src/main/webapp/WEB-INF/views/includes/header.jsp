@@ -490,7 +490,7 @@ body {
 	border-radius: .5em;
 	width: 320px;
     height: 45px;
-    background-color: #ff8b3d;
+    background-color: white;
     border: 1px solid #ddd;
     color:#383838;
     cursor:pointer;
@@ -500,9 +500,9 @@ body {
 }
 
 .not-my-button-login:hover {
-	/* background-color:#ff9248; */
-	/* box-shadow: 0 1px 0 1px rgba(0, 0, 0, .15); */
-	/* background-color:#f1f1f1; */
+	color:white;
+	background-color:rgba(59, 153, 252, .7);
+	font-weight:900;
 }
 
 .login-input {
@@ -995,7 +995,7 @@ body {
    border: 1px solid #ddd;
     width: 475px;
     height: 45px;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     border-radius: .5em;
     color: #383838;
     font-weight: 600;
@@ -1014,7 +1014,7 @@ body {
 
     <div class="header__logo">
         <a href="/main/index">
-            <img src="/resources/icons/tmlogo.png" width="100px" alt="">
+            <img class="tmlogo" src="/resources/icons/tmlogo.png" width="100px" alt="">
         </a>
     </div>
 

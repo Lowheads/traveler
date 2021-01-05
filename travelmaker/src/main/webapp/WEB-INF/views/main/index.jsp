@@ -153,7 +153,7 @@ position: absolute;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     border-color: transparent;
     color: #fff;
 }
@@ -174,7 +174,7 @@ position: absolute;
 	width: 130px;
     height: 35px;
     text-align: center;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     color: white;
     border: 1px solid white;
 }
@@ -304,7 +304,7 @@ body{
 a{text-decoration: none}
 .ct_body{
    padding: 30px;
-   background-image: url('/resources/img/index1.jpg');
+   background-image: url('/resources/img/road.jpg');
    height: 900px;
    background-repeat: no-repeat;
      background-size: cover;
@@ -393,7 +393,7 @@ a{text-decoration: none}
 }
 .region:hover{
    color: white;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
 }
 .datepickerBox{
    position:absolute;
@@ -407,7 +407,7 @@ a{text-decoration: none}
    display:none;
 }
 #goNext{
-   /* background-color: #ff8b3d; */
+   /* background-color: rgba(59, 153, 252, .7); */
    background-color: white;
    border-radius: 50%;
    height: 50px;
@@ -440,15 +440,23 @@ a{text-decoration: none}
 
 
 #popup_open_btn{
-   font-size:14px;
+   font-size:17px;
    margin-right: 1%;
    margin-bottom: 50px;
    background-color:white;
    border: 1px solid #ddd;
    border-radius: 8px;
-   padding: 4px 15px 4px 15px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   padding: 5px 15px 5px 15px;
+/*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ */   cursor:pointer;
+   transition: box-shadow 0.2s ease;
 }
+
+#popup_open_btn:hover{
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+   
+}
+
 #goList{
   float:right;
    font-size:15px;
@@ -460,9 +468,9 @@ a{text-decoration: none}
    padding: 5px 20px 5px 20px;
 }
 #goList:hover{
-    background-color:#ff8b3d;
+    background-color:rgba(59, 153, 252, .7);
    color:white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid rgba(59, 153, 252, .7);
    border-radius: 14px;
 }
 .boardContents{
@@ -544,7 +552,7 @@ a{text-decoration: none}
 
 .card-Img-2{
    height:300px;
-   width:320;
+   width:300px;
    border-radius: 8px;
    background-position: center; 
    background-repeat: no-repeat; 
@@ -561,10 +569,12 @@ a{text-decoration: none}
 }
 
 .header__nav__button-greyHover {
+	color:white;
 	font-family:'Nanum Gothic', sans-serif;
-	font-size:15px;
+	font-size:19px;
     background: transparent;
     transition: box-shadow 0.2s ease;
+    text-shadow: 2px 2px #222;
 }
 
 .header__nav__button-greyHover:hover {
@@ -572,6 +582,12 @@ a{text-decoration: none}
     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
 }
 
+.tmlogo {
+	width:155px;
+	margin-top:10px;
+	
+	/* background-image:url('/resources/icons/tmlogo-bl2ue.png'); */
+}
 </style>
 
 
@@ -583,24 +599,26 @@ a{text-decoration: none}
          
          <div class="mainMsg">
          <div style="padding:0; line-height: normal;">
-         <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
-           text-shadow: 2px 2px black;">
+         <p style="margin: 0;padding: 0;font-size: 59px;
+         color: white;font-weight: 900; text-shadow: 2px 2px #222;
+           ">
          이제, 여행은
          </p>
          </div>
 		<div style="padding:0; line-height: normal;">
-        <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
-           text-shadow: 2px 2px black;">
+        <p style="margin: 0;padding: 0;font-size: 59px;
+        color: white;font-weight: 900; text-shadow: 2px 2px #222;
+           "> 
          가까운 곳에서
          </p>
          </div>
          
-         <button id="popup_open_btn" style="margin-top:20px;">
+         <button id="popup_open_btn" style="margin-top:20px;font-weight:600;">
          여행 성향 검사
          </button>
          </div> 
   
-  <div style="display: flex;
+  <div style="display: flex; margin-left:50px;
     justify-content: center; margin-top: 20px;">
          <div id="mainNav">
          
@@ -733,28 +751,30 @@ a{text-decoration: none}
          <!-- 게시판끝 --> --%>
          
          <div style="display:flex; flex-direction:column; margin: 0 50px 0 50px;">
+         
 		<div style="display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 1em 1em 1em;
+    padding: 0 1em 1em 2.5em;
     ">
-			<div style="font-size:30px; font-family:'Nanum Gothic', sans-serif; font-weight:800;">
+			<div style="font-size:30px; font-family:'Nanum Gothic', sans-serif; font-weight:800; white-space:nowrap;">
 				이번 주 신규 등록 테마
 			</div>
-      <!-- 관리자 게시판리스트 출력 -->
+      
       		<div style="display: flex;">
         		<button style="border: none;
     background-color: white;
     text-decoration: underline;
-    font-size: 16px;
+    font-size: 15px;
     color: #222; cursor:pointer; font-family:'Nanum Gothic', sans-serif;"
         		onclick="location.href='/board/list'">더보기</button>
         	</div>
         </div>
         
-            <div style="display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 330px));
-    
+        	<!-- 관리자 게시판리스트 출력 -->
+        	<div style="display:flex;flex-direction:column;justify-content:center;">
+            <div style="display: grid; grid-gap:5px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     justify-self: center;
     justify-content: space-evenly;">
     
@@ -803,10 +823,10 @@ a{text-decoration: none}
                </c:forEach>
 
             </div>
+            </div>
             <!-- 갤러리끝 -->
          </div>
          <!-- 게시판끝 -->
-         
       
 </body>
 <%@ include file="../includes/footer.jsp" %>
@@ -815,7 +835,9 @@ a{text-decoration: none}
 <script type="text/javascript">
    var startDate;
    var endDate;
+   	$(".tmlogo").attr("src","/resources/icons/logo-sky.png")
    $(function() {
+	   
       $('.dateSelectBox').daterangepicker({
          startDate : moment(),
          endDate : moment(),
@@ -1104,7 +1126,7 @@ a{text-decoration: none}
         data : sendData,
         success : function(data) {
            
-               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:#ff8b3d;color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
+               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:rgba(59, 153, 252, .7);color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
                let divTag = document.createElement("div");
                divTag.className = 'yourList'
                divTag.innerHTML = "<h5 style='font-family:Spoqa Han Sans Neo,sans-serif;text-align:center;'>당신에게 추천하는 장소</h5>";

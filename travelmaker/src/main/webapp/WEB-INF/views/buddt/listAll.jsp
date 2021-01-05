@@ -405,7 +405,7 @@ option {
 
 .btn-3 {
 	color: white;
-	background-color: #ff812f;
+	background-color: #2196f3;
 	border: 1px solid #ddd;
 }
 
@@ -651,7 +651,7 @@ label {
 			</div>
 
 			<div>
-				<form role="form" action="/buddt/register" method="post">
+				<form role="form" action="/buddt/register" method="post" style="margin-bottom:0px;">
 					<div class="rg-form">
 						<div class="rg-form-group">
 							<div style="width:100%; display:flex; flex-direction:row; 
@@ -751,7 +751,7 @@ label {
 
 			<div>
 				<form role="form" id="modiremoveform" action="/buddt/modify"
-					method="post">
+					style="margin-bottom:0px;"method="post">
 
 					<div class="rg-form">
 						<div class="rg-form-group">
