@@ -30,6 +30,9 @@
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
+* {
+	font-family:'Nanum Gothic', sans-serif;
+}
 button{
 	outline: 0;
 }
