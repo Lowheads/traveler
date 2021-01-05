@@ -18,9 +18,12 @@
    <link href="/resources/css/home.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
   var dnd = $.noConflict(true);
   </script>
+  <title>여정 :: 개인 맞춤형 여행플래너</title>
   <style>
 
 * {
@@ -402,7 +405,6 @@ body > div.mainContainer > div.right.menu {
 	flex-direction:column;
 	height:100%;
 	display:flex;
-	overflow-x:hidden;
 }
 .data-range-picker {
 	text-align: center;
@@ -694,16 +696,18 @@ body > div.mainContainer > div.right.menu {
 	color:white;    
 }
 /* daterangepicker 디자인 끝 */
+
 /* alert */
 .swal2-button, .swal-button--confrim{
    background-color: #ff8b3d;
 }
-
 .swal2-button:not([disabled]):hover{background-color:#ff8b3d}.swal2-button:active{background-color:#70bce0}
 
 .swal2-confirm.swal2-styled {
 	background-color: #ff8b3d;
 }
+/* alert */
+
   </style>
 </head>
 <body>
@@ -810,8 +814,7 @@ body > div.mainContainer > div.right.menu {
    <script type="text/javascript" src="/resources/js/place.js"></script>
    <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9eb973825ac1960ebb20d660fdf86341&libraries=services"></script>
-   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+   
    <script type="text/javascript">
    
       var markers =[];
@@ -1188,6 +1191,24 @@ body > div.mainContainer > div.right.menu {
            
         };
         
+		function setArrNull() {
+			const setConNull = (pmarkCon) => {
+				for (let e of pmarkCon) {
+					e.setMap(null);
+				}
+			}
+			for (let eArr of polyArr) {
+				setConNull(eArr);
+			}
+			for (let eArr of markArr) {
+				setConNull(eArr);
+			}
+			markArr = [];
+		    polyArr = [];
+			distArr = [];
+			
+		}
+		
        function initSch(){
     	   let zIndex = 99;
     	   let modal = document.getElementById('show-schedule');
@@ -1420,462 +1441,462 @@ body > div.mainContainer > div.right.menu {
                  mapContainer.style.height = '100%';
                  inmap.relayout();
          drawLineAll(); // 수정후 마지막에 라인그리기
-         }; 
+         };   
          
-         var markers =[];
-         var marker;
-         var overlay;
-         var drawMarks = [];
-         var markArr = [];
-         var polyArr = [];
-         var distArr = [];
-         var resultset = [];
-         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-             mapOption = {
-                center : new kakao.maps.LatLng(33.529252,126.589699), // 지도의 중심좌표
-                level : 8
-             // 지도의 확대 레벨
-             };
-         
-            var map = new kakao.maps.Map(mapContainer,
-                      mapOption); // 지도를 생성합니다
-                      mapContainer.style.width = '100%';
-                      mapContainer.style.height = '100%';
-                      map.relayout();
-   		function setArrNull() {
-   			const setConNull = (pmarkCon) => {
-   				for (let e of pmarkCon) {
-   					e.setMap(null);
-   				}
-   			}
-   			for (let eArr of polyArr) {
-   				setConNull(eArr);
-   			}
-   			for (let eArr of markArr) {
-   				setConNull(eArr);
-   			}
-   			markArr = [];
-   		    polyArr = [];
-   			
-   		}
-            
-   		function drawLineAll(event) {
-     	   distArr = [];
-     	   let latlngList = document.getElementsByClassName("daily-place-dt");
-     	   let len = latlngList.length;
-     	   const draw = (idx) => {
-         	   
-         	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
-     		   let posArr = [];
-     		   let markCon = [];
-     		   let polyCon = [];
-         	   let latlngList = document.getElementsByClassName("daily-place-dt");
-     		   let latlngData = latlngList[idx].children
-     		   let leng = latlngData.length||0;
-      	   
-      	  	   const makeContent = (iidx) => {
-      	  		const getInfo = () => {
-     	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
-     	  		      let URL = "https://place.map.kakao.com/"+placeNo;
-     	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-     	  		}
-      	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A"; 
-      	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-      	  	   
-      		   let content = document.createElement("img");
-      		   content.setAttribute("class", "marker-img");
-      		   content.setAttribute("src", con);
-      		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
-      		   content.setAttribute("draggable","false");
-      		   
-      	  	   /* content.addEventListener("click", getInfo); */
-      	  	   content.addEventListener("click", () => {
-      	  		Swal.fire({
-    				   title: latlngData[iidx].dataset["plc_title"],
-    				   text: latlngData[iidx].dataset["addressDt"],
-    				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
-    				   imageWidth: 400,
-    				   imageHeight: 200,
-    				   imageAlt: 'Custom image',
-    				 })
-      	  	   });
-      	  	   content.addEventListener("mouseenter", (event) => {
-      	  		   let currTarget = event.currentTarget;
-      	  		   currTarget.setAttribute("src", hcon);
-      	  	   });
-      	  	   content.addEventListener("mouseleave", (event) => {
-      	  		   let currTarget = event.currentTarget;
-      	  		   currTarget.setAttribute("src", con);
-      	  	   });
-      	  	   return content;
-      	  	   }
-      	  	   
-      	  	   let hovContent = document.createElement("div");
-      	  	   let hovul = document.createElement("ul");
-      	  	   let hovli = document.createElement("li");
- 			   /* img.src(currentTarget.dataset["img"]); */
- 			  
-      	  	   
-         	   for (let i = 0; i < leng; i++) {
-         		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
-         		posArr.push(pos);
-         		let mark = new kakao.maps.CustomOverlay({
-         			clickable: true,
-                     content: makeContent(i),
-                     position: pos
-                 });
-         		
-      			mark.setMap(inmap);
-      			
-      			markCon.push(mark);
-      			markArr.push(markCon);
-      			
-         	   }
-         	   let plen = posArr.length-1;
-     		   for (let i = 0; i < plen; i++) {
-     			   let polyline = new kakao.maps.Polyline({
-     	    		    map: inmap,
-     	    		    path:[posArr[i],posArr[i+1]],
-     	    		    endArrow: true,
-     	    		    strokeWeight: 3,
-     	    		    strokeColor: "#"+colors[idx],
-     	    		    strokeOpacity: 1,
-     	    		    strokeStyle: 'solid'
-     	    		    
-     	    		})
-     			   let dist = (polyline.getLength()/1000).toFixed("2")+"km";
- 				   distArr.push(dist);  
-     			   polyCon.push(polyline);
-     			   polyArr.push(polyCon);
-     			}
-         	   
-            }
+       function drawLineAll(event) {
+    	   distArr = [];
+    	   let latlngList = document.getElementsByClassName("daily-place-dt");
+    	   let len = latlngList.length;
+    	   const draw = (idx) => {
+        	   
+        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
+    		   let posArr = [];
+    		   let markCon = [];
+    		   let polyCon = [];
+        	   let latlngList = document.getElementsByClassName("daily-place-dt");
+    		   let latlngData = latlngList[idx].children
+    		   let leng = latlngData.length||0;
      	   
-     	   
-     	   for (let idx = 0; idx < len; idx++) {
-     		   draw(idx);
-     		   }
-        }
-        
-        function drawLine(event) {
-     	   let idx = $(this).index()-1;
-     	   
- 		   const draw = (idx) => {
-         	   
-         	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
-     		   let posArr = [];
-     		   let markCon = [];
-     		   let polyCon = [];
-         	   let latlngList = document.getElementsByClassName("daily-place-dt");
-     		   let latlngData = latlngList[idx].children
-     		   let leng = latlngData.length||0;
-      	   
-      	  	   const makeContent = (iidx) => {
-      	  		const getInfo = () => {
-     	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
-     	  		      let URL = "https://place.map.kakao.com/"+placeNo;
-     	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-     	  		}
-      	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-      	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
-      		   let content = document.createElement("img");
-      		   content.setAttribute("class", "marker-img");
-      		   content.setAttribute("src", con);
-      		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
-      		   content.setAttribute("draggable","false");
-      	  	   content.addEventListener("click", getInfo);
-      	  	   content.addEventListener("mouseenter", (event) => {
-      	  		   let currTarget = event.currentTarget;
-      	  		   currTarget.setAttribute("src", hcon);
-      	  	   });
-      	  	   content.addEventListener("mouseleave", (event) => {
-      	  		   let currTarget = event.currentTarget;
-      	  		   currTarget.setAttribute("src", con);
-      	  	   });
-      	  	   return content;
-      	  	   }
+     	  	   const makeContent = (iidx) => {
+     	  		const getInfo = () => {
+    	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
+    	  		      let URL = "https://place.map.kakao.com/"+placeNo;
+    	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+    	  		}
+     	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A"; 
+     	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+     	  	   
+     		   let content = document.createElement("img");
+     		   content.setAttribute("class", "marker-img");
+     		   content.setAttribute("src", con);
+     		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
+     		   content.setAttribute("draggable","false");
      		   
-         	   for (let i = 0; i < leng; i++) {
-         		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
-         		posArr.push(pos);
-         		let mark = new kakao.maps.CustomOverlay({
-         			clickable: true,
-                     content: makeContent(i),
-                     position: pos
-                 });
-         		
-      			mark.setMap(inmap);
-      			
-      			markCon.push(mark);
-      			markArr.push(markCon);
-      			
-         	   }
-         	   
-         	   let plen = posArr.length-1;
-     		   for (let i = 0; i < plen; i++) {
-     			   let polyline = new kakao.maps.Polyline({
-     	    		    map: inmap,
-     	    		    path:posArr,
-     	    		    endArrow: true,
-     	    		    strokeWeight: 3,
-     	    		    strokeColor: "#"+colors[idx],
-     	    		    strokeOpacity: 1,
-     	    		    strokeStyle: 'solid'
-     	    		    
-     	    		})
-     			   polyCon.push(polyline);
-     			   polyArr.push(polyCon);
-     			}
-         	   
-            }
-     	   draw(idx);
-        }
+     	  	   content.addEventListener("click", getInfo);
+     	  	  /*  content.addEventListener("click", () => {
+     	  		Swal.fire({
+   				   title: latlngData[iidx].dataset["plc_title"],
+   				   text: latlngData[iidx].dataset["addressDt"],
+   				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
+   				   imageWidth: 400,
+   				   imageHeight: 200,
+   				   imageAlt: 'Custom image',
+   				 })
+     	  	   }); */
+     	  	   content.addEventListener("mouseenter", (event) => {
+     	  		   let currTarget = event.currentTarget;
+     	  		   currTarget.setAttribute("src", hcon);
+     	  	   });
+     	  	   content.addEventListener("mouseleave", (event) => {
+     	  		   let currTarget = event.currentTarget;
+     	  		   currTarget.setAttribute("src", con);
+     	  	   });
+     	  	   return content;
+     	  	   }
+     	  	   
+     	  	   let hovContent = document.createElement("div");
+     	  	   let hovul = document.createElement("ul");
+     	  	   let hovli = document.createElement("li");
+			   /* img.src(currentTarget.dataset["img"]); */
+			  
+     	  	   
+        	   for (let i = 0; i < leng; i++) {
+        		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
+        		posArr.push(pos);
+        		let mark = new kakao.maps.CustomOverlay({
+        			clickable: true,
+                    content: makeContent(i),
+                    position: pos
+                });
+        		
+     			mark.setMap(inmap);
+     			
+     			markCon.push(mark);
+     			markArr.push(markCon);
+     			
+        	   }
+        	   let plen = posArr.length-1;
+    		   for (let i = 0; i < plen; i++) {
+    			   let polyline = new kakao.maps.Polyline({
+    	    		    map: inmap,
+    	    		    path:[posArr[i],posArr[i+1]],
+    	    		    endArrow: true,
+    	    		    strokeWeight: 3,
+    	    		    strokeColor: "#"+colors[idx],
+    	    		    strokeOpacity: 1,
+    	    		    strokeStyle: 'solid'
+    	    		    
+    	    		})
+    			   let dist = (polyline.getLength()/1000).toFixed("2")+"km";
+				   distArr.push(dist);  
+    			   polyCon.push(polyline);
+    			   polyArr.push(polyCon);
+    			}
+        	   
+           }
+    	   
+    	   
+    	   for (let idx = 0; idx < len; idx++) {
+    		   draw(idx);
+    		   }
+       }
+       
+       function drawLine(event) {
+    	   let idx = $(this).index()-1;
+    	   
+		   const draw = (idx) => {
+        	   
+        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
+    		   let posArr = [];
+    		   let markCon = [];
+    		   let polyCon = [];
+        	   let latlngList = document.getElementsByClassName("daily-place-dt");
+    		   let latlngData = latlngList[idx].children
+    		   let leng = latlngData.length||0;
+     	   
+     	  	   const makeContent = (iidx) => {
+     	  		const getInfo = () => {
+    	 			  let placeNo = latlngData[iidx].dataset["plcNo"]
+    	  		      let URL = "https://place.map.kakao.com/"+placeNo;
+    	                window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+    	  		}
+     	  	   let con = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23"+ colors[idx] +"%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23fff%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23fff%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+     	  	   let hcon = "data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%3Csvg%20width%3D%2240px%22%20height%3D%2240px%22%20version%3D%221.1%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20id%3D%22a%22%20d%3D%22m9.0828%2027.112c-5.3063-1.9908-9.0828-7.1105-9.0828-13.112%200-7.732%206.268-14%2014-14s14%206.268%2014%2014c0%206.0017-3.7765%2011.121-9.0828%2013.112l-4.0772%203.0579c-0.49778%200.37333-1.1822%200.37333-1.68%200l-4.0772-3.0579z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cfilter%20id%3D%22b%22%20x%3D%22-21.4%25%22%20y%3D%22-19.7%25%22%20width%3D%22142.9%25%22%20height%3D%22139.4%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeOffset%20dx%3D%220%22%20dy%3D%220%22%20in%3D%22SourceAlpha%22%20result%3D%22shadowOffsetOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22shadowOffsetOuter1%22%20result%3D%22shadowBlurOuter1%22%20stdDeviation%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeComposite%20in%3D%22shadowBlurOuter1%22%20in2%3D%22SourceAlpha%22%20operator%3D%22out%22%20result%3D%22shadowBlurOuter1%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CfeColorMatrix%20in%3D%22shadowBlurOuter1%22%20values%3D%220%200%200%200%200%20%20%200%200%200%200%200%20%20%200%200%200%200%200%20%200%200%200%200.3%200%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffilter%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(6%205)%22%20fill-rule%3D%22nonzero%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cuse%20fill%3D%22black%22%20filter%3D%22url(%23b)%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22m9.4341%2026.176%200.13412%200.050321%204.1918%203.1438c0.14222%200.10667%200.33778%200.10667%200.48%200l4.1918-3.1438%200.13412-0.050321c5.0317-1.8878%208.4341-6.7117%208.4341-12.176%200-7.1797-5.8203-13-13-13-7.1797%200-13%205.8203-13%2013%200%205.4642%203.4024%2010.288%208.4341%2012.176z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22%23"+ colors[idx] +"%22%20stroke-linejoin%3D%22square%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2220px%22%20y%3D%2224px%22%20fill%3D%22%23"+ colors[idx] +"%22%20font-family%3D%22'Open%20Sans'%2CArial%2C'Helvetica%20Neue'%2Csans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%3E"+(iidx+1)+"%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A";
+     		   let content = document.createElement("img");
+     		   content.setAttribute("class", "marker-img");
+     		   content.setAttribute("src", con);
+     		   content.setAttribute("style", "position: absolute; left: 0px; top: 0px; user-select: none; width: 40px; height: 40px; border: 0px; padding: 0px; margin: 0px; max-width: none; opacity: 1; transform: translate(-50%,-90%);");
+     		   content.setAttribute("draggable","false");
+     	  	   content.addEventListener("click", getInfo);
+     	  	   /* content.addEventListener("click", () => {
+     	  	   Swal.fire({
+   				   title: latlngData[iidx].dataset["plc_title"],
+   				   text: latlngData[iidx].dataset["addressDt"],
+   				   imageUrl: latlngData[iidx].querySelector(".img-wrap-div>img").getAttribute("src"),
+   				   imageWidth: 400,
+   				   imageHeight: 200,
+   				   imageAlt: 'Custom image',
+   				 })
+     	  	   }); */
+     	  	   content.addEventListener("mouseenter", (event) => {
+     	  		   let currTarget = event.currentTarget;
+     	  		   currTarget.setAttribute("src", hcon);
+     	  	   });
+     	  	   content.addEventListener("mouseleave", (event) => {
+     	  		   let currTarget = event.currentTarget;
+     	  		   currTarget.setAttribute("src", con);
+     	  	   });
+     	  	   return content;
+     	  	   }
+    		   
+        	   for (let i = 0; i < leng; i++) {
+        		let pos = new kakao.maps.LatLng(latlngData[i].dataset["lat"],latlngData[i].dataset["lng"]);
+        		posArr.push(pos);
+        		let mark = new kakao.maps.CustomOverlay({
+        			clickable: true,
+                    content: makeContent(i),
+                    position: pos
+                });
+        		
+     			mark.setMap(inmap);
+     			
+     			markCon.push(mark);
+     			markArr.push(markCon);
+     			
+        	   }
+        	   
+        	   let plen = posArr.length-1;
+    		   for (let i = 0; i < plen; i++) {
+    			   let polyline = new kakao.maps.Polyline({
+    	    		    map: inmap,
+    	    		    path:posArr,
+    	    		    endArrow: true,
+    	    		    strokeWeight: 3,
+    	    		    strokeColor: "#"+colors[idx],
+    	    		    strokeOpacity: 1,
+    	    		    strokeStyle: 'solid'
+    	    		    
+    	    		})
+    			   polyCon.push(polyline);
+    			   polyArr.push(polyCon);
+    			}
+        	   
+           }
+    	   draw(idx);
+       }
        
        function searchAction(event) {
-         let placeValue = $("#search-value").val();
-         if(placeValue==""){
-            Swal.fire({icon: 'error',text: "검색어를 입력해주세요"});
-            return;
-         }
-         let placeList = $(".right-place-list");
-         let pageNum = event.currentTarget.dataset["num"]||1;
-         let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
-         
-         let leftPlace = document.getElementsByClassName("selected-place");
-         let index = getActiveDay();
-         let leftPlaceList = document.getElementsByClassName("daily-wrap-div");
-         let activePlaceList = leftPlaceList[index].children;
-         placeList.empty();
-         let tmplist = [];
-         
-         placeService.getList({
-        	title:placeValue,
-            regionNo:regionNo,
-            pageNum:pageNum
-            },
-            (map) => {
-                 let list = map["list"];
-                 let pageMaker = map["pageMaker"];
-                 let len = list.length||0;
-                 let leng = activePlaceList.length||0;
-                  
-                  for (let i= 0; i<len-leng; i++) {
-                     for (let j = 0; j < leng; j++) {
-                           if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
-                              list.splice(i,1);
-                        }
-                     }
-                  }
-                  
-                  const pagingWithpageMaker = (pageMaker)=> {
-                      let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
-                      pagingBar.innerHTML = null;
-                      let wrapperDiv = document.createElement("div");
-                      wrapperDiv.setAttribute("class", "pageNoWrap");
-                    let endPage = pageMaker.endPage;
-                    let startPage = pageMaker.startPage;
-                    if(pageMaker.prev) {
-                       let btnObj = document.createElement("button");
-                       btnObj.setAttribute("type", "button");
-                       btnObj.setAttribute("class", "prev-btn");
-                       btnObj.setAttribute("data-num", startPage-1);
-                       btnObj.innerText ="<";
-                       btnObj.addEventListener('click',searchAction);
-                       pagingBar.appendChild(btnObj);
+           let placeValue = $("#search-value").val();
+           if(placeValue==""){
+              Swal.fire({icon: 'error',text: "검색어를 입력해주세요"});
+              return;
+           }
+           let placeList = $(".right-place-list");
+           let pageNum = event.currentTarget.dataset["num"]||1;
+           let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
+           
+           let leftPlace = document.getElementsByClassName("selected-place");
+           let index = getActiveDay();
+           let leftPlaceList = document.getElementsByClassName("daily-wrap-div");
+           let activePlaceList = leftPlaceList[index].children;
+           placeList.empty();
+           let tmplist = [];
+           
+           placeService.getList({
+          	title:placeValue,
+              regionNo:regionNo,
+              pageNum:pageNum
+              },
+              (map) => {
+                   let list = map["list"];
+                   let pageMaker = map["pageMaker"];
+                   let len = list.length||0;
+                   let leng = activePlaceList.length||0;
+                    
+                    for (let i= 0; i<len-leng; i++) {
+                       for (let j = 0; j < leng; j++) {
+                             if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
+                                list.splice(i,1);
+                          }
+                       }
                     }
                     
-                    for (let k = startPage; k <= endPage; k++) {
-                       let pageObj = document.createElement("div");
-                       pageObj.setAttribute("data-num", k);
-                       pageObj.innerText = k;
-                       pageObj.addEventListener('click',searchAction);
-                       wrapperDiv.appendChild(pageObj);
+                    const pagingWithpageMaker = (pageMaker)=> {
+                        let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
+                        pagingBar.innerHTML = null;
+                        let wrapperDiv = document.createElement("div");
+                        wrapperDiv.setAttribute("class", "pageNoWrap");
+                      let endPage = pageMaker.endPage;
+                      let startPage = pageMaker.startPage;
+                      if(pageMaker.prev) {
+                         let btnObj = document.createElement("button");
+                         btnObj.setAttribute("type", "button");
+                         btnObj.setAttribute("class", "prev-btn");
+                         btnObj.setAttribute("data-num", startPage-1);
+                         btnObj.innerText ="<";
+                         btnObj.addEventListener('click',searchAction);
+                         pagingBar.appendChild(btnObj);
+                      }
+                      
+                      for (let k = startPage; k <= endPage; k++) {
+                         let pageObj = document.createElement("div");
+                         pageObj.setAttribute("data-num", k);
+                         pageObj.innerText = k;
+                         pageObj.addEventListener('click',searchAction);
+                         wrapperDiv.appendChild(pageObj);
+                      }
+                      pagingBar.appendChild(wrapperDiv);
+                      if(pageMaker.next) {
+                         let btnObj = document.createElement("button");
+                         btnObj.setAttribute("type", "button");
+                         btnObj.setAttribute("class", "next-btn");
+                         btnObj.setAttribute("data-num", endPage+1);
+                         btnObj.addEventListener('click',searchAction);
+                         btnObj.innerText =">";
+                         pagingBar.appendChild(btnObj);
+                      }
+                   }
+                    pagingWithpageMaker(pageMaker);
+                    
+                    for (let i = 0; i < len; i++) {
+                       let liobj = document.createElement("li");   
+                       liobj.setAttribute('class', 'left clearfix');
+                       let objs1 = document.createElement("div");
+                       objs1.setAttribute('class','hoverable-place');
+                       objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
+                       objs1.setAttribute('data-region-no',list[i].regionNo);
+                       objs1.setAttribute('data-address-dt',list[i].addressDt);
+                       objs1.setAttribute('data-plc-no',list[i].plcNo);
+                       objs1.setAttribute('data-holiday',list[i].holiday);
+                       objs1.setAttribute('data-lat',list[i].lat);
+                       objs1.setAttribute('data-lng',list[i].lng);
+                       objs1.setAttribute('data-opening-h',list[i].openingH);
+                       objs1.setAttribute('data-p-cate',list[i].pCate);
+                       let span = document.createElement("span");
+                       span.innerText=list[i].plcTitle.replace(" ","\n");
+                       objs1.addEventListener('mouseover',placeOver);
+                       
+                       
+                       let imgwrap = document.createElement("div");
+                       imgwrap.setAttribute('class', 'img-wrap-div');
+                       imgwrap.setAttribute('style', 'border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);grid-area:img;');
+                       
+                       let objs1img = document.createElement('img');
+                       objs1img.setAttribute('src',list[i].plcImg);
+                       objs1img.setAttribute('style','width:80px;height:80px;border-radius:4px;');
+                       
+                       let btnobj1 = document.createElement("button");
+                       btnobj1.setAttribute('class', 'add-button');
+                       let iconobj1 = document.createElement("i");
+                       iconobj1.setAttribute('class', 'fas fa-plus');
+                       btnobj1.addEventListener('click', show);
+                       btnobj1.addEventListener('click', (event) => {
+                           let currTarget = event.currentTarget.parentElement;
+                           let index = document.getElementsByClassName("left-place-list")
+                           let parentI = (currTarget.children)[0].cloneNode(true);
+                           let dailyPlaceList = document.getElementsByClassName("daily-place-list");
+                           let idx = getActiveDay(); // idx 를 얻었다.
+                           let currentList = dailyPlaceList[idx];
+                           let currentPlaceList = currentList.children;
+                           if(currentPlaceList.length>=6){
+                          	  Swal.fire({icon: 'error',
+              	  text: "하루에 장소는 6개까지만 가능합니다."})
+                          	 return;
+                           }
+                           for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
+                              if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
+                                 return;
+                              }
+                           }
+                                       let objs1 = currTarget.cloneNode();
+                                       objs1.setAttribute('class','selected-place');
+                                       let span = document.createElement("span");
+                                       span.innerText = currTarget.dataset['title'];
+                                       
+                                       objs1.append(parentI);
+  									 objs1.append(span);
+                                       let btnobj1 = document.createElement("button");
+                                       btnobj1.setAttribute('class', 'delete-button');
+                                       let iconobj1 = document.createElement("i");
+                                       iconobj1.setAttribute('class', 'fas fa-times');
+                                       btnobj1.addEventListener('click',deleteInLeft);
+                                       btnobj1.appendChild(iconobj1);
+                                       objs1.appendChild(btnobj1);
+                                       currentList.append(objs1);
+                                       
+                           dnd( function() {
+                              dnd( ".daily-place-list" ).sortable();
+                              dnd( ".daily-place-list" ).disableSelection();
+                              
+                              } );
+                        });
+                       btnobj1.appendChild(iconobj1);
+                       
+                       let btnobj2 = document.createElement("button");
+                       btnobj2.setAttribute('class', 'detail-button');
+                       let iconobj2 =document.createElement("i");
+                       iconobj2.setAttribute('class', 'fas fa-search-plus');
+                       btnobj2.addEventListener('click', (event) => { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
+                           let clickedBtn = event.currentTarget;
+                           let placeNo = clickedBtn.parentElement.dataset["plcNo"];
+                           let URL = "https://place.map.kakao.com/"+placeNo;
+                           window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
+                        });
+                       btnobj2.appendChild(iconobj2);
+                       imgwrap.appendChild(objs1img);
+                       objs1.prepend(imgwrap);
+                       objs1.appendChild(span);
+                       objs1.appendChild(btnobj1);
+                       objs1.appendChild(btnobj2);
+                       liobj.appendChild(objs1);
+                       placeList.append(liobj);
                     }
-                    pagingBar.appendChild(wrapperDiv);
-                    if(pageMaker.next) {
-                       let btnObj = document.createElement("button");
-                       btnObj.setAttribute("type", "button");
-                       btnObj.setAttribute("class", "next-btn");
-                       btnObj.setAttribute("data-num", endPage+1);
-                       btnObj.addEventListener('click',searchAction);
-                       btnObj.innerText =">";
-                       pagingBar.appendChild(btnObj);
-                    }
-                 }
-                  pagingWithpageMaker(pageMaker);
-                  
-                  for (let i = 0; i < len; i++) {
-                     let liobj = document.createElement("li");   
-                     liobj.setAttribute('class', 'left clearfix');
-                     let objs1 = document.createElement("div");
-                     objs1.setAttribute('class','hoverable-place');
-                     objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
-                     objs1.setAttribute('data-region-no',list[i].regionNo);
-                     objs1.setAttribute('data-address-dt',list[i].addressDt);
-                     objs1.setAttribute('data-plc-no',list[i].plcNo);
-                     objs1.setAttribute('data-holiday',list[i].holiday);
-                     objs1.setAttribute('data-lat',list[i].lat);
-                     objs1.setAttribute('data-lng',list[i].lng);
-                     objs1.setAttribute('data-opening-h',list[i].openingH);
-                     objs1.setAttribute('data-p-cate',list[i].pCate);
-                     let span = document.createElement("span");
-                     span.innerText=list[i].plcTitle.replace(" ","\n");
-                     objs1.addEventListener('mouseover',placeOver);
-                     
-                     
-                     let imgwrap = document.createElement("div");
-                     imgwrap.setAttribute('class', 'img-wrap-div');
-                     imgwrap.setAttribute('style', 'border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);grid-area:img;');
-                     
-                     let objs1img = document.createElement('img');
-                     objs1img.setAttribute('src',list[i].plcImg);
-                     objs1img.setAttribute('style','width:80px;height:80px;border-radius:4px;');
-                     
-                     let btnobj1 = document.createElement("button");
-                     btnobj1.setAttribute('class', 'add-button');
-                     let iconobj1 = document.createElement("i");
-                     iconobj1.setAttribute('class', 'fas fa-plus');
-                     btnobj1.addEventListener('click', show);
-                     btnobj1.addEventListener('click', (event) => {
-                         let currTarget = event.currentTarget.parentElement;
-                         let index = document.getElementsByClassName("left-place-list")
-                         let parentI = (currTarget.children)[0].cloneNode(true);
-                         let dailyPlaceList = document.getElementsByClassName("daily-place-list");
-                         let idx = getActiveDay(); // idx 를 얻었다.
-                         let currentList = dailyPlaceList[idx];
-                         let currentPlaceList = currentList.children;
-                         if(currentPlaceList.length>=6){
-                        	  Swal.fire({icon: 'error',
-            	  text: "하루에 장소는 6개까지만 가능합니다."})
-                        	 return;
-                         }
-                         for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
-                            if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
-                               return;
-                            }
-                         }
-                                     let objs1 = currTarget.cloneNode();
-                                     objs1.setAttribute('class','selected-place');
-                                     let span = document.createElement("span");
-                                     span.innerText = currTarget.dataset['title'];
-                                     
-                                     objs1.append(parentI);
-									 objs1.append(span);
-                                     let btnobj1 = document.createElement("button");
-                                     btnobj1.setAttribute('class', 'delete-button');
-                                     let iconobj1 = document.createElement("i");
-                                     iconobj1.setAttribute('class', 'fas fa-times');
-                                     btnobj1.addEventListener('click',deleteInLeft);
-                                     btnobj1.appendChild(iconobj1);
-                                     objs1.appendChild(btnobj1);
-                                     currentList.append(objs1);
-                                     
-                         dnd( function() {
-                            dnd( ".daily-place-list" ).sortable();
-                            dnd( ".daily-place-list" ).disableSelection();
-                            
-                            } );
-                      });
-                     btnobj1.appendChild(iconobj1);
-                     
-                     let btnobj2 = document.createElement("button");
-                     btnobj2.setAttribute('class', 'detail-button');
-                     let iconobj2 =document.createElement("i");
-                     iconobj2.setAttribute('class', 'fas fa-search-plus');
-                     btnobj2.addEventListener('click', (event) => { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
-                         let clickedBtn = event.currentTarget;
-                         let placeNo = clickedBtn.parentElement.dataset["plcNo"];
-                         let URL = "https://place.map.kakao.com/"+placeNo;
-                         window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
-                      });
-                     btnobj2.appendChild(iconobj2);
-                     imgwrap.appendChild(objs1img);
-                     objs1.prepend(imgwrap);
-                     objs1.appendChild(span);
-                     objs1.appendChild(btnobj1);
-                     objs1.appendChild(btnobj2);
-                     liobj.appendChild(objs1);
-                     placeList.append(liobj);
-                  }
-               })
-         return;
-      }
-       
-      function deleteInLeft(event) {
-         let deleteElement = event.currentTarget;
-         deleteElement.parentElement.remove(); 
-      }
-      
-      function getActiveDay(){
-         let dateList = document.getElementsByClassName("daily-wrap-div");
-         let idx;
-         for (let i = 0; i < dateList.length; i++) {
-            
-            if(dateList[i].style.display=="block"){
-               idx = i;
-            }
-         }
-         return idx;
-      }
+                 })
+           return;
+        }
+         
+        function deleteInLeft(event) {
+           let deleteElement = event.currentTarget;
+           deleteElement.parentElement.remove(); 
+        }
+        
+        function getActiveDay(){
+           let dateList = document.getElementsByClassName("daily-wrap-div");
+           let idx;
+           for (let i = 0; i < dateList.length; i++) {
+              
+              if(dateList[i].style.display=="block"){
+                 idx = i;
+              }
+           }
+           return idx;
+        }
 
-      function placeOver(event) {
-             let currTarget = event.currentTarget;
-             // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-             var bounds = new kakao.maps.LatLngBounds();
-             
-             const addMarker = (position) => {
-                 let text = currTarget.dataset["holiday"]=="null" ? "무휴":currTarget.dataset["holiday"];
-                 let openH = currTarget.dataset["openingH"]=="null" ? "무휴":currTarget.dataset["openingH"]; 
-                 let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
-				                     <ul class="dotOverlay placeInfo">
-				                     <li> 
-				                         <span class="number">\${currTarget.dataset["title"]}</span>
-				                     </li>
-				                     <li>
-				                         <span class="label">\${text}</span>
-				                     </li>
-				                     <li>
-										 <span class="label">\${openH}</span>
-				                     </li>
-				                 </ul>
-				             	</div>`;
-                 overlay = new kakao.maps.CustomOverlay({
-                     content: content,
-                     position: position,
-                     zIndex: 1
-                 });
-                 marker = new kakao.maps.CustomOverlay({
-                     content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
-                     position: position,
-                     zIndex: 1
-                 });
-                 let markObj = {"marker":marker,"overlay":overlay};
-                 markers.push(markObj);
-                 marker.setMap(map); // 지도 위에 마커를 표출합니다
-                 overlay.setMap(map);
-                 return markObj;
-              } 
-                 
-	          const panTo = (marker) => {
-	               // 이동할 위도 경도 위치를 생성합니다 
-	               let moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
-	               // 지도 중심을 부드럽게 이동시킵니다
-	               // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-	               map.setProportion;
-	               map.panTo(moveLatLon);            
-	          }
-	                var placePosition = new kakao.maps.LatLng(
-	                      (currTarget.dataset["lat"]),
-	                      (currTarget.dataset["lng"])),
-	                marker = addMarker(placePosition);
-	                panTo(marker["marker"]);
-	                
-	                currTarget.addEventListener("mouseout",() => {
-	                   marker["marker"].setMap(null);
-	                   marker["overlay"].setMap(null);
-	                   markers.pop();
-	                }) 
-      		  }
-   </script>
-</body>
-</html>
+        function placeOver(event) {
+               let currTarget = event.currentTarget;
+               // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+               var bounds = new kakao.maps.LatLngBounds();
+               
+               const addMarker = (position) => {
+                   let text = currTarget.dataset["holiday"]=="null" ? "연중 무휴":currTarget.dataset["holiday"];
+                   let openH = currTarget.dataset["openingH"]=="null" ? "":currTarget.dataset["openingH"]; 
+                   /* let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
+  				                     <ul class="dotOverlay placeInfo">
+  				                     <li> 
+  				                         <span class="number">\${currTarget.dataset["title"]}</span>
+  				                     </li>
+  				                     <li>
+  				                         <span class="label">\${text}</span>
+  				                     </li>
+  				                     <li>
+  										 <span class="label">\${openH}</span>
+  				                     </li>
+  				                 </ul>
+  				             	</div>`; */
+  				             	
+  				 let content = document.createElement("div");
+  				 content.setAttribute("style", "position:absolute;z-index:3;white-space:nowrap;");
+  				 let dotoverlay = document.createElement("ul");
+  				 dotoverlay.setAttribute("class", "dotOverlay placeInfo");
+  				 let li1 = document.createElement("li");
+  				 let spannum = document.createElement("span");
+  				 spannum.setAttribute("class", "number");
+  				 spannum.innerText = currTarget.dataset["title"];
+  				 li1.appendChild(spannum);
+  				 
+  				 let li2 = document.createElement("li");
+  				 let spanlabel1 = document.createElement("span");
+  				 spanlabel1.innerText = text;
+  				 li2.appendChild(spanlabel1);
+  				 
+  				 let li3 = document.createElement("li");
+  				 let spanlabel2 = document.createElement("span");
+  				 spanlabel2.innerText = openH;
+  				 li3.appendChild(spanlabel2);
+  								 
+  				 dotoverlay.appendChild(li1);
+  				 dotoverlay.appendChild(li2);
+  				 if(!(currTarget.dataset["openingH"]=="null")){
+  				 dotoverlay.appendChild(li3) 
+  				 }
+  				 content.appendChild(dotoverlay);
+                   overlay = new kakao.maps.CustomOverlay({
+                       content: content,
+                       position: position,
+                       zIndex: 1
+                   });
+                   marker = new kakao.maps.CustomOverlay({
+                       content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
+                       position: position,
+                       zIndex: 1
+                   });
+                   let markObj = {"marker":marker,"overlay":overlay};
+                   markers.push(markObj);
+                   marker.setMap(map); // 지도 위에 마커를 표출합니다
+                   overlay.setMap(map);
+                   return markObj;
+                } 
+                   
+  	          const panTo = (marker) => {
+  	               // 이동할 위도 경도 위치를 생성합니다 
+  	               let moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
+  	               // 지도 중심을 부드럽게 이동시킵니다
+  	               // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+  	               map.setProportion;
+  	               map.panTo(moveLatLon);            
+  	          }
+  	                var placePosition = new kakao.maps.LatLng(
+  	                      (currTarget.dataset["lat"]),
+  	                      (currTarget.dataset["lng"])),
+  	                marker = addMarker(placePosition);
+  	                panTo(marker["marker"]);
+  	                
+  	                currTarget.addEventListener("mouseout",() => {
+  	                   marker["marker"].setMap(null);
+  	                   marker["overlay"].setMap(null);
+  	                   markers.pop();
+  	                }) 
+        		  }
+     </script>
+  </body>
+  </html>
