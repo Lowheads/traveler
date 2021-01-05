@@ -442,14 +442,9 @@ input[type="text"] {
 
 					<div class="budget-box-a">
 						<div>
-							<h2>예산 그래프 이용하기</h2>
-						</div>
-						<div>
-							<!-- <input type="text" id="average" value="￦ 900,000" readonly> -->
-							<p>각 카테고리 항목별로 예산</p>
-						</div>
-						<div>
-							<button class="btn-recommend" onclick="divTest()">사용하기</button>
+							<h2>회원님이 다녀온<b style="font-style: italic;">" 제주도 "</b> 여행 <b style="font-style: italic;">" 3박 4일 "</b></h2><br>
+							
+							<h2><p>1인당 경비평균은 ? </p></h2>
 						</div>
 					</div> 
 					
@@ -458,12 +453,9 @@ input[type="text"] {
 					</div>
 
 					<div class="budget-box-b">
-						<div>
-							<h2>내가 설정한 예산</h2>
-						</div>
 						<div class="in-line-row">
 							<input class="wonSign" type="text" value="￦" readonly> <input
-								type="text" id="pb" value="0" onchange="testDiv()"
+								type="text" id="pb" value="970000" onchange="testDiv()"
 								onkeyup="inputNumberAutoComma(this)"> <a
 								class="a-recommend" onclick="recommend()"
 								href="#allocation-main">제안받기</a>
@@ -489,7 +481,7 @@ input[type="text"] {
 							<tr>
 								<th>카테고리</th>
 								<th>적절한 비용</th>
-								<th>나의 비용</th>
+								<th>추천 비용</th>
 								<th>실제 사용 금액</th>
 							</tr>
 						</thead>
@@ -506,7 +498,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-restaurant" value="">￦ -</div>
+										<div id="average-restaurant" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonRestaurant()">
 											&#8618;
 										</button>
@@ -547,7 +539,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-cafe" value="">￦ -</div>
+										<div id="average-cafe" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonCafe()">
 											&#8618;
 										</button>
@@ -586,7 +578,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-lodging" value="">￦ -</div>
+										<div id="average-lodging" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonLodging()">
 											&#8618;
 										</button>
@@ -626,7 +618,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-trans" value="">￦ -</div>
+										<div id="average-trans" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonTrans()">
 											&#8618;
 										</button>
@@ -664,7 +656,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-shopping" value="">￦ -</div>
+										<div id="average-shopping" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonShopping()">
 											&#8618;
 										</button>
@@ -703,7 +695,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-activity" value="">￦ -</div>
+										<div id="average-activity" class="budaverage"  value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonActivity()">
 											&#8618;
 										</button>
@@ -743,7 +735,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-entertainment" value="">￦ -</div>
+										<div id="average-entertainment" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonEntertainment()">
 											&#8618;
 										</button>
@@ -783,7 +775,7 @@ input[type="text"] {
 
 								<div class="allocate-inline">
 									<td>
-										<div id="average-etc" value="">￦ -</div>
+										<div id="average-etc" class="budaverage" value="">￦ -</div>
 										<button class="allocation-btn" onclick="buttonEtc()">
 											&#8618;
 										</button>
@@ -850,7 +842,7 @@ input[type="text"] {
 						<div class="container">
 							<div class="column">
 								<div style="font-weight:lighter;">
-									나의 예산
+									추천 예산
 									<canvas id="myChart" width="400vw" height="400vh"></canvas>
 								</div>
 								<div style="font-weight:lighter;">
@@ -966,28 +958,35 @@ input[type="text"] {
 		function recommend() {
 			let pb = Number(document.getElementById("pb").value.replace(/,/g,
 					''));
-
+			document.getElementById("average-restaurant").setAttribute('value',(pb * 0.195).toFixed(0))
 			document.getElementById("average-restaurant").innerHTML = "￦ "
 					+ String((pb * 0.195).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-cafe").setAttribute('value',(pb * 0.145).toFixed(0))
 			document.getElementById("average-cafe").innerHTML = "￦ "
 					+ String((pb * 0.145).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-lodging").setAttribute('value',(pb * 0.225).toFixed(0))
 			document.getElementById("average-lodging").innerHTML = "￦ "
 					+ String((pb * 0.225).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-trans").setAttribute('value',(pb * 0.195).toFixed(0))
 			document.getElementById("average-trans").innerHTML = "￦ "
 					+ String((pb * 0.195).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-shopping").setAttribute('value',(pb * 0.035).toFixed(0))
 			document.getElementById("average-shopping").innerHTML = "￦ "
 					+ String((pb * 0.035).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-activity").setAttribute('value',(pb * 0.155).toFixed(0))
 			document.getElementById("average-activity").innerHTML = "￦ "
 					+ String((pb * 0.155).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-entertainment").setAttribute('value',(pb * 0.025).toFixed(0))
 			document.getElementById("average-entertainment").innerHTML = "￦ "
 					+ String((pb * 0.025).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+			document.getElementById("average-etc").setAttribute('value',(pb * 0.025).toFixed(0))
 			document.getElementById("average-etc").innerHTML = "￦ "
 					+ String((pb * 0.025).toFixed(0)).replace(
 							/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
@@ -1084,6 +1083,14 @@ input[type="text"] {
 			document.getElementById('cg-restaurant').value = restaurant;
 			document.getElementById('cg-restaurant').onchange();
 			calculate();
+			buttonCafe() 
+			buttonLodging()
+			 buttonTrans()
+			 buttonShopping()
+			 buttonActivity()
+			 buttonEntertainment()
+			 buttonEntertainment()
+			  buttonEtc()
 		}
 
 		function buttonCafe() {
@@ -1415,6 +1422,10 @@ input[type="text"] {
 			myChartTwo.data.labels[1] = "기타";
 			myChartTwo.update();
 			calculateB();
+		}
+		
+		function moveToRight(){
+			$()
 		}
 	</script>
 </div>
