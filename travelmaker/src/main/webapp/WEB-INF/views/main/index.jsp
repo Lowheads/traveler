@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+      <div class="contents">
+      <!-- 상단 -->
+      <div class="ct_body">
  <%@ include file="../includes/header.jsp" %>
 <%String mem= String.valueOf(session.getAttribute("memNo")); %>
 <!--  <link rel="stylesheet" href="/resources/css/main.css">  -->
@@ -22,7 +25,8 @@
     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />   
-
+<link rel="preconnect" href="https://fonts.gstatic.com"> 
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
@@ -178,10 +182,13 @@ position: absolute;
 }
 /* 날씨 */
  .weather {
-      position: relative;
+/*       position: relative;
       float:right;
       display: flex;
-      color: white;
+      color: white; */
+      display:flex;
+      justify-content:flex-end;
+      margin-right: -15px;
     }
     .weather div {
       width: 50px;
@@ -294,29 +301,32 @@ body{
 a{text-decoration: none}
 .ct_body{
    padding: 30px;
-   background-image: url('https://images.unsplash.com/photo-1593182440709-4b7b56482c55?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
-   height: 700px;
+   background-image: url('/resources/img/index1.jpg');
+   height: 900px;
    background-repeat: no-repeat;
      background-size: cover;
-     margin-bottom:50px; 
+     margin-bottom:50px;
+	
+	display:flex;
+	flex-direction:column;
 }
 #mainNav{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
    text-align:center;
-   margin-top: 100px;
+   /* margin-top: 100px;
    margin-left:auto;
    margin-right:auto;
-   margin-bottom: 150px;
+   margin-bottom: 150px; */
    width: 60%;
-   height: 12%;
+   /* height: 12%; */
    background-color:white;
    border-radius: 50px;
    display:flex;
-   justify-content: flex-start;            
-   flex-grow: 1;
-   
+   /* justify-content: flex-start;            
+   flex-grow: 1; */
    max-width:800px;
    height:65px;
+   min-width: 700px;
 }
 .navContent{
    /* padding-top:15px;
@@ -394,7 +404,8 @@ a{text-decoration: none}
    display:none;
 }
 #goNext{
-   background-color: #ff8b3d;
+   /* background-color: #ff8b3d; */
+   background-color: white;
    border-radius: 50%;
    height: 50px;
    width: 50px;
@@ -405,7 +416,8 @@ a{text-decoration: none}
    font-size: 10px;
 }
 .mainMsg{
-   margin-left: 7%;
+	margin-top:300px;
+	white-space:nowrap;
 }
 .mainMsg b{
    font-size:50px;
@@ -431,7 +443,7 @@ a{text-decoration: none}
    background-color:white;
    border: 1px solid #ddd;
    border-radius: 8px;
-   padding: 4px 12px 4px 12px;
+   padding: 4px 15px 4px 15px;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #goList{
@@ -522,30 +534,73 @@ a{text-decoration: none}
 }
 
 .desc_bottom-2{
-	display:flex;
     font-size : 12px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .card-Img-2{
-   height: 320px;
-   border-radius: 10px;
+   height:300px;
+   width:320;
+   border-radius: 8px;
    background-position: center; 
    background-repeat: no-repeat; 
    background-size: cover;
 }
+
+.header {
+	padding: 0 50px;
+	box-shadow:	none;
+}
+
+.header__nav__button-account {
+	background-color:white;
+}
+
+.header__nav__button-greyHover {
+	font-family:'Nanum Gothic', sans-serif;
+	font-size:15px;
+    background: transparent;
+    transition: box-shadow 0.2s ease;
+}
+
+.header__nav__button-greyHover:hover {
+	background: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+}
+
 </style>
 
 
 <body>
 
-      <div class="contents">
-      <!-- 상단 -->
-      <div class="ct_body">
-      
+
+      <div  style="display: flex;justify-content: space-around;">
       <!--날씨 -->
-          <div class='weather'>
-  </div>
+         
+         <div class="mainMsg">
+         <div style="padding:0; line-height: normal;">
+         <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
+           text-shadow: 2px 2px black;">
+         이제, 여행은
+         </p>
+         </div>
+		<div style="padding:0; line-height: normal;">
+        <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
+           text-shadow: 2px 2px black;">
+         가까운 곳에서
+         </p>
+         </div>
+         
+         <button id="popup_open_btn" style="margin-top:20px;">
+         여행 성향 검사
+         </button>
+         </div> 
+  
+  <div style="display: flex;
+    justify-content: center; margin-top: 20px;">
          <div id="mainNav">
+         
             <div class="navContent navBtnNodeList" style="display:flex;">
 
                <div class="selectContent navBtnNodeList" style="margin-left:40px;">
@@ -564,16 +619,17 @@ a{text-decoration: none}
                </div>
 
             </div>
+            
             <div class="navDateBtn dateNodeList dateSelectBox" style="display:flex;">
                <!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
-               <div class="selectContent dateNodeList"
+               	  <div class="selectContent dateNodeList"
                   style="margin-left: 30px; padding-left: 30px;">
                   <div class="dateNodeList">
                      <b class="dateNodeList">출발일</b>
                   </div>
                   <div class="dateNodeList">날짜추가</div>
                      <div class="datepickerBox dateNodeList">
-                     </div>
+                  </div>
                </div>
             
             </div>
@@ -591,27 +647,18 @@ a{text-decoration: none}
 
             <div class="navSearchBtn" style="display:flex; align-items:center;">
             <div></div>
-               <div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:white; margin-top:15px; margin-bottom: 15px; cursor:pointer; " aria-hidden="true"></i>
+               <div id="goNext" style="float:right; margin-right:10px;"><i class="fa fa-search" style="color:black; margin-top:15px; margin-bottom: 15px; cursor:pointer; " aria-hidden="true"></i>
             </div></div>
          
          </div>
+    </div>
          
-         <div class="mainMsg">
-         <div style="padding:0; line-height: normal;">
-         <p style="margin: 0;padding: 0;font-size: 45px;color: white;font-weight: 800;">
-         이제, 여행은
-         </p>
+         
+         
+         <div class='weather'>
+  		  </div>
+  		  
          </div>
-		<div style="padding:0; line-height: normal;">
-        <p style="margin: 0;padding: 0;font-size: 45px;color: white;font-weight: 800;">
-         가까운 곳에서
-         </p>
-         </div>
-         
-         <button id="popup_open_btn" style="margin-top:20px;">
-         여행 성향 검사
-         </button>
-         
 <!--  test 모달창 -->
     <div id="modal">
 
@@ -682,13 +729,14 @@ a{text-decoration: none}
          </div>
          <!-- 게시판끝 --> --%>
          
-         <div>
+         <div style="display:flex; flex-direction:column; margin: 0 50px 0 50px;">
 		<div style="display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 30px 0 30px;">
-			<div style="font-size:40px;">
-			외로움 달래는 여행
+    padding: 0 1em 1em 1em;
+    ">
+			<div style="font-size:30px; font-family:'Nanum Gothic', sans-serif; font-weight:800;">
+				이번 주 신규 등록 테마
 			</div>
       <!-- 관리자 게시판리스트 출력 -->
       		<div style="display: flex;">
@@ -696,15 +744,17 @@ a{text-decoration: none}
     background-color: white;
     text-decoration: underline;
     font-size: 16px;
-    color: #222;"
+    color: #222; cursor:pointer; font-family:'Nanum Gothic', sans-serif;"
         		onclick="location.href='/board/list'">더보기</button>
         	</div>
         </div>
+        
             <div style="display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 270px));
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 330px));
+    
     justify-self: center;
-    justify-content: center;">
+    justify-content: space-evenly;">
+    
                <c:forEach items="${adminlist }" var="adminlist">
                   <div class="card-contents-2">
 					<c:set var="mem" value="<%=mem %>"/>
@@ -724,14 +774,26 @@ a{text-decoration: none}
                      </div>
                         </a>
                         <div class="card-desc-2">
-                           <b style="display: flex;"><a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
-                           <c:out value="${adminlist.boardTitle }" /></a></b>
-                           <div class="desc_bottom-2">
-                              <i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
-                              <i class="fa fa-heart-o" style="margin-left: 3px;"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
-                              <div style="margin-left:3px;"><i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/></div>
-                           
+                           <div style="display: flex; font-weight:bold; font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a href='/board/get?boardNo=<c:out value="${adminlist.boardNo }"/>'>
+                           <c:out value="${adminlist.boardTitle }" />
+                           </a>
                            </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp<c:out value="${adminlist.VCnt }"/>
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp<c:out value="${adminlist.pickCnt }"/>
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp<c:out value="${adminlist.writer }"/>
+                              </div>
+	                      </div>
+                      </div>
                            
                         </div>
                   </div>
@@ -742,7 +804,7 @@ a{text-decoration: none}
          </div>
          <!-- 게시판끝 -->
          
-      </div>
+      
 </body>
 <%@ include file="../includes/footer.jsp" %>
 
@@ -1178,35 +1240,43 @@ a{text-decoration: none}
           tmp += '<div class="Temp">' + Math.floor(resp.daily[idx].pop*100.0) + '%<div>';
           //맑음
           if(resp.daily[idx].weather[0].icon=='01d' || resp.daily[idx].weather[0].icon=='01n'){
-            imgURL = '/resources/design/line/animation-ready/clear-day.svg';
+            /* imgURL = '/resources/design/line/animation-ready/clear-day.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/day.svg';
           }
           //맑고 구름
           if(resp.daily[idx].weather[0].icon=='02d' || resp.daily[idx].weather[0].icon=='02n'){
-            imgURL = '/resources/design/line/animation-ready/partly-cloudy-day.svg';
+            /* imgURL = '/resources/design/line/animation-ready/partly-cloudy-day.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/cloudy-day-1.svg';
           }
           //구름
           if(resp.daily[idx].weather[0].icon=='03d' || resp.daily[idx].weather[0].icon=='03n'){
-            imgURL = '/resources/design/line/animation-ready/cloudy.svg';
+            /* imgURL = '/resources/design/line/animation-ready/cloudy.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/cloudy-day-3.svg';
           }
           //먹구름
           if(resp.daily[idx].weather[0].icon=='04d' || resp.daily[idx].weather[0].icon=='04n'){
-            imgURL = '/resources/design/line/animation-ready/cloudy.svg';
+            /* imgURL = '/resources/design/line/animation-ready/cloudy.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/cloudy2.svg';
           }
           //소나기
           if(resp.daily[idx].weather[0].icon=='09d' || resp.daily[idx].weather[0].icon=='09d'){
-            imgURL = '/resources/design/line/animation-ready/rain.svg';
+            /* imgURL = '/resources/design/line/animation-ready/rain.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/rainy-4.svg';
           }
           //비
           if(resp.daily[idx].weather[0].icon=='10d' || resp.daily[idx].weather[0].icon=='10n'){
-            imgURL = '/resources/design/line/animation-ready/rain.svg';
+            /* imgURL = '/resources/design/line/animation-ready/rain.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/rainy-6.svg';
           }
           //번개
           if(resp.daily[idx].weather[0].icon=='11d' || resp.daily[idx].weather[0].icon=='11n'){
-            imgURL = '/resources/design/line/animation-ready/thunderstorms.svg';
+            /* imgURL = '/resources/design/line/animation-ready/thunderstorms.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/thunder.svg';
           }
           //눈
           if(resp.daily[idx].weather[0].icon=='13d' || resp.daily[idx].weather[0].icon=='13n'){
-            imgURL = '/resources/design/line/animation-ready/snow.svg';
+            /* imgURL = '/resources/design/line/animation-ready/snow.svg'; */
+        	  imgURL = '/resources/design/line/animation-ready-2/snowy-6.svg';
           }
           //안개
           if(resp.daily[idx].weather[0].icon=='50d' || resp.daily[idx].weather[0].icon=='50n'){
