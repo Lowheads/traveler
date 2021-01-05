@@ -40,9 +40,9 @@
 }
 
 .reg-btn{ /* 등록 버튼 */
-    background-color: #ff8b3d;
+	background-color: #2196f3;
     color: white;
-    border: 1px solid #ff8b3d;
+    border: 1px solid #2196f3;
     font-size: 15px;
     float: right;
     padding: 4px 13px 4px 13px;
@@ -65,6 +65,12 @@
  width: 60px;
     height: 30px;
     margin-right: 0.5%;
+}
+
+.cancel-btn:hover{
+	background-color: #2196f3;
+    color: white;
+    border: 1px solid #2196f3;
 }
 
 .btn-wrap{ /* 등록/ 삭제 버튼 div */

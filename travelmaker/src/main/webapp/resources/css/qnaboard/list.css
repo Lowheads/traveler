@@ -9,12 +9,16 @@
 }
 
 .title-wrap { /* 메인 타이틀 div */
-	font-size: 50px;
-	margin-top: 8%;
-    margin-bottom: 8%;
-    text-align: center;
-    color: black;
-    font-size: 20px;
+	padding-top: 8%;
+    padding-bottom: 8%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2%;
+    background-image: url(https://img.freepik.com/free-vector/young-operators-working-in-call-center-isolated-flat-vector-illustration-cartoon-administrator-holding-clipboard-and-checking-work-in-office_74855-8732.jpg?size=626&ext=jpg);
+    background-position: center;
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    height: 400px;
 }
 
 table.board-wrap {
@@ -25,7 +29,7 @@ table.board-wrap {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 	margin: auto;
-	margin-top: 5%;
+	margin-top: 2%;
 }
 
 table.board-wrap thead th { /* 게시판 제목 라인 */
@@ -61,9 +65,9 @@ table.board-wrap td {
 }
 
 .boardRegiBtn-wrap button{ /* 글 쓰기 버튼 div */
-    background-color: #ff8b3d;
+	background-color: #2196f3;
     color: white;
-    border: 1px solid #ff8b3d;
+    border: 1px solid #2196f3;
     padding: 4px 13px 4px 13px;
     outline: 0;
     font-size: 15px;
@@ -156,7 +160,7 @@ button, input, select, textarea, optgroup {
 }
 
 .pagination_bar .active a{
-   color: #f60;
+   color: #2196f3;
 }
 
 .paging{

@@ -56,7 +56,7 @@
 		<h3>내 정보 수정하기</h3>
 		<div class="button-wrapper">
 					        	 <!-- 저장하기 버튼 -->
-					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
+					<button type="submit" class="member-save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
 	        	 <!-- 홈으로 -->
