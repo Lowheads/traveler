@@ -31,7 +31,7 @@
    if(session.getAttribute("email") != null){
       sessionBtn = "<li><a href='/member/logout'>로그아웃</a></li>";
       modifyBtn = "<li><a href='/member/getMember?email="+session.getAttribute("email")+"\'\">정보수정</a></li>";
-        mypage = "<li><a href='/mypage/pickPL'>위시리스트</a></li>";
+        mypage = "<li><a href='/mypage/pickPL'>마이페이지</a></li>";
         qnapage = "<li><a href='/qnaboard/list'>Q&A게시판</a></li>";
    }
    else{
