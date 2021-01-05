@@ -40,7 +40,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color:#ff8b3d;
+  background-color:#2196f3;
   color: white;
 }
 #tabletitle{
@@ -120,7 +120,7 @@
 #gotoList{
    height:30px;
    margin-top:15px;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
    color:white;
    padding: 3px 8px 0 8px;
    margin-right: 15px;
@@ -168,7 +168,7 @@
 
 .dt_top_left{
    width: 15%;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
    color:white;
     text-align: center;
    line-height: 70px;    
@@ -218,7 +218,7 @@
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
    border-radius: 50%;
    width: 20px;
     height: 20px;
@@ -747,7 +747,7 @@ function myFunction() {
          
       for (i = 0; i < markerlatlng.length; i++) {
          
-         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#ff8b3d; color:white;'>"+(i+1)+"</div><a href=https://place.map.kakao.com/"+markerlatlng[i].dataset["plc_no"]+" target=_blank>"+markerlatlng[i].dataset["title"] + "</a><br>";
+         let pTag = "<div style='margin: 0 15px 15px 0;text-align:center; display:inline-block; width:20px; height:20px; border-radius:50%; background-color:#2196f3; color:white;'>"+(i+1)+"</div><a href=https://place.map.kakao.com/"+markerlatlng[i].dataset["plc_no"]+" target=_blank>"+markerlatlng[i].dataset["title"] + "</a><br>";
          
          $("#places").append(pTag)
          

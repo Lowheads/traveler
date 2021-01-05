@@ -19,10 +19,10 @@
 * , h3{ font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 /* alert */
 .swal-button, .swal-button--confrim{
-	background-color: #ff8b3d;
+	background-color: #2196f3;
 }
 
-.swal-button:not([disabled]):hover{background-color:#ff8b3d}.swal-button:active{background-color:#70bce0}
+.swal-button:not([disabled]):hover{background-color:#2196f3}.swal-button:active{background-color:#70bce0}
 
 .modal-content{
 overflow-y: initial !important
@@ -143,8 +143,8 @@ input:checked+.slider:before {
  #schedulelist_open_btn{
 	font-size:15px;
 	margin-bottom: 50px;
-	background-color: #ff8b3d;
-	border: 1px solid #ff8b3d;
+	background-color: #2196f3;
+	border: 1px solid #2196f3;
 	color:white;
 	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
@@ -154,9 +154,9 @@ input:checked+.slider:before {
 } 
 
 #schedulelist_open_btn:hover, #hiddenlist_open_btn:hover{
-	background-color: #ff8b3d;
+	background-color: #2196f3;
    	color:white;
-   	border: 1px solid #ff8b3d;
+   	border: 1px solid #2196f3;
 }
 .ct_body{
 	padding: 30px;
@@ -292,10 +292,10 @@ input:checked+.slider:before {
     text-decoration : none;
 }
 .pagination_btn a:hover{
-   color: #f60;
+   color: #2196f3;
 }
 .pagination_bar .active a{
-   color: #f60;
+   color: #2196f3;
 }
 
 
@@ -314,11 +314,11 @@ input:checked+.slider:before {
 .searchBtn{
 	width:50px;
 	color:white;
-	background-color: #ff8b3d;
+	background-color: #2196f3;
 	text-align: center;
 	text-decoration: none;
 	padding: 3px 0;
-	border:1px solid #ff8b3d;
+	border:1px solid #2196f3;
 	cursor: pointer;
 	font-size: 13px;
 	
