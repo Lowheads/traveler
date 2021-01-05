@@ -23,6 +23,7 @@
   <script>
   var dnd = $.noConflict(true);
   </script>
+  <title>여정 :: 개인 맞춤형 여행플래너</title>
   <style>
 
 * {
