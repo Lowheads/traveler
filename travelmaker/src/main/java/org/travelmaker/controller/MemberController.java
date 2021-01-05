@@ -59,13 +59,13 @@ public class MemberController {
 		
 		String referer = request.getHeader("Referer");
 		
-		// email 저장하기 여부
-		service.rememberEmail(mVO.getEmail(), request, response);	
-		
-		// 계정 정보가 일치하지 않거나, 탈퇴한 회원이면 fail
+		// 유효한 회원인지 검사
 		if(service.isValidMember(mVO, rttr)) {
 			return "redirect:" + referer; 
 		}
+		
+		// email 저장하기 여부
+		service.rememberEmail(mVO.getEmail(), request, response);	
 
 		if(service.isAdminLogin(mVO, session)) {
 			return "redirect:/admin/main";
