@@ -1625,250 +1625,277 @@ body > div.mainContainer > div.right.menu {
        }
        
        function searchAction(event) {
-         let placeValue = $("#search-value").val();
-         if(placeValue==""){
-            Swal.fire({icon: 'error',text: "검색어를 입력해주세요"});
-            return;
-         }
-         let placeList = $(".right-place-list");
-         let pageNum = event.currentTarget.dataset["num"]||1;
-         let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
-         
-         let leftPlace = document.getElementsByClassName("selected-place");
-         let index = getActiveDay();
-         let leftPlaceList = document.getElementsByClassName("daily-wrap-div");
-         let activePlaceList = leftPlaceList[index].children;
-         placeList.empty();
-         let tmplist = [];
-         
-         placeService.getList({
-        	title:placeValue,
-            regionNo:regionNo,
-            pageNum:pageNum
-            },
-            (map) => {
-                 let list = map["list"];
-                 let pageMaker = map["pageMaker"];
-                 let len = list.length||0;
-                 let leng = activePlaceList.length||0;
-                  
-                  for (let i= 0; i<len-leng; i++) {
-                     for (let j = 0; j < leng; j++) {
-                           if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
-                              list.splice(i,1);
-                        }
-                     }
-                  }
-                  
-                  const pagingWithpageMaker = (pageMaker)=> {
-                      let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
-                      pagingBar.innerHTML = null;
-                      let wrapperDiv = document.createElement("div");
-                      wrapperDiv.setAttribute("class", "pageNoWrap");
-                    let endPage = pageMaker.endPage;
-                    let startPage = pageMaker.startPage;
-                    if(pageMaker.prev) {
-                       let btnObj = document.createElement("button");
-                       btnObj.setAttribute("type", "button");
-                       btnObj.setAttribute("class", "prev-btn");
-                       btnObj.setAttribute("data-num", startPage-1);
-                       btnObj.innerText ="<";
-                       btnObj.addEventListener('click',searchAction);
-                       pagingBar.appendChild(btnObj);
+           let placeValue = $("#search-value").val();
+           if(placeValue==""){
+              Swal.fire({icon: 'error',text: "검색어를 입력해주세요"});
+              return;
+           }
+           let placeList = $(".right-place-list");
+           let pageNum = event.currentTarget.dataset["num"]||1;
+           let regionNo = document.getElementsByClassName("data-range-picker")[0].dataset["regionNo"];
+           
+           let leftPlace = document.getElementsByClassName("selected-place");
+           let index = getActiveDay();
+           let leftPlaceList = document.getElementsByClassName("daily-wrap-div");
+           let activePlaceList = leftPlaceList[index].children;
+           placeList.empty();
+           let tmplist = [];
+           
+           placeService.getList({
+          	title:placeValue,
+              regionNo:regionNo,
+              pageNum:pageNum
+              },
+              (map) => {
+                   let list = map["list"];
+                   let pageMaker = map["pageMaker"];
+                   let len = list.length||0;
+                   let leng = activePlaceList.length||0;
+                    
+                    for (let i= 0; i<len-leng; i++) {
+                       for (let j = 0; j < leng; j++) {
+                             if(activePlaceList[j].dataset["title"]==list[i].plcTitle){
+                                list.splice(i,1);
+                          }
+                       }
                     }
                     
-                    for (let k = startPage; k <= endPage; k++) {
-                       let pageObj = document.createElement("div");
-                       pageObj.setAttribute("data-num", k);
-                       pageObj.innerText = k;
-                       pageObj.addEventListener('click',searchAction);
-                       wrapperDiv.appendChild(pageObj);
+                    const pagingWithpageMaker = (pageMaker)=> {
+                        let pagingBar = document.getElementsByClassName("right-paging-bar")[0];
+                        pagingBar.innerHTML = null;
+                        let wrapperDiv = document.createElement("div");
+                        wrapperDiv.setAttribute("class", "pageNoWrap");
+                      let endPage = pageMaker.endPage;
+                      let startPage = pageMaker.startPage;
+                      if(pageMaker.prev) {
+                         let btnObj = document.createElement("button");
+                         btnObj.setAttribute("type", "button");
+                         btnObj.setAttribute("class", "prev-btn");
+                         btnObj.setAttribute("data-num", startPage-1);
+                         btnObj.innerText ="<";
+                         btnObj.addEventListener('click',searchAction);
+                         pagingBar.appendChild(btnObj);
+                      }
+                      
+                      for (let k = startPage; k <= endPage; k++) {
+                         let pageObj = document.createElement("div");
+                         pageObj.setAttribute("data-num", k);
+                         pageObj.innerText = k;
+                         pageObj.addEventListener('click',searchAction);
+                         wrapperDiv.appendChild(pageObj);
+                      }
+                      pagingBar.appendChild(wrapperDiv);
+                      if(pageMaker.next) {
+                         let btnObj = document.createElement("button");
+                         btnObj.setAttribute("type", "button");
+                         btnObj.setAttribute("class", "next-btn");
+                         btnObj.setAttribute("data-num", endPage+1);
+                         btnObj.addEventListener('click',searchAction);
+                         btnObj.innerText =">";
+                         pagingBar.appendChild(btnObj);
+                      }
+                   }
+                    pagingWithpageMaker(pageMaker);
+                    
+                    for (let i = 0; i < len; i++) {
+                       let liobj = document.createElement("li");   
+                       liobj.setAttribute('class', 'left clearfix');
+                       let objs1 = document.createElement("div");
+                       objs1.setAttribute('class','hoverable-place');
+                       objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
+                       objs1.setAttribute('data-region-no',list[i].regionNo);
+                       objs1.setAttribute('data-address-dt',list[i].addressDt);
+                       objs1.setAttribute('data-plc-no',list[i].plcNo);
+                       objs1.setAttribute('data-holiday',list[i].holiday);
+                       objs1.setAttribute('data-lat',list[i].lat);
+                       objs1.setAttribute('data-lng',list[i].lng);
+                       objs1.setAttribute('data-opening-h',list[i].openingH);
+                       objs1.setAttribute('data-p-cate',list[i].pCate);
+                       let span = document.createElement("span");
+                       span.innerText=list[i].plcTitle.replace(" ","\n");
+                       objs1.addEventListener('mouseover',placeOver);
+                       
+                       
+                       let imgwrap = document.createElement("div");
+                       imgwrap.setAttribute('class', 'img-wrap-div');
+                       imgwrap.setAttribute('style', 'border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);grid-area:img;');
+                       
+                       let objs1img = document.createElement('img');
+                       objs1img.setAttribute('src',list[i].plcImg);
+                       objs1img.setAttribute('style','width:80px;height:80px;border-radius:4px;');
+                       
+                       let btnobj1 = document.createElement("button");
+                       btnobj1.setAttribute('class', 'add-button');
+                       let iconobj1 = document.createElement("i");
+                       iconobj1.setAttribute('class', 'fas fa-plus');
+                       btnobj1.addEventListener('click', show);
+                       btnobj1.addEventListener('click', (event) => {
+                           let currTarget = event.currentTarget.parentElement;
+                           let index = document.getElementsByClassName("left-place-list")
+                           let parentI = (currTarget.children)[0].cloneNode(true);
+                           let dailyPlaceList = document.getElementsByClassName("daily-place-list");
+                           let idx = getActiveDay(); // idx 를 얻었다.
+                           let currentList = dailyPlaceList[idx];
+                           let currentPlaceList = currentList.children;
+                           if(currentPlaceList.length>=6){
+                          	  Swal.fire({icon: 'error',
+              	  text: "하루에 장소는 6개까지만 가능합니다."})
+                          	 return;
+                           }
+                           for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
+                              if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
+                                 return;
+                              }
+                           }
+                                       let objs1 = currTarget.cloneNode();
+                                       objs1.setAttribute('class','selected-place');
+                                       let span = document.createElement("span");
+                                       span.innerText = currTarget.dataset['title'];
+                                       
+                                       objs1.append(parentI);
+  									 objs1.append(span);
+                                       let btnobj1 = document.createElement("button");
+                                       btnobj1.setAttribute('class', 'delete-button');
+                                       let iconobj1 = document.createElement("i");
+                                       iconobj1.setAttribute('class', 'fas fa-times');
+                                       btnobj1.addEventListener('click',deleteInLeft);
+                                       btnobj1.appendChild(iconobj1);
+                                       objs1.appendChild(btnobj1);
+                                       currentList.append(objs1);
+                                       
+                           dnd( function() {
+                              dnd( ".daily-place-list" ).sortable();
+                              dnd( ".daily-place-list" ).disableSelection();
+                              
+                              } );
+                        });
+                       btnobj1.appendChild(iconobj1);
+                       
+                       let btnobj2 = document.createElement("button");
+                       btnobj2.setAttribute('class', 'detail-button');
+                       let iconobj2 =document.createElement("i");
+                       iconobj2.setAttribute('class', 'fas fa-search-plus');
+                       btnobj2.addEventListener('click', (event) => { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
+                           let clickedBtn = event.currentTarget;
+                           let placeNo = clickedBtn.parentElement.dataset["plcNo"];
+                           let URL = "https://place.map.kakao.com/"+placeNo;
+                           window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
+                        });
+                       btnobj2.appendChild(iconobj2);
+                       imgwrap.appendChild(objs1img);
+                       objs1.prepend(imgwrap);
+                       objs1.appendChild(span);
+                       objs1.appendChild(btnobj1);
+                       objs1.appendChild(btnobj2);
+                       liobj.appendChild(objs1);
+                       placeList.append(liobj);
                     }
-                    pagingBar.appendChild(wrapperDiv);
-                    if(pageMaker.next) {
-                       let btnObj = document.createElement("button");
-                       btnObj.setAttribute("type", "button");
-                       btnObj.setAttribute("class", "next-btn");
-                       btnObj.setAttribute("data-num", endPage+1);
-                       btnObj.addEventListener('click',searchAction);
-                       btnObj.innerText =">";
-                       pagingBar.appendChild(btnObj);
-                    }
-                 }
-                  pagingWithpageMaker(pageMaker);
-                  
-                  for (let i = 0; i < len; i++) {
-                     let liobj = document.createElement("li");   
-                     liobj.setAttribute('class', 'left clearfix');
-                     let objs1 = document.createElement("div");
-                     objs1.setAttribute('class','hoverable-place');
-                     objs1.setAttribute('data-title',list[i].plcTitle.replace(" ","\n"));
-                     objs1.setAttribute('data-region-no',list[i].regionNo);
-                     objs1.setAttribute('data-address-dt',list[i].addressDt);
-                     objs1.setAttribute('data-plc-no',list[i].plcNo);
-                     objs1.setAttribute('data-holiday',list[i].holiday);
-                     objs1.setAttribute('data-lat',list[i].lat);
-                     objs1.setAttribute('data-lng',list[i].lng);
-                     objs1.setAttribute('data-opening-h',list[i].openingH);
-                     objs1.setAttribute('data-p-cate',list[i].pCate);
-                     let span = document.createElement("span");
-                     span.innerText=list[i].plcTitle.replace(" ","\n");
-                     objs1.addEventListener('mouseover',placeOver);
-                     
-                     
-                     let imgwrap = document.createElement("div");
-                     imgwrap.setAttribute('class', 'img-wrap-div');
-                     imgwrap.setAttribute('style', 'border-radius: 4px;overflow: hidden;backface-visibility: hidden;transform: translateZ(0);grid-area:img;');
-                     
-                     let objs1img = document.createElement('img');
-                     objs1img.setAttribute('src',list[i].plcImg);
-                     objs1img.setAttribute('style','width:80px;height:80px;border-radius:4px;');
-                     
-                     let btnobj1 = document.createElement("button");
-                     btnobj1.setAttribute('class', 'add-button');
-                     let iconobj1 = document.createElement("i");
-                     iconobj1.setAttribute('class', 'fas fa-plus');
-                     btnobj1.addEventListener('click', show);
-                     btnobj1.addEventListener('click', (event) => {
-                         let currTarget = event.currentTarget.parentElement;
-                         let index = document.getElementsByClassName("left-place-list")
-                         let parentI = (currTarget.children)[0].cloneNode(true);
-                         let dailyPlaceList = document.getElementsByClassName("daily-place-list");
-                         let idx = getActiveDay(); // idx 를 얻었다.
-                         let currentList = dailyPlaceList[idx];
-                         let currentPlaceList = currentList.children;
-                         if(currentPlaceList.length>=6){
-                        	  Swal.fire({icon: 'error',
-            	  text: "하루에 장소는 6개까지만 가능합니다."})
-                        	 return;
-                         }
-                         for (let i = 0; len = currentPlaceList.length ,i < len; i++) {
-                            if(currTarget.dataset["plcNo"]==currentPlaceList[i].dataset["plcNo"]){
-                               return;
-                            }
-                         }
-                                     let objs1 = currTarget.cloneNode();
-                                     objs1.setAttribute('class','selected-place');
-                                     let span = document.createElement("span");
-                                     span.innerText = currTarget.dataset['title'];
-                                     
-                                     objs1.append(parentI);
-									 objs1.append(span);
-                                     let btnobj1 = document.createElement("button");
-                                     btnobj1.setAttribute('class', 'delete-button');
-                                     let iconobj1 = document.createElement("i");
-                                     iconobj1.setAttribute('class', 'fas fa-times');
-                                     btnobj1.addEventListener('click',deleteInLeft);
-                                     btnobj1.appendChild(iconobj1);
-                                     objs1.appendChild(btnobj1);
-                                     currentList.append(objs1);
-                                     
-                         dnd( function() {
-                            dnd( ".daily-place-list" ).sortable();
-                            dnd( ".daily-place-list" ).disableSelection();
-                            
-                            } );
-                      });
-                     btnobj1.appendChild(iconobj1);
-                     
-                     let btnobj2 = document.createElement("button");
-                     btnobj2.setAttribute('class', 'detail-button');
-                     let iconobj2 =document.createElement("i");
-                     iconobj2.setAttribute('class', 'fas fa-search-plus');
-                     btnobj2.addEventListener('click', (event) => { // 상세 정보 보기 페이지 URL + palceNo로 이루어져있다
-                         let clickedBtn = event.currentTarget;
-                         let placeNo = clickedBtn.parentElement.dataset["plcNo"];
-                         let URL = "https://place.map.kakao.com/"+placeNo;
-                         window.open(URL, "카카오 지도", "toolbar=no, menubar=no, scrollbars=no, resizable=yes" ); 
-                      });
-                     btnobj2.appendChild(iconobj2);
-                     imgwrap.appendChild(objs1img);
-                     objs1.prepend(imgwrap);
-                     objs1.appendChild(span);
-                     objs1.appendChild(btnobj1);
-                     objs1.appendChild(btnobj2);
-                     liobj.appendChild(objs1);
-                     placeList.append(liobj);
-                  }
-               })
-         return;
-      }
-       
-      function deleteInLeft(event) {
-         let deleteElement = event.currentTarget;
-         deleteElement.parentElement.remove(); 
-      }
-      
-      function getActiveDay(){
-         let dateList = document.getElementsByClassName("daily-wrap-div");
-         let idx;
-         for (let i = 0; i < dateList.length; i++) {
-            
-            if(dateList[i].style.display=="block"){
-               idx = i;
-            }
-         }
-         return idx;
-      }
+                 })
+           return;
+        }
+         
+        function deleteInLeft(event) {
+           let deleteElement = event.currentTarget;
+           deleteElement.parentElement.remove(); 
+        }
+        
+        function getActiveDay(){
+           let dateList = document.getElementsByClassName("daily-wrap-div");
+           let idx;
+           for (let i = 0; i < dateList.length; i++) {
+              
+              if(dateList[i].style.display=="block"){
+                 idx = i;
+              }
+           }
+           return idx;
+        }
 
-      function placeOver(event) {
-             let currTarget = event.currentTarget;
-             // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-             var bounds = new kakao.maps.LatLngBounds();
-             
-             const addMarker = (position) => {
-                 let text = currTarget.dataset["holiday"]=="null" ? "무휴":currTarget.dataset["holiday"];
-                 let openH = currTarget.dataset["openingH"]=="null" ? "무휴":currTarget.dataset["openingH"]; 
-                 let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
-				                     <ul class="dotOverlay placeInfo">
-				                     <li> 
-				                         <span class="number">\${currTarget.dataset["title"]}</span>
-				                     </li>
-				                     <li>
-				                         <span class="label">\${text}</span>
-				                     </li>
-				                     <li>
-										 <span class="label">\${openH}</span>
-				                     </li>
-				                 </ul>
-				             	</div>`;
-                 overlay = new kakao.maps.CustomOverlay({
-                     content: content,
-                     position: position,
-                     zIndex: 1
-                 });
-                 marker = new kakao.maps.CustomOverlay({
-                     content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
-                     position: position,
-                     zIndex: 1
-                 });
-                 let markObj = {"marker":marker,"overlay":overlay};
-                 markers.push(markObj);
-                 marker.setMap(map); // 지도 위에 마커를 표출합니다
-                 overlay.setMap(map);
-                 return markObj;
-              } 
-                 
-	          const panTo = (marker) => {
-	               // 이동할 위도 경도 위치를 생성합니다 
-	               let moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
-	               // 지도 중심을 부드럽게 이동시킵니다
-	               // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-	               map.setProportion;
-	               map.panTo(moveLatLon);            
-	          }
-	                var placePosition = new kakao.maps.LatLng(
-	                      (currTarget.dataset["lat"]),
-	                      (currTarget.dataset["lng"])),
-	                marker = addMarker(placePosition);
-	                panTo(marker["marker"]);
-	                
-	                currTarget.addEventListener("mouseout",() => {
-	                   marker["marker"].setMap(null);
-	                   marker["overlay"].setMap(null);
-	                   markers.pop();
-	                }) 
-      		  }
-   </script>
-</body>
-</html>
+        function placeOver(event) {
+               let currTarget = event.currentTarget;
+               // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+               var bounds = new kakao.maps.LatLngBounds();
+               
+               const addMarker = (position) => {
+                   let text = currTarget.dataset["holiday"]=="null" ? "연중 무휴":currTarget.dataset["holiday"];
+                   let openH = currTarget.dataset["openingH"]=="null" ? "":currTarget.dataset["openingH"]; 
+                   /* let content = `<div style="position: absolute;z-index:3;white-space:nowrap;">
+  				                     <ul class="dotOverlay placeInfo">
+  				                     <li> 
+  				                         <span class="number">\${currTarget.dataset["title"]}</span>
+  				                     </li>
+  				                     <li>
+  				                         <span class="label">\${text}</span>
+  				                     </li>
+  				                     <li>
+  										 <span class="label">\${openH}</span>
+  				                     </li>
+  				                 </ul>
+  				             	</div>`; */
+  				             	
+  				 let content = document.createElement("div");
+  				 content.setAttribute("style", "position:absolute;z-index:3;white-space:nowrap;");
+  				 let dotoverlay = document.createElement("ul");
+  				 dotoverlay.setAttribute("class", "dotOverlay placeInfo");
+  				 let li1 = document.createElement("li");
+  				 let spannum = document.createElement("span");
+  				 spannum.setAttribute("class", "number");
+  				 spannum.innerText = currTarget.dataset["title"];
+  				 li1.appendChild(spannum);
+  				 
+  				 let li2 = document.createElement("li");
+  				 let spanlabel1 = document.createElement("span");
+  				 spanlabel1.innerText = text;
+  				 li2.appendChild(spanlabel1);
+  				 
+  				 let li3 = document.createElement("li");
+  				 let spanlabel2 = document.createElement("span");
+  				 spanlabel2.innerText = openH;
+  				 li3.appendChild(spanlabel2);
+  								 
+  				 dotoverlay.appendChild(li1);
+  				 dotoverlay.appendChild(li2);
+  				 if(!(currTarget.dataset["openingH"]=="null")){
+  				 dotoverlay.appendChild(li3) 
+  				 }
+  				 content.appendChild(dotoverlay);
+                   overlay = new kakao.maps.CustomOverlay({
+                       content: content,
+                       position: position,
+                       zIndex: 1
+                   });
+                   marker = new kakao.maps.CustomOverlay({
+                       content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
+                       position: position,
+                       zIndex: 1
+                   });
+                   let markObj = {"marker":marker,"overlay":overlay};
+                   markers.push(markObj);
+                   marker.setMap(map); // 지도 위에 마커를 표출합니다
+                   overlay.setMap(map);
+                   return markObj;
+                } 
+                   
+  	          const panTo = (marker) => {
+  	               // 이동할 위도 경도 위치를 생성합니다 
+  	               let moveLatLon = new kakao.maps.LatLng(marker.getPosition().getLat(),marker.getPosition().getLng());
+  	               // 지도 중심을 부드럽게 이동시킵니다
+  	               // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+  	               map.setProportion;
+  	               map.panTo(moveLatLon);            
+  	          }
+  	                var placePosition = new kakao.maps.LatLng(
+  	                      (currTarget.dataset["lat"]),
+  	                      (currTarget.dataset["lng"])),
+  	                marker = addMarker(placePosition);
+  	                panTo(marker["marker"]);
+  	                
+  	                currTarget.addEventListener("mouseout",() => {
+  	                   marker["marker"].setMap(null);
+  	                   marker["overlay"].setMap(null);
+  	                   markers.pop();
+  	                }) 
+        		  }
+     </script>
+  </body>
+  </html>
