@@ -8,6 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
 
+
+tr:hover{
+	cursor:pointer;
+}
+
+.card-header span{
+	cursor:pointer;
+}
+
 #pagination li{
 	margin:3px;
 }
