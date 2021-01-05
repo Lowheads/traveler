@@ -3,10 +3,37 @@
     
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<div class="biggestwrapper">
 <%@ include file="../includes/header.jsp" %>
-
 <!-- URL 직접접근 막기 -->
+<link href="/resources/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.biggestwrapper{
+ 	  background-image: url("/resources/img/mainImg.jpg"); 
+	  background-size: cover;
+	   height:100%;
+}
+
+.body{
+	width:100%;
+	height:100%;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<title>내 정보 조회</title>
+	<!-- JQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+
+<link rel="stylesheet" href="/resources/css/member/memberInfo.css">
+
+</head>
+<body>
 <%
 	String strReferer = request.getHeader("referer");
 	
@@ -20,29 +47,26 @@
 		}
 %>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>내 정보 조회</title>
-	<!-- JQuery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-
-<link rel="stylesheet" href="/resources/css/member/memberInfo.css">
-
-</head>
-<body>
-
 <!-- 전체 div -->
-<div class="container-info">
+<div class="info-wrapper">
 	<!-- 정보 div -->
-	<div class="info-wrap">	
-		<!-- 내정보 div -->
-		<div class="info-head">내 정보</div>
+	<div class="info-container">	
+	
+		<div class="info-header">
+		<h3>내 정보 수정하기</h3>
+		<div class="button-wrapper">
+					        	 <!-- 저장하기 버튼 -->
+					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
+	        	 <!-- 저장하기 버튼 끝 -->
+	        	 
+	        	 <!-- 홈으로 -->
+	        	 <button type="button" class="home_btn" onclick="location.href='/main/index'">홈으로</button>
+	        	 <!-- 홈으로 버튼 끝 -->
+		</div>
+		</div>
 
 			<!-- 정보 출력 div  -->
-			<div class="main-wrap">
+			<div class="info-body">
 				<!-- 이메일 -->
 				<div class="info-content">
 					<div class="content-name">이메일</div>
@@ -59,6 +83,7 @@
 				 	<button type="button" class="dupl-btn" id="infoNicknameCheck">중복 체크</button>
 				 	<div style="margin-top: 3%; text-align: left;"><span id="infoSpanNickname"></span></div>
 				 </form>
+				 <span>닉네임은 한글,영문,숫자 <br> 두자리 이상 8자리 이하만 가능합니다 </span>
 			 	</div>
 			 	<!-- end proper -->
 			 </div>
@@ -81,40 +106,7 @@
 				<div class="content-name">비밀번호</div>
 				<button class="pwd-modiBtn" type='button' id="modal_btn" class="button">비밀번호 재설정</button></div>
 		
-			<!-- 비밀번호 변경 모달 -->
-		<div class="pwdModify_modal">
-			<div class="pwModal_close"><a class="pwdModi-aTag" href="#">X</a></div>
-		<div>
-				<!-- 비밀번호 -->
-				<form action="/member/modifyPwd" method="post">
 			
-				<p style="text-align: center; font-size: 20px; margin-top: 10%; margin-bottom : 10%; font-weight: bold;">비밀번호 변경</p>
-				
-				<div class="pwd-change-wrap">
-				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">현재 비밀번호</div> 
-				<input class="pwd-change" type="password" name="inputPwd" id="inputPwd" placeholder="현재 비밀번호"></div>
-					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">현재 비밀번호를 입력해주세요!</p>
-				
-				<!-- 새로운 비번 -->					
-				<div class="pwd-change-wrap">
-				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">새로운 비밀번호</div> 
-				<input class="pwd-change" type="password" name="newPwd" id="infoPwd" placeholder="변경할 비밀번호"></div>
-					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p>
-
-				<!-- 비밀번호 확인 -->
-				<div class="pwd-change-wrap">
-				<div class="mod-pwd-div" style="width: 130px; font-weight: bold; padding-top: 1%">새로운 비밀번호 확인</div> 
-				<input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" placeholder="비밀번호 확인"></div>
-					<p style="color: dodgerblue; margin-bottom: 5%; margin-top: 1%;">비밀번호는 숫자/영문자/특수문자를 모두 포함해야 합니다</p>
-					<p><input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>"></p>
-				<div class="pwd-change-confirm-btn">
-					<button type="submit" class="pwd-pwd" onclick="return infoPwdCheck();">비밀번호 변경하기</button>
-				</div>
-				
-				</form>
-			</div>
-		</div>
-		<!-- end 변경모달 -->
 		
 		<!-- 회원여행성향 -->
 			<div class="info-content"> 
@@ -130,49 +122,6 @@
 				</c:choose>
 			</div>
 		
-		
-		<!-- 회원탈퇴 모달 -->
-		<div class="member_delete_modal">
-			<div class="mdModal_close"><a class="pwdModi-aTag" href="#">X</a></div>
-		<div>
-
-			<form action="/member/deleteMember" method="post" onsubmit="return deleteAsk();">
-			
-				<p style="text-align: center; font-size: 20px; margin-top: 10%; 
-				margin-bottom : 10%; font-weight: bold;">여행의정석 회원 탈퇴 확인</p>
-				
-				<div class="delete_announce">
-					<p>회원탈퇴하시면 즉시 해지처리 되며,</p>
-					<p style="margin-bottom: 50px">해당 아이디로는 재 가입하실 수 없습니다.</p>
-				</div>
-				
-				<div class="delete-wrap">
-					<div class="del-div">회원 이메일 &nbsp;&nbsp;&nbsp; : &nbsp;</div>
-					<input style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px"
-					value="<%=session.getAttribute("email")%>">  
-						<input type="hidden" name="email" value="<%=session.getAttribute("email")%>" readonly="readonly">
-				</div>
-				
-				<div class="delete-wrap">				
-					<div class="del-div">현재 비밀번호 : &nbsp;</div>
-					<input type="password" id="deletePwd"  name="pwd" placeholder="현재 비밀번호">
-				</div>
-				
-				<div class="delete-wrap">
-					<div class="del-div">비밀번호 확인 : &nbsp;</div>
-					<input type="password" id="deletePwdCfm" placeholder="비밀번호 확인">
-				</div>
-				
-				<div class="delete_confirm_btn">
-					<button type="submit" id="delete_confirm" onclick="return memberDeleteValid();">탈퇴하기</button>
-				</div>
-				
-				</form>
-			</div>
-		</div>
-		<!-- end 탈퇴모달 -->
-		
-	
 		<div class="info-content">
 			<div class="content-name">가입일</div>
 			<div class="content-proper"><fmt:formatDate value="${member.regDate }" type="both" pattern="yyyy-MM-dd"/></div> 
@@ -182,30 +131,110 @@
 			<div class="content-name">최종로그인</div>
 			<div class="content-proper"><fmt:formatDate value="${member.lastDate }" type="both" pattern="yyyy-MM-dd"/></div>
 		</div>
-	</div>
-	<!-- end main-wrap-->
-	
-			<div class="info-foot">
-				<!-- 탈퇴 버튼 -->
-		            <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button>
+		
+						<!-- 탈퇴 버튼 -->
+						<span class="delete-btn" id="deleteBtn">여행의 정석 계정을 삭제하고 싶으신가요? </span>
+		          <!--   <button class="delete-btn" id="deleteBtn" type='button'>회원탈퇴</button> -->
 	        	 <!-- 탈퇴 버튼 끝 -->
 	        	 
 	        	
-	        	 <!-- 저장하기 버튼 -->
-					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
-	        	 <!-- 저장하기 버튼 끝 -->
-	        	 
-	        	 <!-- 홈으로 -->
-	        	 <button type="button" class="home_btn" onclick="location.href='/main/index'">홈으로</button>
-	        	 <!-- 홈으로 버튼 끝 -->
-	        	 
-			</div>
-			<!-- end foot -->
-			
+
+	</div>
+	<!-- end main-wrap-->
+
 		</div>
 		<!-- end info-wrap -->
 	</div>
 <!-- end container-info -->
+
+<!-- 비밀번호 변경 모달 -->
+		<div class="pwdModify_modal modal">
+			<div class="Modal_close"><a class="pwdModi-aTag" href="#"><i class="fas fa-times"></i></a></div>
+		<div>
+				<!-- 비밀번호 -->
+				<form class="modifyPwd" action="/member/modifyPwd" method="post">
+				
+				<h4>비밀번호 변경</h4>
+				<div class="container">
+				<div class="pwd-wrapper">
+				<div class="title">현재 비밀번호</div> 
+				<div class="input-wrapper">
+					<input class="pwd-change" type="password" name="inputPwd" id="inputPwd" >
+					<p>현재 비밀번호를 입력해주세요</p>
+				</div>
+				</div>
+				
+				<!-- 새로운 비번 -->					
+				<div class="pwd-wrapper">
+				<div class="title">새로운 비밀번호</div> 
+				<div class="input-wrapper">
+				<input class="pwd-change" type="password" name="newPwd" id="infoPwd" >
+					<p>비밀번호는 8자리 이상, 12자리 이하의 <br>숫자/영문자/특수문자를 모두 포함해야 합니다</p></div>
+					</div>
+
+				<!-- 비밀번호 확인 -->
+				<div class="pwd-wrapper">
+				<div class="title">새로운 비밀번호 확인</div> 
+				<div class="input-wrapper">
+				<input class="pwd-change" type="password" name="pwdCfmm" id="infoPwdCfm" >
+					<p>다시 한 번 입력해주세요</p></div>
+					<p><input type="hidden" id="email" name='email' value="<%=session.getAttribute("email")%>"></p>
+					</div>
+					
+				<div class="modalFooter">
+					<button type="submit" class="pwd-pwd confirmBtn" onclick="return infoPwdCheck();">변경하기</button>
+				</div>
+				</div>
+				
+				</form>
+				
+			</div>
+		</div>
+		<!-- end 변경모달 -->
+		
+<!-- 회원탈퇴 모달 -->
+		<div class="member_delete_modal modal">
+			<!-- <div class="mdModal_close"><a class="pwdModi-aTag" href="#"><i class="fas fa-times"></i></a></div> -->
+			<div class="Modal_close"><a class="pwdModi-aTag" href="#"><i class="fas fa-times"></i></a></div>
+		<div>
+
+			<form action="/member/deleteMember" class="withdraw" method="post" onsubmit="return deleteAsk();">
+			
+				<h4>여행의정석 회원 탈퇴</h4>
+				
+				<div class="deleteContainer">
+				
+				<div class="delete_announce">
+					<p>하단의 버튼을 누르면 즉시 탈퇴처리되며,<br>같은 아이디로는 재가입이 불가능합니다</p>
+				</div>
+				
+				<div class="delete-wrap">
+					<div class="title">회원 이메일</div>
+					<span> <%=session.getAttribute("email")%></span>
+						<input type="hidden" name="email" value="<%=session.getAttribute("email")%>" readonly="readonly">
+				</div>
+				
+				<div class="delete-wrap">				
+					<div class="title">현재 비밀번호</div>
+					<input type="password" id="deletePwd"  name="pwd" placeholder="현재 비밀번호">
+				</div>
+				
+				<div class="delete-wrap">
+					<div class="title">비밀번호 확인</div>
+					<input type="password" id="deletePwdCfm" placeholder="비밀번호 확인">
+				</div>
+				
+				</div>
+				
+				<div class="modalFooter">
+					
+					<button type="submit" id="delete_confirm" class="confirmBtn" onclick="return memberDeleteValid();">탈퇴하기</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		<!-- end 탈퇴모달 -->
 		
 </body>
 
@@ -216,33 +245,34 @@
 		
 		// 비밀번호 변경
 		document.getElementById('modal_btn').addEventListener('click', onClick);
-		document.querySelector('.pwModal_close').addEventListener('click', offClick);
+		
+		let closeBtn = $(".Modal_close");
+		closeBtn[0].addEventListener('click', offClick);
+		closeBtn[1].addEventListener('click', offClick);
 		
 		// 회원 탈퇴
 		document.getElementById('deleteBtn').addEventListener('click', deleteOnClick);
-		document.querySelector('.mdModal_close').addEventListener('click', deleteOffClick);
-		
 		// 모달 오픈
 		function onClick() {
 			document.querySelector('.pwdModify_modal').style.display = 'block';
 			document.querySelector('.black_bg').style.display = 'block';
+			
 		}
 		// 모달 오픈
 		function deleteOnClick() {
 			document.querySelector('.member_delete_modal').style.display = 'block';
 			document.querySelector('.black_bg').style.display = 'block';
+			 $('body').css("overflow", "hidden");
 		}
 		
 		// 모달 닫기
 		function offClick() {
 			document.querySelector('.pwdModify_modal').style.display = 'none';
-			document.querySelector('.black_bg').style.display = 'none';
-		}
-		// 모달 닫기
-		function deleteOffClick() {
 			document.querySelector('.member_delete_modal').style.display = 'none';
 			document.querySelector('.black_bg').style.display = 'none';
+			$('body').css("overflow", "scroll");
 		}
+		
 		
 	};
 
@@ -402,6 +432,6 @@
 </script>
 
 </html>
-
+</div>
 <%@ include file="../includes/footer.jsp" %>
 
