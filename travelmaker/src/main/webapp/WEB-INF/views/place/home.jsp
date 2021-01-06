@@ -31,7 +31,7 @@
 	font-family:Spoqa Han Sans Neo,sans-serif;
 }
 .submit-btn {
-	background-color: #ff8b3d;
+	background-color: #3b99fc;
     color: white;
     z-index: 10;
     position:absolute;
@@ -44,7 +44,7 @@
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 .submit-btn:hover {
-	background-color:#B59C88;
+	background-color:#14609d;
 }
 
 #right-container > .modal_close_btn {
@@ -70,7 +70,7 @@ img {
 }
 
 #map > button.make-button:hover {
-	background-color:#DB8E5A;
+	background-color:#14609d;
 }
 
 .daily-place-list li {
@@ -292,7 +292,7 @@ div.hoverable-place > button.detail-button {
 	height:100%;
 }
 .left-date-list>button:hover {
-	background-color:#6b472f;
+	background-color:#90a4ae38;
 }
 
 .selected-place {
@@ -312,7 +312,7 @@ div.hoverable-place > button.detail-button {
 	flex: 0 0 40%;
 }
 #left-date-list > button.daily-place-btn.active{
-	background-color:#ff8b3d;
+	background-color:#3b99fc;
 }
 
 #rec-place {
@@ -375,7 +375,7 @@ div.hoverable-place > button.detail-button {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 #map>.make-button {
-	background-color:#ff8b3d;
+	background-color:#3b99fc;
 	color:white;
 	z-index:10;
 	position:absolute;
@@ -478,7 +478,7 @@ body > div.mainContainer > div.right.menu {
 	flex:0 0 20%;
 }
 #left-date-list > button.showAllBtn.active{
-	background-color:#ff8b3d;
+	background-color:#3b99fc;
 }
 .place-perday-list {
 	display: flex;
@@ -512,7 +512,7 @@ body > div.mainContainer > div.right.menu {
 /* #all-schedule > ul > div > button:hover {
 } */
 #all-schedule > div > ul > div > button:hover {
-	background-color:#ffae77;
+	background-color:#52a9ef;
 }
 .outplcdt-wrap-div {
 	padding-top:10px;
@@ -526,7 +526,7 @@ body > div.mainContainer > div.right.menu {
 
 .plcdt-wrap-div > span {
 	font-weight: 600;
-	color: #ff9100;
+	color: #2196f3;
 }
 {
 	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
@@ -552,7 +552,7 @@ body > div.mainContainer > div.right.menu {
 	border:0; box-shadow:0px 1px 2px #888;
 }    
 .number {
-	font-weight:bold;color:#ee6152;
+	font-weight:bold;color:#008eff;
 }
 .dotOverlay:after {
 		content:'';
@@ -673,7 +673,7 @@ body > div.mainContainer > div.right.menu {
 	font-size:13px;
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #ff8b3d;
+    background-color: #3b99fc;
     border-color: transparent;
     color: #fff;
 }
@@ -692,19 +692,19 @@ body > div.mainContainer > div.right.menu {
     width: 60px;
     height: 40px;
     border-radius:5px;
-    background-color:#ff8b3d;
+    background-color:#3b99fc;
 	color:white;    
 }
 /* daterangepicker 디자인 끝 */
 
 /* alert */
 .swal2-button, .swal-button--confrim{
-   background-color: #ff8b3d;
+   background-color: #3b99fc;
 }
-.swal2-button:not([disabled]):hover{background-color:#ff8b3d}.swal2-button:active{background-color:#70bce0}
+.swal2-button:not([disabled]):hover{background-color:#3b99fc}.swal2-button:active{background-color:#70bce0}
 
 .swal2-confirm.swal2-styled {
-	background-color: #ff8b3d;
+	background-color: #3b99fc;
 }
 /* alert */
 
@@ -1449,7 +1449,7 @@ body > div.mainContainer > div.right.menu {
     	   let len = latlngList.length;
     	   const draw = (idx) => {
         	   
-        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
+        	   let colors = ["21209c","3ec1d3","3490de","583d72","086972","f07b3f","b61aae","ea5455","2d4059","fdb827"];
     		   let posArr = [];
     		   let markCon = [];
     		   let polyCon = [];
@@ -1533,9 +1533,9 @@ body > div.mainContainer > div.right.menu {
     	   let idx = $(this).index()-1;
     	   
 		   const draw = (idx) => {
-        	   
-        	   let colors = ["f07b3f","b61aae","ea5455","2d4059","fdb827","21209c","583d72","3ec1d3","3490de","086972"];
-    		   let posArr = [];
+			   
+			   let colors = ["21209c","3ec1d3","3490de","583d72","086972","f07b3f","b61aae","ea5455","2d4059","fdb827"];
+			   let posArr = [];
     		   let markCon = [];
     		   let polyCon = [];
         	   let latlngList = document.getElementsByClassName("daily-place-dt");
@@ -1851,8 +1851,18 @@ body > div.mainContainer > div.right.menu {
                        zIndex: 1
                    });
                    marker = new kakao.maps.CustomOverlay({
-                       content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>',
-                       position: position,
+                      /*  content: '<span class="dot" style="overflow: hidden;float: left;width: 12px;height: 12px;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png);"></span>', */
+                     content: `<svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background: none;">
+                         <circle cx="50" cy="50" r="27.1897" fill="none" ng-attr-stroke="{{config.c1}}" ng-attr-stroke-width="{{config.width}}" stroke="#2082c1" stroke-width="10">
+                     <animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="1" keySplines="0 0.2 0.8 1" begin="-0.5s" repeatCount="indefinite"/>
+                     <animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1" keySplines="0.2 0 0.8 1" begin="-0.5s" repeatCount="indefinite"/>
+                   </circle>
+                   <circle cx="50" cy="50" r="3.96265" fill="none" ng-attr-stroke="{{config.c2}}" ng-attr-stroke-width="{{config.width}}" stroke="#2082c1" stroke-width="8">
+                     <animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="1" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"/>
+                     <animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"/>
+                   </circle>
+                 </svg>`,
+                      position: position,
                        zIndex: 1
                    });
                    let markObj = {"marker":marker,"overlay":overlay};
