@@ -421,9 +421,9 @@ a:visited{text-decoration: none;}
     border: 1px solid #4e266d;
 }
 #searchPwdBtn:hover{
-   background-color: #ff8b3d;
+   background-color: rgba(59, 153, 252, .7);
    color: white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid rgba(59, 153, 252, .7);
 }
 #menu_wrap {
    position: absolute;
@@ -538,8 +538,8 @@ body {
 /* 
 #button:hover {
    color: white;
-   background-color: #ff8b3d;
-   border: 1px solid #ff8b3d;
+   background-color: rgba(59, 153, 252, .7);
+   border: 1px solid rgba(59, 153, 252, .7);
 } 
 */
 
@@ -572,7 +572,7 @@ body {
  	width: 130px;
     height: 35px;
     text-align: center;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     color: white;
     border: 1px solid white;
     border-radius: 7px;
@@ -642,7 +642,7 @@ body {
     color:rgba(255, 255, 255, 0.9);
 }
 .button-btn-submit:hover{
-	background-color: #ff8b3d;
+	background-color: rgba(59, 153, 252, .7);
 	color:rgba(255, 255, 255, 0.9);
 	font-weight: bold;
 }
@@ -731,12 +731,12 @@ body {
 }
 .recPlace:hover{
     color:rgba(255, 255, 255, 0.9);
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     
 }
 .clicked{
 	 color:rgba(255, 255, 255, 0.9);
-	background-color: #ff8b3d;
+	background-color: rgba(59, 153, 252, .7);
 }
 .prev, .next {
     cursor: pointer;
