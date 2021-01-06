@@ -63,7 +63,7 @@ display:inline-block;
 }
 
 .home_btn:hover, .save-btn:hover{
-    background-color: #ff8b3d;
+    background-color: #2196f3;
     color: white;
 }
 
@@ -101,9 +101,9 @@ display:inline-block;
 
 /*중복체크 비밀번호 재설정버튼*/
 .info-body button{
-	background-color: #ff8b3d;
+	background-color: #2196f3;
     color: white;
-    border: 1px solid #ff8b3d;
+    border: 1px solid #2196f3;
     padding: 4px 10px; 
     border-radius: 7px;
     font-size: 12px;
@@ -206,10 +206,9 @@ display:inline-block;
 }
 
 .confirmBtn:hover{
-	
-		background: #ff8b3d;
+	background: #2196f3;
     color: white;
-    border : 1px solid #ff8b3d;
+    border : 1px solid #2196f3;
 }
 
 

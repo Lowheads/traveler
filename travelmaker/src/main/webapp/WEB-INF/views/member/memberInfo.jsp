@@ -114,7 +114,7 @@
 				
 				<c:choose>
 				    <c:when test="${member.travelType == null}">
-				   		<div class="content-proper">테스트 해주세요</div> 
+				   		<div class="content-proper" style = "font-size:10px">테스트 결과가 없습니다<br>메인 페이지에서 테스트를 해주세요</div> 
 				    </c:when>
 				    <c:when test="${member.travelType != null}">
 						<div class="content-proper">${member.travelType }</div> 
