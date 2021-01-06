@@ -13,7 +13,7 @@
 <head>
 <style>
 .biggestwrapper{
- 	  background-image: url("/resources/img/mainImg.jpg"); 
+ 	  background-image: url("/resources/img/road.jpg"); 
 	  background-size: cover;
 	   height:100%;
 }
@@ -21,6 +21,9 @@
 .body{
 	width:100%;
 	height:100%;
+}
+.header__nav__button-account {
+	background-color:white;
 }
 
 </style>
@@ -56,7 +59,7 @@
 		<h3>내 정보 수정하기</h3>
 		<div class="button-wrapper">
 					        	 <!-- 저장하기 버튼 -->
-					<button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
+                    <button type="submit" class="save-btn" onclick="return infoNickSaveCheck()">저장하기</button>
 	        	 <!-- 저장하기 버튼 끝 -->
 	        	 
 	        	 <!-- 홈으로 -->
@@ -114,7 +117,7 @@
 				
 				<c:choose>
 				    <c:when test="${member.travelType == null}">
-				   		<div class="content-proper" style = "font-size:10px">테스트 결과가 없습니다<br>메인 페이지에서 테스트를 해주세요</div> 
+                           <div class="content-proper" style = "font-size:10px">테스트 결과가 없습니다<br>메인 페이지에서 테스트를 해주세요</div> 				    
 				    </c:when>
 				    <c:when test="${member.travelType != null}">
 						<div class="content-proper">${member.travelType }</div> 

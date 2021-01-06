@@ -179,7 +179,7 @@ li{
 				href="/main/index">
 				<!-- <div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
-				</div>
+				</div> 
 				<div class="sidebar-brand-text mx-3">
 					여행의 정석
 				</div> -->
