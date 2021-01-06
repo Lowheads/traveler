@@ -114,6 +114,14 @@ li{
 	padding-bottom:10px;
 } 
 
+.logoImg{
+	width:60%;
+}
+
+.logoImg img{
+	width: 100%;
+}
+
 
 </style>
 <script>
@@ -170,11 +178,14 @@ li{
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/main/index">
-				<div class="sidebar-brand-icon rotate-n-15">
+				<!-- <div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
-				</div>
+				</div> 
 				<div class="sidebar-brand-text mx-3">
 					여행의 정석
+				</div> -->
+				<div class="logoImg">
+					<img src = "/resources/img/logo.png">				
 				</div>
 			</a>
 

@@ -642,7 +642,7 @@ body {
     color:rgba(255, 255, 255, 0.9);
 }
 .button-btn-submit:hover{
-	background-color: rgba(59, 153, 252, .7);
+	background-color: #2196f3;
 	color:rgba(255, 255, 255, 0.9);
 	font-weight: bold;
 }
@@ -731,12 +731,12 @@ body {
 }
 .recPlace:hover{
     color:rgba(255, 255, 255, 0.9);
-    background-color: rgba(59, 153, 252, .7);
+    background-color: #2182F3;
     
 }
 .clicked{
 	 color:rgba(255, 255, 255, 0.9);
-	background-color: rgba(59, 153, 252, .7);
+	background-color: #2196f3;
 }
 .prev, .next {
     cursor: pointer;

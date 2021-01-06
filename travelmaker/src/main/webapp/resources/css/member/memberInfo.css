@@ -214,8 +214,7 @@ display:inline-block;
 }
 
 .confirmBtn:hover{
-	
-		background: #2196f3;
+	background: #2196f3;
     color: white;
     border : 1px solid #2196f3;
 }
