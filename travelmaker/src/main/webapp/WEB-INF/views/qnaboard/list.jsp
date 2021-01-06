@@ -28,7 +28,7 @@
 <div class="full-wrap">
 	
 	<!-- 메인 타이틀 -->
-	<div class="title-wrap"><a href="/qnaboard/list">Q&A 게시판</a></div>
+	<div class="title-wrap"><a href="/qnaboard/list"></a></div>
 
   <table class="board-wrap">
     <thead>

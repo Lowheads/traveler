@@ -25,7 +25,7 @@ public class Kakao_restapi {
  
         postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
         postParams.add(new BasicNameValuePair("client_id", "1bf3c8a08cf3e47ad275686f733fb056")); // REST API KEY
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:809/member/kakaoLogin")); // 리다이렉트 URI
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8181/member/kakaoLogin")); // 리다이렉트 URI
         postParams.add(new BasicNameValuePair("code", code)); // 로그인 과정중 얻은 code 값
  
         final HttpClient client = HttpClientBuilder.create().build();

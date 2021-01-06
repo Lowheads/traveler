@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 .mod-btn{
-	    background-color: #ff8b3d;
+	background-color: #2196f3;
     color: white;
-    border: 1px solid #ff8b3d;
+    border: 1px solid #2196f3;
     font-size: 15px;
     float: right;
     padding: 4px 13px 4px 13px;
@@ -29,9 +29,9 @@
 }
 
 .del-btn:hover{
-background-color: #A9A9A9;
-   color:balck;
-   border: 1px solid #A9A9A9;
+	background-color: #2196f3;
+    color: white;
+    border: 1px solid #2196f3;
 }
 
 .list-btn{
@@ -49,7 +49,7 @@ background-color: #A9A9A9;
 }
 
 .list-btn:hover{
-   background-color: #A9A9A9;
-   color:balck;
-   border: 1px solid #A9A9A9;
+	background-color: #2196f3;
+    color: white;
+    border: 1px solid #2196f3;
 }
