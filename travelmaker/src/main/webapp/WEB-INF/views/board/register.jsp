@@ -85,17 +85,17 @@ body{
 	font-size:15px;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	background-color:#ff8b3d;
+	background-color:#2196f3;
 	color: white;
-	border: 1px solid #ff8b3d;
+	border: 1px solid #2196f3;
 	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
 	outline: 0;
 }
 .btn:hover{
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid #2196f3;
    cursor: pointer;
 }
 

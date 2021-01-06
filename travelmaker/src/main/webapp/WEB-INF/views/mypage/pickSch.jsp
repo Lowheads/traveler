@@ -54,11 +54,11 @@
 }
 
 .pagination_btn a:hover{
-	color: #f60;
+	color: #2196f3;
 }
 
 .pagination_bar .active a{
-	color: #f60;
+	color: #2196f3;
 }
       a {
       text-decoration: none;
@@ -211,13 +211,13 @@
          padding: 10px 20px 0 20px;
          text-align: center;
          color: white;
-   background-color: #ff8b3d;
+   background-color: #2196f3;
          
       }
 
       
 .mnu_box:hover {
-   background-color:#ff8b3d;
+   background-color:#2196f3;
      color:white;
 }
       .content_wrap {

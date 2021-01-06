@@ -55,11 +55,11 @@
 }
 
 .pagination_btn a:hover{
-	color: #f60;
+	color: #2196f3;
 }
 
 .pagination_bar .active a{
-	color: #f60;
+	color: #2196f3;
 }
 
 /* 좋아요버튼 test */
@@ -417,11 +417,11 @@
    padding: 10px 20px 0 20px;
    text-align: center;
    color: white;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
 }
 
 .mnu_box:hover {
-   background-color:#ff8b3d;
+   background-color:#2196f3;
      color:white;
 }
 
@@ -470,8 +470,8 @@
 }
 
 #viewMap_btn:hover{
-   background-color: #ff8b3d;
-   border: 1px solid #ff8b3d;
+   background-color: #2196f3;
+   border: 1px solid #2196f3;
    color: white;   
 }
 

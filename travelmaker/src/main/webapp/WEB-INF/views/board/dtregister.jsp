@@ -209,7 +209,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #ff8b3d;
+  background-color: #2196f3;
   color: white;
 }
 #tabletitle{
@@ -242,8 +242,8 @@
 .registerbtn{
 	font-size:15px;
 	color: white;
-	background-color:#ff8b3d;
-	border: 1px solid #ff8b3d;
+	background-color:#2196f3;
+	border: 1px solid #2196f3;
 	border-radius: 7px;
 	padding: 5px 20px 5px 20px;
 	float: right;
@@ -320,9 +320,9 @@
 }
 
 .fileAdd_btn:hover{
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid #2196f3;
 }
 
 

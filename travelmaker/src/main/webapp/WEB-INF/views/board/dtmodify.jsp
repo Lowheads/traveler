@@ -200,7 +200,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #ff8b3d;
+  background-color: #2196f3;
   color: white;
 }
 #tabletitle{
@@ -231,9 +231,9 @@
 }
 
 .btn:hover, .update_btn:hover , .fileAdd_btn:hover{
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
-   border: 1px solid #ff8b3d;	
+   border: 1px solid #2196f3;	
 }
 
 .cancel_btn:hover, #fileDel:hover, #fileDelBtn:hover{
@@ -257,9 +257,9 @@
 .update_btn{
 	font-size:15px;
 	margin-bottom: 10px;
-	background-color:#ff8b3d;
+	background-color:#2196f3;
 	color: white;
-	border: 1px solid #ff8b3d;
+	border: 1px solid #2196f3;
 	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: right;

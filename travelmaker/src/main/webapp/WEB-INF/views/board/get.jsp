@@ -28,10 +28,10 @@
 }
 
 .swal-button--confirm{
-	background-color: #ff8b3d;
+	background-color: #2196f3;
 }
 
-.swal-button:not([disabled]):hover{background-color:#ff8b3d }.swal-button:active{background-color:#70bce0}
+.swal-button:not([disabled]):hover{background-color:#2196f3 }.swal-button:active{background-color:#70bce0}
 
 .contents{
 	width: 80%;
@@ -208,9 +208,9 @@
 	font-size:15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	background-color:#ff8b3d;
+	background-color:#2196f3;
 	color:white;
-	border: 1px solid #ff8b3d;
+	border: 1px solid #2196f3;
 	border-radius: 7px; 
 	padding: 5px 20px 5px 20px;
 	float: right;
@@ -270,7 +270,7 @@ overflow-y: auto;
 
 .dt_top_left{
    width: 15%;
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
     text-align: center;
    line-height: 70px;    
@@ -299,9 +299,9 @@ overflow-y: auto;
    padding-right: 10px;
 }
 .showMap:hover , #dtmodify_btn:hover, #list_btn:hover, #modify_btn:hover, #remove_btn:hover{
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid #2196f3;
 }
 .schdt_bottom{
    height: 100px;
@@ -321,7 +321,7 @@ overflow-y: auto;
    margin-left:auto;
    margin-right:auto;
    color:white;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
    border-radius: 50%;
    width: 20px;
     height: 20px;
