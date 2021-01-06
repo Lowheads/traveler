@@ -86,7 +86,7 @@ a:visited{text-decoration: none;}
     --pink: #ff385c;
 }
 .header {
-    height: 80px;
+    height: 110px;
     padding: 0 90px;
     display: flex;
     align-items: center;
@@ -162,9 +162,12 @@ a:visited{text-decoration: none;}
     text-decoration: none;
     color: #222;
     height: 40px;
+    font-size:18px;
+    transition: box-shadow 0.2s ease;
 }
 .header__nav__button-greyHover:hover {
-    background: var(--grey-light);
+	background-color:whitesmoke;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
  .header__nav__button-account {
     border: 1px solid var(--grey-med);
@@ -1014,12 +1017,15 @@ body {
 
     <div class="header__logo">
         <a href="/main/index">
-            <img class="tmlogo" src="/resources/icons/tmlogo.png" width="100px" alt="">
+            <img class="tmlogo" src="/resources/icons/logo-sky.png" width="145px" alt="">
         </a>
     </div>
 
          <div class="header__nav">
-        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 게시판
+        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 
+        <div>
+        게시판
+        </div>
         </button>
 
         <button id="budgetbutton" 
