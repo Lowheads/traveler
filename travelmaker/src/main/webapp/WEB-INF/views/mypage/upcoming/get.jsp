@@ -251,7 +251,7 @@
 }
 
 .map_wrap {
-   width: 400px;
+   width: 500px;
    height: 350px;
 }
 /* 지도 css */
@@ -367,7 +367,7 @@ height: 90%;
 	padding-top: 8px;
 	position: absolute;
 	right: 10%;
-	top:100px;
+	top:150px;
 }
 
 .register_open_btn:hover .sharebtnbox{

@@ -252,7 +252,7 @@
 }
 
 .map_wrap {
-   width: 400px;
+   width: 500px;
    height: 350px;
 }
 /* 지도 css */
