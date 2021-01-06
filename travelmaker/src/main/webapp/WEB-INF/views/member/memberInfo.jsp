@@ -25,6 +25,18 @@
 .header__nav__button-account {
 	background-color:white;
 }
+.header__nav__button-greyHover {
+	color:white;
+	font-family:'Nanum Gothic', sans-serif;
+	font-size:19px;
+    background: transparent;
+    transition: box-shadow 0.2s ease;
+    text-shadow: 2px 2px #222;
+}
+.header__nav__button-greyHover:hover {
+	background: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+}
 
 </style>
 
