@@ -63,7 +63,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
 		  StringBuffer url = new StringBuffer();
 		  url.append("https://kauth.kakao.com/oauth/authorize?");
 		  url.append("client_id=" + "1bf3c8a08cf3e47ad275686f733fb056");
-		  url.append("&redirect_uri=http://localhost:809/member/kakaoLogin");
+		  url.append("&redirect_uri=http://localhost:8181/member/kakaoLogin");
 		  url.append("&response_type=code");
 		return url;
 	}
