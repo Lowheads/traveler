@@ -86,7 +86,7 @@ a:visited{text-decoration: none;}
     --pink: #ff385c;
 }
 .header {
-    height: 80px;
+    height: 110px;
     padding: 0 90px;
     display: flex;
     align-items: center;
@@ -162,9 +162,12 @@ a:visited{text-decoration: none;}
     text-decoration: none;
     color: #222;
     height: 40px;
+    font-size:18px;
+    transition: box-shadow 0.2s ease;
 }
 .header__nav__button-greyHover:hover {
-    background: var(--grey-light);
+	background-color:whitesmoke;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
  .header__nav__button-account {
     border: 1px solid var(--grey-med);
@@ -418,9 +421,9 @@ a:visited{text-decoration: none;}
     border: 1px solid #4e266d;
 }
 #searchPwdBtn:hover{
-   background-color: #ff8b3d;
+   background-color: rgba(59, 153, 252, .7);
    color: white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid rgba(59, 153, 252, .7);
 }
 #menu_wrap {
    position: absolute;
@@ -490,7 +493,7 @@ body {
 	border-radius: .5em;
 	width: 320px;
     height: 45px;
-    background-color: #ff8b3d;
+    background-color: white;
     border: 1px solid #ddd;
     color:#383838;
     cursor:pointer;
@@ -500,9 +503,9 @@ body {
 }
 
 .not-my-button-login:hover {
-	/* background-color:#ff9248; */
-	/* box-shadow: 0 1px 0 1px rgba(0, 0, 0, .15); */
-	/* background-color:#f1f1f1; */
+	color:white;
+	background-color:rgba(59, 153, 252, .7);
+	font-weight:900;
 }
 
 .login-input {
@@ -535,8 +538,8 @@ body {
 /* 
 #button:hover {
    color: white;
-   background-color: #ff8b3d;
-   border: 1px solid #ff8b3d;
+   background-color: rgba(59, 153, 252, .7);
+   border: 1px solid rgba(59, 153, 252, .7);
 } 
 */
 
@@ -569,7 +572,7 @@ body {
  	width: 130px;
     height: 35px;
     text-align: center;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     color: white;
     border: 1px solid white;
     border-radius: 7px;
@@ -639,7 +642,7 @@ body {
     color:rgba(255, 255, 255, 0.9);
 }
 .button-btn-submit:hover{
-	background-color: #ff8b3d;
+	background-color: #2196f3;
 	color:rgba(255, 255, 255, 0.9);
 	font-weight: bold;
 }
@@ -728,12 +731,12 @@ body {
 }
 .recPlace:hover{
     color:rgba(255, 255, 255, 0.9);
-    background-color: #ff8b3d;
+    background-color: #2182F3;
     
 }
 .clicked{
 	 color:rgba(255, 255, 255, 0.9);
-	background-color: #ff8b3d;
+	background-color: #2196f3;
 }
 .prev, .next {
     cursor: pointer;
@@ -995,7 +998,7 @@ body {
    border: 1px solid #ddd;
     width: 475px;
     height: 45px;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     border-radius: .5em;
     color: #383838;
     font-weight: 600;
@@ -1014,12 +1017,15 @@ body {
 
     <div class="header__logo">
         <a href="/main/index">
-            <img src="/resources/icons/tmlogo.png" width="100px" alt="">
+            <img class="tmlogo" src="/resources/icons/logo-sky.png" width="145px" alt="">
         </a>
     </div>
 
          <div class="header__nav">
-        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 게시판
+        <button type="button" onclick="location.href='/board/list'" class="header__nav__button header__nav__button-greyHover"> 
+        <div>
+        게시판
+        </div>
         </button>
 
         <button id="budgetbutton" 

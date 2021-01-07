@@ -51,11 +51,11 @@
 }
 
 .pagination_btn a:hover{
-	color: #f60;
+	color: #2196f3;
 }
 
 .pagination_bar .active a{
-	color: #f60;
+	color: #2196f3;
 }
 a {
    text-decoration: none;
@@ -122,11 +122,11 @@ body {
    padding: 10px 20px 0 20px;
    text-align: center;
    color: white;
-   background-color: #ff8b3d;
+   background-color: #2196f3;
 }
 
 .mnu_box:hover {
-   background-color: #ff8b3d;
+   background-color: #2196f3;
    color:white;
 }
 
@@ -137,7 +137,7 @@ body {
 }
 
 .content_tap {
-  width: 90%;
+  width: 80%;
    height: 100px;
    display: flex;
    font-size: 12px;
@@ -155,7 +155,7 @@ body {
 
 .contents {
    padding: 20px;
-   width: 100%;
+   width: 1050px;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
@@ -225,6 +225,8 @@ body {
                   <a href="/mypage/past" style="color: #3099dd;"><b>지나간 일정</b></a>
                </div>
          </div>
+         
+         <div style="display: flex;justify-content: center;">
          <div class="contents">
             <!-- 카드게시물 -->
             <c:forEach items="${list }" var="sch">
@@ -249,6 +251,7 @@ body {
             </div>
          </a>
             </c:forEach>
+         </div>
          </div>
          
            <div style="text-align: center;">
@@ -297,14 +300,20 @@ body {
 				'https://t1.daumcdn.net/cfile/tistory/99D7EF3359E8954035',
 				'https://t1.daumcdn.net/cfile/tistory/99AB833359E8953E0C',
 				'https://t1.daumcdn.net/cfile/tistory/99936B3359E8953C27',
-				'https://t1.daumcdn.net/cfile/tistory/998E003359E8953828' ]
+				'https://t1.daumcdn.net/cfile/tistory/998E003359E8953828',
+				'https://cdn.pixabay.com/photo/2016/09/22/02/34/horse-1686229_1280.jpg',
+				'https://cdn.pixabay.com/photo/2015/09/18/03/36/film-camera-945006_1280.jpg',
+				'https://cdn.pixabay.com/photo/2020/05/05/07/52/republic-of-korea-5131925_1280.jpg',
+				'https://cdn.pixabay.com/photo/2016/11/18/07/46/cozy-seopji-1833560_1280.jpg',
+				'https://cdn.pixabay.com/photo/2016/02/11/08/48/jeju-island-1193280_1280.jpg',
+				'https://cdn.pixabay.com/photo/2019/09/10/08/31/sea-4465585_1280.jpg']
 
 		let divBg = document.getElementsByClassName('sch_Img');
 		for (let i = 0; i < divBg.length; i++) {
 			let num = Math.random();
 
 			divBg[i].style.backgroundImage = "url("
-					+ imgArr[Math.floor(num * 9)] + ")";
+					+ imgArr[Math.floor(num * 15)] + ")";
 		}
 
 	})

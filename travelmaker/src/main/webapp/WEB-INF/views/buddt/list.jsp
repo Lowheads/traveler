@@ -412,7 +412,7 @@ option {
 
     .btn-3 {
         color: white;
-        background-color: #ff812f;
+        background-color: #2196f3;
         border: 1px solid #ddd;
     }
 
@@ -496,6 +496,9 @@ label {
         .l_wrap{width:100vw;height:100vh;overflow:auto;}
         .l_wrap.s_no-scroll{pointer-events:none;}
         
+form {
+	margin-bottom:0px;
+}
 </style>
 
 

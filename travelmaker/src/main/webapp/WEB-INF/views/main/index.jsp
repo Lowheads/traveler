@@ -26,10 +26,14 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />   
 <link rel="preconnect" href="https://fonts.gstatic.com"> 
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com"> 
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
 <style>
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 button{
 	outline: 0;
 }
@@ -150,7 +154,7 @@ position: absolute;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     border-color: transparent;
     color: #fff;
 }
@@ -171,7 +175,7 @@ position: absolute;
 	width: 130px;
     height: 35px;
     text-align: center;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
     color: white;
     border: 1px solid white;
 }
@@ -301,7 +305,7 @@ body{
 a{text-decoration: none}
 .ct_body{
    padding: 30px;
-   background-image: url('/resources/img/index1.jpg');
+   background-image: url('/resources/img/road.jpg');
    height: 900px;
    background-repeat: no-repeat;
      background-size: cover;
@@ -325,8 +329,8 @@ a{text-decoration: none}
    /* justify-content: flex-start;            
    flex-grow: 1; */
    max-width:800px;
-   height:65px;
-   min-width: 700px;
+   height:63px;
+   min-width: 800px;
 }
 .navContent{
    /* padding-top:15px;
@@ -364,8 +368,9 @@ a{text-decoration: none}
 }
 .selectContent b{
    color:black;
-   font-size: 12px;
+   font-size: 17px;
    text-align: left;
+   font-weight:bold;
 }
 .selectRegionBox{
    position: absolute;
@@ -390,7 +395,7 @@ a{text-decoration: none}
 }
 .region:hover{
    color: white;
-    background-color: #ff8b3d;
+    background-color: rgba(59, 153, 252, .7);
 }
 .datepickerBox{
    position:absolute;
@@ -404,7 +409,7 @@ a{text-decoration: none}
    display:none;
 }
 #goNext{
-   /* background-color: #ff8b3d; */
+   /* background-color: rgba(59, 153, 252, .7); */
    background-color: white;
    border-radius: 50%;
    height: 50px;
@@ -416,6 +421,7 @@ a{text-decoration: none}
    font-size: 10px;
 }
 .mainMsg{
+margin-left:40px;
 	margin-top:300px;
 	white-space:nowrap;
 }
@@ -437,15 +443,23 @@ a{text-decoration: none}
 
 
 #popup_open_btn{
-   font-size:14px;
+   font-size:17px;
    margin-right: 1%;
    margin-bottom: 50px;
    background-color:white;
    border: 1px solid #ddd;
    border-radius: 8px;
-   padding: 4px 15px 4px 15px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   padding: 5px 15px 5px 15px;
+/*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ */   cursor:pointer;
+   transition: box-shadow 0.2s ease;
 }
+
+#popup_open_btn:hover{
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+   
+}
+
 #goList{
   float:right;
    font-size:15px;
@@ -457,9 +471,9 @@ a{text-decoration: none}
    padding: 5px 20px 5px 20px;
 }
 #goList:hover{
-    background-color:#ff8b3d;
+    background-color:rgba(59, 153, 252, .7);
    color:white;
-   border: 1px solid #ff8b3d;
+   border: 1px solid rgba(59, 153, 252, .7);
    border-radius: 14px;
 }
 .boardContents{
@@ -541,7 +555,7 @@ a{text-decoration: none}
 
 .card-Img-2{
    height:300px;
-   width:320;
+   width:100%;
    border-radius: 8px;
    background-position: center; 
    background-repeat: no-repeat; 
@@ -558,10 +572,12 @@ a{text-decoration: none}
 }
 
 .header__nav__button-greyHover {
+	color:white;
 	font-family:'Nanum Gothic', sans-serif;
-	font-size:15px;
+	font-size:19px;
     background: transparent;
     transition: box-shadow 0.2s ease;
+    text-shadow: 2px 2px #222;
 }
 
 .header__nav__button-greyHover:hover {
@@ -569,6 +585,28 @@ a{text-decoration: none}
     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
 }
 
+.tmlogo {
+	width:155px;
+	margin-top:10px;
+	
+	/* background-image:url('/resources/icons/tmlogo-bl2ue.png'); */
+}
+
+        .portfolio {
+            /*width: 900px;*/
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(4, 370px);
+            grid-template-row: repeat(2, 1fr);
+
+        }
+
+        .portfolio img {
+            width: 65px;
+            height: 65px;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+        }
 </style>
 
 
@@ -580,24 +618,26 @@ a{text-decoration: none}
          
          <div class="mainMsg">
          <div style="padding:0; line-height: normal;">
-         <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
-           text-shadow: 2px 2px black;">
+         <p style="margin: 0;padding: 0;font-size: 59px;
+         color: white;font-weight: 900; text-shadow: 2px 2px #222;
+           ">
          이제, 여행은
          </p>
          </div>
-		<div style="padding:0; line-height: normal;">
-        <p style="margin: 0;padding: 0;font-size: 50px;color: white;font-weight: 800;
-           text-shadow: 2px 2px black;">
+		<div style="padding:0; line-height: normal;margin-top:-10px;">
+        <p style="margin: 0;padding: 0;font-size: 59px;
+        color: white;font-weight: 900; text-shadow: 2px 2px #222;
+           "> 
          가까운 곳에서
          </p>
          </div>
          
-         <button id="popup_open_btn" style="margin-top:20px;">
+         <button id="popup_open_btn" style="margin-top:20px;font-weight:600;">
          여행 성향 검사
          </button>
          </div> 
   
-  <div style="display: flex;
+  <div style="display: flex; margin-left:0px;
     justify-content: center; margin-top: 20px;">
          <div id="mainNav">
          
@@ -605,7 +645,7 @@ a{text-decoration: none}
 
                <div class="selectContent navBtnNodeList" style="margin-left:40px;">
                   <div><b class="navBtnNodeList">위치</b></div>
-                  <div class="navBtnNodeList">어디로 여행가세요?</div>
+                  <div class="navBtnNodeList" style="font-weight:lighter;">어디로 여행가세요?</div>
                <div class="selectRegionBox">
                      <div class="region" data-region-no="1">제주시</div>
                      <div class="region" data-region-no="2">서귀포시</div>
@@ -623,7 +663,7 @@ a{text-decoration: none}
             <div class="navDateBtn dateNodeList dateSelectBox" style="display:flex;">
                <!-- <input type="text" name="daterange" class="data-range-picker" style="border:none; width:220px"; /> -->
                	  <div class="selectContent dateNodeList"
-                  style="margin-left: 30px; padding-left: 30px;">
+                  style="margin-left: 30px; padding-left: 30px; font-weight:lighter;">
                   <div class="dateNodeList">
                      <b class="dateNodeList">출발일</b>
                   </div>
@@ -636,7 +676,7 @@ a{text-decoration: none}
 
             <div class="navDateBtn datedateBtn" style="display:flex;">
                <div class="selectContent dateNodeList" 
-                  style="margin-left: 30px; padding-left: 30px;">
+                  style="margin-left: 30px; padding-left: 30px; font-weight:lighter;">
                   <div class="dateNodeList">
                      <b class="dateNodeList">도착일</b>
                   </div>
@@ -728,30 +768,147 @@ a{text-decoration: none}
             <!-- 갤러리끝 -->
          </div>
          <!-- 게시판끝 --> --%>
+<div style="display:flex; justify-content:center;
+margin:70px 0 70px 130px;flex-direction: column;">
+<div style="margin-bottom: 10px;
+    font-size: 20;">쉿! 오늘만 아는 힙 플레이스 &#128293;</div>
+<section class="portfolio">
+
+        <div style="display: flex; cursor:pointer;">
+            <div>
+                <img src="/resources/img/Pickled-Pepper.jpg" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    서울
+                </div>
+                <div style="font-weight:lighter;">
+                    흐리고 안개
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div>
+                <img src="/resources/img/Pirouette.jpg" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    제주시
+                </div>
+                <div style="font-weight:lighter;">
+                    비자림
+                </div>
+            </div>
+        </div>        
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/220x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    서귀포시
+                </div>
+                <div style="font-weight:lighter;">
+                    새벽숯불가든
+                </div>
+            </div>
+        </div>        
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/221x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    종로구
+                </div>
+                <div style="font-weight:lighter;">
+                    오죽이네
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/222x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    종로구
+                </div>
+                <div style="font-weight:lighter;">
+                    제일제면소
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/223x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    제주시
+                </div>
+                <div style="font-weight:lighter;">
+                   	한림 칠돈가
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/224x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    서귀포시
+                </div>
+                <div style="font-weight:lighter;">
+                    호랑호랑
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div>
+                <img src="https://source.unsplash.com/random/225x200" alt="">
+            </div>
+            <div style="display: flex; flex-direction: column;white-space: nowrap; align-self: center; margin: 0 20px;">
+                <div style="font-weight: 500;">
+                    제주시
+                </div>
+                <div style="font-weight:lighter;">
+                    블랑로쉐
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+        <div style="display:flex;">
+        
+         <div style="display:flex; flex-direction:column; 
+         margin: 0 0px 0 0px; width:51%;">
          
-         <div style="display:flex; flex-direction:column; margin: 0 50px 0 50px;">
 		<div style="display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 1em 1em 1em;
+    padding: 0 1.6em 1em 1.6em;
     ">
-			<div style="font-size:30px; font-family:'Nanum Gothic', sans-serif; font-weight:800;">
-				이번 주 신규 등록 테마
+			<div style="font-size:27px; 
+			font-family:'Noto Sans KR', sans-serif; 
+			font-weight:600; white-space:nowrap;">
+				2021년, 1월! 새해를 여는 여행
 			</div>
-      <!-- 관리자 게시판리스트 출력 -->
+      
       		<div style="display: flex;">
-        		<button style="border: none;
-    background-color: white;
-    text-decoration: underline;
-    font-size: 16px;
-    color: #222; cursor:pointer; font-family:'Nanum Gothic', sans-serif;"
+        		<button style="border: none; background-color: white;
+    					text-decoration: underline; font-size: 15px;
+    					color: #222; cursor:pointer; 
+    					font-family: 'Noto Sans KR', sans-serif; white-space:nowrap;"
         		onclick="location.href='/board/list'">더보기</button>
         	</div>
         </div>
         
+        	<!-- 관리자 게시판리스트 출력 -->
+        	<div style="display:flex;flex-direction:column;justify-content:center;">
             <div style="display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 330px));
-    
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     justify-self: center;
     justify-content: space-evenly;">
     
@@ -800,10 +957,334 @@ a{text-decoration: none}
                </c:forEach>
 
             </div>
+            </div>
             <!-- 갤러리끝 -->
          </div>
          <!-- 게시판끝 -->
          
+         <div style="display:flex; flex-direction:column; 
+         margin: 0 0px 0 0px; width:51%;">
+         
+		<div style="display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1.6em 1em 1.6em;
+    ">
+			<div style="font-size:27px; 
+			font-family:'Noto Sans KR', sans-serif; 
+			font-weight:600; white-space:nowrap;">
+				고민 없이, 여행은 일단 계획하는거야!
+			</div>
+      
+      		<div style="display: flex;">
+        		<button style="border: none; background-color: white;
+    					text-decoration: underline; font-size: 15px;
+    					color: #222; cursor:pointer; 
+    					font-family: 'Noto Sans KR', sans-serif; white-space:nowrap;"
+        		onclick="location.href='/board/list'">더보기</button>
+        	</div>
+        </div>
+        
+        	<!-- 관리자 게시판리스트 출력 -->
+        	<div style="display:flex;flex-direction:column;justify-content:center;">
+            <div style="display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+    justify-self: center;
+    justify-content: space-evenly;">
+    
+               
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/200x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                 <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/201x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/202x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/203x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/204x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/205x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/206x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/207x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image: url(https://source.unsplash.com/random/208x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image:url(https://source.unsplash.com/random/209x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image:url(https://source.unsplash.com/random/210x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+                  <div class="card-contents-2">
+                     <div class="card-Img-2" style="background-image:url(https://source.unsplash.com/random/211x200);" >
+                     </div>
+                        <div class="card-desc-2">
+                           <div style="display: flex; font-weight:bold;font-size:16px; font-family:'Nanum Gothic', sans-serif;">
+                           <a>머라드</a>
+                           </div>
+                       <div class="desc_bottom-2" style="font-size:13px;">
+                           <div style="display:flex;">
+                              <div>
+                              	<i class="fa fa-eye"></i>&nbsp;3344
+                              </div>
+                              <div  style="margin-left: 3px;">
+                              	<i class="fa fa-heart-o"></i>&nbsp;123
+                              </div>
+                          </div>
+                          <div>
+                              <div style="color:#222222;">
+                              	<i class="fa fa-pencil-square-o" ></i>&nbsp;3414
+                              </div>
+	                      </div>
+                      </div>
+                        </div>
+                  </div>
+            </div>
+            </div>
+         </div>
+</div>
       
 </body>
 <%@ include file="../includes/footer.jsp" %>
@@ -812,7 +1293,9 @@ a{text-decoration: none}
 <script type="text/javascript">
    var startDate;
    var endDate;
+   	$(".tmlogo").attr("src","/resources/icons/logo-sky.png")
    $(function() {
+	   
       $('.dateSelectBox').daterangepicker({
          startDate : moment(),
          endDate : moment(),
@@ -1101,7 +1584,7 @@ a{text-decoration: none}
         data : sendData,
         success : function(data) {
            
-               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:#ff8b3d;color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
+               let tag = "<h2 style='font-family:Spoqa Han Sans Neo,sans-serif;'>당신에게 추천하는 여행테마는?<hr><b style='border-radius:20px;padding:5px 10px 5px 10px;font-family:Spoqa Han Sans Neo,sans-serif;font-size:30px;background-color:rgba(59, 153, 252, .7);color:white;text-shadow:none;'> "+yourType+"</b></h2>"+"<p style='font-size:20px;'>"+typeDt+"</p><hr>"
                let divTag = document.createElement("div");
                divTag.className = 'yourList'
                divTag.innerHTML = "<h5 style='font-family:Spoqa Han Sans Neo,sans-serif;text-align:center;'>당신에게 추천하는 장소</h5>";

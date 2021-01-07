@@ -14,8 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
-	href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap"
-	rel="stylesheet">
+	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <!--  나눔명조  -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -126,6 +125,7 @@ h1 {
 	font-family: "Nanum Myeongjo", sans-serif;
 	font-style: oblique;
 	font-size: 25px;
+	font-weight:lighter;
 }
 
 .budget-box {
@@ -148,7 +148,7 @@ h1 {
 
 .budget-box-a {
 	display: grid;
-	grid-template-rows: repeat(3, 1fr);
+	/* grid-template-rows: repeat(3, 1fr); */
 	grid-template-columns: 1fr;
 	margin: 50px;
 	justify-items: center;
@@ -221,7 +221,7 @@ h2 {
 .my-table thead tr {
 	color: black;
 	text-align: left;
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: bold;
 	border-bottom: 2px solid #dddddd;
 }
@@ -342,72 +342,72 @@ input[type="text"] {
 
 .color-restaurant {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(232, 220, 190, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8)
 }
 
 .color-cafe {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(75, 52, 47, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8)
 }
 
 .color-lodging {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(25, 75, 70, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8)
 }
 
 .color-trans {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(174, 114, 80, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 
 .color-trans-2 {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(174, 114, 80, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 
 .color-shopping {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(185, 160, 35, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 
 .color-activity {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(42, 76, 125, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 
 .color-entertainment {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(190, 75, 59, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 
 .color-etc {
 	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
+	width: 18px;
+	height: 18px;
 	background-color: rgba(132, 130, 131, 0.8);
 	box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
@@ -442,11 +442,34 @@ input[type="text"] {
 
 					<div class="budget-box-a">
 						<div>
-							<h2>회원님이 다녀온<b style="font-style: italic;">" 제주도 "</b> 여행 <b style="font-style: italic;">" 3박 4일 "</b></h2><br>
+							<h2 style="font-weight:bold;">회원님이 다녀온
+							<b id="average">
+							" 3박 4일 "</b>
+							의 <b id="average">
+							" 제주도 "</b>
+							일정의
+							</h2>
+							<br>
 							
-							<h2><p>1인당 경비평균은 ? </p></h2>
+							<h2 style="font-weight:bold;">1인당 경비 평균은?</h2>
 						</div>
-					</div> 
+					</div>
+					 
+					<!-- <div class="budget-box-a">
+                        <div>
+                            <div style="font-size:25px;">다녀온</div>
+                            <div id="average" style="width: 80px;">"제주도"</div>
+                            <div id="average" style="width:auto;">"3박 4일"</div>
+                             <div style="font-size:25px;">의</div>
+                        </div>
+                        <div>
+                        	
+                            
+                        </div>
+                        <div>
+                            <h2>1인 경비 평균은?</h2>
+                        </div>
+                    </div> -->
 					
 					<div class="css-for-hr">
 						<hr class="line-column">
@@ -455,9 +478,10 @@ input[type="text"] {
 					<div class="budget-box-b">
 						<div class="in-line-row">
 							<input class="wonSign" type="text" value="￦" readonly> <input
-								type="text" id="pb" value="970000" onchange="testDiv()"
-								onkeyup="inputNumberAutoComma(this)"> <a
-								class="a-recommend" onclick="recommend()"
+								type="text" id="pb" value="1,070,000" onchange="testDiv()"
+								onkeyup="inputNumberAutoComma(this)"
+								style="font-weight:300;font-style: oblique;color:#222;"> 
+								<a class="a-recommend" onclick="recommend()"
 								href="#allocation-main">제안받기</a>
 						</div>
 					</div>
@@ -492,7 +516,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-restaurant"></div>
 										&nbsp
-										<div>음식</div>
+										<div style="font-size:16px">음식</div>
 									</div>
 								</td>
 
@@ -533,7 +557,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-cafe"></div>
 										&nbsp
-										<div>카페</div>
+										<div style="font-size:16px">카페</div>
 									</div>
 								</td>
 
@@ -572,7 +596,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-lodging"></div>
 										&nbsp
-										<div>숙박</div>
+										<div style="font-size:16px">숙박</div>
 									</div>
 								</td>
 
@@ -612,7 +636,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-trans-2"></div>
 										&nbsp
-										<div>교통</div>
+										<div style="font-size:16px">교통</div>
 									</div>
 								</td>
 
@@ -650,7 +674,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-shopping"></div>
 										&nbsp
-										<div>쇼핑</div>
+										<div style="font-size:16px">쇼핑</div>
 									</div>
 								</td>
 
@@ -689,7 +713,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-activity"></div>
 										&nbsp
-										<div>활동</div>
+										<div style="font-size:16px">활동</div>
 									</div>
 								</td>
 
@@ -729,7 +753,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-entertainment"></div>
 										&nbsp
-										<div>주점</div>
+										<div style="font-size:16px">주점</div>
 									</div>
 								</td>
 
@@ -769,7 +793,7 @@ input[type="text"] {
 										style="display: flex; align-items: center; justify-content: center;">
 										<div class="color-etc"></div>
 										&nbsp
-										<div>기타</div>
+										<div style="font-size:16px">기타</div>
 									</div>
 								</td>
 
