@@ -35,12 +35,10 @@ public class ReplyController {
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		log.info("ReplyVO : " + vo);
 		
-		// 댓글 등록(1이면 성공, 0이면 실패)
 		int insertCnt = service.register(vo);
 		
 		log.info("Reply INSERT CNT(1(성공), 0(실패) : " + insertCnt);
 		 
-		// 성공이면 OK, 실패하면 SERVER ERROR
 		return insertCnt == 1 ? new ResponseEntity<String>("댓글을 등록하였습니다.", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -68,7 +66,6 @@ public class ReplyController {
 	public ResponseEntity<String> remove(@PathVariable("rno") int rno){
 		log.info("삭제합니다 : " + rno);
 		
-		// 삭제 성공하면 메세지와 함께 200, 실패하면 500
 		return service.remove(rno) == 1 ? new ResponseEntity<String>("댓글을 삭제하였습니다.", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
