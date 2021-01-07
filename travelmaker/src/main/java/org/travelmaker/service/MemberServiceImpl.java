@@ -118,11 +118,10 @@ public class MemberServiceImpl implements MemberService {
 		   
 	   try{
 			   
-		   // 암호화의 늦은 반영으로.. 기존 회원도 비밀번호가 맞다면 로그인 시키자.
 			String rawPwd = mVO.getPwd();
 			String encodePwd = mapper.getMember(mVO.getEmail()).getPwd();
 			   
-		    if(!(isPwdMatch(rawPwd, encodePwd)) && login(mVO)==null) {
+		    if(!(isPwdMatch(rawPwd, encodePwd))) {
 		    	rttr.addFlashAttribute("msg", "이메일 또는 패스워드를 확인해주세요.");
 		    	return true;
 		    }
@@ -274,8 +273,7 @@ public class MemberServiceImpl implements MemberService {
 		   
 	   String dbPwd = mapper.getMember(email).getPwd();
 	    
-	   // 암호화의 늦은 반영으로.. 기존 회원도 비밀번호가 맞다면 탈퇴시키자.
-	   if(!(isPwdMatch(pwd, dbPwd)) && (!(dbPwd.equals(pwd)))) {
+	   if(!(isPwdMatch(pwd, dbPwd))) {
 	   	   rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
 	   	   return true;
 	   }
@@ -423,7 +421,7 @@ public class MemberServiceImpl implements MemberService {
 			return true;
 		}
 
-		if(!(isPwdMatch(inputPwd, presentPwd)) && !(inputPwd.equals(presentPwd))) {
+		if(!(isPwdMatch(inputPwd, presentPwd))) {
 			rttr.addFlashAttribute("msg", "현재 비밀번호와 일치하지 않습니다.");
 			rttr.addFlashAttribute("member", getMember(email));
 			return true;
@@ -431,7 +429,5 @@ public class MemberServiceImpl implements MemberService {
 
 		return false;
 	}
-
-
 
 }// end ServiceImpl
