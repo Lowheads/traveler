@@ -55,11 +55,11 @@
 }
 
 .pagination_btn a:hover{
-	color: #f60;
+	color: #2196f3;
 }
 
 .pagination_bar .active a{
-	color: #f60;
+	color: #2196f3;
 }
 
 /* 좋아요버튼 test */
@@ -417,11 +417,11 @@
    padding: 10px 20px 0 20px;
    text-align: center;
    color: white;
-   background-color:#ff8b3d;
+   background-color:#2196f3;
 }
 
 .mnu_box:hover {
-   background-color:#ff8b3d;
+   background-color:#2196f3;
      color:white;
 }
 
@@ -432,7 +432,7 @@
 }
 
 .content_tap {
-   width: 90%;
+   width: 80%;
    height: 100px;
    display: flex;
    font-size: 12px;
@@ -470,14 +470,14 @@
 }
 
 #viewMap_btn:hover{
-   background-color: #ff8b3d;
-   border: 1px solid #ff8b3d;
+   background-color: #2196f3;
+   border: 1px solid #2196f3;
    color: white;   
 }
 
 .contents {
    padding: 20px;
-   width: 100%;
+   width: 1050px;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
@@ -578,7 +578,9 @@
             </select>
          </div>
 
-
+		
+		<div style="display: flex;justify-content: center;">
+		<!-- contents start -->
          <div class="contents">
             <!-- 카드게시물 -->
             <c:forEach items="${list }" var="place">
@@ -622,6 +624,8 @@
                
             </c:forEach>
                <div class="viewMap"><div></div><button id="viewMap_btn">지도에서 보기</button></div>
+         </div>
+         <!-- contents end -->
          </div>
       </div>
 
