@@ -138,11 +138,11 @@ public class MemberController {
 	}
 	
 	//aJax 금액 충전
-	@RequestMapping("/payMoney")
+	@RequestMapping("/pointCharging")
 	@ResponseBody
-	public void chargingMoney(@RequestParam("payMoney") long money, @RequestParam String email) {
-		log.info("충전 금액 " + money + "원");
-		service.moneyCharging(money, email);
+	public void pointCharging(@RequestParam("point") long point, @RequestParam String email) {
+		log.info("충전 금액 " + point + "원");
+		service.pointCharging(point, email);
 		
 	}
 	

@@ -22,11 +22,13 @@
 	 <div class="black_bg_social"></div>
 	
 <!-- 전체 div -->
-<div class="container-info">
+<div class="info-container">
 	<!-- 정보 div -->
 	<div class="info-wrap">	
 		<!-- 내정보 div -->
-		<div class="info-head">내 정보</div>
+		<div class="info-header">
+		<h3>내 정보</h3>
+		</div>
 	
 	<!-- 정보 출력 div  -->
 	<div class="api-main-wrap">
@@ -76,6 +78,14 @@
 						<div class="content-proper">${member.travelType }</div> 
 				    </c:when>
 				</c:choose>
+			</div>
+			
+				<!-- 현재 가진 point -->
+			<div class="info-content"> 
+				<div class="content-name"">POINT</div>
+				<div class="content-proper" style="margin-top: 1%;" >
+					<fmt:formatNumber value="${member.point }" pattern="#,###" /> POINT</div> 
+					<button style="margin-left: 3%;" id="check_module" type="button">POINT 충전</button>
 			</div>
 		
 		<div class="info-content">
@@ -295,6 +305,47 @@
 		});
 		
 }); // end 탈퇴 인증메일
+
+// 결제
+$("#check_module").click(function() {
+	var IMP = window.IMP; 
+	IMP.init('imp32870043');
+	let point = 20000; // 우린 2만원 충전가능해요!
+	let msg;
+	
+	IMP.request_pay({
+		pg : 'kakao', 
+		merchant_uid : 'merchant_' + new Date().getTime(),
+		name : '주문명 : 결제테스트',
+		amount : point,
+		buyer_email : "${member.email}",
+		buyer_name : "${member.nickname}",
+		buyer_postcode : '123-456',
+	}, function(rsp) {
+		console.log(rsp);
+		if (rsp.success) {
+			msg = '결제가 완료되었습니다.';
+			msg += '\n고유ID : ' + rsp.imp_uid;
+			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+			msg += '\n결제 금액 : ' + rsp.paid_amount;
+			msg += '\n카드 승인번호 : ' + rsp.apply_num;
+		       $.ajax({
+                    type: "GET", 
+                    url: "/member/pointCharging", 
+                    data: {
+                        "point" : point,
+                        "email" : "${member.email}"
+                    },
+                });
+		} else {
+			msg = '결제에 실패하였습니다.';
+			msg += '에러내용 : ' + rsp.error_msg;
+		}
+		alert(msg);
+		document.location.href="/member/getMember?email=" + "${member.email}";
+	});
+});
+
 
 </script>
 

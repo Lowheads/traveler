@@ -20,7 +20,7 @@ public interface MemberMapper {
     
    public int hasEmail(String email); // 이메일 중복체크
    
-   public void moneyCharging(@Param("money") long money, @Param("email") String email); // 금액 충전
+   public void pointCharging(@Param("point") long point, @Param("email") String email); // 포인트 충전
    
    public MemberVO getMember(String email); // 멤버 객체 반환
    

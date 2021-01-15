@@ -45,10 +45,6 @@
 	<!-- JQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 
-<!-- 결제 -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
 <link rel="stylesheet" href="/resources/css/member/memberInfo.css">
 
 </head>
@@ -143,11 +139,12 @@
 				</c:choose>
 			</div>
 			
-			<!-- 현재 가진 money -->
+			<!-- 현재 가진 point -->
 			<div class="info-content"> 
-				<div class="content-name"">충전금액</div>
-				<div class="content-proper" style="margin-top: 1%;">${member.money } 원</div> 
-					<button style="margin-left: 3%;" id="check_module" type="button">금액 충전</button>
+				<div class="content-name"">POINT</div>
+				<div class="content-proper" style="margin-top: 1%;" >
+					<fmt:formatNumber value="${member.point }" pattern="#,###" /> POINT</div> 
+					<button style="margin-left: 3%;" id="check_module" type="button">POINT 충전</button>
 			</div>
 			
 		
@@ -170,9 +167,10 @@
 	<!-- end main-wrap-->
 
 		</div>
-		<!-- end info-wrap -->
+		<!-- end container-info -->
 	</div>
-<!-- end container-info -->
+	<!-- end info-wrap -->
+
 
 <!-- 비밀번호 변경 모달 -->
 		<div class="pwdModify_modal modal">
@@ -461,14 +459,14 @@
 	$("#check_module").click(function() {
 		var IMP = window.IMP; 
 		IMP.init('imp32870043');
-		let payMoney = 20000; // 우린 2만원 충전가능해요!
+		let point = 20000; // 우린 2만원 충전가능해요!
 		let msg;
 		
 		IMP.request_pay({
 			pg : 'kakao', 
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : '주문명 : 결제테스트',
-			amount : payMoney,
+			amount : point,
 			buyer_email : "${member.email}",
 			buyer_name : "${member.nickname}",
 			buyer_postcode : '123-456',
@@ -482,9 +480,9 @@
 				msg += '\n카드 승인번호 : ' + rsp.apply_num;
 			       $.ajax({
 	                    type: "GET", 
-	                    url: "/member/payMoney", 
+	                    url: "/member/pointCharging", 
 	                    data: {
-	                        "payMoney" : payMoney,
+	                        "point" : point,
 	                        "email" : "${member.email}"
 	                    },
 	                });
