@@ -1,7 +1,7 @@
 package org.travelmaker.mapper;
 
 import org.apache.ibatis.annotations.Param;
-
+import org.junit.runners.Parameterized.Parameters;
 import org.travelmaker.domain.MemberVO;
 
 // MemberDAO 인터페이스와 같음
@@ -19,6 +19,8 @@ public interface MemberMapper {
    public void modifyPwd(@Param("pwd") String pwd, @Param("email") String email); // 비밀번호 수정
     
    public int hasEmail(String email); // 이메일 중복체크
+   
+   public void moneyCharging(@Param("money") long money, @Param("email") String email); // 금액 충전
    
    public MemberVO getMember(String email); // 멤버 객체 반환
    

@@ -137,6 +137,15 @@ public class MemberController {
 		return cnt;
 	}
 	
+	//aJax 금액 충전
+	@RequestMapping("/payMoney")
+	@ResponseBody
+	public void chargingMoney(@RequestParam("payMoney") long money, @RequestParam String email) {
+		log.info("충전 금액 " + money + "원");
+		service.moneyCharging(money, email);
+		
+	}
+	
 	// 정보수정 -> 저장하기 누르면 실행
 	@RequestMapping(value = "/saveMember", method = RequestMethod.POST)
 	public String saveMember(String nickname, String email, HttpSession session, RedirectAttributes rttr) {
