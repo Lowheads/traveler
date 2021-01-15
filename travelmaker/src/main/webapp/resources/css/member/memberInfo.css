@@ -112,7 +112,18 @@ display:inline-block;
     font-size: 12px;
     outline: 0;
     cursor: pointer;
-	
+}
+
+/* 소셜회원 포인트 충전 버튼 */
+.api-main-wrap button{
+		background-color: rgba(59, 153, 252, .7);
+    color: white;
+    border: 1px solid #2196f3;
+    padding: 4px 10px; 
+    border-radius: 7px;
+    font-size: 12px;
+    outline: 0;
+    cursor: pointer;
 }
 
 /*탈퇴버튼*/
@@ -138,7 +149,7 @@ display:inline-block;
 .api-main-wrap{ /* 내용 div(소셜 회원 페이지)*/
 	padding : 7%;
 	padding-top : 10%;
-	height: 400px;
+	height: 550px;
 	padding-left: 0%;
 	margin-left: 16%
 }

@@ -42,7 +42,7 @@ public interface MemberService {
    
    public int hasNickname(String nickname); // 닉네임 중복체크
    
-   public void moneyCharging(long money, String email); // 금액 충전
+   public void pointCharging(long point, String email); // 포인트 충전
    
    public boolean doubleCheckOnesNickname(String nickname, MemberVO member, RedirectAttributes rttr); // 한번 더 닉네임 중복체크
    

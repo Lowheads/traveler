@@ -430,10 +430,10 @@ public class MemberServiceImpl implements MemberService {
 		return false;
 	}
 
-
+	// 포인트 충전
 	@Override
-	public void moneyCharging(long money, String email) {
-		mapper.moneyCharging(money, email);
+	public void pointCharging(long point, String email) {
+		mapper.pointCharging(point, email);
 	}
 	
 
