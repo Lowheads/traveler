@@ -16,6 +16,7 @@
       <result property="status" column="STATUS" />
       <result property="memGrade" column="MEM_GRADE" />
       <result property="travelType" column="TRAVEL_TYPE" />
+      <result property="money" column="MONEY" />
    </resultMap>
 
    <!-- 현 유저 확인 -->
@@ -25,7 +26,7 @@
    
    <!-- 회원가입 -->
    <insert id="join">
-      insert into member (mem_no, email, nickname, pwd, birth, gender, status, mem_grade)
+      insert into member (mem_no, email, nickname, pwd, birth, gender, status, mem_grade, money)
       values(
       seq_memNo.nextval,
       #{email},
@@ -34,7 +35,8 @@
       #{birth},
       #{gender},
       #{status},
-      #{memGrade}
+      #{memGrade},
+      0
       )
    </insert>   
    
@@ -123,4 +125,14 @@
       TRAVEL_TYPE = #{yourType}
       where MEM_NO = #{memNo} 
    </update>
+   
+   <!-- 0원일 때 충전 -->
+   <update id="moneyCharging">
+   		update member 
+		set money = money + #{money}
+		where email = #{email}
+   </update>
+   
+   
+
 </mapper>

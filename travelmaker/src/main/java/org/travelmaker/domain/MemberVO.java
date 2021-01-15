@@ -19,5 +19,6 @@ public class MemberVO {
 	private String status; // 상태 (일반:MS001 / 탈퇴:MS002 / 휴면:MS003)
 	private String memGrade; // 회원유형 (멤버:MG001 / 관리자:MG002 / SNS회원:MG003)
 	private String travelType; // 여행타입
+	private long money;
 	
 }

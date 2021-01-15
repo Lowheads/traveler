@@ -42,6 +42,8 @@ public interface MemberService {
    
    public int hasNickname(String nickname); // 닉네임 중복체크
    
+   public void moneyCharging(long money, String email); // 금액 충전
+   
    public boolean doubleCheckOnesNickname(String nickname, MemberVO member, RedirectAttributes rttr); // 한번 더 닉네임 중복체크
    
    public boolean isDoubleCheckOnesPwd(String pwd, String email, RedirectAttributes rttr, HttpSession session); // 탈퇴전 유효성 체크

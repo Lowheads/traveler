@@ -430,4 +430,11 @@ public class MemberServiceImpl implements MemberService {
 		return false;
 	}
 
+
+	@Override
+	public void moneyCharging(long money, String email) {
+		mapper.moneyCharging(money, email);
+	}
+	
+
 }// end ServiceImpl
