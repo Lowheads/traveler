@@ -142,7 +142,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int register(ScheduleVO schedule) {
+	public int register(ScheduleVO schedule) throws Exception {
 
 		log.info("register....."+schedule);
 		return mapper.insertSelectKey(schedule);

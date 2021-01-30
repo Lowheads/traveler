@@ -41,7 +41,7 @@ public interface ScheduleService {
 
 	public int getComingScheduleTotal(Criteria cri);
 
-	public int register(ScheduleVO schedule);
+	public int register(ScheduleVO schedule) throws Exception;
 
 	public ScheduleVO getListSchedule(int schNo);
 	
