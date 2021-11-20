@@ -47,6 +47,6 @@
   * [김유빈] (https://github.com/newyou88) Yubin Kim
   * [이종운] (https://github.com/JongWoon.Lee) Jongwoon Lee
   * [정지은] (https://github.com/Jinnie-J) Jieun Jeong
-  * [현주엽] (https://github.com/lowheads) Juyeop Hyun
+  * [현주엽] (https://github.com/Lowheads) Juyeop Hyun
   * [홍순규] (https://github.com/Sunky97) Sunkyu Hong
   
